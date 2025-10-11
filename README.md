@@ -5,17 +5,17 @@ Autor: Francisco David Hernández Alayón
 ## Configuración backend
 
 
-### crear carpeta backend y entrar
+### Crear carpeta backend y entrar
 ```
 mkdir backend && cd backend
 ```
 
-### crear solución
+### Crear solución
 ```
 dotnet new sln -n CarApp
 ```
 
-### crear proyectos
+### Crear proyectos
 ```
 dotnet new classlib -n CarApp.Domain
 dotnet new classlib -n CarApp.Application
@@ -23,7 +23,7 @@ dotnet new classlib -n CarApp.Infrastructure
 dotnet new webapi -n CarApp.Api
 ```
 
-### agregar referencias entre proyectos
+### Agregar referencias entre proyectos
 ```
 dotnet add CarApp.Application reference CarApp.Domain
 dotnet add CarApp.Infrastructure reference CarApp.Domain
@@ -31,12 +31,12 @@ dotnet add CarApp.Api reference CarApp.Application
 dotnet add CarApp.Api reference CarApp.Infrastructure
 ```
 
-### agregar proyectos a la solución
+### Agregar proyectos a la solución
 ```
 dotnet sln add CarApp.Domain CarApp.Application CarApp.Infrastructure CarApp.Api
 ```
 
-# instalar paquete necesario
+### Instalar paquete necesario
 ```
 cd CarApp.Infrastructure
 dotnet add package Microsoft.EntityFrameworkCore
@@ -51,7 +51,7 @@ dotnet ef database update -p ../CarApp.Infrastructure -s .
 ```
 
 
-# crear base de datos
+### Crear base de datos
 ```
 dotnet tool install --global dotnet-ef
 cd CarApp.Api
@@ -80,6 +80,7 @@ dotnet run --urls "URL API"
 ```
 
 ### Frontend
+Crear un .env con REACT_APP_BACKEND_API_URL="URL DE LA API DEL BACKEND"
 ```
 cd frontend/carapp-frontend
 npm start
