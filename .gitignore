@@ -1,0 +1,64 @@
+# ----------------------
+# BACKEND (.NET)
+# ----------------------
+
+# Build results
+**/bin/
+**/obj/
+
+# User-specific files
+**/Properties/launchSettings.json
+
+# Database files
+**/*.db
+
+# Entity Framework Migrations
+**/Migrations/
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# ----------------------
+# FRONTEND (React / Node)
+# ----------------------
+
+# Node modules
+frontend/carapp-frontend/node_modules/
+
+# Build output
+frontend/carapp-frontend/build/
+frontend/carapp-frontend/dist/
+
+# Local env files
+frontend/carapp-frontend/.env
+frontend/carapp-frontend/.env.local
+frontend/carapp-frontend/.env.development.local
+frontend/carapp-frontend/.env.test.local
+frontend/carapp-frontend/.env.production.local
+
+# Logs
+frontend/carapp-frontend/npm-debug.log*
+frontend/carapp-frontend/yarn-debug.log*
+frontend/carapp-frontend/yarn-error.log*
+
+# Editor directories
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Misc
+.DS_Store
+Thumbs.db
