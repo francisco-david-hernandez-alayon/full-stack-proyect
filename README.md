@@ -12,51 +12,51 @@ mkdir backend && cd backend
 
 ### Crear solución
 ```
-dotnet new sln -n CarApp
+dotnet new sln -n GameApp
 ```
 
 ### Crear proyectos
 ```
-dotnet new classlib -n CarApp.Domain
-dotnet new classlib -n CarApp.Application
-dotnet new classlib -n CarApp.Infrastructure
-dotnet new webapi -n CarApp.Api
+dotnet new classlib -n GameApp.Domain
+dotnet new classlib -n GameApp.Application
+dotnet new classlib -n GameApp.Infrastructure
+dotnet new webapi -n GameApp.Api
 ```
 
 ### Agregar referencias entre proyectos
 ```
-dotnet add CarApp.Application reference CarApp.Domain
-dotnet add CarApp.Infrastructure reference CarApp.Domain
-dotnet add CarApp.Api reference CarApp.Application
-dotnet add CarApp.Api reference CarApp.Infrastructure
+dotnet add GameApp.Application reference GameApp.Domain
+dotnet add GameApp.Infrastructure reference GameApp.Domain
+dotnet add GameApp.Api reference GameApp.Application
+dotnet add GameApp.Api reference GameApp.Infrastructure
 ```
 
 ### Agregar proyectos a la solución
 ```
-dotnet sln add CarApp.Domain CarApp.Application CarApp.Infrastructure CarApp.Api
+dotnet sln add GameApp.Domain GameApp.Application GameApp.Infrastructure GameApp.Api
 ```
 
 ### Instalar paquete necesario
 ```
-cd CarApp.Infrastructure
+cd GameApp.Infrastructure
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 
-cd ../CarApp.Api
+cd ../GameApp.Api
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet ef migrations add InitialCreate -p ../CarApp.Infrastructure -s .
-dotnet ef database update -p ../CarApp.Infrastructure -s .
+dotnet ef migrations add InitialCreate -p ../GameApp.Infrastructure -s .
+dotnet ef database update -p ../GameApp.Infrastructure -s .
 ```
 
 
 ### Crear base de datos
 ```
 dotnet tool install --global dotnet-ef
-cd CarApp.Api
-dotnet ef migrations add InitialCreate -p ../CarApp.Infrastructure -s .
-dotnet ef database update -p ../CarApp.Infrastructure -s .
+cd GameApp.Api
+dotnet ef migrations add InitialCreate -p ../GameApp.Infrastructure -s .
+dotnet ef database update -p ../GameApp.Infrastructure -s .
 ```
 
 
@@ -64,8 +64,8 @@ dotnet ef database update -p ../CarApp.Infrastructure -s .
 ## Configuración frontend
 ```
 cd ../frontend
-npx create-react-app carapp-frontend
-cd carapp-frontend
+npx create-react-app gameapp-frontend
+cd gameapp-frontend
 npm install axios
 
 ```
@@ -75,13 +75,13 @@ npm install axios
 
 ### Backend
 ```
-cd backend/CarApp.Api
+cd backend/GameApp.Api
 dotnet run --urls "URL API"
 ```
 
 ### Frontend
 Crear un .env con REACT_APP_BACKEND_API_URL="URL DE LA API DEL BACKEND"
 ```
-cd frontend/carapp-frontend
+cd frontend/gameapp-frontend
 npm start
 ```
