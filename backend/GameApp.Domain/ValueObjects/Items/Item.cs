@@ -3,10 +3,10 @@ namespace GameApp.Domain.ValueObjects.Items;
 
 public class Item
 {
-    private readonly ItemName _name;
-    private readonly ItemDescription _description;
+    protected readonly ItemName _name;
+    protected readonly ItemDescription _description;
 
-    public Item(ItemName name, ItemDescription description)
+    protected Item(ItemName name, ItemDescription description)
     {
         _name = name;
         _description = description;

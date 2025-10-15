@@ -7,10 +7,11 @@ class WarriorCharacter : Character
     private static readonly int _defaultMaxHealthPoints = 150;
     private static readonly int _defaultMaxFoodPoints = 100;
     private static readonly int _defaultMaxInventorySlots = 5;
+    private static readonly int _defaultStartingMoney = 10;
 
     // Constructor
     public WarriorCharacter()
-        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots)
+        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney)
     {
     }
 }

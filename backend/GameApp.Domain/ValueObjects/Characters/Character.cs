@@ -1,39 +1,37 @@
 
 namespace GameApp.Domain.ValueObjects.Characters;
 
-// Abstract class for Character entity
+// Abstract class for Character value object
 public abstract class Character
 {
-    // character general properties
-    private readonly Guid _id;
-    private readonly CharacterName _name;
-    private readonly int _maxHealthPoints;
-    private readonly int _maxFoodPoints;
-    private readonly int _maxInventorySlots;
-
+    protected readonly CharacterName _name;
+    protected readonly int _maxHealthPoints;
+    protected readonly int _maxFoodPoints;
+    protected readonly int _maxInventorySlots;
+    protected readonly int _startingMoney;
 
     // Constructor
-    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots)
+    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney)
     {
-        _id = Guid.NewGuid();
         _name = name;
         _maxHealthPoints = maxHealthPoints;
         _maxFoodPoints = maxFoodPoints;
         _maxInventorySlots = maxInventorySlots;
+        _startingMoney = startingMoney;
     }
 
     // Getters
-    public Guid GetId() => _id;
     public CharacterName GetName() => _name;
     public int GetMaxHealthPoints() => _maxHealthPoints;
     public int GetMaxFoodPoints() => _maxFoodPoints;
     public int GetMaxInventorySlots() => _maxInventorySlots;
+    public int GetStartingMoney() => _startingMoney;
 
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} character (ID: {_id}): " +
-               $"MaxHP={_maxHealthPoints}, MaxFood={_maxFoodPoints}, MaxInventorySlots={_maxInventorySlots}";
+        return $"{_name.GetName()} character: " +
+               $"MaxHP={_maxHealthPoints}, MaxFood={_maxFoodPoints}, MaxInventorySlots={_maxInventorySlots}, StartingMoney={_startingMoney},";
     }
 
 }
