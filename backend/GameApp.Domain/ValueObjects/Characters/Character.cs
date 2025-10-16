@@ -27,11 +27,4 @@ public abstract class Character
     public int GetMaxInventorySlots() => _maxInventorySlots;
     public int GetStartingMoney() => _startingMoney;
 
-    // To string
-    public override string ToString()
-    {
-        return $"{_name.GetName()} character: " +
-               $"MaxHP={_maxHealthPoints}, MaxFood={_maxFoodPoints}, MaxInventorySlots={_maxInventorySlots}, StartingMoney={_startingMoney},";
-    }
-
 }
