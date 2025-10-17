@@ -43,6 +43,7 @@ public class Game
     }
 
     // Getters
+    public Guid GetGuid() => Id;
     public Character GetCharacter() => _character;
     public int GetNumberScenesToFinish() => _numberScenesToFinish;
     public List<Scene> GetCompletedScenes() => new List<Scene>(_listCompletedScenes);
@@ -71,6 +72,10 @@ public class Game
 
     public Game SetFinalScene(Scene newFinalScene) =>
         new Game(Id, _character, _numberScenesToFinish, _listCompletedScenes, newFinalScene);
+
+
+    public Game UpdateGame(Character newCharacter, int newNumberScenesToFinish, List<Scene> newCompletedScenes, Scene newFinalScene) =>
+    new Game(Id, newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene);
 
     // To string
     public override string ToString()

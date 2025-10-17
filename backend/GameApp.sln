@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameApp.Api", "GameApp.Adap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameApp.Infrastructure", "GameApp.Adapter\GameApp.Infrastructure\GameApp.Infrastructure.csproj", "{11D79C80-B500-4318-B2F5-D95C7C8D6BF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameApp.Host", "GameApp.Host\GameApp.Host.csproj", "{96AE7F41-E970-4F0A-A249-3AAD364918A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{11D79C80-B500-4318-B2F5-D95C7C8D6BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D79C80-B500-4318-B2F5-D95C7C8D6BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11D79C80-B500-4318-B2F5-D95C7C8D6BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AE7F41-E970-4F0A-A249-3AAD364918A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AE7F41-E970-4F0A-A249-3AAD364918A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AE7F41-E970-4F0A-A249-3AAD364918A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AE7F41-E970-4F0A-A249-3AAD364918A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBCC7548-5F88-4A8A-85D4-271B3F75D98E} = {80682F76-F9E8-44FD-B8B9-D50590D46FC4}

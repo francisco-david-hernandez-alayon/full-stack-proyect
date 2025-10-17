@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\GameApp.Domain\GameApp.Domain.csproj" />
+    <ProjectReference Include="..\..\GameApp.Application\GameApp.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
