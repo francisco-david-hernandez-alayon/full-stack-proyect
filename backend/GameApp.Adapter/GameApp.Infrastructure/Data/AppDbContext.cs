@@ -11,13 +11,13 @@ public class AppDbContext : DbContext
 
     public void SeedData()
     {
-        if (!Games.Any())
-        {
-            Games.AddRange(
-                new Game { Id = 1, Title = "partida 1" },
-                new Game { Id = 2, Title = "partida 2" }
-            );
-            SaveChanges();
-        }
+        // if (!Games.Any())
+        // {
+        //     Games.AddRange(
+        //         new Game { Id = 1, Title = "partida 1" },
+        //         new Game { Id = 2, Title = "partida 2" }
+        //     );
+        //     SaveChanges();
+        // }
     }
 }

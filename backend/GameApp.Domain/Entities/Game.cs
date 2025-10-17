@@ -7,16 +7,25 @@ namespace GameApp.Domain.Entities;
 
 public class Game
 {
-    private readonly Guid _id;
+    public Guid Id { get; private set; }
     private readonly Character _character;
     private readonly int _numberScenesToFinish;
     private readonly List<Scene> _listCompletedScenes;
     private readonly Scene _finalScene;
 
+    // Required for EF Core
+    private Game()
+    {
+        Id = Guid.NewGuid();
+        _character = null!;
+        _listCompletedScenes = new List<Scene>();
+        _finalScene = null!;
+    }
+
     // Default constructor
     public Game(Character character, int numberScenesToFinish, Scene finalScene)
     {
-        _id = Guid.NewGuid();
+        Id = Guid.NewGuid();
         _character = character;
         _numberScenesToFinish = numberScenesToFinish;
         _finalScene = finalScene;
@@ -26,7 +35,7 @@ public class Game
     // Restore constructor
     public Game(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, Scene finalScene)
     {
-        _id = id;
+        Id = id;
         _character = character;
         _numberScenesToFinish = numberScenesToFinish;
         _listCompletedScenes = new List<Scene>(completedScenes);
@@ -34,7 +43,6 @@ public class Game
     }
 
     // Getters
-    public Guid GetId() => _id;
     public Character GetCharacter() => _character;
     public int GetNumberScenesToFinish() => _numberScenesToFinish;
     public List<Scene> GetCompletedScenes() => new List<Scene>(_listCompletedScenes);
@@ -42,15 +50,15 @@ public class Game
 
     // Setters
     public Game SetCharacter(Character newCharacter) =>
-        new Game(_id, newCharacter, _numberScenesToFinish, _listCompletedScenes, _finalScene);
+        new Game(Id, newCharacter, _numberScenesToFinish, _listCompletedScenes, _finalScene);
 
     public Game SetNumberScenesToFinish(int newNumberScenesToFinish) =>
-        new Game(_id, _character, newNumberScenesToFinish, _listCompletedScenes, _finalScene);
+        new Game(Id, _character, newNumberScenesToFinish, _listCompletedScenes, _finalScene);
 
     public Game AddCompletedScene(Scene newScene)
     {
         var newList = new List<Scene>(_listCompletedScenes) { newScene };
-        return new Game(_id, _character, _numberScenesToFinish, newList, _finalScene);
+        return new Game(Id, _character, _numberScenesToFinish, newList, _finalScene);
     }
 
     public Game RemoveLastCompletedScene()
@@ -58,17 +66,17 @@ public class Game
         if (_listCompletedScenes.Count == 0) return this;
         var newList = new List<Scene>(_listCompletedScenes);
         newList.RemoveAt(newList.Count - 1);
-        return new Game(_id, _character, _numberScenesToFinish, newList, _finalScene);
+        return new Game(Id, _character, _numberScenesToFinish, newList, _finalScene);
     }
 
     public Game SetFinalScene(Scene newFinalScene) =>
-        new Game(_id, _character, _numberScenesToFinish, _listCompletedScenes, newFinalScene);
+        new Game(Id, _character, _numberScenesToFinish, _listCompletedScenes, newFinalScene);
 
     // To string
     public override string ToString()
     {
         string completedScenesStr = string.Join(", ", _listCompletedScenes.ConvertAll(s => s.GetName().ToString()));
-        return $"Game {_id}: Character={_character.GetName()}, NumberScenesToFinish={_numberScenesToFinish}, " +
+        return $"Game {Id}: Character={_character.GetName()}, NumberScenesToFinish={_numberScenesToFinish}, " +
                $"CompletedScenes=[{completedScenesStr}], FinalScene={_finalScene?.GetName()}";
     }
 }
