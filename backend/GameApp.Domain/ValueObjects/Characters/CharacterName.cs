@@ -4,7 +4,8 @@ namespace GameApp.Domain.ValueObjects;
 public class CharacterName
 {
     private static readonly string _messageIfEmpty = "Character name cannot be empty";
-    private readonly string _name;
+    public string Name { get; }
+
 
     // Constructor
     public CharacterName(string value)
@@ -12,10 +13,10 @@ public class CharacterName
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(_messageIfEmpty, nameof(value));
 
-        _name = value;
+        Name = value;
     }
 
-    public string GetName() => _name;
+    public string GetName() => Name;
 
 
     public CharacterName SetName(string newName)
@@ -31,10 +32,10 @@ public class CharacterName
         if (obj is not CharacterName other)
             return false;
 
-        return _name == other._name;
+        return Name == other.Name;
     }
 
-    public override int GetHashCode() => _name.GetHashCode();
+    public override int GetHashCode() => Name.GetHashCode();
 
-    public override string ToString() => _name;
+    public override string ToString() => Name;
 }

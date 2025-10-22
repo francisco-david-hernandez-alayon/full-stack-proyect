@@ -15,10 +15,10 @@ public class NothingHappensScene : Scene
 
     // Setters 
     public NothingHappensScene SetSceneName(SceneName newName) =>
-    new NothingHappensScene(newName, GetDescription(), GetBiomes());
+    new NothingHappensScene(newName, GetDescription(), GetBiome());
 
     public NothingHappensScene SetSceneDescription(SceneDescription newDescription) =>
-    new NothingHappensScene(GetName(), newDescription, GetBiomes());
+    new NothingHappensScene(GetName(), newDescription, GetBiome());
 
     public NothingHappensScene SetBiome(Biomes newBiome) =>
     new NothingHappensScene(GetName(), GetDescription(), newBiome);
@@ -26,8 +26,8 @@ public class NothingHappensScene : Scene
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} NothingHappens Scene: " +
-               $"Description={_description}, Biome={_biome}, ";
+        return $"{GetName()} NothingHappens Scene: " +
+               $"Description={GetDescription()}, Biome={GetBiome()}, ";
     }
 
 }

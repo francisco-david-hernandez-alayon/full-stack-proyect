@@ -5,17 +5,18 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class SceneDescription
 {
     private static readonly string _messageIfEmpty = "Scene description cannot be empty";
-    private readonly string _description;
+    public string Description { get; private set; } = default!;
+
 
     public SceneDescription(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(_messageIfEmpty, nameof(value));
 
-        _description = value;
+        Description = value;
     }
 
-    public string GetDescription() => _description;
+    public string GetDescription() => Description;
 
     public SceneDescription SetDescription(string newDescription)
     {
@@ -30,10 +31,10 @@ public class SceneDescription
         if (obj is not SceneDescription other)
             return false;
 
-        return _description == other._description;
+        return Description == other.Description;
     }
 
-    public override int GetHashCode() => _description.GetHashCode();
+    public override int GetHashCode() => Description.GetHashCode();
 
-    public override string ToString() => _description;
+    public override string ToString() => Description;
 }

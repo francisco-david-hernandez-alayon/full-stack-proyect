@@ -4,27 +4,28 @@ namespace GameApp.Domain.ValueObjects.Characters;
 // Abstract class for Character value object
 public abstract class Character
 {
-    protected readonly CharacterName _name;
-    protected readonly int _maxHealthPoints;
-    protected readonly int _maxFoodPoints;
-    protected readonly int _maxInventorySlots;
-    protected readonly int _startingMoney;
+    public CharacterName Name { get; }
+    public int MaxHealthPoints { get; }
+    public int MaxFoodPoints { get; }
+    public int MaxInventorySlots { get; }
+    public int StartingMoney { get; }
+
 
     // Constructor
     protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney)
     {
-        _name = name;
-        _maxHealthPoints = maxHealthPoints;
-        _maxFoodPoints = maxFoodPoints;
-        _maxInventorySlots = maxInventorySlots;
-        _startingMoney = startingMoney;
+        Name = name;
+        MaxHealthPoints = maxHealthPoints;
+        MaxFoodPoints = maxFoodPoints;
+        MaxInventorySlots = maxInventorySlots;
+        StartingMoney = startingMoney;
     }
 
     // Getters
-    public CharacterName GetName() => _name;
-    public int GetMaxHealthPoints() => _maxHealthPoints;
-    public int GetMaxFoodPoints() => _maxFoodPoints;
-    public int GetMaxInventorySlots() => _maxInventorySlots;
-    public int GetStartingMoney() => _startingMoney;
+    public CharacterName GetName() => Name;
+    public int GetMaxHealthPoints() => MaxHealthPoints;
+    public int GetMaxFoodPoints() => MaxFoodPoints;
+    public int GetMaxInventorySlots() => MaxInventorySlots;
+    public int GetStartingMoney() => StartingMoney;
 
 }

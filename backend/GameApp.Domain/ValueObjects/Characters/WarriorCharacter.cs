@@ -3,7 +3,7 @@ using GameApp.Domain.ValueObjects.Items;
 namespace GameApp.Domain.ValueObjects.Characters;
 
 // Concrete class for Warrior Character entity
-class WarriorCharacter : Character
+public class WarriorCharacter : Character
 {
     private static readonly CharacterName _characterName = new CharacterName("Warrior");
     private static readonly int _defaultMaxHealthPoints = 150;
@@ -11,21 +11,22 @@ class WarriorCharacter : Character
     private static readonly int _defaultMaxInventorySlots = 5;
     private static readonly int _defaultStartingMoney = 10;
 
-    // current atributes
-    private readonly int _currentHealthPoints;
-    private readonly int _currentFoodPoints;
-    private readonly int _currentMoney;
-    private readonly List<Item> _inventoryList;
+    // current atributes  (COULD BE IN CHARACTER ABSTRACT CLASS)
+    public int CurrentHealthPoints { get; }
+    public int CurrentFoodPoints { get; }
+    public int CurrentMoney { get; }
+    public IReadOnlyList<Item> InventoryList { get; }
+
 
 
     // Default constructor
     public WarriorCharacter()
         : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney)
     {
-        _currentHealthPoints = _defaultMaxHealthPoints;
-        _currentFoodPoints = _defaultMaxFoodPoints;
-        _currentMoney = _defaultStartingMoney;
-        _inventoryList = new List<Item>();
+        CurrentHealthPoints = _defaultMaxHealthPoints;
+        CurrentFoodPoints = _defaultMaxFoodPoints;
+        CurrentMoney = _defaultStartingMoney;
+        InventoryList = new List<Item>();
     }
 
     // Restore constructor
@@ -33,109 +34,109 @@ class WarriorCharacter : Character
                             int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int currentMoney, List<Item> inventoryList)
         : base(name, maxHealthPoints, maxFoodPoints, maxInventorySlots, currentMoney)
     {
-        _currentHealthPoints = currentHealthPoints;
-        _currentFoodPoints = currentFoodPoints;
-        _currentMoney = currentMoney;
-        _inventoryList = new List<Item>(inventoryList);
+        CurrentHealthPoints = currentHealthPoints;
+        CurrentFoodPoints = currentFoodPoints;
+        CurrentMoney = currentMoney;
+        InventoryList = new List<Item>(inventoryList);
     }
 
 
     // getters
-    public int GetCurrentHealthPoints() => _currentHealthPoints;
-    public int GetCurrentFoodPoints() => _currentFoodPoints;
-    public int GetCurrentMoney() => _currentMoney;
-    public List<Item> GetInventoryList() => new List<Item>(_inventoryList);
+    public int GetCurrentHealthPoints() => CurrentHealthPoints;
+    public int GetCurrentFoodPoints() => CurrentFoodPoints;
+    public int GetCurrentMoney() => CurrentMoney;
+    public List<Item> GetInventoryList() => new List<Item>(InventoryList);
 
 
     // setters
     public WarriorCharacter AddItemInventory(Item newItem)
     {
-        if (_inventoryList.Count >= _maxInventorySlots)
+        if (InventoryList.Count >= MaxInventorySlots)
             return this; // no empty slot, return unchanged
 
-        List<Item> newInventory = new List<Item>(_inventoryList) { newItem };
-        return new WarriorCharacter(_name, _currentHealthPoints, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, newInventory);
+        List<Item> newInventory = new List<Item>(InventoryList) { newItem };
+        return new WarriorCharacter(Name, CurrentHealthPoints, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, newInventory);
     }
 
 
     public WarriorCharacter ReplaceItemInventory(int index, Item newItem)
     {
-        if (index < 0 || index >= _inventoryList.Count) return this;
-        var newInventory = new List<Item>(_inventoryList);
+        if (index < 0 || index >= InventoryList.Count) return this;
+        var newInventory = new List<Item>(InventoryList);
         newInventory[index] = newItem;
-        return new WarriorCharacter(_name, _currentHealthPoints, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, newInventory);
+        return new WarriorCharacter(Name, CurrentHealthPoints, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, newInventory);
     }
 
     public WarriorCharacter RemoveItemInventory(int index)
     {
-        if (index < 0 || index >= _inventoryList.Count) return this; // bad index
-        
-        var newInventory = new List<Item>(_inventoryList);
-        newInventory.RemoveAt(index); 
-        return new WarriorCharacter(_name, _currentHealthPoints, _currentFoodPoints,
-                                    _maxHealthPoints, _maxFoodPoints, _maxInventorySlots,
-                                    _currentMoney, newInventory);
+        if (index < 0 || index >= InventoryList.Count) return this; // bad index
+
+        var newInventory = new List<Item>(InventoryList);
+        newInventory.RemoveAt(index);
+        return new WarriorCharacter(Name, CurrentHealthPoints, CurrentFoodPoints,
+                                    MaxHealthPoints, MaxFoodPoints, MaxInventorySlots,
+                                    CurrentMoney, newInventory);
     }
 
     public WarriorCharacter ReceiveDamage(int damage)
     {
-        int newHealth = _currentHealthPoints - damage;
+        int newHealth = CurrentHealthPoints - damage;
         if (newHealth < 0)
             newHealth = 0;
 
-        return new WarriorCharacter(_name, newHealth, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, _inventoryList);
+        return new WarriorCharacter(Name, newHealth, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, GetInventoryList());
     }
 
     public WarriorCharacter Heal(int amount)
     {
-        int newHealth = _currentHealthPoints + amount;
-        if (newHealth > _maxHealthPoints)
-            newHealth = _maxHealthPoints;
+        int newHealth = CurrentHealthPoints + amount;
+        if (newHealth > MaxHealthPoints)
+            newHealth = MaxHealthPoints;
 
-        return new WarriorCharacter(_name, newHealth, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, _inventoryList);
+        return new WarriorCharacter(Name, newHealth, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, GetInventoryList());
     }
 
     public WarriorCharacter Eat(int amount)
     {
-        int newFood = _currentFoodPoints + amount;
-        if (newFood > _maxFoodPoints)
-            newFood = _maxFoodPoints;
+        int newFood = CurrentFoodPoints + amount;
+        if (newFood > MaxFoodPoints)
+            newFood = MaxFoodPoints;
 
-        return new WarriorCharacter(_name, _currentHealthPoints, newFood, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, _inventoryList);
+        return new WarriorCharacter(Name, CurrentHealthPoints, newFood, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, GetInventoryList());
     }
 
     public WarriorCharacter GetHungry(int amount)
     {
-        int newFood = _currentFoodPoints - amount;
+        int newFood = CurrentFoodPoints - amount;
         if (newFood < 0)
             newFood = 0;
 
-        return new WarriorCharacter(_name, _currentHealthPoints, newFood, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, _currentMoney, _inventoryList);
+        return new WarriorCharacter(Name, CurrentHealthPoints, newFood, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, CurrentMoney, GetInventoryList());
     }
 
     public WarriorCharacter EarnMoney(int amount)
     {
-        int newMoney = _currentMoney + amount;
+        int newMoney = CurrentMoney + amount;
 
-        return new WarriorCharacter(_name, _currentHealthPoints, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, newMoney, _inventoryList);
+        return new WarriorCharacter(Name, CurrentHealthPoints, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, newMoney, GetInventoryList());
     }
 
     public WarriorCharacter SpendMoney(int amount)
     {
-        int newMoney = _currentMoney - amount;
+        int newMoney = CurrentMoney - amount;
         if (newMoney < 0)  // You shouldn't be able to pay if you don't have enough money
             newMoney = 0;
 
-        return new WarriorCharacter(_name, _currentHealthPoints, _currentFoodPoints, _maxHealthPoints, _maxFoodPoints, _maxInventorySlots, newMoney, _inventoryList);
+        return new WarriorCharacter(Name, CurrentHealthPoints, CurrentFoodPoints, MaxHealthPoints, MaxFoodPoints, MaxInventorySlots, newMoney, GetInventoryList());
     }
 
 
     // To string
     public override string ToString()
     {
-        string inventoryStr = string.Join(", ", _inventoryList.Select(i => i?.ToString() ?? "Empty"));
-        return $"{_name.GetName()} Warrior character: " +
-               $"HP={_currentHealthPoints}/{_maxHealthPoints}, Food={_currentFoodPoints}/{_maxFoodPoints}, " +
-               $"InventorySlots={_maxInventorySlots}, Money={_currentMoney}, Inventory=[{inventoryStr}]";
+        string inventoryStr = string.Join(", ", InventoryList.Select(i => i?.ToString() ?? "Empty"));
+        return $"{Name.GetName()} Warrior character: " +
+               $"HP={CurrentHealthPoints}/{MaxHealthPoints}, Food={CurrentFoodPoints}/{MaxFoodPoints}, " +
+               $"InventorySlots={MaxInventorySlots}, Money={CurrentMoney}, Inventory=[{inventoryStr}]";
     }
 }

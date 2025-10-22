@@ -25,15 +25,35 @@ dotnet new webapi -n GameApp.Api
 
 ### Agregar referencias entre proyectos
 ```
-dotnet add GameApp.Application reference GameApp.Domain
-dotnet add GameApp.Infrastructure reference GameApp.Domain
-dotnet add GameApp.Api reference GameApp.Application
-dotnet add GameApp.Api reference GameApp.Infrastructure
+# Application -> Domain
+dotnet add GameApp.Application/GameApp.Application.csproj reference GameApp.Domain/GameApp.Domain.csproj
+
+# Infrastructure -> Domain
+dotnet add GameApp.Adapter/GameApp.Infrastructure/GameApp.Infrastructure.csproj reference GameApp.Domain/GameApp.Domain.csproj
+# Infrastructure -> Application
+dotnet add GameApp.Adapter/GameApp.Infrastructure/GameApp.Infrastructure.csproj reference GameApp.Application/GameApp.Application.csproj
+
+# Api -> Domain
+dotnet add GameApp.Adapter/GameApp.Api/GameApp.Api.csproj reference GameApp.Domain/GameApp.Domain.csproj
+# Api -> Application
+dotnet add GameApp.Adapter/GameApp.Api/GameApp.Api.csproj reference GameApp.Application/GameApp.Application.csproj
+
+# Host -> Api (para descubrir los controladores)
+dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Adapter/GameApp.Api/GameApp.Api.csproj
+
+# Host -> Infrastructure (para DbContext y repositorios)
+dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Adapter/GameApp.Infrastructure/GameApp.Infrastructure.csproj
+
+# Host -> Application (para servicios y casos de uso)
+dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Application/GameApp.Application.csproj
+
+
+
 ```
 
 ### Agregar proyectos a la solución
 ```
-dotnet sln add GameApp.Domain GameApp.Application GameApp.Infrastructure GameApp.Api
+dotnet sln add GameApp.Domain GameApp.Application GameApp.Infrastructure GameApp.Api GameApp.Host
 ```
 
 ### Instalar paquete necesario
@@ -43,7 +63,7 @@ dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 
-cd ../GameApp.Api
+cd GameApp.Api
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet ef migrations add InitialCreate -p ../GameApp.Infrastructure -s .
@@ -75,7 +95,7 @@ npm install axios
 
 ### Backend
 ```
-cd backend/GameApp.Api
+cd backend/GameApp.Host
 dotnet run --urls "URL API"
 ```
 
@@ -85,3 +105,17 @@ Crear un .env con REACT_APP_BACKEND_API_URL="URL DE LA API DEL BACKEND"
 cd frontend/gameapp-frontend
 npm start
 ```
+
+
+# Comprobar base de datos SQL
+```
+sudo apt install sqlite3
+```
+cd backend/GameApp.Host
+
+sqlite3 gameapp.db
+```
+SELECT * FROM Games;
+.exit
+```
+

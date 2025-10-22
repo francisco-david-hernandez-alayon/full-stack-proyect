@@ -7,27 +7,27 @@ public class EnterDungeonScene : Scene
 {
 
     private static readonly Random _random = new Random();
-    private readonly List<Scene> _possibleScenes;
+    public List<Scene> PossibleScenes { get; private set; } = new();
 
     // Constructor
     public EnterDungeonScene(SceneName name, SceneDescription description, Biomes biome, List<Scene> possibleScenes)
     : base(name, description, biome)
     {
-        _possibleScenes = possibleScenes;
+        PossibleScenes = possibleScenes;
     }
 
     // Getter
-    public List<Scene> GetPossibleScenes() => new List<Scene>(_possibleScenes);
+    public List<Scene> GetPossibleScenes() => new List<Scene>(PossibleScenes);
 
     // Setter
-    public EnterDungeonScene SetPossibleScenes(List<Scene> newPossibleScenes) => new EnterDungeonScene(GetName(), GetDescription(), GetBiomes(), newPossibleScenes);
+    public EnterDungeonScene SetPossibleScenes(List<Scene> newPossibleScenes) => new EnterDungeonScene(GetName(), GetDescription(), GetBiome(), newPossibleScenes);
 
     // Generate Random Scene
     public Scene GenerateRandomScene()
     {
-        int randomPosScene = _random.Next(_possibleScenes.Count);
+        int randomPosScene = _random.Next(PossibleScenes.Count);
 
-        Scene scene = _possibleScenes[randomPosScene];
+        Scene scene = PossibleScenes[randomPosScene];
 
         return scene;
     }
@@ -35,8 +35,8 @@ public class EnterDungeonScene : Scene
     // To string
     public override string ToString()
     {
-        string scenes = string.Join(", ", _possibleScenes.Select(s => s.GetName().ToString()));
-        return $"EnterDungeonScene: {GetName()} - {_biome}\nDescription: {GetDescription()}\nPossible Scenes: [{scenes}]";
+        string scenes = string.Join(", ", PossibleScenes.Select(s => s.GetName().ToString()));
+        return $"EnterDungeonScene: {GetName()} - {GetBiome()}\nDescription: {GetDescription()}\nPossible Scenes: [{scenes}]";
     }
 
 }

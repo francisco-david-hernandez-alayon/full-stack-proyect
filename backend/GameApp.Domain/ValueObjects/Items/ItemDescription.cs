@@ -4,18 +4,18 @@ namespace GameApp.Domain.ValueObjects.Items;
 // Value Object for a game's inventory item description
 public class ItemDescription
 {
+    public string Description { get; private set; }
     private static readonly string _messageIfEmpty = "Item description cannot be empty";
-    private readonly string _description;
 
     public ItemDescription(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(_messageIfEmpty, nameof(value));
 
-        _description = value;
+        Description = value;
     }
 
-    public string GetDescription() => _description;
+    public string GetDescription() => Description;
 
     public ItemDescription SetDescription(string newDescription)
     {
@@ -30,10 +30,10 @@ public class ItemDescription
         if (obj is not ItemDescription other)
             return false;
 
-        return _description == other._description;
+        return Description == other.Description;
     }
 
-    public override int GetHashCode() => _description.GetHashCode();
+    public override int GetHashCode() => Description.GetHashCode();
 
-    public override string ToString() => _description;
+    public override string ToString() => Description;
 }

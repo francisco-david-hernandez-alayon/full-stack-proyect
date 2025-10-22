@@ -1,6 +1,8 @@
 using GameApp.Domain.Entities;
 using GameApp.Domain.Repositories;
 using GameApp.Infrastructure.Data;
+using GameApp.Infrastructure.Data.Models;
+using GameApp.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameApp.Infrastructure.Repositories;
@@ -16,38 +18,38 @@ public class GameRepository : IGameRepository
 
     public async Task<IEnumerable<Game>> FetchAllAsync()
     {
-        return await _context.Games.ToListAsync();
+        var models = await _context.Games.ToListAsync();
+        return models.Select(GameMapper.ToDomain);
     }
 
     public async Task<Game?> FetchByIdAsync(Guid id)
     {
-        return await _context.Games.FindAsync(id);
-    }
-
-    public async Task<Game?> DeleteAsync(Guid id)
-    {
-        var game = await _context.Games.FindAsync(id);
-        if (game is null) return null;
-
-        _context.Games.Remove(game);
-        await _context.SaveChangesAsync();
-        return game;
+        var model = await _context.Games.FindAsync(id);
+        return model is null ? null : GameMapper.ToDomain(model);
     }
 
     public async Task<Game?> SaveAsync(Game game)
     {
-        _context.Games.Add(game);
+        var model = GameMapper.ToDataModel(game);
+        _context.Games.Add(model);
         await _context.SaveChangesAsync();
         return game;
     }
 
     public async Task<Game?> UpdateAsync(Game game)
     {
-        var existing = await _context.Games.FindAsync(game.GetGuid());
-        if (existing is null) return null;
-
-        _context.Entry(existing).CurrentValues.SetValues(game);
+        var model = GameMapper.ToDataModel(game);
+        _context.Games.Update(model);
         await _context.SaveChangesAsync();
         return game;
+    }
+
+    public async Task<Game?> DeleteAsync(Guid id)
+    {
+        var model = await _context.Games.FindAsync(id);
+        if (model is null) return null;
+        _context.Games.Remove(model);
+        await _context.SaveChangesAsync();
+        return GameMapper.ToDomain(model);
     }
 }

@@ -6,36 +6,36 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 // Class for a scene where you have to fight an enemy
 public class EnemyScene : Scene
 {
-    public readonly Enemy _enemy;
+    public Enemy Enemy { get; private set; }
 
     // Constructor
     public EnemyScene(SceneName name, SceneDescription description, Biomes biome, Enemy enemy)
     : base(name, description, biome)
     {
-        _enemy = enemy;
+        Enemy = enemy;
     }
 
     // Getter
-    public Enemy GetEnemy() => _enemy;
+    public Enemy GetEnemy() => Enemy;
 
     // Setters 
     public EnemyScene SetSceneName(SceneName newName) =>
-    new EnemyScene(newName, GetDescription(), GetBiomes(), _enemy);
+    new EnemyScene(newName, GetDescription(), GetBiome(), Enemy);
 
     public EnemyScene SetSceneDescription(SceneDescription newDescription) =>
-    new EnemyScene(GetName(), newDescription, GetBiomes(), _enemy);
+    new EnemyScene(GetName(), newDescription, GetBiome(), Enemy);
 
     public EnemyScene SetBiome(Biomes newBiome) =>
-    new EnemyScene(GetName(), GetDescription(), newBiome, _enemy);
+    new EnemyScene(GetName(), GetDescription(), newBiome, Enemy);
 
     public EnemyScene SetEnemy(Enemy newEnemy) =>
-    new EnemyScene(GetName(), GetDescription(), GetBiomes(), newEnemy);
+    new EnemyScene(GetName(), GetDescription(), GetBiome(), newEnemy);
 
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} Enemy Scene: " +
-               $"Description={_description}, Biome={_biome}, " +
-               $"Enemy={_enemy}";
+        return $"{GetName()} Enemy Scene: " +
+               $"Description={GetDescription()}, Biome={GetBiome()}, " +
+               $"Enemy={Enemy}";
     }
 }

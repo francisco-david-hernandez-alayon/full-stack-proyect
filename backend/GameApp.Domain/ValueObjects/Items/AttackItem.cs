@@ -4,31 +4,29 @@ namespace GameApp.Domain.ValueObjects.Items;
 // Specific class for attack item to attack enemies
 class AttackItem : Item
 {
-    private readonly int _attackDamage;
-
-    private readonly int _speedAttack;
-
-    private readonly int _durability;
+    public int AttackDamage { get; private set; }
+    public int SpeedAttack { get; private set; }
+    public int Durability { get; private set; }
 
     // constructor
     public AttackItem(ItemName name, ItemDescription description, int attackDamage, int speedAttack, int durability)
         : base(name, description)
     {
-        _attackDamage = attackDamage;
-        _speedAttack = speedAttack;
-        _durability = durability;
+        AttackDamage = attackDamage;
+        SpeedAttack  = speedAttack;
+        Durability = durability;
     }
-    
+
     // getters
-    public int GetAttackDamage() => _attackDamage;
+    public int GetAttackDamage() => AttackDamage;
 
-    public int GetSpeedAttack() => _speedAttack;
+    public int GetSpeedAttack() => SpeedAttack ;
 
-    public int GetDurability() => _durability;
+    public int GetDurability() => Durability;
 
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} attack item: " + $"AttackDamage={_attackDamage}, SpeedAttack={_speedAttack}, durability={_durability}";
+        return $"{GetName()} attack item: " + $"AttackDamage={AttackDamage}, SpeedAttack={SpeedAttack }, durability={Durability}";
     }
 }

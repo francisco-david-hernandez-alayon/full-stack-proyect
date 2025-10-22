@@ -4,18 +4,18 @@ namespace GameApp.Domain.ValueObjects.Items;
 // Value Object for a game's inventory item name
 public class ItemName
 {
+    public string Name { get; private set; }
     private static readonly string _messageIfEmpty = "Item name cannot be empty";
-    private readonly string _name;
 
     public ItemName(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(_messageIfEmpty, nameof(value));
 
-        _name = value;
+        Name = value;
     }
 
-    public string GetName() => _name;
+    public string GetName() => Name;
 
     public ItemName SetName(string newName)
     {
@@ -30,10 +30,10 @@ public class ItemName
         if (obj is not ItemName other)
             return false;
 
-        return _name == other._name;
+        return Name == other.Name;
     }
 
-    public override int GetHashCode() => _name.GetHashCode();
+    public override int GetHashCode() => Name.GetHashCode();
 
-    public override string ToString() => _name;
+    public override string ToString() => Name;
 }

@@ -21,6 +21,9 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 // Dependency Injection
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<GameGetService>();
+builder.Services.AddScoped<GameCreateService>();
+builder.Services.AddScoped<GameUpdateService>();
+builder.Services.AddScoped<GameDeleteService>();
 
 var app = builder.Build();
 
@@ -29,7 +32,6 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
-    db.SeedData();
 }
 
 if (app.Environment.IsDevelopment())

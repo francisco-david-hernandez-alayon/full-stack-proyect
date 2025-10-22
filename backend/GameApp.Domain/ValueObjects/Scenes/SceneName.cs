@@ -4,7 +4,8 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class SceneName
 {
     private static readonly string _messageIfEmpty = "Scene name cannot be empty";
-    private readonly string _name;
+    public string Name { get; private set; } = default!;
+
 
     // Constructor
     public SceneName(string value)
@@ -12,10 +13,10 @@ public class SceneName
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException(_messageIfEmpty, nameof(value));
 
-        _name = value;
+        Name = value;
     }
 
-    public string GetName() => _name;
+    public string GetName() => Name;
 
 
     public SceneName SetName(string newName)
@@ -31,10 +32,10 @@ public class SceneName
         if (obj is not SceneName other)
             return false;
 
-        return _name == other._name;
+        return Name == other.Name;
     }
 
-    public override int GetHashCode() => _name.GetHashCode();
+    public override int GetHashCode() => Name.GetHashCode();
 
-    public override string ToString() => _name;
+    public override string ToString() => Name;
 }

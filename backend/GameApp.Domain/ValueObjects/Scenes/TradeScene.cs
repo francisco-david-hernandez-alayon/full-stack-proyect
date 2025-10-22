@@ -7,12 +7,14 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class TradeScene : Scene
 {
     // Character offer
-    private readonly List<Item> _characterItemsOffer;
-    private readonly int _characterMoneyOffer;
+    public List<Item> CharacterItemsOffer { get; private set; } = new();
+    public int CharacterMoneyOffer { get; private set; }
+
 
     // Merchant offer
-    private readonly List<Item> _merchantItemsOffer;
-    private readonly int _merchantMoneyOffer;
+    public List<Item> MerchantItemsOffer { get; private set; } = new();
+    public int MerchantMoneyOffer { get; private set; }
+
 
     // Constructor
     public TradeScene(
@@ -25,50 +27,50 @@ public class TradeScene : Scene
         int merchantMoneyOffer
     ) : base(name, description, biome)
     {
-        _characterItemsOffer = characterItemsOffer;
-        _characterMoneyOffer = characterMoneyOffer;
-        _merchantItemsOffer = merchantItemsOffer;
-        _merchantMoneyOffer = merchantMoneyOffer;
+        CharacterItemsOffer = characterItemsOffer;
+        CharacterMoneyOffer = characterMoneyOffer;
+        MerchantItemsOffer = merchantItemsOffer;
+        MerchantMoneyOffer = merchantMoneyOffer;
     }
 
     // Getters
-    public List<Item> GetCharacterItemsOffer() => _characterItemsOffer;
-    public int GetCharacterMoneyOffer() => _characterMoneyOffer;
-    public List<Item> GetMerchantItemsOffer() => _merchantItemsOffer;
-    public int GetMerchantMoneyOffer() => _merchantMoneyOffer;
+    public List<Item> GetCharacterItemsOffer() => CharacterItemsOffer;
+    public int GetCharacterMoneyOffer() => CharacterMoneyOffer;
+    public List<Item> GetMerchantItemsOffer() => MerchantItemsOffer;
+    public int GetMerchantMoneyOffer() => MerchantMoneyOffer;
 
     // Setters 
     public TradeScene SetSceneName(SceneName newName) =>
-        new TradeScene(newName, GetDescription(), GetBiomes(), _characterItemsOffer, _characterMoneyOffer, _merchantItemsOffer, _merchantMoneyOffer);
+        new TradeScene(newName, GetDescription(), GetBiome(), CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
     public TradeScene SetSceneDescription(SceneDescription newDescription) =>
-        new TradeScene(GetName(), newDescription, GetBiomes(), _characterItemsOffer, _characterMoneyOffer, _merchantItemsOffer, _merchantMoneyOffer);
+        new TradeScene(GetName(), newDescription, GetBiome(), CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
     public TradeScene SetBiome(Biomes newBiome) =>
-        new TradeScene(GetName(), GetDescription(), newBiome, _characterItemsOffer, _characterMoneyOffer, _merchantItemsOffer, _merchantMoneyOffer);
+        new TradeScene(GetName(), GetDescription(), newBiome, CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
 
     public TradeScene SetCharacterItemsOffer(List<Item> newItemsOffer) =>
-        new TradeScene(GetName(), GetDescription(), GetBiomes(), newItemsOffer, _characterMoneyOffer, _merchantItemsOffer, _merchantMoneyOffer);
+        new TradeScene(GetName(), GetDescription(), GetBiome(), newItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
     public TradeScene SetCharacterMoneyOffer(int newMoneyOffer) =>
-        new TradeScene(GetName(), GetDescription(), GetBiomes(), _characterItemsOffer, newMoneyOffer, _merchantItemsOffer, _merchantMoneyOffer);
+        new TradeScene(GetName(), GetDescription(), GetBiome(), CharacterItemsOffer, newMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
     public TradeScene SetMerchantItemsOffer(List<Item> newItemsOffer) =>
-        new TradeScene(GetName(), GetDescription(), GetBiomes(), _characterItemsOffer, _characterMoneyOffer, newItemsOffer, _merchantMoneyOffer);
+        new TradeScene(GetName(), GetDescription(), GetBiome(), CharacterItemsOffer, CharacterMoneyOffer, newItemsOffer, MerchantMoneyOffer);
 
     public TradeScene SetMerchantMoneyOffer(int newMoneyOffer) =>
-        new TradeScene(GetName(), GetDescription(), GetBiomes(), _characterItemsOffer, _characterMoneyOffer, _merchantItemsOffer, newMoneyOffer);
+        new TradeScene(GetName(), GetDescription(), GetBiome(), CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, newMoneyOffer);
 
 
     // To string
     public override string ToString()
     {
-        string characterItems = string.Join(", ", _characterItemsOffer.Select(i => i.ToString()));
-        string merchantItems = string.Join(", ", _merchantItemsOffer.Select(i => i.ToString()));
+        string characterItems = string.Join(", ", CharacterItemsOffer.Select(i => i.ToString()));
+        string merchantItems = string.Join(", ", MerchantItemsOffer.Select(i => i.ToString()));
 
-        return $"TradeScene: {GetName()} - {_biome}\n" +
-               $"Character Offer: Money={_characterMoneyOffer}, Items=[{characterItems}]\n" +
-               $"Merchant Offer: Money={_merchantMoneyOffer}, Items=[{merchantItems}]";
+        return $"TradeScene: {GetName()} - {GetBiome()}\n" +
+               $"Character Offer: Money={CharacterMoneyOffer}, Items=[{characterItems}]\n" +
+               $"Merchant Offer: Money={MerchantMoneyOffer}, Items=[{merchantItems}]";
     }
 }

@@ -7,36 +7,37 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class ItemScene : Scene
 {
 
-    private readonly Item _rewardItem;
+    public Item RewardItem { get; private set; } = default!;
+
 
     // Constructor
     public ItemScene(SceneName name, SceneDescription description, Biomes biome, Item item)
     : base(name, description, biome)
     {
-        _rewardItem = item;
+        RewardItem = item;
     }
 
     // Getter
-    public Item GetRewardItem() => _rewardItem;
+    public Item GetRewardItem() => RewardItem;
 
     // Setters 
     public ItemScene SetSceneName(SceneName newName) =>
-    new ItemScene(newName, GetDescription(), GetBiomes(), _rewardItem);
+    new ItemScene(newName, GetDescription(), GetBiome(), RewardItem);
 
     public ItemScene SetSceneDescription(SceneDescription newDescription) =>
-    new ItemScene(GetName(), newDescription, GetBiomes(), _rewardItem);
+    new ItemScene(GetName(), newDescription, GetBiome(), RewardItem);
 
     public ItemScene SetBiome(Biomes newBiome) =>
-    new ItemScene(GetName(), GetDescription(), newBiome, _rewardItem);
+    new ItemScene(GetName(), GetDescription(), newBiome, RewardItem);
 
     public ItemScene SetItem(Item newItem) =>
-    new ItemScene(GetName(), GetDescription(), GetBiomes(), newItem);
+    new ItemScene(GetName(), GetDescription(), GetBiome(), newItem);
 
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} Item Scene: " +
-               $"Description={_description}, Biome={_biome}, " +
-               $"Reward Item={_rewardItem}";
+        return $"{GetName()} Item Scene: " +
+               $"Description={GetDescription()}, Biome={GetBiome()}, " +
+               $"Reward Item={RewardItem}";
     }
 }
