@@ -5,6 +5,7 @@ using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
 using GameApp.Api.dtos;
 using GameApp.Domain.Enumerates;
+using GameApp.Api.Mappers;
 
 namespace GameApp.Api.Controllers;
 
@@ -25,59 +26,50 @@ public class GameController : ControllerBase
     }
 
     [HttpGet]
-    [HttpGet]
     public async Task<IActionResult> Get()
     {
+        // Use service
         var games = await _getService.GetAllGamesAsync();
-        var dtos = games.Select(g => new GameResponseDto
-        {
-            Id = g.GetGuid(),
-            CharacterType = "unknown",
-            CompletedScenes = g.GetCompletedScenes()?.Select(s => s.GetName()?.ToString() ?? "unknown").ToList() ?? new List<string>(),
-            FinalSceneName = g.GetFinalScene()?.GetName()?.ToString() ?? "unknown"
-        });
 
-        return Ok(dtos);
+        // Response
+        return Ok(GameDtoMapper.ToDtoList(games));
     }
 
 
 
-
-    private Biomes ParseBiome(string biomeString)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
-        if (Enum.TryParse<Biomes>(biomeString, true, out var biome))
-            return biome;
+        try
+        {
+            // Use service
+            Game? game = await _getService.GetGameAsync(id);
 
-        return Biomes.unknown;
+            // Response
+            if (game is null)
+                return NotFound($"Game with ID {id} not found.");
+
+            return Ok(GameDtoMapper.ToDto(game));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] GameCreateRequestDto request)
     {
         try
         {
-            // TEMPORAL: Tansform data form Dto
-            Biomes biome = ParseBiome(request.FinalScene.Biome);
-            NothingHappensScene finalScene = new NothingHappensScene(new SceneName(request.FinalScene.Name), new SceneDescription(request.FinalScene.Description), biome);
-
-            Character warriorCharacter;
-
-            if (request.Character.Type == "warrior")
-            {
-                warriorCharacter = new WarriorCharacter();
-                Console.WriteLine("Warrior Character created");
-
-                // default    
-            }
-            else
-            {
-                warriorCharacter = new WarriorCharacter();
-            }
-
+            // Tansform request Dto to Domain
+            Character character = CharacterDtoMapper.ToDomain(request.Character);
+            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
 
             // Use service
             Game? createdGame = await _createService.CreateGameAsync(
-                warriorCharacter,
+                character,
                 request.NumberScenesToFinish,
                 finalScene
             );
@@ -86,7 +78,7 @@ public class GameController : ControllerBase
 
             // Response
             return createdGame is not null
-                ? Ok(createdGame)
+                ? Ok(GameDtoMapper.ToDto(createdGame))
                 : BadRequest("The game could not be created");
 
         }
@@ -95,5 +87,55 @@ public class GameController : ControllerBase
             return BadRequest(new { error = ex.Message });
         }
     }
+
+
+    [HttpPut]
+    public async Task<IActionResult> Put(Guid id, [FromBody] GameUpdateRequestDto request)
+    {
+        try
+        {
+            // Tansform request Dto to Domain
+            Character character = CharacterDtoMapper.ToDomain(request.Character);
+            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
+            List<Scene> completedScenes = request.ListCompletedScenes?
+            .Select(SceneDtoMapper.ToDomain)
+            .ToList() ?? new List<Scene>();
+
+            // Use service
+            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene);
+
+            // Response
+            return updatedGame is not null
+                ? Ok(GameDtoMapper.ToDto(updatedGame))
+                : BadRequest("The game could not be updated");
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            // Use service
+            Game? deletedGame = await _deleteService.DeleteGameAsync(id);
+
+            // Response
+            if (deletedGame is null)
+                return NotFound($"Game with ID {id} not found.");
+
+            return Ok(GameDtoMapper.ToDto(deletedGame));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
 
 }

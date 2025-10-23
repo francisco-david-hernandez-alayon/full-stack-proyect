@@ -9,7 +9,7 @@ public class EnemyScene : Scene
     public Enemy Enemy { get; private set; }
 
     // Constructor
-    public EnemyScene(SceneName name, SceneDescription description, Biomes biome, Enemy enemy)
+    public EnemyScene(SceneName name, SceneDescription description, Biome biome, Enemy enemy)
     : base(name, description, biome)
     {
         Enemy = enemy;
@@ -25,7 +25,7 @@ public class EnemyScene : Scene
     public EnemyScene SetSceneDescription(SceneDescription newDescription) =>
     new EnemyScene(GetName(), newDescription, GetBiome(), Enemy);
 
-    public EnemyScene SetBiome(Biomes newBiome) =>
+    public EnemyScene SetBiome(Biome newBiome) =>
     new EnemyScene(GetName(), GetDescription(), newBiome, Enemy);
 
     public EnemyScene SetEnemy(Enemy newEnemy) =>

@@ -1,7 +1,14 @@
+namespace GameApp.Api.dtos;
+
 public class GameResponseDto
 {
     public Guid Id { get; set; }
-    public string CharacterType { get; set; } = default!;
-    public List<string> CompletedScenes { get; set; } = new();
-    public string FinalSceneName { get; set; } = default!;
+
+    public CharacterDto Character { get; set; } = default!;
+
+    public int NumberScenesToFinish { get; set; }
+
+    public List<SceneDto> CompletedScenes { get; set; } = new();
+
+    public SceneDto FinalScene { get; set; } = default!;
 }

@@ -1,6 +1,6 @@
 namespace GameApp.Domain.Enumerates;
 
-public enum Biomes
+public enum Biome
 {
     city,
     forest,

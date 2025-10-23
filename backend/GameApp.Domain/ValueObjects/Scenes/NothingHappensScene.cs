@@ -7,7 +7,7 @@ public class NothingHappensScene : Scene
 {
 
     // Constructor
-    public NothingHappensScene(SceneName name, SceneDescription description, Biomes biome)
+    public NothingHappensScene(SceneName name, SceneDescription description, Biome biome)
     : base(name, description, biome)
     {
 
@@ -20,7 +20,7 @@ public class NothingHappensScene : Scene
     public NothingHappensScene SetSceneDescription(SceneDescription newDescription) =>
     new NothingHappensScene(GetName(), newDescription, GetBiome());
 
-    public NothingHappensScene SetBiome(Biomes newBiome) =>
+    public NothingHappensScene SetBiome(Biome newBiome) =>
     new NothingHappensScene(GetName(), GetDescription(), newBiome);
 
     // To string

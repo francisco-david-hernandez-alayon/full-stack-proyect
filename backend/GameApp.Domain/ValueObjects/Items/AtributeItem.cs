@@ -2,7 +2,7 @@ namespace GameApp.Domain.ValueObjects.Items;
 
 
 // Specific class for item that affect to atributes
-class AtributeItem : Item
+public class AtributeItem : Item
 {
     public int HealthPointsReceived { get; private set; }
     public int FoodPointsReceived { get; private set; }

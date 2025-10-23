@@ -1,6 +1,6 @@
 namespace GameApp.Domain.Enumerates;
 
-public enum UserActions
+public enum UserAction
 {
     // SCENARIO
     moveForward,  // move forward in a chosen direction

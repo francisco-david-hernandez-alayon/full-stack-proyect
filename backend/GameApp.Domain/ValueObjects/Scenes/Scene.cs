@@ -7,13 +7,13 @@ public abstract class Scene
 {
     public SceneName Name { get; private set; } = default!;
     public SceneDescription Description { get; private set; } = default!;
-    public Biomes Biome { get; private set; }
+    public Biome Biome { get; private set; }
 
     // constructor EF
     protected Scene() { }
 
     // Constructor
-    public Scene(SceneName name, SceneDescription description, Biomes biome)
+    public Scene(SceneName name, SceneDescription description, Biome biome)
     {
         Name = name;
         Description = description;
@@ -23,7 +23,7 @@ public abstract class Scene
     // Getter
     public SceneName GetName() => Name;
     public SceneDescription GetDescription() => Description;
-    public Biomes GetBiome() => Biome;
+    public Biome GetBiome() => Biome;
 
 
 }

@@ -10,7 +10,7 @@ public class EnterDungeonScene : Scene
     public List<Scene> PossibleScenes { get; private set; } = new();
 
     // Constructor
-    public EnterDungeonScene(SceneName name, SceneDescription description, Biomes biome, List<Scene> possibleScenes)
+    public EnterDungeonScene(SceneName name, SceneDescription description, Biome biome, List<Scene> possibleScenes)
     : base(name, description, biome)
     {
         PossibleScenes = possibleScenes;

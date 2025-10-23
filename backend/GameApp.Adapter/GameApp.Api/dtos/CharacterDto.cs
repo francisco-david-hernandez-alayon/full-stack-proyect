@@ -1,6 +1,8 @@
+using GameApp.Api.Enumerates;
+
 namespace GameApp.Api.dtos;
 
 public class CharacterDto
 {
-    public string Type { get; set; } = default!; 
+    public CharacterType Type { get; set; } = default!; 
 }

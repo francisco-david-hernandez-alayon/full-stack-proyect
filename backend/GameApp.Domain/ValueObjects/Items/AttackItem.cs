@@ -2,7 +2,7 @@ namespace GameApp.Domain.ValueObjects.Items;
 
 
 // Specific class for attack item to attack enemies
-class AttackItem : Item
+public class AttackItem : Item
 {
     public int AttackDamage { get; private set; }
     public int SpeedAttack { get; private set; }

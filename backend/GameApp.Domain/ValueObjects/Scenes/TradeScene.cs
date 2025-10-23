@@ -20,7 +20,7 @@ public class TradeScene : Scene
     public TradeScene(
         SceneName name,
         SceneDescription description,
-        Biomes biome,
+        Biome biome,
         List<Item> characterItemsOffer,
         int characterMoneyOffer,
         List<Item> merchantItemsOffer,
@@ -46,7 +46,7 @@ public class TradeScene : Scene
     public TradeScene SetSceneDescription(SceneDescription newDescription) =>
         new TradeScene(GetName(), newDescription, GetBiome(), CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
-    public TradeScene SetBiome(Biomes newBiome) =>
+    public TradeScene SetBiome(Biome newBiome) =>
         new TradeScene(GetName(), GetDescription(), newBiome, CharacterItemsOffer, CharacterMoneyOffer, MerchantItemsOffer, MerchantMoneyOffer);
 
 

@@ -11,7 +11,7 @@ public class ItemScene : Scene
 
 
     // Constructor
-    public ItemScene(SceneName name, SceneDescription description, Biomes biome, Item item)
+    public ItemScene(SceneName name, SceneDescription description, Biome biome, Item item)
     : base(name, description, biome)
     {
         RewardItem = item;
@@ -27,7 +27,7 @@ public class ItemScene : Scene
     public ItemScene SetSceneDescription(SceneDescription newDescription) =>
     new ItemScene(GetName(), newDescription, GetBiome(), RewardItem);
 
-    public ItemScene SetBiome(Biomes newBiome) =>
+    public ItemScene SetBiome(Biome newBiome) =>
     new ItemScene(GetName(), GetDescription(), newBiome, RewardItem);
 
     public ItemScene SetItem(Item newItem) =>
