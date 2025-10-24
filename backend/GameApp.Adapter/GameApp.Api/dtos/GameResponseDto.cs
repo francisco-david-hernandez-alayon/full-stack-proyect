@@ -10,5 +10,5 @@ public class GameResponseDto
 
     public List<SceneDto> CompletedScenes { get; set; } = new();
 
-    public SceneDto FinalScene { get; set; } = default!;
+    public FinalSceneDto FinalScene { get; set; } = default!;
 }

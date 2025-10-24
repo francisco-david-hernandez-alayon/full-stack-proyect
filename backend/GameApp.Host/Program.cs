@@ -4,12 +4,17 @@ using GameApp.Application.Services;
 using GameApp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using GameApp.Api;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add API controllers from Api project using a marker class
 builder.Services.AddControllers()
-       .AddApplicationPart(typeof(Marker).Assembly);
+       .AddApplicationPart(typeof(Marker).Assembly)
+       .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

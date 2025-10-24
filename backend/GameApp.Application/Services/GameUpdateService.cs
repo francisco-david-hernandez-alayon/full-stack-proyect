@@ -12,7 +12,7 @@ public class GameUpdateService : GameUpdateUseCase
 
     public GameUpdateService(IGameRepository repo) => _repo = repo;
 
-    public async Task<Game?> UpdateGameAsync(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, Scene finalScene)
+    public async Task<Game?> UpdateGameAsync(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene)
     {
         var game = await _repo.FetchByIdAsync(id);
         if (game is null)

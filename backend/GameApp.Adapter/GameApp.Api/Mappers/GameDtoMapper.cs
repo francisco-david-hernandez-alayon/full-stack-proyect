@@ -9,7 +9,7 @@ namespace GameApp.Api.Mappers
     public static class GameDtoMapper
     {
 
-        public static Game ToDomain(GameCreateRequestDto dto)
+        public static Game ToDomain(GameResponseDto dto)
         {
             var character = CharacterDtoMapper.ToDomain(dto.Character);
             var finalScene = FinalSceneDtoMapper.ToDomain(dto.FinalScene);
@@ -29,7 +29,7 @@ namespace GameApp.Api.Mappers
                 Character = CharacterDtoMapper.ToDto(game.GetCharacter()),
                 NumberScenesToFinish = game.GetNumberScenesToFinish(),
                 CompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),
-                FinalScene = SceneDtoMapper.ToDto(game.GetFinalScene())
+                FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene())
             };
         }
 

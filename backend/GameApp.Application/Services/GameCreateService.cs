@@ -12,7 +12,7 @@ public class GameCreateService : GameCreateUseCase
 
     public GameCreateService(IGameRepository repo) => _repo = repo;
 
-    public async Task<Game?> CreateGameAsync(Character character, int numberScenesToFinish, Scene finalScene)
+    public async Task<Game?> CreateGameAsync(Character character, int numberScenesToFinish, NothingHappensScene finalScene)
     {
         var game = new Game(character, numberScenesToFinish, finalScene);
         return await _repo.SaveAsync(game);

@@ -25,10 +25,10 @@ public static class EnemyDtoMapper
         return new EnemyDto
         {
             Name = enemy.GetName().GetName(),
-            HealthPoints = enemy.GetHealtPoints(),
-            DamageAttack = enemy.GetDamageAttack(),
+            HealthPoints = enemy.GetHealthPoints(),
+            DamageAttack = enemy.GetAttackDamage(),
             SpeedAttack = enemy.GetSpeedAttack(),
-            MoneyReward = enemy.GetMoneyReward(),
+            MoneyReward = enemy.GetRewardMoney(),
         };
     }
 

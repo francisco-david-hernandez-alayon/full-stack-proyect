@@ -11,7 +11,7 @@ public class Game
     public Character Character { get; private set; } = default!;
     public int NumberScenesToFinish { get; private set; }
     public List<Scene> ListCompletedScenes { get; private set; } = new();
-    public Scene FinalScene { get; private set; } = default!;
+    public NothingHappensScene FinalScene { get; private set; } = default!;
 
     // Required for EF Core
     private Game()
@@ -23,7 +23,7 @@ public class Game
     }
 
     // Default constructor
-    public Game(Character character, int numberScenesToFinish, Scene finalScene)
+    public Game(Character character, int numberScenesToFinish, NothingHappensScene finalScene)
     {
         Id = Guid.NewGuid();
         Character = character;
@@ -33,7 +33,7 @@ public class Game
     }
 
     // Restore constructor
-    public Game(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, Scene finalScene)
+    public Game(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene)
     {
         Id = id;
         Character = character;
@@ -47,7 +47,7 @@ public class Game
     public Character GetCharacter() => Character;
     public int GetNumberScenesToFinish() => NumberScenesToFinish;
     public List<Scene> GetCompletedScenes() => new List<Scene>(ListCompletedScenes);
-    public Scene GetFinalScene() => FinalScene;
+    public NothingHappensScene GetFinalScene() => FinalScene;
 
     // Setters
     public Game SetCharacter(Character newCharacter) =>
@@ -70,11 +70,11 @@ public class Game
         return new Game(Id, Character, NumberScenesToFinish, newList, FinalScene);
     }
 
-    public Game SetFinalScene(Scene newFinalScene) =>
+    public Game SetFinalScene(NothingHappensScene newFinalScene) =>
         new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, newFinalScene);
 
 
-    public Game UpdateGame(Character newCharacter, int newNumberScenesToFinish, List<Scene> newCompletedScenes, Scene newFinalScene) =>
+    public Game UpdateGame(Character newCharacter, int newNumberScenesToFinish, List<Scene> newCompletedScenes, NothingHappensScene newFinalScene) =>
     new Game(Id, newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene);
 
     // To string

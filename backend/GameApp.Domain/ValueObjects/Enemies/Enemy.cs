@@ -3,53 +3,53 @@ namespace GameApp.Domain.ValueObjects.Enemies;
 // Class for an enemy
 public class Enemy
 {
-    public readonly EnemyName _name;
-    public readonly int _healtPoints;
-    public readonly int _damageAttack;
-    public readonly int _speedAttack;
-    public readonly int _moneyReward;
+    public readonly EnemyName Name;
+    public readonly int HealthPoints;
+    public readonly int AttackDamage;
+    public readonly int SpeedAttack;
+    public readonly int RewardMoney;
 
     // constructor
-    public Enemy(EnemyName name, int healtPoints, int damageAttack, int speedAttack, int moneyReward)
+    public Enemy(EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
     {
-        _name = name;
-        _healtPoints = healtPoints;
-        _damageAttack = damageAttack;
-        _speedAttack = speedAttack;
-        _moneyReward = moneyReward;
+        Name = name;
+        HealthPoints = healthPoints;
+        AttackDamage = attackDamage;
+        SpeedAttack = speedAttack;
+        RewardMoney = rewardMoney;
     }
 
     // Getters
-    public EnemyName GetName() => _name;
-    public int GetHealtPoints() => _healtPoints;
-    public int GetDamageAttack() => _damageAttack;
-    public int GetSpeedAttack() => _speedAttack;
-    public int GetMoneyReward() => _moneyReward;
+    public EnemyName GetName() => Name;
+    public int GetHealthPoints() => HealthPoints;
+    public int GetAttackDamage() => AttackDamage;
+    public int GetSpeedAttack() => SpeedAttack;
+    public int GetRewardMoney() => RewardMoney;
 
     // Setters
-    public Enemy SetName(EnemyName newName) => new Enemy(newName, _healtPoints, _damageAttack, _speedAttack, _moneyReward);
-    public Enemy SetHealtPoints(int newHealtPoints) => new Enemy(_name, newHealtPoints, _damageAttack, _speedAttack, _moneyReward);
-    public Enemy SetDamageAttack(int newDamageAttack) => new Enemy(_name, _healtPoints, newDamageAttack, _speedAttack, _moneyReward);
-    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(_name, _healtPoints, _damageAttack, newSpeedAttack, _moneyReward);
-    public Enemy SetMoneyReward(int newMoneyReward) => new Enemy(_name, _healtPoints, _damageAttack, _speedAttack, newMoneyReward);
+    public Enemy SetName(EnemyName newName) => new Enemy(newName, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetHealthPoints(int newHealthPoints) => new Enemy(Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
+    public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
     public Enemy ReceiveDamage(int damage) {
-        int newHealtPoints = _healtPoints - damage;
+        int newHealthPoints = HealthPoints - damage;
 
-        if (newHealtPoints < 0) {
-            newHealtPoints = 0;
+        if (newHealthPoints < 0) {
+            newHealthPoints = 0;
         }
 
-        return new Enemy(_name, newHealtPoints, _damageAttack, _speedAttack, _moneyReward);
+        return new Enemy(Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
     }
 
     // To string
     public override string ToString()
     {
-        return $"{_name.GetName()} Enemy: " +
-               $"HealthPoints={_healtPoints}, " +
-               $"DamageAttack={_damageAttack}, " +
-               $"SpeedAttack={_speedAttack}, " +
-               $"MoneyReward={_moneyReward}";
+        return $"{Name.GetName()} Enemy: " +
+               $"HealthPoints={HealthPoints}, " +
+               $"AttackDamage={AttackDamage}, " +
+               $"SpeedAttack={SpeedAttack}, " +
+               $"RewardMoney={RewardMoney}";
     }
 
 }

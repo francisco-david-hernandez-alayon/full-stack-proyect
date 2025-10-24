@@ -6,6 +6,7 @@ using GameApp.Domain.ValueObjects.Scenes;
 using GameApp.Api.dtos;
 using GameApp.Domain.Enumerates;
 using GameApp.Api.Mappers;
+using System.Text.Json;
 
 namespace GameApp.Api.Controllers;
 
@@ -64,7 +65,7 @@ public class GameController : ControllerBase
         try
         {
             // Tansform request Dto to Domain
-            Character character = CharacterDtoMapper.ToDomain(request.Character);
+            Character character = CharacterDtoMapper.ToDomainFromType(request.Character);
             NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
 
             // Use service
