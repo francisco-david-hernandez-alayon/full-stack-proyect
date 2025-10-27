@@ -2,7 +2,7 @@
 Autor: Francisco David Hernández Alayón
 
 
-## Configuración backend
+## CONFIGURACIÓN BACKEND
 
 
 ### Crear carpeta backend y entrar
@@ -19,6 +19,7 @@ dotnet new sln -n GameApp
 ```
 dotnet new classlib -n GameApp.Domain
 dotnet new classlib -n GameApp.Application
+mkdir GameApp.Adapter; cd GameApp.Adapter
 dotnet new classlib -n GameApp.Infrastructure
 dotnet new webapi -n GameApp.Api
 ```
@@ -38,60 +39,55 @@ dotnet add GameApp.Adapter/GameApp.Api/GameApp.Api.csproj reference GameApp.Doma
 # Api -> Application
 dotnet add GameApp.Adapter/GameApp.Api/GameApp.Api.csproj reference GameApp.Application/GameApp.Application.csproj
 
-# Host -> Api (para descubrir los controladores)
+# Host -> Api (para los controladores)
 dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Adapter/GameApp.Api/GameApp.Api.csproj
-
 # Host -> Infrastructure (para DbContext y repositorios)
 dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Adapter/GameApp.Infrastructure/GameApp.Infrastructure.csproj
-
 # Host -> Application (para servicios y casos de uso)
 dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Application/GameApp.Application.csproj
-
-
-
 ```
 
 ### Agregar proyectos a la solución
 ```
-dotnet sln add GameApp.Domain GameApp.Application GameApp.Infrastructure GameApp.Api GameApp.Host
+dotnet sln add GameApp.Domain GameApp.Application GameApp.Adapter/GameApp.Infrastructure GameApp.Adapter/GameApp.Api GameApp.Host
 ```
 
-### Instalar paquete necesario
+### Instalar paquetes necesarios
 ```
 cd GameApp.Infrastructure
 dotnet add package Microsoft.EntityFrameworkCore
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package MongoDB.Driver
 
 cd GameApp.Api
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet ef migrations add InitialCreate -p ../GameApp.Infrastructure -s .
-dotnet ef database update -p ../GameApp.Infrastructure -s .
+```
+
+### Configurar base de datos mongodb
+```
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+
 ```
 
 
-### Crear base de datos
-```
-dotnet tool install --global dotnet-ef
-cd GameApp.Api
-dotnet ef migrations add InitialCreate -p ../GameApp.Infrastructure -s .
-dotnet ef database update -p ../GameApp.Infrastructure -s .
-```
 
-
-
-## Configuración frontend
+## CONFIGURACIÓN FRONTEND
 ```
 cd ../frontend
 npx create-react-app gameapp-frontend
 cd gameapp-frontend
 npm install axios
-
 ```
 
 
-## Ejecutar localmente
+## EJECUTAR LOCALMENTE
 
 ### Backend
 ```
@@ -106,16 +102,4 @@ cd frontend/gameapp-frontend
 npm start
 ```
 
-
-# Comprobar base de datos SQL
-```
-sudo apt install sqlite3
-```
-cd backend/GameApp.Host
-
-sqlite3 gameapp.db
-```
-SELECT * FROM Games;
-.exit
-```
 

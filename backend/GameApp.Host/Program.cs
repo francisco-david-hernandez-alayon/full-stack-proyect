@@ -1,14 +1,14 @@
-using GameApp.Infrastructure.Data;
-using GameApp.Infrastructure.Repositories;
+using MongoDB.Driver;
 using GameApp.Application.Services;
 using GameApp.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 using GameApp.Api;
 using System.Text.Json.Serialization;
+using GameApp.Infrastructure;
+using GameApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add API controllers from Api project using a marker class
+// Configure Api: Add API controllers from Api project using a marker class
 builder.Services.AddControllers()
        .AddApplicationPart(typeof(Marker).Assembly)
        .AddJsonOptions(options =>
@@ -19,11 +19,19 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure Infrastructure
-builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite("Data Source=gameapp.db"));
 
-// Dependency Injection
+
+// Configure Infrastructure
+// 1. Configure mongoDb conexion
+var mongoClient = new MongoClient("mongodb://localhost:27017"); 
+var database = mongoClient.GetDatabase("GameAppDb");
+
+// 2. Register IMongoDatabase and repository
+builder.Services.AddSingleton(database);
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+
+
+// Configure services: Dependency Injection
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<GameGetService>();
 builder.Services.AddScoped<GameCreateService>();
@@ -32,12 +40,6 @@ builder.Services.AddScoped<GameDeleteService>();
 
 var app = builder.Build();
 
-// Seed database
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
-}
 
 if (app.Environment.IsDevelopment())
 {
