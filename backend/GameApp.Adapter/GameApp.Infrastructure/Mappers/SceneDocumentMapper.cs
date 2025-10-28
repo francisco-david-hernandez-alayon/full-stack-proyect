@@ -10,9 +10,9 @@ public static class SceneDocumentMapper
     {
         var doc = new SceneDocument
         {
-            Name = scene.Name.Name,
-            Description = scene.Description.Description,
-            Biome = scene.Biome
+            Name = scene.GetName().GetName(),
+            Description = scene.GetDescription().GetDescription(),
+            Biome = scene.GetBiome()
         };
 
         switch (scene)
@@ -23,30 +23,30 @@ public static class SceneDocumentMapper
 
             case ChangeBiomeScene changeBiome:
                 doc.SceneType = SceneType.ChangeBiome;
-                doc.BiomeToChange = changeBiome.BiomeToChange;
+                doc.BiomeToChange = changeBiome.GetBiomeToChange();
                 break;
 
             case EnemyScene enemyScene:
                 doc.SceneType = SceneType.Enemy;
-                doc.Enemy = EnemyDocumentMapper.ToDocument(enemyScene.Enemy);
+                doc.Enemy = EnemyDocumentMapper.ToDocument(enemyScene.GetEnemy());
                 break;
 
             case ItemScene itemScene:
                 doc.SceneType = SceneType.Item;
-                doc.RewardItem = ItemDocumentMapper.ToDocument(itemScene.RewardItem);
+                doc.RewardItem = ItemDocumentMapper.ToDocument(itemScene.GetRewardItem());
                 break;
 
             case EnterDungeonScene dungeon:
                 doc.SceneType = SceneType.EnterDungeon;
-                doc.PossibleScenes = dungeon.PossibleScenes.Select(ToDocument).ToList();
+                doc.PossibleScenes = dungeon.GetPossibleScenes().Select(ToDocument).ToList();
                 break;
 
             case TradeScene trade:
                 doc.SceneType = SceneType.Trade;
-                doc.CharacterItemsOffer = trade.CharacterItemsOffer.Select(ItemDocumentMapper.ToDocument).ToList();
-                doc.CharacterMoneyOffer = trade.CharacterMoneyOffer;
-                doc.MerchantItemsOffer = trade.MerchantItemsOffer.Select(ItemDocumentMapper.ToDocument).ToList();
-                doc.MerchantMoneyOffer = trade.MerchantMoneyOffer;
+                doc.CharacterItemsOffer = trade.GetCharacterItemsOffer().Select(ItemDocumentMapper.ToDocument).ToList();
+                doc.CharacterMoneyOffer = trade.GetCharacterMoneyOffer();
+                doc.MerchantItemsOffer = trade.GetMerchantItemsOffer().Select(ItemDocumentMapper.ToDocument).ToList();
+                doc.MerchantMoneyOffer = trade.GetMerchantMoneyOffer();
                 break;
 
             default:

@@ -35,9 +35,9 @@ public class WarriorCharacter : Character
     // To string
     public override string ToString()
     {
-        string inventoryStr = string.Join(", ", InventoryList.Select(i => i?.ToString() ?? "Empty"));
-        return $"{Name.GetName()} Warrior character: " +
-               $"HP={CurrentHealthPoints}/{MaxHealthPoints}, Food={CurrentFoodPoints}/{MaxFoodPoints}, " +
-               $"InventorySlots={MaxInventorySlots}, Money={CurrentMoney}, Inventory=[{inventoryStr}]";
+        string inventoryStr = string.Join(", ", GetInventoryList().Select(i => i?.ToString() ?? "Empty"));
+        return $"{GetName().GetName()} Warrior character: " +
+               $"HP={GetCurrentHealthPoints}/{GetMaxHealthPoints()}, Food={GetCurrentFoodPoints()}/{GetMaxFoodPoints()}, " +
+               $"InventorySlots={GetMaxInventorySlots()}, Money={GetCurrentMoney()}, Inventory=[{inventoryStr}]";
     }
 }

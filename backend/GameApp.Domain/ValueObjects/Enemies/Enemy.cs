@@ -3,11 +3,12 @@ namespace GameApp.Domain.ValueObjects.Enemies;
 // Class for an enemy
 public class Enemy
 {
-    public readonly EnemyName Name;
-    public readonly int HealthPoints;
-    public readonly int AttackDamage;
-    public readonly int SpeedAttack;
-    public readonly int RewardMoney;
+    private readonly EnemyName Name;
+    private readonly int HealthPoints;
+    private readonly int AttackDamage;
+    private readonly int SpeedAttack;
+    private readonly int RewardMoney;
+
 
     // constructor
     public Enemy(EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
@@ -32,10 +33,12 @@ public class Enemy
     public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
     public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
     public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
-    public Enemy ReceiveDamage(int damage) {
+    public Enemy ReceiveDamage(int damage)
+    {
         int newHealthPoints = HealthPoints - damage;
 
-        if (newHealthPoints < 0) {
+        if (newHealthPoints < 0)
+        {
             newHealthPoints = 0;
         }
 

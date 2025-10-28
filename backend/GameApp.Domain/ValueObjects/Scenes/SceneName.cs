@@ -4,7 +4,8 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class SceneName
 {
     private static readonly string _messageIfEmpty = "Scene name cannot be empty";
-    public string Name { get; private set; } = default!;
+    private readonly string Name;
+
 
 
     // Constructor

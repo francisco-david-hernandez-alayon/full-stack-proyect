@@ -23,6 +23,8 @@ public static class SceneDtoMapper
         SceneDescription sceneDescription = new SceneDescription(dto.Description);
         Biome biome = dto.Biome;
 
+        Console.WriteLine("Scene: '" + sceneName + ", " + sceneDescription + ", " + biome + ", " + dto.SceneType + "\n");
+        
         return dto.SceneType switch
         {
             SceneType.NothingHappens => new NothingHappensScene(sceneName, sceneDescription, biome),
@@ -74,9 +76,9 @@ public static class SceneDtoMapper
 
         SceneDto dto = new SceneDto
         {
-            Name = scene.Name.Name,
-            Description = scene.Description.Description,
-            Biome = scene.Biome
+            Name = scene.GetName().GetName(),
+            Description = scene.GetDescription().GetDescription(),
+            Biome = scene.GetBiome()
         };
 
         switch (scene)
@@ -87,36 +89,36 @@ public static class SceneDtoMapper
 
             case ChangeBiomeScene changeBiome:
                 dto.SceneType = SceneType.ChangeBiome;
-                dto.BiomeToChange = changeBiome.BiomeToChange;
+                dto.BiomeToChange = changeBiome.GetBiomeToChange();
                 break;
 
             case EnemyScene enemyScene:
                 dto.SceneType = SceneType.Enemy;
-                dto.Enemy = EnemyDtoMapper.ToDto(enemyScene.Enemy);
+                dto.Enemy = EnemyDtoMapper.ToDto(enemyScene.GetEnemy());
                 break;
 
             case ItemScene itemScene:
                 dto.SceneType = SceneType.Item;
-                dto.RewardItem = ItemDtoMapper.ToDto(itemScene.RewardItem);
+                dto.RewardItem = ItemDtoMapper.ToDto(itemScene.GetRewardItem());
                 break;
 
             case EnterDungeonScene dungeon:
                 dto.SceneType = SceneType.EnterDungeon;
-                dto.PossibleScenes = dungeon.PossibleScenes
+                dto.PossibleScenes = dungeon.GetPossibleScenes()
                     .Select(ToDto)
                     .ToList();
                 break;
 
             case TradeScene trade:
                 dto.SceneType = SceneType.Trade;
-                dto.CharacterItemsOffer = trade.CharacterItemsOffer
+                dto.CharacterItemsOffer = trade.GetCharacterItemsOffer()
                     .Select(ItemDtoMapper.ToDto)
                     .ToList();
-                dto.CharacterMoneyOffer = trade.CharacterMoneyOffer;
-                dto.MerchantItemsOffer = trade.MerchantItemsOffer
+                dto.CharacterMoneyOffer = trade.GetCharacterMoneyOffer();
+                dto.MerchantItemsOffer = trade.GetMerchantItemsOffer()
                     .Select(ItemDtoMapper.ToDto)
                     .ToList();
-                dto.MerchantMoneyOffer = trade.MerchantMoneyOffer;
+                dto.MerchantMoneyOffer = trade.GetMerchantMoneyOffer();
                 break;
 
             default:

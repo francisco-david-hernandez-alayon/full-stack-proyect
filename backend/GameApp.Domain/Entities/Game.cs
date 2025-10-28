@@ -1,17 +1,16 @@
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
-using System;
-using System.Collections.Generic;
 
 namespace GameApp.Domain.Entities;
 
 public class Game
 {
-    public Guid Id { get; private set; }
-    public Character Character { get; private set; } = default!;
-    public int NumberScenesToFinish { get; private set; }
-    public List<Scene> ListCompletedScenes { get; private set; } = new();
-    public NothingHappensScene FinalScene { get; private set; } = default!;
+    private readonly Guid Id;
+    private readonly Character Character;
+    private readonly int NumberScenesToFinish;
+    private readonly List<Scene> ListCompletedScenes;
+    private readonly NothingHappensScene FinalScene;
+
 
     // Required for EF Core
     private Game()

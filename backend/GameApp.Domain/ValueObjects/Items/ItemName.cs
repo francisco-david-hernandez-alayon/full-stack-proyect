@@ -4,8 +4,9 @@ namespace GameApp.Domain.ValueObjects.Items;
 // Value Object for a game's inventory item name
 public class ItemName
 {
-    public string Name { get; private set; }
     private static readonly string _messageIfEmpty = "Item name cannot be empty";
+    
+    private readonly string Name;
 
     public ItemName(string value)
     {

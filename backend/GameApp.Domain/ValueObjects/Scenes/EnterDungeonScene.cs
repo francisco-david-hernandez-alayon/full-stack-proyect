@@ -7,7 +7,7 @@ public class EnterDungeonScene : Scene
 {
 
     private static readonly Random _random = new Random();
-    public List<Scene> PossibleScenes { get; private set; } = new();
+    private readonly List<Scene> PossibleScenes;
 
     // Constructor
     public EnterDungeonScene(SceneName name, SceneDescription description, Biome biome, List<Scene> possibleScenes)

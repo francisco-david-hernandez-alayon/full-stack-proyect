@@ -90,25 +90,27 @@ public class GameController : ControllerBase
     }
 
 
-    [HttpPut]
+    [HttpPut("{id:guid}")]
     public async Task<IActionResult> Put(Guid id, [FromBody] GameUpdateRequestDto request)
     {
         try
         {
-            // Tansform request Dto to Domain
+            // Transform request Dto to Domain
             Character character = CharacterDtoMapper.ToDomain(request.Character);
             NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
             List<Scene> completedScenes = request.ListCompletedScenes?
-            .Select(SceneDtoMapper.ToDomain)
-            .ToList() ?? new List<Scene>();
+                .Select(SceneDtoMapper.ToDomain)
+                .ToList() ?? new List<Scene>();
 
             // Use service
             Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene);
 
+            Console.WriteLine("Game updated: '" + updatedGame + "'");
+
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : BadRequest("The game could not be updated");
+                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene)));    // game not updated
 
         }
         catch (Exception ex)

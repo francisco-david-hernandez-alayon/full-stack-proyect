@@ -15,23 +15,23 @@ public static class ItemDocumentMapper
 
         var doc = new ItemDocument
         {
-            Name = item.Name.Name,
-            Description = item.Description.Description
+            Name = item.GetName().GetName(),
+            Description = item.GetDescription().GetDescription()
         };
 
         switch (item)
         {
             case AttackItem attack:
                 doc.ItemType = ItemType.Attack;
-                doc.AttackDamage = attack.AttackDamage;
-                doc.SpeedAttack = attack.SpeedAttack;
-                doc.Durability = attack.Durability;
+                doc.AttackDamage = attack.GetAttackDamage();
+                doc.SpeedAttack = attack.GetSpeedAttack();
+                doc.Durability = attack.GetDurability();
                 break;
 
             case AtributeItem attr:
                 doc.ItemType = ItemType.Attribute;
-                doc.HealthPointsReceived = attr.HealthPointsReceived;
-                doc.FoodPointsReceived = attr.FoodPointsReceived;
+                doc.HealthPointsReceived = attr.GetHealthPointsReceived();
+                doc.FoodPointsReceived = attr.GetFoodPointsReceived();
                 break;
 
             default:

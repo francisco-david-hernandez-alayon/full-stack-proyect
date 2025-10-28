@@ -28,7 +28,7 @@ namespace GameApp.Api.Mappers
                 Id = game.GetGuid(),
                 Character = CharacterDtoMapper.ToDto(game.GetCharacter()),
                 NumberScenesToFinish = game.GetNumberScenesToFinish(),
-                CompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),
+                ListCompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),
                 FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene())
             };
         }

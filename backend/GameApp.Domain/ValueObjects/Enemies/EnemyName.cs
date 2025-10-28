@@ -4,7 +4,8 @@ namespace GameApp.Domain.ValueObjects.Enemies;
 public class EnemyName
 {
     private static readonly string _messageIfEmpty = "Enemy name cannot be empty";
-    public string Name { get; private set; } = default!;
+    private readonly string Name;
+
 
 
     // Constructor

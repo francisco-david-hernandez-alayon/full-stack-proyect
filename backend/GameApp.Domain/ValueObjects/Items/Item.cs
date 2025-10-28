@@ -1,10 +1,10 @@
 namespace GameApp.Domain.ValueObjects.Items;
 
 
-public class Item
+public abstract class Item
 {
-    public ItemName Name { get; private set; }
-    public ItemDescription Description { get; private set; }
+    private readonly ItemName Name;
+    private readonly ItemDescription Description;
 
     protected Item(ItemName name, ItemDescription description)
     {

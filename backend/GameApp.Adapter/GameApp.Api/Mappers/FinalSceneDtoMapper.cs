@@ -33,9 +33,9 @@ public static class FinalSceneDtoMapper
 
         FinalSceneDto dto = new FinalSceneDto
         {
-            Name = scene.Name.Name,
-            Description = scene.Description.Description,
-            Biome = scene.Biome
+            Name = scene.GetName().GetName(),
+            Description = scene.GetDescription().GetDescription(),
+            Biome = scene.GetBiome()
         };
 
         return dto;

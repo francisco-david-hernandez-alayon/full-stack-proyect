@@ -8,7 +8,7 @@ public class GameResponseDto
 
     public int NumberScenesToFinish { get; set; }
 
-    public List<SceneDto> CompletedScenes { get; set; } = new();
+    public List<SceneDto> ListCompletedScenes { get; set; } = new();
 
     public FinalSceneDto FinalScene { get; set; } = default!;
 }

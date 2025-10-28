@@ -7,13 +7,13 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class TradeScene : Scene
 {
     // Character offer
-    public List<Item> CharacterItemsOffer { get; private set; } = new();
-    public int CharacterMoneyOffer { get; private set; }
-
+    private readonly List<Item> CharacterItemsOffer;
+    private readonly int CharacterMoneyOffer;
 
     // Merchant offer
-    public List<Item> MerchantItemsOffer { get; private set; } = new();
-    public int MerchantMoneyOffer { get; private set; }
+    private readonly List<Item> MerchantItemsOffer;
+    private readonly int MerchantMoneyOffer;
+
 
 
     // Constructor

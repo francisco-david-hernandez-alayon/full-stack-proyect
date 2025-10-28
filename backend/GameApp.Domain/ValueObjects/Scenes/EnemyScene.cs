@@ -6,7 +6,7 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 // Class for a scene where you have to fight an enemy
 public class EnemyScene : Scene
 {
-    public Enemy Enemy { get; private set; }
+    private readonly Enemy Enemy;
 
     // Constructor
     public EnemyScene(SceneName name, SceneDescription description, Biome biome, Enemy enemy)

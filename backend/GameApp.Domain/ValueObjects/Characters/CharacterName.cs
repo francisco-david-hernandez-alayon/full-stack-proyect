@@ -4,7 +4,8 @@ namespace GameApp.Domain.ValueObjects;
 public class CharacterName
 {
     private static readonly string _messageIfEmpty = "Character name cannot be empty";
-    public string Name { get; }
+    private readonly string Name;
+
 
 
     // Constructor

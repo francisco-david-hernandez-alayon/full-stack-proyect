@@ -16,10 +16,10 @@ public static class CharacterDocumentMapper
                 WarriorCharacter => CharacterType.Warrior,
                 _ => CharacterType.None
             },
-            CurrentHealthPoints = character.CurrentHealthPoints,
-            CurrentFoodPoints = character.CurrentFoodPoints,
-            CurrentMoney = character.CurrentMoney,
-            InventoryList = character.InventoryList.Select(ItemDocumentMapper.ToDocument).ToList()
+            CurrentHealthPoints = character.GetCurrentHealthPoints(),
+            CurrentFoodPoints = character.GetCurrentFoodPoints(),
+            CurrentMoney = character.GetCurrentMoney(),
+            InventoryList = character.GetInventoryList().Select(ItemDocumentMapper.ToDocument).ToList()
         };
     }
 

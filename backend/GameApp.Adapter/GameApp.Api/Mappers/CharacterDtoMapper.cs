@@ -46,10 +46,10 @@ public static class CharacterDtoMapper
                 WarriorCharacter => CharacterType.Warrior,
                 _ => CharacterType.None
             },
-            CurrentHealthPoints = character.CurrentHealthPoints,
-            CurrentFoodPoints = character.CurrentFoodPoints,
-            CurrentMoney = character.CurrentMoney,
-            InventoryList = character.InventoryList.Select(ItemDtoMapper.ToDto).ToList()
+            CurrentHealthPoints = character.GetCurrentHealthPoints(),
+            CurrentFoodPoints = character.GetCurrentFoodPoints(),
+            CurrentMoney = character.GetCurrentMoney(),
+            InventoryList = character.GetInventoryList().Select(ItemDtoMapper.ToDto).ToList()
         };
     }
 }

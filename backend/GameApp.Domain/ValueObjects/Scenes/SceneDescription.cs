@@ -5,7 +5,8 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class SceneDescription
 {
     private static readonly string _messageIfEmpty = "Scene description cannot be empty";
-    public string Description { get; private set; } = default!;
+    private readonly string Description;
+
 
 
     public SceneDescription(string value)

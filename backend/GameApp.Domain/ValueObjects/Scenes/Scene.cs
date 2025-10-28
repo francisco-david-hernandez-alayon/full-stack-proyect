@@ -5,9 +5,9 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 // Abtract class for a general scene
 public abstract class Scene
 {
-    public SceneName Name { get; private set; } = default!;
-    public SceneDescription Description { get; private set; } = default!;
-    public Biome Biome { get; private set; }
+    private readonly SceneName Name;
+    private readonly SceneDescription Description;
+    private readonly Biome Biome;
 
     // constructor EF
     protected Scene() { }

@@ -52,23 +52,23 @@ public static class ItemDtoMapper
 
         ItemDto dto = new ItemDto
         {
-            Name = item.Name.Name,
-            Description = item.Description.Description
+            Name = item.GetName().GetName(),
+            Description = item.GetDescription().GetDescription()
         };
 
         switch (item)
         {
             case AttackItem attack:
                 dto.ItemType = ItemType.Attack;
-                dto.AttackDamage = attack.AttackDamage;
-                dto.SpeedAttack = attack.SpeedAttack;
-                dto.Durability = attack.Durability;
+                dto.AttackDamage = attack.GetAttackDamage();
+                dto.SpeedAttack = attack.GetSpeedAttack();
+                dto.Durability = attack.GetDurability();
                 break;
 
             case AtributeItem attr:
                 dto.ItemType = ItemType.Attribute;
-                dto.HealthPointsReceived = attr.HealthPointsReceived;
-                dto.FoodPointsReceived = attr.FoodPointsReceived;
+                dto.HealthPointsReceived = attr.GetHealthPointsReceived();
+                dto.FoodPointsReceived = attr.GetFoodPointsReceived();
                 break;
 
             default:

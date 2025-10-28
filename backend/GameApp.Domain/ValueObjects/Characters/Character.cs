@@ -6,18 +6,17 @@ namespace GameApp.Domain.ValueObjects.Characters;
 // Abstract class for Character value object
 public abstract class Character
 {
-    public CharacterName Name { get; }
-    public int MaxHealthPoints { get; }
-    public int MaxFoodPoints { get; }
-    public int MaxInventorySlots { get; }
-    public int StartingMoney { get; }
+    private readonly CharacterName Name;
+    private readonly int MaxHealthPoints;
+    private readonly int MaxFoodPoints;
+    private readonly int MaxInventorySlots;
+    private readonly int StartingMoney;
 
-
-    // current Character atributes
-    public int CurrentHealthPoints { get; }
-    public int CurrentFoodPoints { get; }
-    public int CurrentMoney { get; }
-    public IReadOnlyList<Item> InventoryList { get; }
+    // current Character attributes
+    private readonly int CurrentHealthPoints;
+    private readonly int CurrentFoodPoints;
+    private readonly int CurrentMoney;
+    private readonly List<Item> InventoryList;
 
 
     // Constructor

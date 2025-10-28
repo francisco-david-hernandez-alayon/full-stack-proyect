@@ -7,7 +7,7 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 public class ItemScene : Scene
 {
 
-    public Item RewardItem { get; private set; } = default!;
+    private readonly Item RewardItem;
 
 
     // Constructor

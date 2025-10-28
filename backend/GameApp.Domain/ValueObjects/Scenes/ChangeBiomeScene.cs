@@ -5,7 +5,7 @@ namespace GameApp.Domain.ValueObjects.Scenes;
 // Class for scene where the biome changes
 public class ChangeBiomeScene : Scene
 {
-    public Biome BiomeToChange { get; private set; }
+    private readonly Biome BiomeToChange;
 
     // Constructor
     public ChangeBiomeScene(SceneName name, SceneDescription description, Biome biome, Biome biomeToChange)

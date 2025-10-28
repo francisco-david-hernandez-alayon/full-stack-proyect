@@ -9,9 +9,9 @@ public static class FinalSceneDocumentMapper
     {
         return new FinalSceneDocument
         {
-            Name = scene.Name.Name,
-            Description = scene.Description.Description,
-            Biome = scene.Biome
+            Name = scene.GetName().GetName(),
+            Description = scene.GetDescription().GetDescription(),
+            Biome = scene.GetBiome()
         };
     }
 
