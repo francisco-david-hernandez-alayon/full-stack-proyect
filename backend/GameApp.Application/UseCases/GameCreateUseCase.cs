@@ -6,5 +6,5 @@ namespace GameApp.Application.UseCases;
 
 public interface GameCreateUseCase
 {
-    public Task<Game?> CreateGameAsync(Character character, int numberScenesToFinish, NothingHappensScene finalScene);
+    public Task<Game?> CreateGameAsync(Character character, int numberScenesToFinish, NothingHappensScene finalScene, List<Scene> listCurrentScenes);
 }

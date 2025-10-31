@@ -13,6 +13,7 @@ public static class GameDocumentMapper
             Character = CharacterDocumentMapper.ToDocument(game.GetCharacter()),
             NumberScenesToFinish = game.GetNumberScenesToFinish(),
             CompletedScenes = game.GetCompletedScenes().Select(SceneDocumentMapper.ToDocument).ToList(),
+            CurrentScenes = game.GetCurrentScenes().Select(SceneDocumentMapper.ToDocument).ToList(),
             FinalScene = FinalSceneDocumentMapper.ToDocument(game.GetFinalScene())
         };
     }
@@ -24,6 +25,7 @@ public static class GameDocumentMapper
 
         var character = CharacterDocumentMapper.ToDomain(doc.Character);
         var completedScenes = doc.CompletedScenes.Select(SceneDocumentMapper.ToDomain).ToList();
+        var currentScenes = doc.CurrentScenes.Select(SceneDocumentMapper.ToDomain).ToList();
         var finalScene = FinalSceneDocumentMapper.ToDomain(doc.FinalScene);
 
         return new Game(
@@ -31,7 +33,8 @@ public static class GameDocumentMapper
             character,
             doc.NumberScenesToFinish,
             completedScenes,
-            finalScene
+            finalScene,
+            currentScenes
         );
     }
 

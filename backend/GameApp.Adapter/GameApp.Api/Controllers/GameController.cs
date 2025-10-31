@@ -67,12 +67,16 @@ public class GameController : ControllerBase
             // Tansform request Dto to Domain
             Character character = CharacterDtoMapper.ToDomainFromType(request.Character);
             NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
+            List<Scene> currentScenes = request.ListCurrentScenes?
+                .Select(SceneDtoMapper.ToDomain)
+                .ToList() ?? new List<Scene>();
 
             // Use service
             Game? createdGame = await _createService.CreateGameAsync(
                 character,
                 request.NumberScenesToFinish,
-                finalScene
+                finalScene,
+                currentScenes
             );
 
             Console.WriteLine("Game created: " + createdGame);
@@ -101,16 +105,19 @@ public class GameController : ControllerBase
             List<Scene> completedScenes = request.ListCompletedScenes?
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
+            List<Scene> currentScenes = request.ListCurrentScenes?
+                .Select(SceneDtoMapper.ToDomain)
+                .ToList() ?? new List<Scene>();
 
             // Use service
-            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene);
+            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes);
 
             Console.WriteLine("Game updated: '" + updatedGame + "'");
 
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene)));    // game not updated
+                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes)));    // game not updated
 
         }
         catch (Exception ex)

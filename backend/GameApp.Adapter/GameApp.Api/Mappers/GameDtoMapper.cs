@@ -13,11 +13,13 @@ namespace GameApp.Api.Mappers
         {
             var character = CharacterDtoMapper.ToDomain(dto.Character);
             var finalScene = FinalSceneDtoMapper.ToDomain(dto.FinalScene);
+            var currentScenes = dto.ListCurrentScenes.Select(SceneDtoMapper.ToDomain).ToList();
 
             return new Game(
                 character,
                 dto.NumberScenesToFinish,
-                finalScene
+                finalScene,
+                currentScenes
             );
         }
         
@@ -29,6 +31,7 @@ namespace GameApp.Api.Mappers
                 Character = CharacterDtoMapper.ToDto(game.GetCharacter()),
                 NumberScenesToFinish = game.GetNumberScenesToFinish(),
                 ListCompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),
+                ListCurrentScenes = game.GetCurrentScenes().Select(SceneDtoMapper.ToDto).ToList(),
                 FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene())
             };
         }

@@ -12,7 +12,7 @@ public class GameUpdateService : GameUpdateUseCase
 
     public GameUpdateService(IGameRepository repo) => _repo = repo;
 
-    public async Task<Game?> UpdateGameAsync(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene)
+    public async Task<Game?> UpdateGameAsync(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene, List<Scene> listCurrentScenes)
     {
         var game = await _repo.FetchByIdAsync(id);
         if (game is null)
@@ -21,7 +21,7 @@ public class GameUpdateService : GameUpdateUseCase
             return null;
         }
 
-        Game updatedGame = game.UpdateGame(character, numberScenesToFinish, completedScenes, finalScene);
+        Game updatedGame = game.UpdateGame(character, numberScenesToFinish, completedScenes, finalScene, listCurrentScenes);
         return await _repo.UpdateAsync(updatedGame);
     }
 }
