@@ -20,6 +20,15 @@ public class EnterDungeonScene : Scene
     public List<Scene> GetPossibleScenes() => new List<Scene>(PossibleScenes);
 
     // Setter
+    public EnterDungeonScene SetSceneName(SceneName newName) =>
+    new EnterDungeonScene(newName, GetDescription(), GetBiome(), PossibleScenes);
+
+    public EnterDungeonScene SetSceneDescription(SceneDescription newDescription) =>
+    new EnterDungeonScene(GetName(), newDescription, GetBiome(), PossibleScenes);
+
+    public EnterDungeonScene SetBiome(Biome newBiome) =>
+    new EnterDungeonScene(GetName(), GetDescription(), newBiome, PossibleScenes);
+
     public EnterDungeonScene SetPossibleScenes(List<Scene> newPossibleScenes) => new EnterDungeonScene(GetName(), GetDescription(), GetBiome(), newPossibleScenes);
 
     // Generate Random Scene
