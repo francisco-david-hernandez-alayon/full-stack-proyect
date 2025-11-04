@@ -13,18 +13,19 @@ import { EnemyName } from './domain/value-objects/enemies/enemy-name.js'
 import { Enemy } from './domain/value-objects/enemies/enemy.js'
 import { ItemName } from "./domain/value-objects/items/item-name.js";
 import { ItemDescription } from "./domain/value-objects/items/item-description.js";
+import { UserAction } from "./domain/enumerates/user-action.js";
 
-// Crear personaje
+// Create character
 const warrior = new WarriorCharacter();
 
-// Crear un item de ejemplo
+// Create example item
 const healthPotion = new AtributeItem(
     new ItemName("Health Potion"), 
     new ItemDescription("Restore 50hp"), 
     50, 0
 );
 
-// Crear escenas
+// Create scenes
 const nothingScene = new NothingHappensScene(
     new SceneName("Peaceful Meadow"),
     new SceneDescription("A calm and peaceful area"),
@@ -50,13 +51,18 @@ const enemyScene = new EnemyScene(
     enemy
 );
 
-// Crear game
+// Create currentUserActions
+const currentUserActions = [UserAction.MOVE_FORWARD, UserAction.USE_ITEM] 
+
+
+// Create game
 const game = new Game(
     warrior,
     10,
     nothingScene,
     [itemScene, enemyScene],
-    [nothingScene, itemScene, nothingScene, itemScene, enemyScene]
+    [nothingScene, itemScene, nothingScene, itemScene, enemyScene],
+    currentUserActions
 );
 
 // Mostrar por pantalla usando toString

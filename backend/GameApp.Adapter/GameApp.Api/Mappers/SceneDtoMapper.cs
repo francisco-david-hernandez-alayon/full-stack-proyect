@@ -30,10 +30,7 @@ public static class SceneDtoMapper
             SceneType.NothingHappens => new NothingHappensScene(sceneName, sceneDescription, biome),
 
             SceneType.ChangeBiome =>
-                new ChangeBiomeScene(sceneName, sceneDescription, biome,
-                    dto.BiomeToChange ?? throw new ArgumentNullException(nameof(dto.BiomeToChange),
-                        "BiomeToChange is required for ChangeBiomeScene")
-                ),
+                new ChangeBiomeScene(sceneName, sceneDescription, biome),
 
             SceneType.Enemy =>
                 new EnemyScene(sceneName, sceneDescription, biome,
@@ -89,7 +86,6 @@ public static class SceneDtoMapper
 
             case ChangeBiomeScene changeBiome:
                 dto.SceneType = SceneType.ChangeBiome;
-                dto.BiomeToChange = changeBiome.GetBiomeToChange();
                 break;
 
             case EnemyScene enemyScene:

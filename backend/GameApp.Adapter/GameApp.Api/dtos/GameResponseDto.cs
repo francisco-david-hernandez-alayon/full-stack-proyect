@@ -1,3 +1,5 @@
+using GameApp.Domain.Enumerates;
+
 namespace GameApp.Api.dtos;
 
 public class GameResponseDto
@@ -11,6 +13,8 @@ public class GameResponseDto
     public List<SceneDto> ListCompletedScenes { get; set; } = new();
 
     public List<SceneDto> ListCurrentScenes { get; set; } = new();
+
+    public List<UserAction> ListCurrentUserActions { get; set; } = new();
 
     public FinalSceneDto FinalScene { get; set; } = default!;
 }

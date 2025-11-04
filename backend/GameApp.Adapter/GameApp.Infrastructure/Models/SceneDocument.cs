@@ -13,9 +13,6 @@ public class SceneDocument
 
 
     [BsonIgnoreIfNull]
-    public Biome? BiomeToChange { get; set; }
-
-    [BsonIgnoreIfNull]
     public EnemyDocument? Enemy { get; set; }
 
     [BsonIgnoreIfNull]

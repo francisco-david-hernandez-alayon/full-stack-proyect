@@ -70,13 +70,15 @@ public class GameController : ControllerBase
             List<Scene> currentScenes = request.ListCurrentScenes?
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
+            List<UserAction> currentUserAction = request.ListCurrentUserActions;
 
             // Use service
             Game? createdGame = await _createService.CreateGameAsync(
                 character,
                 request.NumberScenesToFinish,
                 finalScene,
-                currentScenes
+                currentScenes,
+                currentUserAction
             );
 
             Console.WriteLine("Game created: " + createdGame);
@@ -108,16 +110,17 @@ public class GameController : ControllerBase
             List<Scene> currentScenes = request.ListCurrentScenes?
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
+            List<UserAction> currentUserAction = request.ListCurrentUserActions;
 
             // Use service
-            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes);
+            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction);
 
             Console.WriteLine("Game updated: '" + updatedGame + "'");
 
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes)));    // game not updated
+                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction)));    // game not updated
 
         }
         catch (Exception ex)

@@ -1,4 +1,5 @@
 using GameApp.Api.Enumerates;
+using GameApp.Domain.Enumerates;
 
 namespace GameApp.Api.dtos;
 
@@ -8,4 +9,6 @@ public class GameCreateRequestDto
     public int NumberScenesToFinish { get; set; }
     public FinalSceneDto FinalScene { get; set; } = default!;
     public List<SceneDto> ListCurrentScenes { get; set; } = new();
+
+    public List<UserAction> ListCurrentUserActions { get; set; } = new();
 }

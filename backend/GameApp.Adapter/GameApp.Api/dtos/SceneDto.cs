@@ -11,8 +11,6 @@ public class SceneDto
     public SceneType SceneType { get; set; }
 
     // optional depending on the type of scene:
-    // ChangeBiomeScene
-    public Biome? BiomeToChange { get; set; } 
 
     // EnemyScene
     public EnemyDto? Enemy { get; set; } 

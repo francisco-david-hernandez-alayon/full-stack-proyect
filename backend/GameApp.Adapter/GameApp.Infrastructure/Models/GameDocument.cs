@@ -1,3 +1,4 @@
+using GameApp.Domain.Enumerates;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -14,5 +15,8 @@ public class GameDocument
     public List<SceneDocument> CompletedScenes { get; set; } = new();
 
     public List<SceneDocument> CurrentScenes { get; set; } = new();
+
+    public List<UserAction> CurrentUserActions { get; set; } = new();
+    
     public FinalSceneDocument FinalScene { get; set; } = default!;
 }

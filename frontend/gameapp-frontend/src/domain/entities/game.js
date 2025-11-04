@@ -1,10 +1,11 @@
+import { UserAction } from '../enumerates/user-action.js';
 import { Character } from '../value-objects/characters/character';
 import { NothingHappensScene } from '../value-objects/scenes/nothing-happens-scene.js';
 import { Scene } from '../value-objects/scenes/scene.js';
 import { v4 as uuidv4 } from "uuid";
 
 export class Game {
-    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCompletedScenes = [], id = null) {
+    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCompletedScenes = [], listCurrentUserActions = [], id = null) {
         this._id = id ?? uuidv4();
 
         if (!(character instanceof Character)) throw new TypeError("character must be an instance of Character");
@@ -23,6 +24,9 @@ export class Game {
 
         this.#validateSceneList(listCompletedScenes, "listCompletedScenes");
         this._listCompletedScenes = [...listCompletedScenes];
+
+        this.#validateUserActionsList(listCurrentUserActions, "listCurrentUserActions");
+        this._listCurrentUserActions = listCurrentUserActions;
     }
 
     #validateSceneList(list, paramName) {
@@ -34,6 +38,22 @@ export class Game {
         }
     }
 
+    #validateUserActionsList(list, paramName) {
+        if (!Array.isArray(list)) {
+            throw new TypeError(`${paramName} must be an array`);
+        }
+
+        const validActions = Object.values(UserAction);
+
+        for (const action of list) {
+            if (!validActions.includes(action)) {
+                throw new TypeError(
+                    `${paramName} contains an invalid UserAction value: '${action}'`
+                );
+            }
+        }
+    }
+
     // getter
     get id() { return this._id; }
     get character() { return this._character; }
@@ -41,44 +61,50 @@ export class Game {
     get completedScenes() { return [...this._listCompletedScenes]; }
     get finalScene() { return this._finalScene; }
     get currentScenes() { return [...this._listCurrentScenes]; }
+    get currentUserActions() { return [...this._listCurrentUserActions]; }
 
     // setter
     setCharacter(newCharacter) {
-        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._id, this._listCompletedScenes);
+        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
     }
 
     setNumberScenesToFinish(newNumber) {
-        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._id, this._listCompletedScenes);
+        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
     }
 
     addCompletedScene(newScene) {
         const newList = [...this._listCompletedScenes, newScene];
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._id, newList);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._id);
     }
 
     removeLastCompletedScene() {
         if (this._listCompletedScenes.length === 0) return this;
         const newList = [...this._listCompletedScenes];
         newList.pop();
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._id, newList);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._id);
     }
 
     setFinalScene(newFinalScene) {
-        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._id, this._listCompletedScenes);
+        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
     }
 
     setCurrentScenes(newList) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._id, this._listCompletedScenes);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCompletedScenes, this._listCurrentUserActions, this._id);
     }
 
-    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes) {
-        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, this._id, newCompletedScenes);
+    setCurrentUserActions(newListCurrenUserActions) {
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, newListCurrenUserActions, this._id);
+    }
+
+    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newListCurrenUserActions) {
+        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newCompletedScenes, newListCurrenUserActions, this._id);
     }
 
     toString() {
         const completedStr = this._listCompletedScenes.map(s => s.name.toString()).join(", ");
-        const currentStr = this._listCurrentScenes.map(s => s.name.toString()).join(", ");
+        const currentScenesStr = this._listCurrentScenes.map(s => s.name.toString()).join(", ");
+        const currentUserActionsStr = this._listCurrentUserActions.join(", ");
         return `Game ${this._id}: Character=${this._character.name.toString()}, NumberScenesToFinish=${this._numberScenesToFinish}, ` +
-            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentStr}]`;
+            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentScenesStr}], CurrentUserActions=[${currentUserActionsStr}]`;
     }
 }

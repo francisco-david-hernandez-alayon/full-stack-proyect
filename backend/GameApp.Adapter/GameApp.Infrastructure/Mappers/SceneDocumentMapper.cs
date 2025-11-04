@@ -23,7 +23,6 @@ public static class SceneDocumentMapper
 
             case ChangeBiomeScene changeBiome:
                 doc.SceneType = SceneType.ChangeBiome;
-                doc.BiomeToChange = changeBiome.GetBiomeToChange();
                 break;
 
             case EnemyScene enemyScene:
@@ -68,8 +67,7 @@ public static class SceneDocumentMapper
                 new NothingHappensScene(name, description, doc.Biome),
 
             SceneType.ChangeBiome =>
-                new ChangeBiomeScene(name, description, doc.Biome,
-                    doc.BiomeToChange ?? throw new ArgumentNullException(nameof(doc.BiomeToChange))),
+                new ChangeBiomeScene(name, description, doc.Biome),
 
             SceneType.Enemy =>
                 new EnemyScene(name, description, doc.Biome,
