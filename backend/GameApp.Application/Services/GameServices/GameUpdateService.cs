@@ -1,11 +1,11 @@
-using GameApp.Application.UseCases;
+using GameApp.Application.UseCases.GameUseCases;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.Repositories;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Application.Services;
+namespace GameApp.Application.Services.GameServices;
 
 public class GameUpdateService : GameUpdateUseCase
 {
@@ -23,6 +23,6 @@ public class GameUpdateService : GameUpdateUseCase
         }
 
         Game updatedGame = game.UpdateGame(character, numberScenesToFinish, completedScenes, finalScene, listCurrentScenes, listCurrentUserActions);
-        return await _repo.UpdateAsync(updatedGame);
+        return await _repo.UpdateAsync(id, updatedGame);
     }
 }

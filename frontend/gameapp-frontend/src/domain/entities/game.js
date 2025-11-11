@@ -1,7 +1,7 @@
 import { UserAction } from '../enumerates/user-action.js';
 import { Character } from '../value-objects/characters/character';
 import { NothingHappensScene } from '../value-objects/scenes/nothing-happens-scene.js';
-import { Scene } from '../value-objects/scenes/scene.js';
+import { Scene } from './scene.js';
 import { v4 as uuidv4 } from "uuid";
 
 export class Game {

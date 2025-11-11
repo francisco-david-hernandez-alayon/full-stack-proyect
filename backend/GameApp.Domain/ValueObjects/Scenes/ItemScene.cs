@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Items;
 
@@ -13,6 +14,13 @@ public class ItemScene : Scene
     // Constructor
     public ItemScene(SceneName name, SceneDescription description, Biome biome, Item item)
     : base(name, description, biome)
+    {
+        RewardItem = item;
+    }
+
+    // Restore Constructor
+    public ItemScene(Guid id, SceneName name, SceneDescription description, Biome biome, Item item)
+    : base(id, name, description, biome)
     {
         RewardItem = item;
     }
@@ -36,7 +44,7 @@ public class ItemScene : Scene
     // To string
     public override string ToString()
     {
-        return $"{GetName()} Item Scene: " +
+        return $"{GetName()} Item Scene({GetGuid()}): " +
                $"Description={GetDescription()}, Biome={GetBiome()}, " +
                $"Reward Item={RewardItem}";
     }

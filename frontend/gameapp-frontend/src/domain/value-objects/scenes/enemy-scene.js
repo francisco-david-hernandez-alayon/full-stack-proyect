@@ -1,10 +1,10 @@
 import { Enemy } from "../enemies/enemy";
-import { Scene } from "./scene";
+import { Scene } from "../../entities/scene";
 
 // EnemyScene
 export class EnemyScene extends Scene {
-    constructor(name, description, biome, enemy) {
-        super(name, description, biome);
+    constructor(name, description, biome, enemy, id = null) {
+        super(name, description, biome, id);
         if (!(enemy instanceof Enemy)) throw new TypeError("enemy must be Enemy");
         this._enemy = enemy;
     }

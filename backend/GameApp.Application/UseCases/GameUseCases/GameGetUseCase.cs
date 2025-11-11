@@ -1,6 +1,6 @@
 using GameApp.Domain.Entities;
 
-namespace GameApp.Application.UseCases;
+namespace GameApp.Application.UseCases.GameUseCases;
 
 public interface GameGetUseCase
 {

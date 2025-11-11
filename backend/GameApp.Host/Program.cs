@@ -1,10 +1,9 @@
 using MongoDB.Driver;
-using GameApp.Application.Services;
 using GameApp.Domain.Repositories;
 using GameApp.Api;
 using System.Text.Json.Serialization;
-using GameApp.Infrastructure;
 using GameApp.Infrastructure.Repositories;
+using GameApp.Application.Services.GameServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 
 namespace GameApp.Domain.ValueObjects.Scenes;
@@ -12,7 +13,13 @@ public class ChangeBiomeScene : Scene
     {
     }
 
+    // Restore Constructor
+    public ChangeBiomeScene(Guid id, SceneName name, SceneDescription description, Biome biome)
+        : base(id, name, description, biome)
+    {
+    }
+
     // To string
     public override string ToString() =>
-        $"ChangeBiomeScene: {GetName()} - Description={GetDescription()}, BiomeToChange={GetBiome()}";
+        $"ChangeBiomeScene({GetGuid()}): {GetName()} - {GetDescription()}, BiomeToChange={GetBiome()}";
 }

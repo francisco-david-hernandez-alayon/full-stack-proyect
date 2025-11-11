@@ -1,10 +1,10 @@
 import { Item } from "../items/item";
-import { Scene } from "./scene";
+import { Scene } from "../../entities/scene";
 
 // ItemScene
 export class ItemScene extends Scene {
-    constructor(name, description, biome, item) {
-        super(name, description, biome);
+    constructor(name, description, biome, item, id = null) {
+        super(name, description, biome, id);
         if (!(item instanceof Item)) throw new TypeError("item must be Item");
         this._rewardItem = item;
     }

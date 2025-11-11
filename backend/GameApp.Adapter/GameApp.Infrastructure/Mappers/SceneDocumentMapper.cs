@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.ValueObjects.Scenes;
 using GameApp.Infrastructure.Enumerates;
 using GameApp.Infrastructure.Models;

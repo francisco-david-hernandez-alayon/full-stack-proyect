@@ -14,6 +14,7 @@ public class Game
     private readonly List<UserAction> ListCurrentUserActions;  // all possible actions that the user can perform in the current scenes
     private readonly NothingHappensScene FinalScene;
 
+    ///-------------CREATE ATRIBUTE: CurrentEnemy
 
     // Required for EF Core
     private Game()

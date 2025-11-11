@@ -34,10 +34,10 @@ public class GameRepository : IGameRepository
         return game;
     }
 
-    public async Task<Game?> UpdateAsync(Game game)
+    public async Task<Game?> UpdateAsync(Guid id, Game game)
     {
         var doc = GameDocumentMapper.ToDocument(game);
-        var result = await _games.ReplaceOneAsync(g => g.Id == game.GetGuid(), doc);
+        var result = await _games.ReplaceOneAsync(g => g.Id == id, doc);
         return result.IsAcknowledged && result.ModifiedCount > 0 ? game : null;
     }
 

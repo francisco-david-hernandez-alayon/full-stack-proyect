@@ -1,9 +1,9 @@
-import { Scene } from "./scene";
+import { Scene } from "../../entities/scene";
 
 // EnterDungeonScene
 export class EnterDungeonScene extends Scene {
-    constructor(name, description, biome, possibleScenes = []) {
-        super(name, description, biome);
+    constructor(name, description, biome, possibleScenes = [], id = null) {
+        super(name, description, biome, id);
         this._possibleScenes = possibleScenes;
     }
 

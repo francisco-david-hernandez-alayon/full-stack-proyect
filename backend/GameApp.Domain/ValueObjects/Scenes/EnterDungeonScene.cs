@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 
 namespace GameApp.Domain.ValueObjects.Scenes;
@@ -12,6 +13,13 @@ public class EnterDungeonScene : Scene
     // Constructor
     public EnterDungeonScene(SceneName name, SceneDescription description, Biome biome, List<Scene> possibleScenes)
     : base(name, description, biome)
+    {
+        PossibleScenes = possibleScenes;
+    }
+
+    // Restore Constructor
+    public EnterDungeonScene(Guid id, SceneName name, SceneDescription description, Biome biome, List<Scene> possibleScenes)
+    : base(id, name, description, biome)
     {
         PossibleScenes = possibleScenes;
     }
@@ -45,7 +53,7 @@ public class EnterDungeonScene : Scene
     public override string ToString()
     {
         string scenes = string.Join(", ", PossibleScenes.Select(s => s.GetName().ToString()));
-        return $"EnterDungeonScene: {GetName()} - {GetBiome()}\nDescription: {GetDescription()}\nPossible Scenes: [{scenes}]";
+        return $"EnterDungeonScene({GetGuid()}): {GetName()} - {GetBiome()}\nDescription: {GetDescription()}\nPossible Scenes: [{scenes}]";
     }
 
 }

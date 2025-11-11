@@ -7,6 +7,7 @@ using GameApp.Api.dtos;
 using GameApp.Domain.Enumerates;
 using GameApp.Api.Mappers;
 using System.Text.Json;
+using GameApp.Application.Services.GameServices;
 
 namespace GameApp.Api.Controllers;
 

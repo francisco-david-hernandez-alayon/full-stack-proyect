@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 
 namespace GameApp.Domain.ValueObjects.Scenes;
@@ -10,7 +11,12 @@ public class NothingHappensScene : Scene
     public NothingHappensScene(SceneName name, SceneDescription description, Biome biome)
     : base(name, description, biome)
     {
+    }
 
+    // Restore Constructor
+    public NothingHappensScene(Guid id, SceneName name, SceneDescription description, Biome biome)
+    : base(id, name, description, biome)
+    {
     }
 
     // Setters 
@@ -26,7 +32,7 @@ public class NothingHappensScene : Scene
     // To string
     public override string ToString()
     {
-        return $"{GetName()} NothingHappens Scene: " +
+        return $"{GetName()} NothingHappens Scene({GetGuid()}): " +
                $"Description={GetDescription()}, Biome={GetBiome()}, ";
     }
 

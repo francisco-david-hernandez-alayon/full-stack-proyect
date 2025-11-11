@@ -1,8 +1,8 @@
-using GameApp.Application.UseCases;
+using GameApp.Application.UseCases.GameUseCases;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Repositories;
 
-namespace GameApp.Application.Services;
+namespace GameApp.Application.Services.GameServices;
 
 public class GameDeleteService : GameDeleteUseCase
 {

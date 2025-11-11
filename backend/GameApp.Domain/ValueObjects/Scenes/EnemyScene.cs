@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Enemies;
 
@@ -11,6 +12,13 @@ public class EnemyScene : Scene
     // Constructor
     public EnemyScene(SceneName name, SceneDescription description, Biome biome, Enemy enemy)
     : base(name, description, biome)
+    {
+        Enemy = enemy;
+    }
+
+    // Restore constructor
+    public EnemyScene(Guid id, SceneName name, SceneDescription description, Biome biome, Enemy enemy)
+    : base(id, name, description, biome)
     {
         Enemy = enemy;
     }
@@ -34,8 +42,8 @@ public class EnemyScene : Scene
     // To string
     public override string ToString()
     {
-        return $"{GetName()} Enemy Scene: " +
-               $"Description={GetDescription()}, Biome={GetBiome()}, " +
+        return $"Enemy Scene({GetGuid()}): " +
+               $"{GetName()} - Description={GetDescription()}, Biome={GetBiome()}, " +
                $"Enemy={Enemy}";
     }
 }

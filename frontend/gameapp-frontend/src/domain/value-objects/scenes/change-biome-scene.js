@@ -1,9 +1,9 @@
-import { Scene } from "./scene";
+import { Scene } from "../../entities/scene";
 
 // ChangeBiomeScene
 export class ChangeBiomeScene extends Scene {
-    constructor(name, description, biome) {
-        super(name, description, biome);
+    constructor(name, description, biome, id = null) {
+        super(id, name, description, biome);
     }
 
     // setter

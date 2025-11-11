@@ -1,9 +1,9 @@
 import { Item } from "../items/item";
-import { Scene } from "./scene";
+import { Scene } from "../../entities/scene";
 
 export class TradeScene extends Scene {
-    constructor(name, description, biome, characterItemsOffer = [], characterMoneyOffer = 0, merchantItemsOffer = [], merchantMoneyOffer = 0) {
-        super(name, description, biome);
+    constructor(name, description, biome, characterItemsOffer = [], characterMoneyOffer = 0, merchantItemsOffer = [], merchantMoneyOffer = 0, id = null) {
+        super(name, description, biome, id);
 
         this.#validateItemList(characterItemsOffer, "characterItemsOffer");
         this.#validateItemList(merchantItemsOffer, "merchantItemsOffer");

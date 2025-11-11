@@ -3,7 +3,7 @@ using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Application.UseCases;
+namespace GameApp.Application.UseCases.GameUseCases;
 
 public interface GameUpdateUseCase
 {

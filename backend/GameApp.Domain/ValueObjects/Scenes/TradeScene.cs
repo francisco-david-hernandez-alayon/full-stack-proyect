@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Items;
 
@@ -26,6 +27,24 @@ public class TradeScene : Scene
         List<Item> merchantItemsOffer,
         int merchantMoneyOffer
     ) : base(name, description, biome)
+    {
+        CharacterItemsOffer = characterItemsOffer;
+        CharacterMoneyOffer = characterMoneyOffer;
+        MerchantItemsOffer = merchantItemsOffer;
+        MerchantMoneyOffer = merchantMoneyOffer;
+    }
+
+    // Restore Constructor
+    public TradeScene(
+        Guid id,
+        SceneName name,
+        SceneDescription description,
+        Biome biome,
+        List<Item> characterItemsOffer,
+        int characterMoneyOffer,
+        List<Item> merchantItemsOffer,
+        int merchantMoneyOffer
+    ) : base(id, name, description, biome)
     {
         CharacterItemsOffer = characterItemsOffer;
         CharacterMoneyOffer = characterMoneyOffer;
@@ -69,7 +88,7 @@ public class TradeScene : Scene
         string characterItems = string.Join(", ", CharacterItemsOffer.Select(i => i.ToString()));
         string merchantItems = string.Join(", ", MerchantItemsOffer.Select(i => i.ToString()));
 
-        return $"TradeScene: {GetName()} - {GetBiome()}\n" +
+        return $"TradeScene({GetGuid()}): {GetName()} - {GetBiome()}\n" +
                $"Character Offer: Money={CharacterMoneyOffer}, Items=[{characterItems}]\n" +
                $"Merchant Offer: Money={MerchantMoneyOffer}, Items=[{merchantItems}]";
     }
