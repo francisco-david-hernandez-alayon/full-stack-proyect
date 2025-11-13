@@ -3,7 +3,7 @@ using GameApp.Domain.Enumerates;
 
 namespace GameApp.Api.dtos;
 
-public class SceneDto
+public class SceneUpdateRequestDto
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
@@ -16,7 +16,7 @@ public class SceneDto
     public EnemyDto? Enemy { get; set; } 
 
     // EnterDungeonScene
-    public List<SceneDto>? PossibleScenes { get; set; } 
+    public List<SceneResponseDto>? PossibleScenes { get; set; } 
 
     // ItemScene
     public ItemDto? RewardItem { get; set; } 

@@ -1,11 +1,16 @@
 using GameApp.Domain.Enumerates;
 using GameApp.Infrastructure.Enumerates;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace GameApp.Infrastructure.Models;
 
 public class SceneDocument
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.String)]
+    public Guid Id { get; set; }
+
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public Biome Biome { get; set; }

@@ -4,6 +4,9 @@ using GameApp.Api;
 using System.Text.Json.Serialization;
 using GameApp.Infrastructure.Repositories;
 using GameApp.Application.Services.GameServices;
+using GameAppApp.Infrastructure.Repositories;
+using SceneApp.Application.Services.SceneServices;
+using GameApp.Application.Services.SceneServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +30,6 @@ var database = mongoClient.GetDatabase("GameAppDb");
 
 // 2. Register IMongoDatabase and repository
 builder.Services.AddSingleton(database);
-builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 
 // Configure services: Dependency Injection
@@ -36,6 +38,12 @@ builder.Services.AddScoped<GameGetService>();
 builder.Services.AddScoped<GameCreateService>();
 builder.Services.AddScoped<GameUpdateService>();
 builder.Services.AddScoped<GameDeleteService>();
+
+builder.Services.AddScoped<ISceneRepository, SceneRepository>();
+builder.Services.AddScoped<SceneGetService>();
+builder.Services.AddScoped<SceneCreateService>();
+builder.Services.AddScoped<SceneUpdateService>();
+builder.Services.AddScoped<SceneDeleteService>();
 
 var app = builder.Build();
 

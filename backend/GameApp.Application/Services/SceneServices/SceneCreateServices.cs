@@ -11,6 +11,13 @@ public class SceneCreateService : SceneCreateUseCase
 
     public async Task<Scene?> CreateSceneAsync(Scene scene)
     {
+        // scene name must be unique in the collection
+        var existingScene = await _repo.FetchByName(scene.GetName());
+        if (existingScene is not null)
+        {
+            Console.WriteLine($"Scene name {scene.GetName()} exist");
+            return null;
+        }
         return await _repo.SaveAsync(scene);
     }
 }

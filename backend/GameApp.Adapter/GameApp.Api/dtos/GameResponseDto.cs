@@ -10,9 +10,9 @@ public class GameResponseDto
 
     public int NumberScenesToFinish { get; set; }
 
-    public List<SceneDto> ListCompletedScenes { get; set; } = new();
+    public List<SceneResponseDto> ListCompletedScenes { get; set; } = new();
 
-    public List<SceneDto> ListCurrentScenes { get; set; } = new();
+    public List<SceneResponseDto> ListCurrentScenes { get; set; } = new();
 
     public List<UserAction> ListCurrentUserActions { get; set; } = new();
 
