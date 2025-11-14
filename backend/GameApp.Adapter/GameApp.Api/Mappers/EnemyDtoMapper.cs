@@ -32,4 +32,37 @@ public static class EnemyDtoMapper
         };
     }
 
+
+    public static Enemy? ToDomainPosibleNull(EnemyDto? dto)
+    {
+        if (dto is null)
+            return null;
+
+        if (dto.Name is null)
+            throw new ArgumentNullException(nameof(dto.Name));
+
+        return new Enemy(
+            new EnemyName(dto.Name),
+            dto.HealthPoints,
+            dto.DamageAttack,
+            dto.SpeedAttack,
+            dto.MoneyReward
+        );
+    }
+
+    public static EnemyDto? ToDtoPosibleNull(Enemy? enemy)
+    {
+        if (enemy is null)
+            return null;
+
+        return new EnemyDto
+        {
+            Name = enemy.GetName().GetName(),
+            HealthPoints = enemy.GetHealthPoints(),
+            DamageAttack = enemy.GetAttackDamage(),
+            SpeedAttack = enemy.GetSpeedAttack(),
+            MoneyReward = enemy.GetRewardMoney(),
+        };
+    }
+
 }

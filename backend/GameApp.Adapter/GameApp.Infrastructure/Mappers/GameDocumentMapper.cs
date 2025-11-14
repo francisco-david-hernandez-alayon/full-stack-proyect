@@ -1,4 +1,8 @@
 using GameApp.Domain.Entities;
+using GameApp.Domain.Enumerates;
+using GameApp.Domain.ValueObjects.Characters;
+using GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Domain.ValueObjects.Scenes;
 using GameApp.Infrastructure.Models;
 
 namespace GameApp.Infrastructure.Mappers;
@@ -15,7 +19,8 @@ public static class GameDocumentMapper
             CompletedScenes = game.GetCompletedScenes().Select(SceneDocumentMapper.ToDocument).ToList(),
             CurrentScenes = game.GetCurrentScenes().Select(SceneDocumentMapper.ToDocument).ToList(),
             CurrentUserActions = game.GetCurrentUserAction(),
-            FinalScene = FinalSceneDocumentMapper.ToDocument(game.GetFinalScene())
+            FinalScene = FinalSceneDocumentMapper.ToDocument(game.GetFinalScene()),
+            CurrentEnemy = EnemyDocumentMapper.ToDocumentPosibleNull(game.GetCurrentEnemy())   // could be null
         };
     }
 
@@ -24,11 +29,12 @@ public static class GameDocumentMapper
         if (doc == null)
             throw new ArgumentNullException(nameof(doc));
 
-        var character = CharacterDocumentMapper.ToDomain(doc.Character);
-        var completedScenes = doc.CompletedScenes.Select(SceneDocumentMapper.ToDomain).ToList();
-        var currentScenes = doc.CurrentScenes.Select(SceneDocumentMapper.ToDomain).ToList();
-        var currentUserAction = doc.CurrentUserActions.ToList();
-        var finalScene = FinalSceneDocumentMapper.ToDomain(doc.FinalScene);
+        Character character = CharacterDocumentMapper.ToDomain(doc.Character);
+        List<Scene> completedScenes = doc.CompletedScenes.Select(SceneDocumentMapper.ToDomain).ToList();
+        List<Scene> currentScenes = doc.CurrentScenes.Select(SceneDocumentMapper.ToDomain).ToList();
+        List<UserAction> currentUserAction = doc.CurrentUserActions.ToList();
+        NothingHappensScene finalScene = FinalSceneDocumentMapper.ToDomain(doc.FinalScene);
+        Enemy? currentEnemy = EnemyDocumentMapper.ToDomainPosibleNull(doc.CurrentEnemy);
 
         return new Game(
             doc.Id,
@@ -37,7 +43,8 @@ public static class GameDocumentMapper
             completedScenes,
             finalScene,
             currentScenes,
-            currentUserAction
+            currentUserAction,
+            currentEnemy
         );
     }
 

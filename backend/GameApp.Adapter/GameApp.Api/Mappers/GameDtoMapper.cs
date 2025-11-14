@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameApp.Api.dtos;
 using GameApp.Domain.Entities;
+using GameApp.Domain.ValueObjects.Enemies;
 
 
 namespace GameApp.Api.Mappers
@@ -27,6 +28,7 @@ namespace GameApp.Api.Mappers
         
         public static GameResponseDto ToDto(Game game)
         {
+
             return new GameResponseDto
             {
                 Id = game.GetGuid(),
@@ -35,7 +37,8 @@ namespace GameApp.Api.Mappers
                 ListCompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),
                 ListCurrentScenes = game.GetCurrentScenes().Select(SceneDtoMapper.ToDto).ToList(),
                 ListCurrentUserActions = game.GetCurrentUserAction().ToList(),
-                FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene())
+                FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene()),
+                CurrentEnemy = EnemyDtoMapper.ToDtoPosibleNull(game.GetCurrentEnemy()),
             };
         }
 

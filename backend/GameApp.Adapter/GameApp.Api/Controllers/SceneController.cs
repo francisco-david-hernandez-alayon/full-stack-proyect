@@ -101,7 +101,7 @@ public class SceneController : ControllerBase
             // Response
             return updatedScene is not null
                 ? Ok(SceneDtoMapper.ToDto(updatedScene))
-                : Ok(SceneDtoMapper.ToDto(sceneToCreate));    // Scene not updated
+                : NotFound();    // Scene not updated
 
         }
         catch (Exception ex)

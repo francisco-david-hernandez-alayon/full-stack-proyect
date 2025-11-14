@@ -17,4 +17,6 @@ public class GameResponseDto
     public List<UserAction> ListCurrentUserActions { get; set; } = new();
 
     public FinalSceneDto FinalScene { get; set; } = default!;
+
+    public EnemyDto? CurrentEnemy { get; set; }
 }

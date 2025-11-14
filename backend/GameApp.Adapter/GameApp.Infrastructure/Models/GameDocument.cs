@@ -19,4 +19,7 @@ public class GameDocument
     public List<UserAction> CurrentUserActions { get; set; } = new();
     
     public FinalSceneDocument FinalScene { get; set; } = default!;
+
+    [BsonIgnoreIfNull]
+    public EnemyDocument? CurrentEnemy { get; set; }
 }

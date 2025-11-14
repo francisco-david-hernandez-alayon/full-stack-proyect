@@ -1,11 +1,12 @@
 import { UserAction } from '../enumerates/user-action.js';
 import { Character } from '../value-objects/characters/character';
+import { Enemy } from '../value-objects/enemies/enemy.js';
 import { NothingHappensScene } from '../value-objects/scenes/nothing-happens-scene.js';
 import { Scene } from './scene.js';
 import { v4 as uuidv4 } from "uuid";
 
 export class Game {
-    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCompletedScenes = [], listCurrentUserActions = [], id = null) {
+    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCompletedScenes = [], listCurrentUserActions = [], currentEnemy = null, id = null) {
         this._id = id ?? uuidv4();
 
         if (!(character instanceof Character)) throw new TypeError("character must be an instance of Character");
@@ -27,6 +28,9 @@ export class Game {
 
         this.#validateUserActionsList(listCurrentUserActions, "listCurrentUserActions");
         this._listCurrentUserActions = listCurrentUserActions;
+
+        if (currentEnemy != null && !(currentEnemy instanceof Enemy)) throw new TypeError("currentEnemy must be an instance of Enemy or null");
+        this._currentEnemy = currentEnemy;
     }
 
     #validateSceneList(list, paramName) {
@@ -62,42 +66,47 @@ export class Game {
     get finalScene() { return this._finalScene; }
     get currentScenes() { return [...this._listCurrentScenes]; }
     get currentUserActions() { return [...this._listCurrentUserActions]; }
+    get currentEnemy() { return this._currentEnemy; }
 
     // setter
     setCharacter(newCharacter) {
-        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
+        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     setNumberScenesToFinish(newNumber) {
-        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
+        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     addCompletedScene(newScene) {
         const newList = [...this._listCompletedScenes, newScene];
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     removeLastCompletedScene() {
         if (this._listCompletedScenes.length === 0) return this;
         const newList = [...this._listCompletedScenes];
         newList.pop();
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     setFinalScene(newFinalScene) {
-        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._id);
+        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     setCurrentScenes(newList) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCompletedScenes, this._listCurrentUserActions, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
     }
 
     setCurrentUserActions(newListCurrenUserActions) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, newListCurrenUserActions, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, newListCurrenUserActions, this._currentEnemy, this._id);
     }
 
-    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newListCurrenUserActions) {
-        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newCompletedScenes, newListCurrenUserActions, this._id);
+    setCurrentEnemy(newCurrentEnemy) {
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, newCurrentEnemy, this._id);
+    }
+
+    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newListCurrenUserActions, newCurrentEnemy) {
+        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newCompletedScenes, newListCurrenUserActions, newCurrentEnemy, this._id);
     }
 
     toString() {
@@ -105,6 +114,6 @@ export class Game {
         const currentScenesStr = this._listCurrentScenes.map(s => s.name.toString()).join(", ");
         const currentUserActionsStr = this._listCurrentUserActions.join(", ");
         return `Game ${this._id}: Character=${this._character.name.toString()}, NumberScenesToFinish=${this._numberScenesToFinish}, ` +
-            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentScenesStr}], CurrentUserActions=[${currentUserActionsStr}]`;
+            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentScenesStr}], CurrentUserActions=[${currentUserActionsStr}], CurrentEnemy=${this._currentEnemy}`;
     }
 }

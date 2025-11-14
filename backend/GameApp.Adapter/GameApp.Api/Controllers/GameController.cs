@@ -8,6 +8,7 @@ using GameApp.Domain.Enumerates;
 using GameApp.Api.Mappers;
 using System.Text.Json;
 using GameApp.Application.Services.GameServices;
+using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Api.Controllers;
 
@@ -112,16 +113,17 @@ public class GameController : ControllerBase
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
             List<UserAction> currentUserAction = request.ListCurrentUserActions;
+            Enemy? currentEnemy = EnemyDtoMapper.ToDomainPosibleNull(request.CurrentEnemy);
 
             // Use service
-            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction);
+            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy);
 
             Console.WriteLine("Game updated: '" + updatedGame + "'");
 
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction)));    // game not updated
+                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy)));    // game not updated
 
         }
         catch (Exception ex)

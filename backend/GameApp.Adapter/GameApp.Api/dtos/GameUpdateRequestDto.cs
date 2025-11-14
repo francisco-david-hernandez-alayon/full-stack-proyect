@@ -10,5 +10,6 @@ public class GameUpdateRequestDto
     public List<SceneResponseDto> ListCompletedScenes { get; set; } = new();
     public List<SceneResponseDto> ListCurrentScenes { get; set; } = new();
     public List<UserAction> ListCurrentUserActions { get; set; } = new();
+    public EnemyDto? CurrentEnemy { get; set; }
 
 }
