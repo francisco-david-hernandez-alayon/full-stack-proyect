@@ -10,7 +10,7 @@ public class GameDeleteService : GameDeleteUseCase
 
     public GameDeleteService(IGameRepository repo) => _repo = repo;
 
-    public async Task<Game?> DeleteGameAsync(Guid id)
+    public async Task<Game?> DeleteGame(Guid id)
     {
         return await _repo.DeleteAsync(id);
     }

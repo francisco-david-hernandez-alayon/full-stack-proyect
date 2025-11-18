@@ -9,7 +9,7 @@ public class SceneCreateService : SceneCreateUseCase
 
     public SceneCreateService(ISceneRepository repo) => _repo = repo;
 
-    public async Task<Scene?> CreateSceneAsync(Scene scene)
+    public async Task<Scene?> CreateScene(Scene scene)
     {
         // scene name must be unique in the collection
         var existingScene = await _repo.FetchByName(scene.GetName());

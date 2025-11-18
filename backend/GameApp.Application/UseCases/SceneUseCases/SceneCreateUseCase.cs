@@ -4,5 +4,5 @@ namespace GameApp.Application.UseCases.SceneUseCases;
 
 public interface SceneCreateUseCase
 {
-    public Task<Scene?> CreateSceneAsync(Scene scene);
+    public Task<Scene?> CreateScene(Scene scene);
 }

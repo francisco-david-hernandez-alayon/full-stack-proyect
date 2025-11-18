@@ -6,16 +6,17 @@ import { Scene } from './scene.js';
 import { v4 as uuidv4 } from "uuid";
 
 export class Game {
-    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCompletedScenes = [], listCurrentUserActions = [], currentEnemy = null, id = null) {
+    constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCurrentUserActions = [], listCompletedScenes = [], currentEnemy = null, id = null) {
         this._id = id ?? uuidv4();
 
         if (!(character instanceof Character)) throw new TypeError("character must be an instance of Character");
         this._character = character;
 
-        if (typeof numberScenesToFinish !== "number" || !Number.isFinite(numberScenesToFinish)) {
-            throw new TypeError("numberScenesToFinish must be a finite number");
+        if (typeof numberScenesToFinish !== "number" || !Number.isInteger(numberScenesToFinish) || numberScenesToFinish <= 0) {
+            throw new TypeError("numberScenesToFinish must be an integer greater than 0");
         }
         this._numberScenesToFinish = numberScenesToFinish;
+
 
         if (!(finalScene instanceof NothingHappensScene)) throw new TypeError("finalScene must be an instance of NothingHappensScene");
         this._finalScene = finalScene;

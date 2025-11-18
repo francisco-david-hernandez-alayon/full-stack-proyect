@@ -32,7 +32,7 @@ public class GameController : ControllerBase
     public async Task<IActionResult> Get()
     {
         // Use service
-        var games = await _getService.GetAllGamesAsync();
+        var games = await _getService.GetAllGames();
 
         // Response
         return Ok(GameDtoMapper.ToDtoList(games));
@@ -46,7 +46,7 @@ public class GameController : ControllerBase
         try
         {
             // Use service
-            Game? game = await _getService.GetGameAsync(id);
+            Game? game = await _getService.GetGame(id);
 
             // Response
             if (game is null)
@@ -75,7 +75,7 @@ public class GameController : ControllerBase
             List<UserAction> currentUserAction = request.ListCurrentUserActions;
 
             // Use service
-            Game? createdGame = await _createService.CreateGameAsync(
+            Game? createdGame = await _createService.CreateGame(
                 character,
                 request.NumberScenesToFinish,
                 finalScene,
@@ -116,7 +116,7 @@ public class GameController : ControllerBase
             Enemy? currentEnemy = EnemyDtoMapper.ToDomainPosibleNull(request.CurrentEnemy);
 
             // Use service
-            Game? updatedGame = await _updateService.UpdateGameAsync(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy);
+            Game? updatedGame = await _updateService.UpdateGame(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy);
 
             Console.WriteLine("Game updated: '" + updatedGame + "'");
 
@@ -139,7 +139,7 @@ public class GameController : ControllerBase
         try
         {
             // Use service
-            Game? deletedGame = await _deleteService.DeleteGameAsync(id);
+            Game? deletedGame = await _deleteService.DeleteGame(id);
 
             // Response
             if (deletedGame is null)

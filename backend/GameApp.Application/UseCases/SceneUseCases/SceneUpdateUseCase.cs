@@ -4,5 +4,5 @@ namespace GameApp.Application.UseCases.SceneUseCases;
 
 public interface SceneUpdateUseCase
 {
-    public Task<Scene?> UpdateSceneAsync(Guid id, Scene scene);
+    public Task<Scene?> UpdateScene(Guid id, Scene scene);
 }

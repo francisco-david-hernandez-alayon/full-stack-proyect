@@ -30,7 +30,7 @@ public class SceneController : ControllerBase
     public async Task<IActionResult> Get()
     {
         // Use service
-        var Scenes = await _getService.GetAllScenesAsync();
+        var Scenes = await _getService.GetAllScenes();
 
         // Response
         return Ok(SceneDtoMapper.ToDtoList(Scenes));
@@ -44,7 +44,7 @@ public class SceneController : ControllerBase
         try
         {
             // Use service
-            Scene? Scene = await _getService.GetSceneAsync(id);
+            Scene? Scene = await _getService.GetScene(id);
 
             // Response
             if (Scene is null)
@@ -68,7 +68,7 @@ public class SceneController : ControllerBase
             Scene sceneToCreate = SceneDtoMapper.ToDomainFromCreateRequest(request);
 
             // Use service
-            Scene? createdScene = await _createService.CreateSceneAsync(sceneToCreate);
+            Scene? createdScene = await _createService.CreateScene(sceneToCreate);
 
             Console.WriteLine("Scene created: " + createdScene);
 
@@ -94,7 +94,7 @@ public class SceneController : ControllerBase
             Scene sceneToCreate = SceneDtoMapper.ToDomainFromUpdateRequest(request);
 
             // Use service
-            Scene? updatedScene = await _updateService.UpdateSceneAsync(id, sceneToCreate);
+            Scene? updatedScene = await _updateService.UpdateScene(id, sceneToCreate);
 
             Console.WriteLine("Scene updated: '" + updatedScene + "'");
 
@@ -117,7 +117,7 @@ public class SceneController : ControllerBase
         try
         {
             // Use service
-            Scene? deletedScene = await _deleteService.DeleteSceneAsync(id);
+            Scene? deletedScene = await _deleteService.DeleteScene(id);
 
             // Response
             if (deletedScene is null)

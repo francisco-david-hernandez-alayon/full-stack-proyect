@@ -4,5 +4,5 @@ namespace GameApp.Application.UseCases.SceneUseCases;
 
 public interface SceneDeleteUseCase
 {
-    public Task<Scene?> DeleteSceneAsync(Guid id);
+    public Task<Scene?> DeleteScene(Guid id);
 }

@@ -1,6 +1,7 @@
 using GameApp.Application.UseCases.SceneUseCases;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Repositories;
+using GameApp.Domain.ValueObjects.Scenes;
 
 namespace SceneApp.Application.Services.SceneServices;
 
@@ -13,12 +14,17 @@ public class SceneGetService : SceneGetUseCase
         _repo = repo;
     }
 
-    public async Task<Scene?> GetSceneAsync(Guid id)
+    public async Task<Scene?> GetScene(Guid id)
     {
         return await _repo.FetchByIdAsync(id);
     }
 
-    public async Task<IEnumerable<Scene>> GetAllScenesAsync()
+    public async Task<Scene?> GetSceneByName(SceneName name)
+    {
+        return await _repo.FetchByName(name);
+    }
+
+    public async Task<IEnumerable<Scene>> GetAllScenes()
     {
         return await _repo.FetchAllAsync();
     }

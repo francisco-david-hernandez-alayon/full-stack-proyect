@@ -61,9 +61,11 @@ const game = new Game(
     10,
     nothingScene,
     [itemScene, enemyScene],
+    currentUserActions,
     [nothingScene, itemScene, nothingScene, itemScene, enemyScene],
-    currentUserActions
+    
 );
+
 
 // Mostrar por pantalla usando toString
 console.log(game.toString());

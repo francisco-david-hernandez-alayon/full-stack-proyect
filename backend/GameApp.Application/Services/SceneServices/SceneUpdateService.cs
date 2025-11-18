@@ -10,7 +10,7 @@ public class SceneUpdateService : SceneUpdateUseCase
 
     public SceneUpdateService(ISceneRepository repo) => _repo = repo;
 
-    public async Task<Scene?> UpdateSceneAsync(Guid id, Scene scene)
+    public async Task<Scene?> UpdateScene(Guid id, Scene scene)
     {
         var existingScene = await _repo.FetchByIdAsync(id);
         if (existingScene is null)

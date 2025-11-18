@@ -13,12 +13,12 @@ public class GameGetService : GameGetUseCase
         _repo = repo;
     }
 
-    public async Task<Game?> GetGameAsync(Guid id)
+    public async Task<Game?> GetGame(Guid id)
     {
         return await _repo.FetchByIdAsync(id);
     }
 
-    public async Task<IEnumerable<Game>> GetAllGamesAsync()
+    public async Task<IEnumerable<Game>> GetAllGames()
     {
         return await _repo.FetchAllAsync();
     }

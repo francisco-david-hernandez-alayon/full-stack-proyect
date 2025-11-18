@@ -4,7 +4,7 @@ namespace GameApp.Application.UseCases.GameUseCases;
 
 public interface GameGetUseCase
 {
-    public Task<Game?> GetGameAsync(Guid id);
+    public Task<Game?> GetGame(Guid id);
     
-    public Task<IEnumerable<Game>> GetAllGamesAsync();
+    public Task<IEnumerable<Game>> GetAllGames();
 }

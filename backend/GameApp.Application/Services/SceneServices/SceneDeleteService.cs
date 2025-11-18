@@ -10,7 +10,7 @@ public class SceneDeleteService : SceneDeleteUseCase
 
     public SceneDeleteService(ISceneRepository repo) => _repo = repo;
 
-    public async Task<Scene?> DeleteSceneAsync(Guid id)
+    public async Task<Scene?> DeleteScene(Guid id)
     {
         return await _repo.DeleteAsync(id);
     }
