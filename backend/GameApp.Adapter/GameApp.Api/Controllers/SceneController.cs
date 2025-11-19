@@ -58,6 +58,26 @@ public class SceneController : ControllerBase
         }
     }
 
+    [HttpGet("name/{name}")]
+    public async Task<IActionResult> GetByName(string name)
+    {
+        try
+        {
+            // Use service
+            Scene? Scene = await _getService.GetSceneByName(new SceneName(name));
+
+            // Response
+            if (Scene is null)
+                return NotFound($"Scene with name {name} not found.");
+
+            return Ok(SceneDtoMapper.ToDto(Scene));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] SceneCreateRequestDto request)
