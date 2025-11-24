@@ -1,4 +1,7 @@
-import { IGameRepository } from "../../domain/repositories/igame-repository";
+import { IGameRepository } from "../../../application/repositories/igame-repository";
+import { Game } from "../../../domain/entities/game";
+import { GamePostJsonRequest } from "../request/game-post-json-request";
+import { GameJsonResponse } from "../response/game-json-response";
 
 export class GameHttpRepository extends IGameRepository {
 
@@ -9,7 +12,7 @@ export class GameHttpRepository extends IGameRepository {
         if (!apiUrl) throw new TypeError("apiUrl is required");
 
         const baseUrl = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
-        this.#gamesEndpoint = `${baseUrl}/games`;
+        this.#gamesEndpoint = `${baseUrl}/game`;
     }
 
     // GET :id
@@ -17,55 +20,54 @@ export class GameHttpRepository extends IGameRepository {
         if (!id) throw new TypeError("id is required");
 
         const res = await fetch(`${this.#gamesEndpoint}/${id}`);
+        if (!res.ok) throw new Error(`Error fetching game ${id}`);
 
-        if (!res.ok) {
-            throw new Error(`Error fetching game ${id}`);
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return new GameJsonResponse(json);
     }
 
     // GET
     async fetchAll() {
         const res = await fetch(this.#gamesEndpoint);
+        if (!res.ok) throw new Error("Error fetching games");
 
-        if (!res.ok) {
-            throw new Error("Error fetching games");
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return json.map(g => new GameJsonResponse(g));
     }
 
     // POST
     async save(game) {
-        if (!game) throw new TypeError("game is required");
+        // validate game
+        if (!(game instanceof Game)) {
+            throw new TypeError("game must be an instance of Game");
+        }
+
+        // create body request
+        const bodyDto = new GamePostJsonRequest(game);
+
+        console.log(bodyDto.toString());
 
         const res = await fetch(this.#gamesEndpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(game),
+            body: JSON.stringify(bodyDto),
         });
 
-        if (!res.ok) {
-            throw new Error("Error saving game");
-        }
+        if (!res.ok) throw new Error("Error saving game");
 
-        return await res.json();
+        const json = await res.json();
+        return new GameJsonResponse(json);
     }
 
     // DELETE :id
     async delete(id) {
         if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#gamesEndpoint}/${id}`, {
-            method: "DELETE",
-        });
+        const res = await fetch(`${this.#gamesEndpoint}/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error(`Error deleting game ${id}`);
 
-        if (!res.ok) {
-            throw new Error(`Error deleting game ${id}`);
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return new GameJsonResponse(json);
     }
 
     // PUT :id
@@ -79,10 +81,9 @@ export class GameHttpRepository extends IGameRepository {
             body: JSON.stringify(game),
         });
 
-        if (!res.ok) {
-            throw new Error(`Error updating game ${id}`);
-        }
+        if (!res.ok) throw new Error(`Error updating game ${id}`);
 
-        return await res.json();
+        const json = await res.json();
+        return new GameJsonResponse(json);
     }
 }

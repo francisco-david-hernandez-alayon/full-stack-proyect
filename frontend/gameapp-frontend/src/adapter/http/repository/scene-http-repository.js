@@ -1,15 +1,16 @@
 import { ISceneRepository } from "../../../application/repositories/iscene-repository";
+import { SceneJsonResponse } from "./mappers/scene-json-response";
 
 export class SceneHttpRepository extends ISceneRepository {
 
-    #scenesEndpoint; // endpoint privado
+    #scenesEndpoint;
 
     constructor(apiUrl) {
         super();
         if (!apiUrl) throw new TypeError("apiUrl is required");
 
         const baseUrl = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
-        this.#scenesEndpoint = `${baseUrl}/scenes`;
+        this.#scenesEndpoint = `${baseUrl}/scene`;
     }
 
     // GET :id
@@ -17,12 +18,10 @@ export class SceneHttpRepository extends ISceneRepository {
         if (!id) throw new TypeError("id is required");
 
         const res = await fetch(`${this.#scenesEndpoint}/${id}`);
+        if (!res.ok) throw new Error(`Error fetching scene ${id}`);
 
-        if (!res.ok) {
-            throw new Error(`Error fetching scene ${id}`);
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return new SceneJsonResponse(json);
     }
 
     // GET name/:name
@@ -30,72 +29,65 @@ export class SceneHttpRepository extends ISceneRepository {
         if (!name) throw new TypeError("name is required");
 
         const res = await fetch(`${this.#scenesEndpoint}/name/${encodeURIComponent(name)}`);
+        if (!res.ok) throw new Error(`Error fetching scene by name '${name}'`);
 
-        if (!res.ok) {
-            throw new Error(`Error fetching scene by name '${name}'`);
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return new SceneJsonResponse(json);
     }
 
     // GET
     async fetchAll() {
         const res = await fetch(this.#scenesEndpoint);
+        if (!res.ok) throw new Error("Error fetching scenes");
 
-        if (!res.ok) {
-            throw new Error("Error fetching scenes");
-        }
-
-        return await res.json();
+        const json = await res.json();
+        return json.map(s => new SceneJsonResponse(s));
     }
 
-    // POST
-    async save(scene) {
-        if (!scene) throw new TypeError("scene is required");
+    // // POST
+    // async save(scene) {
+    //     if (!scene) throw new TypeError("scene is required");
 
-        const res = await fetch(this.#scenesEndpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(scene),
-        });
+    //     const res = await fetch(this.#scenesEndpoint, {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(scene),
+    //     });
 
-        if (!res.ok) {
-            throw new Error("Error saving scene");
-        }
+    //     if (!res.ok) throw new Error("Error saving scene");
 
-        return await res.json();
-    }
+    //     const json = await res.json();
+    //     return new SceneJsonResponse(json);
+    // }
 
-    // DELETE :id
-    async delete(id) {
-        if (!id) throw new TypeError("id is required");
+    // // DELETE :id
+    // async delete(id) {
+    //     if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#scenesEndpoint}/${id}`, {
-            method: "DELETE",
-        });
+    //     const res = await fetch(`${this.#scenesEndpoint}/${id}`, {
+    //         method: "DELETE",
+    //     });
 
-        if (!res.ok) {
-            throw new Error(`Error deleting scene ${id}`);
-        }
+    //     if (!res.ok) throw new Error(`Error deleting scene ${id}`);
 
-        return await res.json();
-    }
+    //     const json = await res.json();
+    //     return new SceneJsonResponse(json);
+    // }
 
-    // PUT :id
-    async update(id, scene) {
-        if (!id) throw new TypeError("id is required");
-        if (!scene) throw new TypeError("scene is required");
+    // // PUT :id
+    // async update(id, scene) {
+    //     if (!id) throw new TypeError("id is required");
+    //     if (!scene) throw new TypeError("scene is required");
 
-        const res = await fetch(`${this.#scenesEndpoint}/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(scene),
-        });
+    //     const res = await fetch(`${this.#scenesEndpoint}/${id}`, {
+    //         method: "PUT",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify(scene),
+    //     });
 
-        if (!res.ok) {
-            throw new Error(`Error updating scene ${id}`);
-        }
+    //     if (!res.ok) throw new Error(`Error updating scene ${id}`);
 
-        return await res.json();
-    }
+    //     const json = await res.json();
+    //     return new SceneJsonResponse(json);
+    // }
 }

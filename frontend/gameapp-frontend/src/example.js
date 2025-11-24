@@ -15,6 +15,8 @@ import { ItemName } from "./domain/value-objects/items/item-name.js";
 import { ItemDescription } from "./domain/value-objects/items/item-description.js";
 import { UserAction } from "./domain/enumerates/user-action.js";
 
+import { GameHttpRepository } from "./adapter/http/repository/game-http-repository.js"
+
 // Create character
 const warrior = new WarriorCharacter();
 
@@ -55,16 +57,47 @@ const enemyScene = new EnemyScene(
 const currentUserActions = [UserAction.MOVE_FORWARD, UserAction.USE_ITEM] 
 
 
-// Create game
+// 1️⃣ Crear el juego
 const game = new Game(
     warrior,
     10,
     nothingScene,
     [itemScene, enemyScene],
     currentUserActions,
-    [nothingScene, itemScene, nothingScene, itemScene, enemyScene],
-    
+    [nothingScene, itemScene, nothingScene, itemScene, enemyScene]
 );
+
+
+
+// Inicializar el repositorio
+const repo = new GameHttpRepository("http://localhost:5000/api");
+
+(async () => {
+    try {
+        // // Show Game
+        // console.log("Juego a enviar:");
+        // console.log(game.toString());
+
+        // POST
+        const createdGame = await repo.save(game);
+        console.log("Respuesta POST (Game creado):");
+        console.log(createdGame);
+
+        // // GET
+        // const fetchedById = await repo.fetchById(game.id);
+        // console.log("Respuesta GET por ID:");
+        // console.log(fetchedById);
+
+        // // GET
+        // const allGames = await repo.fetchAll();
+        // console.log("Respuesta GET todos los juegos:");
+        // console.log(allGames);
+
+    } catch (err) {
+        console.error("❌ Error en las peticiones:", err);
+    }
+})();
+
 
 
 // Mostrar por pantalla usando toString

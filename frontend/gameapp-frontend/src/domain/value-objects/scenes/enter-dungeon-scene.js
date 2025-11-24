@@ -1,4 +1,5 @@
 import { Scene } from "../../entities/scene";
+import { ChangeBiomeScene } from "./change-biome-scene";
 
 // EnterDungeonScene
 export class EnterDungeonScene extends Scene {
