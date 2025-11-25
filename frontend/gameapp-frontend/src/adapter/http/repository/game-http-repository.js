@@ -1,6 +1,7 @@
 import { IGameRepository } from "../../../application/repositories/igame-repository";
 import { Game } from "../../../domain/entities/game";
 import { GamePostJsonRequest } from "../request/game-post-json-request";
+import { GamePutJsonRequest } from "../request/game-put-json-request";
 import { GameJsonResponse } from "../response/game-json-response";
 
 export class GameHttpRepository extends IGameRepository {
@@ -23,7 +24,7 @@ export class GameHttpRepository extends IGameRepository {
         if (!res.ok) throw new Error(`Error fetching game ${id}`);
 
         const json = await res.json();
-        return new GameJsonResponse(json);
+        return new GameJsonResponse(json).toGame();
     }
 
     // GET
@@ -32,7 +33,7 @@ export class GameHttpRepository extends IGameRepository {
         if (!res.ok) throw new Error("Error fetching games");
 
         const json = await res.json();
-        return json.map(g => new GameJsonResponse(g));
+        return json.map(g => new GameJsonResponse(g).toGame());
     }
 
     // POST
@@ -45,8 +46,6 @@ export class GameHttpRepository extends IGameRepository {
         // create body request
         const bodyDto = new GamePostJsonRequest(game);
 
-        console.log(bodyDto.toString());
-
         const res = await fetch(this.#gamesEndpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -56,7 +55,7 @@ export class GameHttpRepository extends IGameRepository {
         if (!res.ok) throw new Error("Error saving game");
 
         const json = await res.json();
-        return new GameJsonResponse(json);
+        return new GameJsonResponse(json).toGame();
     }
 
     // DELETE :id
@@ -67,7 +66,7 @@ export class GameHttpRepository extends IGameRepository {
         if (!res.ok) throw new Error(`Error deleting game ${id}`);
 
         const json = await res.json();
-        return new GameJsonResponse(json);
+        return new GameJsonResponse(json).toGame();
     }
 
     // PUT :id
@@ -75,15 +74,18 @@ export class GameHttpRepository extends IGameRepository {
         if (!id) throw new TypeError("id is required");
         if (!game) throw new TypeError("game is required");
 
+        // create body request
+        const bodyDto = new GamePutJsonRequest(game);
+
         const res = await fetch(`${this.#gamesEndpoint}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(game),
+            body: JSON.stringify(bodyDto),
         });
 
         if (!res.ok) throw new Error(`Error updating game ${id}`);
 
         const json = await res.json();
-        return new GameJsonResponse(json);
+        return new GameJsonResponse(json).toGame();
     }
 }

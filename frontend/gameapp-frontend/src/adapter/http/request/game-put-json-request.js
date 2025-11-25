@@ -1,13 +1,15 @@
 import { Game } from "../../../domain/entities/game";
 import { Scene } from "../../../domain/entities/scene";
 import { UserAction } from "../../../domain/enumerates/user-action";
-import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import { Character } from "../../../domain/value-objects/characters/character";
+import { Enemy } from "../../../domain/value-objects/enemies/enemy";
 import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene";
-import { CharacterType } from "../enumerates/character-type";
+import { CharacterJsonRequest } from "./character-json-request";
+import { EnemyJsonRequest } from "./enemy-json-request";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
 
-export class GamePostJsonRequest {
+export class GamePutJsonRequest {
     constructor(game) {
         if (!game) throw new TypeError("game instance is required");
 
@@ -16,11 +18,10 @@ export class GamePostJsonRequest {
         }
 
         // 1. Character
-        if (game.character instanceof  WarriorCharacter) {
-            this.character = CharacterType.Warrior;
-        } else {
-            throw new TypeError(`Unknown character class: '${game.character.constructor.name}'`);
-        }
+        if (!(game.character instanceof Character)) {
+            throw new TypeError("game.character must be an instance of Character");
+        } 
+        this.character = new CharacterJsonRequest(game.character);
 
         // 2. NumberScenesToFinish
         if (typeof game.numberScenesToFinish !== "number" || !Number.isInteger(game.numberScenesToFinish)) {
@@ -56,6 +57,25 @@ export class GamePostJsonRequest {
             }
             return action;
         });
+
+        // 6. ListCompletedScenes
+        if (!Array.isArray(game.completedScenes)) {
+            throw new TypeError("game.completedScenes must be an array");
+        }
+        this.listCompletedScenes = game.completedScenes.map(scene => {
+            if (!(scene instanceof Scene)) {
+                throw new TypeError("All elements of game.listCompletedScenes must be instances of Scene");
+            }
+            return new SceneJsonRequest(scene);
+        });
+
+
+        // 7. CurrentEnemy (OPTIONAL)
+        if ((game.currentEnemy instanceof Enemy)) {
+            this.currentEnemy = new EnemyJsonRequest(game.currentEnemy);
+        } 
+        
+
     }
 
     toString() {

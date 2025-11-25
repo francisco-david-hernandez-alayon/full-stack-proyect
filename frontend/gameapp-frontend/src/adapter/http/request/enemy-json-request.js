@@ -5,11 +5,11 @@ export class EnemyJsonRequest {
         if (!enemy) throw new TypeError("enemy is required");
         if (!(enemy instanceof Enemy)) throw new TypeError("enemy must be an instance of Enemy");
 
-        this.name = enemy._name;
-        this.healthPoints = enemy._healthPoints;
-        this.damageAttack = enemy._damageAttack;
-        this.speedAttack = enemy._speedAttack;
-        this.moneyReward = enemy._moneyReward;
+        this.name = enemy.name.name;
+        this.healthPoints = enemy.healthPoints;
+        this.damageAttack = enemy.damageAttack;
+        this.speedAttack = enemy.speedAttack;
+        this.moneyReward = enemy.moneyReward;
     }
 
     toString() {

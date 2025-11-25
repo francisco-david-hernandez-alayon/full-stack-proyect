@@ -71,43 +71,43 @@ export class Game {
 
     // setter
     setCharacter(newCharacter) {
-        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     setNumberScenesToFinish(newNumber) {
-        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     addCompletedScene(newScene) {
         const newList = [...this._listCompletedScenes, newScene];
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, newList, this._currentEnemy, this._id);
     }
 
     removeLastCompletedScene() {
         if (this._listCompletedScenes.length === 0) return this;
         const newList = [...this._listCompletedScenes];
         newList.pop();
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newList, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, newList, this._currentEnemy, this._id);
     }
 
     setFinalScene(newFinalScene) {
-        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     setCurrentScenes(newList) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCompletedScenes, this._listCurrentUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList,this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     setCurrentUserActions(newListCurrenUserActions) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, newListCurrenUserActions, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newListCurrenUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     setCurrentEnemy(newCurrentEnemy) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCompletedScenes, this._listCurrentUserActions, newCurrentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, newCurrentEnemy, this._id);
     }
 
-    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newListCurrenUserActions, newCurrentEnemy) {
-        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newCompletedScenes, newListCurrenUserActions, newCurrentEnemy, this._id);
+    updateGame(newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrenUserActions, newListCurrentScenes, newCurrentEnemy) {
+        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newListCurrenUserActions, newCompletedScenes, newCurrentEnemy, this._id);
     }
 
     toString() {

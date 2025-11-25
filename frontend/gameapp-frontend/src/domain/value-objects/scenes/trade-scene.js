@@ -9,8 +9,17 @@ export class TradeScene extends Scene {
         this.#validateItemList(merchantItemsOffer, "merchantItemsOffer");
 
         this._characterItemsOffer = [...characterItemsOffer];
+
+        if (typeof characterMoneyOffer !== "number" || !Number.isInteger(characterMoneyOffer) || characterMoneyOffer <= 0) {
+            throw new TypeError("characterMoneyOffer must be an integer greater than 0");
+        }
         this._characterMoneyOffer = characterMoneyOffer;
+
         this._merchantItemsOffer = [...merchantItemsOffer];
+
+        if (typeof merchantMoneyOffer !== "number" || !Number.isInteger(merchantMoneyOffer) || merchantMoneyOffer <= 0) {
+            throw new TypeError("merchantMoneyOffer must be an integer greater than 0");
+        }
         this._merchantMoneyOffer = merchantMoneyOffer;
     }
 

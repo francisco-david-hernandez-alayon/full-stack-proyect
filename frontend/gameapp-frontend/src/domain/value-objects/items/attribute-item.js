@@ -1,7 +1,7 @@
 import { Item } from './item.js'
 
 // Specific class for attribute items
-export class AtributeItem extends Item {
+export class AttributeItem extends Item {
   constructor(name, description, healthPointsReceived, foodPointsReceived) {
     super(name, description);
 
@@ -29,11 +29,11 @@ export class AtributeItem extends Item {
 
   // setter
   setHealthPointsReceived(newValue) {
-    return new AtributeItem(this._name, this._description, newValue, this._foodPointsReceived);
+    return new AttributeItem(this._name, this._description, newValue, this._foodPointsReceived);
   }
 
   setFoodPointsReceived(newValue) {
-    return new AtributeItem(this._name, this._description, this._healthPointsReceived, newValue);
+    return new AttributeItem(this._name, this._description, this._healthPointsReceived, newValue);
   }
 
   toString() {

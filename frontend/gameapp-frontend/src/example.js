@@ -2,12 +2,12 @@ import { WarriorCharacter } from "./domain/value-objects/characters/warrior-char
 import { Game } from "./domain/entities/game.js";
 
 import { NothingHappensScene } from './domain/value-objects/scenes/nothing-happens-scene.js';
-import {EnemyScene} from './domain/value-objects/scenes/enemy-scene.js';
+import { EnemyScene } from './domain/value-objects/scenes/enemy-scene.js';
 import { ItemScene } from './domain/value-objects/scenes/item-scene.js';
-import {SceneName} from './domain/value-objects/scenes/scene-name.js';
-import { SceneDescription} from './domain/value-objects/scenes/scene-description.js';
+import { SceneName } from './domain/value-objects/scenes/scene-name.js';
+import { SceneDescription } from './domain/value-objects/scenes/scene-description.js';
 
-import { AtributeItem } from "./domain/value-objects/items/attribute-item.js";
+import { AttributeItem } from "./domain/value-objects/items/attribute-item.js";
 import { Biome } from './domain/enumerates/biome.js'
 import { EnemyName } from './domain/value-objects/enemies/enemy-name.js'
 import { Enemy } from './domain/value-objects/enemies/enemy.js'
@@ -16,14 +16,22 @@ import { ItemDescription } from "./domain/value-objects/items/item-description.j
 import { UserAction } from "./domain/enumerates/user-action.js";
 
 import { GameHttpRepository } from "./adapter/http/repository/game-http-repository.js"
+import { SceneHttpRepository } from "./adapter/http/repository/scene-http-repository.js";
 
+
+
+
+
+
+
+//--------------------------------------------SIMPLE TESTING----------------------------------------//
 // Create character
 const warrior = new WarriorCharacter();
 
 // Create example item
-const healthPotion = new AtributeItem(
-    new ItemName("Health Potion"), 
-    new ItemDescription("Restore 50hp"), 
+const healthPotion = new AttributeItem(
+    new ItemName("Health Potion"),
+    new ItemDescription("Restore 50hp"),
     50, 0
 );
 
@@ -54,7 +62,7 @@ const enemyScene = new EnemyScene(
 );
 
 // Create currentUserActions
-const currentUserActions = [UserAction.MOVE_FORWARD, UserAction.USE_ITEM] 
+const currentUserActions = [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]
 
 
 // 1️⃣ Crear el juego
@@ -70,28 +78,53 @@ const game = new Game(
 
 
 // Inicializar el repositorio
-const repo = new GameHttpRepository("http://localhost:5000/api");
+const repoGame = new GameHttpRepository("http://localhost:5000/api");
+
+const repoScene = new SceneHttpRepository("http://localhost:5000/api");
 
 (async () => {
     try {
-        // // Show Game
-        // console.log("Juego a enviar:");
-        // console.log(game.toString());
 
         // POST
-        const createdGame = await repo.save(game);
-        console.log("Respuesta POST (Game creado):");
-        console.log(createdGame);
+        console.log("--------------------> Response POST (Create Game):");
+        let createdGame = await repoGame.save(game);
+        console.log(createdGame.toString());
 
-        // // GET
-        // const fetchedById = await repo.fetchById(game.id);
-        // console.log("Respuesta GET por ID:");
-        // console.log(fetchedById);
+        // GET ById
+        console.log("--------------------> Response GET by ID:");
+        const fetchedById = await repoGame.fetchById(createdGame.id);
+        console.log(fetchedById.toString());
 
-        // // GET
-        // const allGames = await repo.fetchAll();
-        // console.log("Respuesta GET todos los juegos:");
-        // console.log(allGames);
+        // GET
+        console.log("--------------------> Response GET all games:");
+        const allGames = await repoGame.fetchAll();
+        allGames.forEach(game => {
+            console.log(game.toString());
+        });
+
+        // PUT 
+        console.log("--------------------> Response PUT (update Game):");
+        createdGame = createdGame.addCompletedScene(itemScene);
+        const newCharacter = createdGame.character.heal(createdGame.character.currentHealthPoints + itemScene.rewardItem.healthPointsReceived);
+        createdGame = createdGame.setCharacter(newCharacter);
+
+        const updatedGame = await repoGame.update(createdGame.id, createdGame);
+        console.log(updatedGame.toString());
+
+        // DELETE
+        console.log("--------------------> Response DELETE by ID:");
+        const deleteGame = await repoGame.delete(createdGame.id);
+        console.log(deleteGame.toString());
+
+
+
+
+        // GET SCENES
+        console.log("--------------------> Response GET all SCENES:");
+        const allScenes = await repoScene.fetchAll();
+        allScenes.forEach(scene => {
+            console.log(scene.toString());
+        });
 
     } catch (err) {
         console.error("❌ Error en las peticiones:", err);

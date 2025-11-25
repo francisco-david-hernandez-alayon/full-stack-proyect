@@ -1,5 +1,5 @@
 import { ISceneRepository } from "../../../application/repositories/iscene-repository";
-import { SceneJsonResponse } from "./mappers/scene-json-response";
+import { SceneJsonResponse } from "../response/scene-json-response";
 
 export class SceneHttpRepository extends ISceneRepository {
 
@@ -21,7 +21,7 @@ export class SceneHttpRepository extends ISceneRepository {
         if (!res.ok) throw new Error(`Error fetching scene ${id}`);
 
         const json = await res.json();
-        return new SceneJsonResponse(json);
+        return new SceneJsonResponse(json).toScene();
     }
 
     // GET name/:name
@@ -32,7 +32,7 @@ export class SceneHttpRepository extends ISceneRepository {
         if (!res.ok) throw new Error(`Error fetching scene by name '${name}'`);
 
         const json = await res.json();
-        return new SceneJsonResponse(json);
+        return new SceneJsonResponse(json).toScene();
     }
 
     // GET
@@ -41,7 +41,7 @@ export class SceneHttpRepository extends ISceneRepository {
         if (!res.ok) throw new Error("Error fetching scenes");
 
         const json = await res.json();
-        return json.map(s => new SceneJsonResponse(s));
+        return json.map(s => new SceneJsonResponse(s).toScene());
     }
 
     // // POST
@@ -57,7 +57,7 @@ export class SceneHttpRepository extends ISceneRepository {
     //     if (!res.ok) throw new Error("Error saving scene");
 
     //     const json = await res.json();
-    //     return new SceneJsonResponse(json);
+    //     return new SceneJsonResponse(json).toScene();
     // }
 
     // // DELETE :id
@@ -71,7 +71,7 @@ export class SceneHttpRepository extends ISceneRepository {
     //     if (!res.ok) throw new Error(`Error deleting scene ${id}`);
 
     //     const json = await res.json();
-    //     return new SceneJsonResponse(json);
+    //     return new SceneJsonResponse(json).toScene();
     // }
 
     // // PUT :id
@@ -88,6 +88,6 @@ export class SceneHttpRepository extends ISceneRepository {
     //     if (!res.ok) throw new Error(`Error updating scene ${id}`);
 
     //     const json = await res.json();
-    //     return new SceneJsonResponse(json);
+    //     return new SceneJsonResponse(json).toScene();
     // }
 }

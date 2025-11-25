@@ -6,16 +6,16 @@ export class ItemJsonRequest {
         if (!item) throw new TypeError("item is required");
         if (!(item instanceof Item)) throw new TypeError("item must be an instance of Item");
 
-        this.name = item._name;
-        this.description = item._description;
-        this.itemType = item._itemType;
+        this.name = item.name.name;
+        this.description = item.description.description;
+        this.itemType = item.itemType;
 
         // opcionales dependiendo del tipo
-        this.healthPointsReceived = item._healthPointsReceived ?? null;
-        this.foodPointsReceived = item._foodPointsReceived ?? null;
-        this.attackDamage = item._attackDamage ?? null;
-        this.speedAttack = item._speedAttack ?? null;
-        this.durability = item._durability ?? null;
+        this.healthPointsReceived = item.healthPointsReceived ?? null;
+        this.foodPointsReceived = item.foodPointsReceived ?? null;
+        this.attackDamage = item.attackDamage ?? null;
+        this.speedAttack = item.speedAttack ?? null;
+        this.durability = item.durability ?? null;
     }
 
     toString() {

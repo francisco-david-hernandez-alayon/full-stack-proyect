@@ -5,7 +5,20 @@ import { ChangeBiomeScene } from "./change-biome-scene";
 export class EnterDungeonScene extends Scene {
     constructor(name, description, biome, possibleScenes = [], id = null) {
         super(name, description, biome, id);
+        this.#validatePossibleScene(possibleScenes);
         this._possibleScenes = possibleScenes;
+    }
+
+    #validatePossibleScene(possibleScenes) {
+        if (!Array.isArray(possibleScenes)) {
+            throw new TypeError("possibleScenes must be an array of Scene");
+        }
+
+        for (const s of possibleScenes) {
+            if (!(s instanceof Scene)) {
+                throw new TypeError("each element of possibleScenes must be an instance of Scene");
+            }
+        }
     }
 
     // getter
