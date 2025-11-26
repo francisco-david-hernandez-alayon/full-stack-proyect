@@ -1,4 +1,4 @@
-import { Scene } from "../../entities/scene";
+import { Scene } from "./scene.js";
 
 // NothingHappensScene
 export class NothingHappensScene extends Scene {

@@ -1,9 +1,9 @@
 import { Game } from "../../../domain/entities/game";
-import { Scene } from "../../../domain/entities/scene";
+import { Scene } from "../../../domain/entities/scenes/scene.js";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { Character } from "../../../domain/value-objects/characters/character";
 import { Enemy } from "../../../domain/value-objects/enemies/enemy";
-import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene";
+import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 import { CharacterJsonRequest } from "./character-json-request";
 import { EnemyJsonRequest } from "./enemy-json-request";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";

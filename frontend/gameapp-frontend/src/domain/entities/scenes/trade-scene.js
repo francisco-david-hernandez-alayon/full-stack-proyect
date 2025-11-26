@@ -1,5 +1,5 @@
-import { Item } from "../items/item";
-import { Scene } from "../../entities/scene";
+import { Item } from "../../value-objects/items/item.js";
+import { Scene } from "./scene.js";
 
 export class TradeScene extends Scene {
     constructor(name, description, biome, characterItemsOffer = [], characterMoneyOffer = 0, merchantItemsOffer = [], merchantMoneyOffer = 0, id = null) {

@@ -4,6 +4,7 @@ using GameApp.Domain.Repositories;
 using GameApp.Infrastructure.Models;
 using GameApp.Infrastructure.Mappers;
 using GameApp.Domain.ValueObjects.Scenes;
+using GameApp.Host.scenes;
 
 namespace GameAppApp.Infrastructure.Repositories;
 
@@ -53,4 +54,30 @@ public class SceneRepository : ISceneRepository
         var doc = await _Scenes.FindOneAndDeleteAsync(g => g.Id == id);
         return doc is null ? null : SceneDocumentMapper.ToDomain(doc);
     }
+
+    // SEED INITIAL DATA
+    public async Task SeedAsync()
+    {
+        // Add all scenes
+        List<Scene> scenes = new List<Scene>();
+
+        ChangeBiomesScenesAdder.AddScenes(scenes);
+        ForestScenesAdder.AddScenes(scenes);
+        DesertScenesAdder.AddScenes(scenes);
+        SwampScenesAdder.AddScenes(scenes);
+        CityScenesAdder.AddScenes(scenes);
+        
+
+        // Insert scene only if not exist in db
+        foreach (var scene in scenes)
+        {
+            var existing = await FetchByName(scene.GetName());
+            if (existing is not null)
+                continue; 
+
+            await SaveAsync(scene);
+        }
+    }
+
+
 }

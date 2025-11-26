@@ -1,8 +1,8 @@
 import { Game } from "../../../domain/entities/game";
-import { Scene } from "../../../domain/entities/scene";
+import { Scene } from "../../../domain/entities/scenes/scene.js";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
-import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene";
+import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 import { CharacterType } from "../enumerates/character-type";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";

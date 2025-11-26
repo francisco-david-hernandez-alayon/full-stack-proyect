@@ -2,13 +2,13 @@ import { EnemyJsonRequest } from "./enemy-json-request.js";
 import { ItemJsonRequest } from "./item-json-request.js";
 import { Enemy } from "../../../domain/value-objects/enemies/enemy.js";
 import { Item } from "../../../domain/value-objects/items/item.js";
-import { Scene } from "../../../domain/entities/scene.js";
-import { EnemyScene } from "../../../domain/value-objects/scenes/enemy-scene.js";
-import { EnterDungeonScene } from "../../../domain/value-objects/scenes/enter-dungeon-scene.js";
-import { ItemScene } from "../../../domain/value-objects/scenes/item-scene.js";
-import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene.js";
-import { TradeScene } from "../../../domain/value-objects/scenes/trade-scene.js";
-import { ChangeBiomeScene } from "../../../domain/value-objects/scenes/change-biome-scene.js";
+import { Scene } from "../../../domain/entities/scenes/scene.js";
+import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene.js";
+import { EnterDungeonScene } from "../../../domain/entities/scenes/enter-dungeon-scene.js";
+import { ItemScene } from "../../../domain/entities/scenes/item-scene.js";
+import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
+import { TradeScene } from "../../../domain/entities/scenes/trade-scene.js";
+import { ChangeBiomeScene } from "../../../domain/entities/scenes/change-biome-scene.js";
 import { SceneType } from "../enumerates/scene-type.js";
 
 export class SceneJsonRequest {

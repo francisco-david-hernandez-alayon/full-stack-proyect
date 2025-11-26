@@ -16,4 +16,6 @@ public interface ISceneRepository
     public abstract Task<Scene?> SaveAsync(Scene scene);
 
     public abstract Task<Scene?> UpdateAsync(Guid id, Scene scene);
+
+    public abstract Task SeedAsync();
 }

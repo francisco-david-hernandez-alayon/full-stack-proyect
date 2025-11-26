@@ -1,5 +1,5 @@
-import { Item } from "../items/item";
-import { Scene } from "../../entities/scene";
+import { Item } from "../../value-objects/items/item.js";
+import { Scene } from "./scene.js";
 
 // ItemScene
 export class ItemScene extends Scene {

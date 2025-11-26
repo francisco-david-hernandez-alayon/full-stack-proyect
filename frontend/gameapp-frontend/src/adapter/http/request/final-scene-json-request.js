@@ -1,8 +1,5 @@
-import { Scene } from "../../../domain/entities/scene";
-import { Biome } from "../../../domain/enumerates/biome";
-import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene";
-import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
-import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
+
+import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 
 export class FinalSceneJsonRequest {
     constructor(finalScene) {

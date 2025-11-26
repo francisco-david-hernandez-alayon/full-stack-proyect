@@ -1,17 +1,16 @@
 import { Enemy } from "../../../domain/value-objects/enemies/enemy";
-import { Item } from "../../../domain/value-objects/items/item";
 import { AttackItem } from "../../../domain/value-objects/items/attack-item";
 import { AttributeItem } from "../../../domain/value-objects/items/attribute-item";
 import { ItemType } from "../enumerates/item-type";
 import { ItemDescription } from "../../../domain/value-objects/items/item-description";
 import { ItemName } from "../../../domain/value-objects/items/item-name";
-import { EnemyScene } from "../../../domain/value-objects/scenes/enemy-scene";
-import { EnterDungeonScene } from "../../../domain/value-objects/scenes/enter-dungeon-scene";
-import { ItemScene } from "../../../domain/value-objects/scenes/item-scene";
-import { NothingHappensScene } from "../../../domain/value-objects/scenes/nothing-happens-scene";
+import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
+import { EnterDungeonScene } from "../../../domain/entities/scenes/enter-dungeon-scene";
+import { ItemScene } from "../../../domain/entities/scenes/item-scene";
+import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
 import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
-import { TradeScene } from "../../../domain/value-objects/scenes/trade-scene";
+import { TradeScene } from "../../../domain/entities/scenes/trade-scene";
 import { SceneType } from "../enumerates/scene-type";
 import { EnemyName } from "../../../domain/value-objects/enemies/enemy-name";
 

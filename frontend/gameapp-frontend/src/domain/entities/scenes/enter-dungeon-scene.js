@@ -1,4 +1,4 @@
-import { Scene } from "../../entities/scene";
+import { Scene } from "./scene.js";
 import { ChangeBiomeScene } from "./change-biome-scene";
 
 // EnterDungeonScene

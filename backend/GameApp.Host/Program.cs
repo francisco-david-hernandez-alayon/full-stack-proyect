@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen();
 
 
 // Configure Infrastructure
-// 1. Configure mongoDb conexion
+// 1. Configure mongoDb conection
 var mongoClient = new MongoClient("mongodb://localhost:27017"); 
 var database = mongoClient.GetDatabase("GameAppDb");
 
@@ -46,6 +46,12 @@ builder.Services.AddScoped<SceneUpdateService>();
 builder.Services.AddScoped<SceneDeleteService>();
 
 var app = builder.Build();
+// seed initial data
+using (var scope = app.Services.CreateScope())
+{
+    var sceneRepo = scope.ServiceProvider.GetRequiredService<ISceneRepository>();
+    await sceneRepo.SeedAsync();
+}
 
 
 if (app.Environment.IsDevelopment())

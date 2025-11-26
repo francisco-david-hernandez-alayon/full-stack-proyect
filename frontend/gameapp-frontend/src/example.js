@@ -1,9 +1,9 @@
 import { WarriorCharacter } from "./domain/value-objects/characters/warrior-character.js";
 import { Game } from "./domain/entities/game.js";
 
-import { NothingHappensScene } from './domain/value-objects/scenes/nothing-happens-scene.js';
-import { EnemyScene } from './domain/value-objects/scenes/enemy-scene.js';
-import { ItemScene } from './domain/value-objects/scenes/item-scene.js';
+import { NothingHappensScene } from './domain/entities/scenes/nothing-happens-scene.js';
+import { EnemyScene } from './domain/entities/scenes/enemy-scene.js';
+import { ItemScene } from './domain/entities/scenes/item-scene.js';
 import { SceneName } from './domain/value-objects/scenes/scene-name.js';
 import { SceneDescription } from './domain/value-objects/scenes/scene-description.js';
 

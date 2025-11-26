@@ -1,5 +1,5 @@
-import { Enemy } from "../enemies/enemy";
-import { Scene } from "../../entities/scene";
+import { Enemy } from "../../value-objects/enemies/enemy.js";
+import { Scene } from "./scene.js";
 
 // EnemyScene
 export class EnemyScene extends Scene {

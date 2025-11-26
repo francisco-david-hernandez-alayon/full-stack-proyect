@@ -1,6 +1,6 @@
-import { SceneName } from '../value-objects/scenes/scene-name.js'
-import { SceneDescription } from '../value-objects/scenes/scene-description.js'
-import { Biome } from '../enumerates/biome.js';
+import { SceneName } from '../../value-objects/scenes/scene-name.js'
+import { SceneDescription } from '../../value-objects/scenes/scene-description.js'
+import { Biome } from '../../enumerates/biome.js';
 import { v4 as uuidv4 } from "uuid";
 
 // Abstract base class Scene
