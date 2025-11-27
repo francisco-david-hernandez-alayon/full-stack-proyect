@@ -1,6 +1,7 @@
 using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 
-namespace GameApp.Host.scenes;
+namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 
 // Interface for scenes adder to feed initial db
 public interface IScenesAdder

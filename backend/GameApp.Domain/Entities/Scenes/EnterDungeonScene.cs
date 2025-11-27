@@ -1,7 +1,7 @@
-using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
+using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Domain.ValueObjects.Scenes;
+namespace GameApp.Domain.Entities.Scenes;
 
 // class for a scene where you enter a dungeon that can randomly generate a scene
 public class EnterDungeonScene : Scene

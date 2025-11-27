@@ -1,9 +1,10 @@
-using GameApp.Api.Enumerates;
+using GameApp.Adapter.Api.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.ItemsDto;
 
 public class ItemDto
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public ItemType ItemType { get; set; } = default!; 

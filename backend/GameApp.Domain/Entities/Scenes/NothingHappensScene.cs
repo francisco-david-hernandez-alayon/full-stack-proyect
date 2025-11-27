@@ -1,7 +1,7 @@
-using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
+using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Domain.ValueObjects.Scenes;
+namespace GameApp.Domain.Entities.Scenes;
 
 // Class for scene where nothing happens you just move forward
 public class NothingHappensScene : Scene

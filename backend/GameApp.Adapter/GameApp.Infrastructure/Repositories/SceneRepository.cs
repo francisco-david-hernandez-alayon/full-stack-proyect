@@ -1,38 +1,45 @@
 using MongoDB.Driver;
-using GameApp.Domain.Entities;
 using GameApp.Domain.Repositories;
-using GameApp.Infrastructure.Models;
-using GameApp.Infrastructure.Mappers;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Mappers;
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Host.scenes;
+using GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
+using GameApp.Domain.Entities.Scenes;
+using GameApp.Domain.Entities.Items;
 
-namespace GameAppApp.Infrastructure.Repositories;
+namespace GameApp.Adapter.Infrastructure.Repositories;
 
 public class SceneRepository : ISceneRepository
 {
     private readonly IMongoCollection<SceneDocument> _Scenes;
+    private readonly IItemRepository _itemRepository;
 
-    public SceneRepository(IMongoDatabase database)
+    public SceneRepository(IMongoDatabase database, IItemRepository itemRepository)
     {
-        _Scenes = database.GetCollection<SceneDocument>("Scenes");
+        _Scenes = database.GetCollection<SceneDocument>("scenes");
+        _itemRepository = itemRepository;
     }
 
     public async Task<IEnumerable<Scene>> FetchAllAsync()
     {
         var docs = await _Scenes.Find(_ => true).ToListAsync();
-        return docs.Select(SceneDocumentMapper.ToDomain);
+
+        var scenes = await Task.WhenAll(docs.Select(doc => SceneDocumentMapper.ToDomainAsync(doc, _itemRepository)));
+
+        return scenes;
     }
+
 
     public async Task<Scene?> FetchByIdAsync(Guid id)
     {
         var doc = await _Scenes.Find(g => g.Id == id).FirstOrDefaultAsync();
-        return doc is null ? null : SceneDocumentMapper.ToDomain(doc);
+        return doc is null ? null : await SceneDocumentMapper.ToDomainAsync(doc, _itemRepository);
     }
 
     public async Task<Scene?> FetchByName(SceneName name)
     {
         var doc = await _Scenes.Find(g => g.Name == name.GetName()).FirstOrDefaultAsync();
-        return doc is null ? null : SceneDocumentMapper.ToDomain(doc);
+        return doc is null ? null : await SceneDocumentMapper.ToDomainAsync(doc, _itemRepository);
     }
 
     public async Task<Scene?> SaveAsync(Scene Scene)
@@ -52,7 +59,7 @@ public class SceneRepository : ISceneRepository
     public async Task<Scene?> DeleteAsync(Guid id)
     {
         var doc = await _Scenes.FindOneAndDeleteAsync(g => g.Id == id);
-        return doc is null ? null : SceneDocumentMapper.ToDomain(doc);
+        return doc is null ? null : await SceneDocumentMapper.ToDomainAsync(doc, _itemRepository);
     }
 
     // SEED INITIAL DATA
@@ -66,14 +73,14 @@ public class SceneRepository : ISceneRepository
         DesertScenesAdder.AddScenes(scenes);
         SwampScenesAdder.AddScenes(scenes);
         CityScenesAdder.AddScenes(scenes);
-        
+
 
         // Insert scene only if not exist in db
         foreach (var scene in scenes)
         {
             var existing = await FetchByName(scene.GetName());
             if (existing is not null)
-                continue; 
+                continue;
 
             await SaveAsync(scene);
         }

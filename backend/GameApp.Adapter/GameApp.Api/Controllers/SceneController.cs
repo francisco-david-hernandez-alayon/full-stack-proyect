@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using GameApp.Domain.Entities;
-using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Domain.Enumerates;
-using GameApp.Api.Mappers;
+using GameApp.Domain.Entities.Scenes;
+using GameApp.Adapter.Api.Mappers;
 using GameApp.Application.Services.SceneServices;
 using SceneApp.Application.Services.SceneServices;
-using GameApp.Api.dtos;
+using GameApp.Adapter.Api.dtos.ScenesDto;
 
-namespace GameApp.Api.Controllers;
+namespace GameApp.Adapter.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

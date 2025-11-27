@@ -1,8 +1,10 @@
-using GameApp.Api.dtos;
+using GameApp.Adapter.Api.dtos;
+using GameApp.Adapter.Api.dtos.ScenesDto;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Api.Mappers;
+namespace GameApp.Adapter.Api.Mappers;
 
 public static class FinalSceneDtoMapper
 {

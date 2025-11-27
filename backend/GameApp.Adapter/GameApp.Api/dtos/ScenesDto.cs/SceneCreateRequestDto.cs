@@ -1,7 +1,9 @@
-using GameApp.Api.Enumerates;
+using GameApp.Adapter.Api.dtos.ItemsDto;
+using GameApp.Adapter.Api.dtos.OthersDto;
+using GameApp.Adapter.Api.Enumerates;
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.ScenesDto;
 
 public class SceneCreateRequestDto
 {

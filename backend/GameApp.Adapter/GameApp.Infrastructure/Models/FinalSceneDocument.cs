@@ -1,6 +1,6 @@
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class FinalSceneDocument
 {

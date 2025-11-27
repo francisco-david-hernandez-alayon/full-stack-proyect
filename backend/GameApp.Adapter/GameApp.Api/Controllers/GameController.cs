@@ -3,14 +3,16 @@ using GameApp.Application.Services;
 using GameApp.Domain.Entities;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Api.dtos;
+using GameApp.Adapter.Api.dtos;
 using GameApp.Domain.Enumerates;
-using GameApp.Api.Mappers;
+using GameApp.Adapter.Api.Mappers;
 using System.Text.Json;
 using GameApp.Application.Services.GameServices;
 using GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Domain.Entities.Scenes;
+using GameApp.Adapter.Api.dtos.GamesDto;
 
-namespace GameApp.Api.Controllers;
+namespace GameApp.Adapter.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

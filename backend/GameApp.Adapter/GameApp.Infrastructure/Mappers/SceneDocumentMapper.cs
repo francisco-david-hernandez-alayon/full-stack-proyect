@@ -1,9 +1,12 @@
-using GameApp.Domain.Entities;
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Infrastructure.Enumerates;
-using GameApp.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Enumerates;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Domain.Entities.Scenes;
+using GameApp.Domain.ValueObjects.Items;
+using GameApp.Domain.Repositories;
+using GameApp.Domain.Entities.Items;
 
-namespace GameApp.Infrastructure.Mappers;
+namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class SceneDocumentMapper
 {
@@ -34,7 +37,7 @@ public static class SceneDocumentMapper
 
             case ItemScene itemScene:
                 doc.SceneType = SceneType.Item;
-                doc.RewardItem = ItemDocumentMapper.ToDocument(itemScene.GetRewardItem());
+                doc.RewardItem = itemScene.GetRewardItem().GetName().GetName();  // store only item name
                 break;
 
             case EnterDungeonScene dungeon:
@@ -58,7 +61,7 @@ public static class SceneDocumentMapper
         return doc;
     }
 
-    public static Scene ToDomain(SceneDocument doc)
+    public static async Task<Scene> ToDomainAsync(SceneDocument doc, IItemRepository itemRepository)
     {
         var name = new SceneName(doc.Name);
         var description = new SceneDescription(doc.Description);
@@ -82,12 +85,20 @@ public static class SceneDocumentMapper
                 new ItemScene(doc.Id, name, description, doc.Biome,
                     doc.RewardItem is null
                         ? throw new ArgumentNullException(nameof(doc.RewardItem))
-                        : ItemDocumentMapper.ToDomain(doc.RewardItem)
+                        : await GetItemByName(new ItemName(doc.RewardItem!), itemRepository)
                 ),
 
             SceneType.EnterDungeon =>
-                new EnterDungeonScene(doc.Id, name, description, doc.Biome,
-                    doc.PossibleScenes?.Select(ToDomain).ToList() ?? new List<Scene>()),
+                new EnterDungeonScene(
+                    doc.Id,
+                    name,
+                    description,
+                    doc.Biome,
+                    doc.PossibleScenes != null
+                        ? (await Task.WhenAll(doc.PossibleScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository)))).ToList()
+                        : new List<Scene>()
+                ),
+
 
             SceneType.Trade =>
                 new TradeScene(doc.Id, name, description, doc.Biome,
@@ -100,4 +111,19 @@ public static class SceneDocumentMapper
             _ => new NothingHappensScene(doc.Id, name, description, doc.Biome)
         };
     }
+
+
+    private static async Task<Item> GetItemByName(ItemName name, IItemRepository itemRepository)
+    {
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+
+        Item? item = await itemRepository.FetchByName(name);
+        if (item == null)
+            throw new InvalidOperationException($"Item '{name.GetName()}' not found.");
+
+        return item;
+    }
+
+
 }

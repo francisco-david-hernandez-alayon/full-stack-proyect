@@ -1,5 +1,5 @@
 using GameApp.Application.UseCases.SceneUseCases;
-using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Repositories;
 
 namespace SceneApp.Application.Services.SceneServices;

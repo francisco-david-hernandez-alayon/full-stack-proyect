@@ -1,10 +1,11 @@
-using GameApp.Api.dtos;
-using GameApp.Api.Enumerates;
+using GameApp.Adapter.Api.dtos;
+using GameApp.Adapter.Api.dtos.OthersDto;
+using GameApp.Adapter.Api.Enumerates;
 using GameApp.Domain.ValueObjects;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Enemies;
 
-namespace GameApp.Api.Mappers;
+namespace GameApp.Adapter.Api.Mappers;
 
 public static class EnemyDtoMapper
 {

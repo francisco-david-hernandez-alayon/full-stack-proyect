@@ -1,8 +1,8 @@
 using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Enemies;
-using GameApp.Domain.ValueObjects.Scenes;
 
 namespace GameApp.Application.UseCases.GameUseCases;
 

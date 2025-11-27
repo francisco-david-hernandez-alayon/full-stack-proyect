@@ -1,7 +1,7 @@
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Domain.Entities;
+namespace GameApp.Domain.Entities.Scenes;
 
 // Abtract entity class for a general scene
 public abstract class Scene

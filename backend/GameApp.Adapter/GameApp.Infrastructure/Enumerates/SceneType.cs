@@ -1,4 +1,4 @@
-namespace GameApp.Infrastructure.Enumerates;
+namespace GameApp.Adapter.Infrastructure.Enumerates;
 
 public enum SceneType
 {

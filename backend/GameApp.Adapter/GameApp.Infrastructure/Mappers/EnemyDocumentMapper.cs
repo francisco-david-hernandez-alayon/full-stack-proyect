@@ -1,7 +1,7 @@
 using GameApp.Domain.ValueObjects.Enemies;
-using GameApp.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Models;
 
-namespace GameApp.Infrastructure.Mappers;
+namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class EnemyDocumentMapper
 {

@@ -1,6 +1,6 @@
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.ScenesDto;
 
 public class FinalSceneDto
 {

@@ -1,14 +1,15 @@
 using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Host.scenes;
+namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 
-public class SwampScenesAdder : IScenesAdder
+public class DesertScenesAdder : IScenesAdder
 {
 
     private static Biome getBiome()
     {
-        return Biome.swamp;
+        return Biome.desert;
     }
 
     public static void AddScenes(List<Scene> scenes)

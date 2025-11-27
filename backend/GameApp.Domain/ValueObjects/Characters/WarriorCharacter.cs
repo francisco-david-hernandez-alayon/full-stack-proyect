@@ -1,3 +1,4 @@
+using GameApp.Domain.Entities.Items;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Domain.ValueObjects.Characters;

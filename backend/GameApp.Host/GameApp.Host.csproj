@@ -18,7 +18,6 @@
     <ProjectReference Include="..\GameApp.Adapter\GameApp.Api\GameApp.Api.csproj" />
     <ProjectReference Include="..\GameApp.Adapter\GameApp.Infrastructure\GameApp.Infrastructure.csproj" />
     <ProjectReference Include="..\GameApp.Application\GameApp.Application.csproj" />
-    <ProjectReference Include="..\GameApp.Domain\GameApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>

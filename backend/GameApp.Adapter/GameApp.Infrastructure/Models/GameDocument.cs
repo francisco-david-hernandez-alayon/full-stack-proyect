@@ -2,7 +2,7 @@ using GameApp.Domain.Enumerates;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace GameApp.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class GameDocument
 {

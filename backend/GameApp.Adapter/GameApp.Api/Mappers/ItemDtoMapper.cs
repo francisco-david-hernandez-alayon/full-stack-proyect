@@ -1,11 +1,10 @@
-using GameApp.Api.dtos;
-using GameApp.Api.Enumerates;
-using GameApp.Domain.ValueObjects;
-using GameApp.Domain.ValueObjects.Characters;
-using GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Adapter.Api.dtos;
+using GameApp.Adapter.Api.dtos.ItemsDto;
+using GameApp.Adapter.Api.Enumerates;
+using GameApp.Domain.Entities.Items;
 using GameApp.Domain.ValueObjects.Items;
 
-namespace GameApp.Api.Mappers;
+namespace GameApp.Adapter.Api.Mappers;
 
 public static class ItemDtoMapper
 {
@@ -19,12 +18,13 @@ public static class ItemDtoMapper
         if (dto.Description == null)
             throw new ArgumentNullException(nameof(dto.Name));
 
+        Guid id = dto.Id;
         ItemName itemName = new ItemName(dto.Name);
         ItemDescription itemDescription = new ItemDescription(dto.Description);
 
         return dto.ItemType switch
         {
-            ItemType.Attack => new AttackItem(itemName, itemDescription,
+            ItemType.Attack => new AttackItem(id, itemName, itemDescription,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                         "AttackDamage is required for AttackItem")
                  , dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
@@ -33,7 +33,7 @@ public static class ItemDtoMapper
                         "Durability is required for AttackItem")
                         ),
 
-            ItemType.Attribute => new AtributeItem(itemName, itemDescription,
+            ItemType.Attribute => new AtributeItem(id, itemName, itemDescription,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                         "HealthPointsReceived is required for AttributeItem"),
                 dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
@@ -45,6 +45,16 @@ public static class ItemDtoMapper
     }
 
 
+    // public static Item ToDomainFromCreateRequest(ItemDto dto)
+    // {
+        
+    // }
+
+    // public static Item ToDomainFromUpdateRequest(ItemDto dto)
+    // {
+        
+    // }
+
     public static ItemDto ToDto(Item item)
     {
         if (item == null)
@@ -52,6 +62,7 @@ public static class ItemDtoMapper
 
         ItemDto dto = new ItemDto
         {
+            Id = item.GetGuid(),
             Name = item.GetName().GetName(),
             Description = item.GetDescription().GetDescription()
         };

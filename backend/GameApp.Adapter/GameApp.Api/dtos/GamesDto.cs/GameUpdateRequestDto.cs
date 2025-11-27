@@ -1,6 +1,8 @@
+using GameApp.Adapter.Api.dtos.OthersDto;
+using GameApp.Adapter.Api.dtos.ScenesDto;
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.GamesDto;
 
 public class GameUpdateRequestDto
 {

@@ -1,4 +1,6 @@
-namespace GameApp.Domain.ValueObjects.Items;
+using GameApp.Domain.ValueObjects.Items;
+
+namespace GameApp.Domain.Entities.Items;
 
 
 // Specific class for item that affect to atributes
@@ -9,9 +11,17 @@ public class AtributeItem : Item
 
 
 
-    // constructor
+    // Default constructor
     public AtributeItem(ItemName name, ItemDescription description, int healthPointsReceived, int foodPointsReceived)
         : base(name, description)
+    {
+        HealthPointsReceived = healthPointsReceived;
+        FoodPointsReceived = foodPointsReceived;
+    }
+
+    // Restore constructor
+    public AtributeItem(Guid id, ItemName name, ItemDescription description, int healthPointsReceived, int foodPointsReceived)
+        : base(id, name, description)
     {
         HealthPointsReceived = healthPointsReceived;
         FoodPointsReceived = foodPointsReceived;
@@ -25,6 +35,6 @@ public class AtributeItem : Item
     // To string
     public override string ToString()
     {
-        return $"{GetName()} atribute item: " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}";
+        return $"{GetName()} atribute item({GetGuid()}): " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}";
     }
 }

@@ -1,4 +1,4 @@
-using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.ValueObjects.Scenes;
 
 namespace GameApp.Application.UseCases.SceneUseCases;

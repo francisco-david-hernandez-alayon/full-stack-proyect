@@ -1,12 +1,12 @@
 using MongoDB.Driver;
 using GameApp.Domain.Repositories;
-using GameApp.Api;
 using System.Text.Json.Serialization;
-using GameApp.Infrastructure.Repositories;
 using GameApp.Application.Services.GameServices;
-using GameAppApp.Infrastructure.Repositories;
 using SceneApp.Application.Services.SceneServices;
 using GameApp.Application.Services.SceneServices;
+using GameApp.Application.Services.ItemServices;
+using GameApp.Adapter.Infrastructure.Repositories;
+using GameApp.Adapter.Api;     
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,12 +45,36 @@ builder.Services.AddScoped<SceneCreateService>();
 builder.Services.AddScoped<SceneUpdateService>();
 builder.Services.AddScoped<SceneDeleteService>();
 
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<ItemGetService>();
+builder.Services.AddScoped<ItemCreateService>();
+builder.Services.AddScoped<ItemUpdateService>();
+builder.Services.AddScoped<ItemDeleteService>();
+builder.Services.AddScoped<IGameRepository>(sp =>
+{
+    var db = sp.GetRequiredService<IMongoDatabase>();
+    var itemRepo = sp.GetRequiredService<IItemRepository>();
+    return new GameRepository(db, itemRepo);
+});
+
+builder.Services.AddScoped<ISceneRepository>(sp =>
+{
+    var db = sp.GetRequiredService<IMongoDatabase>();
+    var itemRepo = sp.GetRequiredService<IItemRepository>();
+    return new SceneRepository(db, itemRepo);
+});
+
 var app = builder.Build();
+
 // seed initial data
 using (var scope = app.Services.CreateScope())
 {
     var sceneRepo = scope.ServiceProvider.GetRequiredService<ISceneRepository>();
+    var itemRepo = scope.ServiceProvider.GetRequiredService<IItemRepository>();
+
+    await itemRepo.SeedAsync();
     await sceneRepo.SeedAsync();
+    
 }
 
 

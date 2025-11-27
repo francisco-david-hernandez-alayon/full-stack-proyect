@@ -1,12 +1,12 @@
-using GameApp.Api.Enumerates;
+using GameApp.Adapter.Api.dtos.ItemsDto;
+using GameApp.Adapter.Api.dtos.OthersDto;
+using GameApp.Adapter.Api.Enumerates;
 using GameApp.Domain.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.ScenesDto;
 
-public class SceneResponseDto
+public class SceneUpdateRequestDto
 {
-    public Guid Id { get; set; }
-    
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public Biome Biome { get; set; } = default!;

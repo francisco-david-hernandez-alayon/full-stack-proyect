@@ -1,9 +1,8 @@
 using GameApp.Domain.ValueObjects.Characters;
-using GameApp.Domain.Enumerates;
-using GameApp.Infrastructure.Models;
-using GameApp.Infrastructure.Enumerates;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Enumerates;
 
-namespace GameApp.Infrastructure.Mappers;
+namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class CharacterDocumentMapper
 {

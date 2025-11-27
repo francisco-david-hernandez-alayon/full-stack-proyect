@@ -1,30 +1,36 @@
 using GameApp.Domain.Repositories;
 using GameApp.Domain.Entities;
-using GameApp.Infrastructure.Models;
-using GameApp.Infrastructure.Mappers;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Mappers;
 using MongoDB.Driver;
 
-namespace GameApp.Infrastructure.Repositories;
+namespace GameApp.Adapter.Infrastructure.Repositories;
 
 public class GameRepository : IGameRepository
 {
     private readonly IMongoCollection<GameDocument> _games;
+    private readonly IItemRepository _itemRepository;
 
-    public GameRepository(IMongoDatabase database)
+    public GameRepository(IMongoDatabase database, IItemRepository itemRepository)
     {
         _games = database.GetCollection<GameDocument>("games");
+        _itemRepository = itemRepository;
     }
+
 
     public async Task<IEnumerable<Game>> FetchAllAsync()
     {
         var docs = await _games.Find(_ => true).ToListAsync();
-        return docs.Select(GameDocumentMapper.ToDomain);
+
+        var tasks = docs.Select(doc => GameDocumentMapper.ToDomainAsync(doc, _itemRepository));
+        return await Task.WhenAll(tasks);
     }
 
     public async Task<Game?> FetchByIdAsync(Guid id)
     {
         var doc = await _games.Find(g => g.Id == id).FirstOrDefaultAsync();
-        return doc is null ? null : GameDocumentMapper.ToDomain(doc);
+        if (doc is null) return null;
+        return await GameDocumentMapper.ToDomainAsync(doc, _itemRepository);
     }
 
     public async Task<Game?> SaveAsync(Game game)
@@ -44,6 +50,7 @@ public class GameRepository : IGameRepository
     public async Task<Game?> DeleteAsync(Guid id)
     {
         var doc = await _games.FindOneAndDeleteAsync(g => g.Id == id);
-        return doc is null ? null : GameDocumentMapper.ToDomain(doc);
+        if (doc is null) return null;
+        return await GameDocumentMapper.ToDomainAsync(doc, _itemRepository);
     }
 }

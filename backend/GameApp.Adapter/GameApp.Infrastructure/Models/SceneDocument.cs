@@ -1,9 +1,10 @@
 using GameApp.Domain.Enumerates;
-using GameApp.Infrastructure.Enumerates;
+using GameApp.Adapter.Infrastructure.Enumerates;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using GameApp.Domain.ValueObjects.Items;
 
-namespace GameApp.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class SceneDocument
 {
@@ -24,7 +25,7 @@ public class SceneDocument
     public List<SceneDocument>? PossibleScenes { get; set; }
 
     [BsonIgnoreIfNull]
-    public ItemDocument? RewardItem { get; set; }
+    public string? RewardItem { get; set; }
 
     [BsonIgnoreIfNull]
     public List<ItemDocument>? CharacterItemsOffer { get; set; }

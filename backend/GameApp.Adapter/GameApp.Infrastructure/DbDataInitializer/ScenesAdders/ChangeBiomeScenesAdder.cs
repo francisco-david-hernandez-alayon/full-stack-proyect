@@ -1,8 +1,8 @@
-using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Host.scenes;
+namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 
 public class ChangeBiomesScenesAdder : IScenesAdder
 {

@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-using GameApp.Api.dtos;
+using GameApp.Adapter.Api.dtos.GamesDto;
 using GameApp.Domain.Entities;
-using GameApp.Domain.ValueObjects.Enemies;
 
 
-namespace GameApp.Api.Mappers
+namespace GameApp.Adapter.Api.Mappers
 {
     public static class GameDtoMapper
     {

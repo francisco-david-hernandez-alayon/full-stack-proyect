@@ -1,6 +1,7 @@
-using GameApp.Api.Enumerates;
+using GameApp.Adapter.Api.dtos.ItemsDto;
+using GameApp.Adapter.Api.Enumerates;
 
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.OthersDto;
 
 public class CharacterDto
 {

@@ -1,8 +1,8 @@
-using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Domain.ValueObjects.Scenes;
+namespace GameApp.Domain.Entities.Scenes;
 
 // Class for a scene where you have to fight an enemy
 public class EnemyScene : Scene

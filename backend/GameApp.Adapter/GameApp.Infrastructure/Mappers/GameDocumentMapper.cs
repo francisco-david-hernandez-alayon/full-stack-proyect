@@ -3,9 +3,11 @@ using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Enemies;
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Domain.Entities.Scenes;
+using GameApp.Domain.Repositories;
 
-namespace GameApp.Infrastructure.Mappers;
+namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class GameDocumentMapper
 {
@@ -24,14 +26,22 @@ public static class GameDocumentMapper
         };
     }
 
-    public static Game ToDomain(GameDocument doc)
+    public async static Task<Game> ToDomainAsync(GameDocument doc, IItemRepository itemRepository)
     {
         if (doc == null)
             throw new ArgumentNullException(nameof(doc));
 
         Character character = CharacterDocumentMapper.ToDomain(doc.Character);
-        List<Scene> completedScenes = doc.CompletedScenes.Select(SceneDocumentMapper.ToDomain).ToList();
-        List<Scene> currentScenes = doc.CurrentScenes.Select(SceneDocumentMapper.ToDomain).ToList();
+
+        List<Scene> completedScenes = (await Task.WhenAll(
+            doc.CompletedScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))
+        )).ToList();
+
+        List<Scene> currentScenes = (await Task.WhenAll(
+            doc.CurrentScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))
+        )).ToList();
+
+
         List<UserAction> currentUserAction = doc.CurrentUserActions.ToList();
         NothingHappensScene finalScene = FinalSceneDocumentMapper.ToDomain(doc.FinalScene);
         Enemy? currentEnemy = EnemyDocumentMapper.ToDomainPosibleNull(doc.CurrentEnemy);
@@ -47,5 +57,6 @@ public static class GameDocumentMapper
             currentEnemy
         );
     }
+
 
 }

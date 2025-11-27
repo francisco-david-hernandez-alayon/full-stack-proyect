@@ -1,6 +1,6 @@
-using GameApp.Infrastructure.Enumerates;
+using GameApp.Adapter.Infrastructure.Enumerates;
 
-namespace GameApp.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class CharacterDocument
 {

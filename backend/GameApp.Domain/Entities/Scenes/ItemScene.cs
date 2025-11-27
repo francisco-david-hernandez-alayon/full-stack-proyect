@@ -1,8 +1,8 @@
-using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Items;
 using GameApp.Domain.Enumerates;
-using GameApp.Domain.ValueObjects.Items;
+using GameApp.Domain.ValueObjects.Scenes;
 
-namespace GameApp.Domain.ValueObjects.Scenes;
+namespace GameApp.Domain.Entities.Scenes;
 
 // Class for a scene where you get an item
 public class ItemScene : Scene

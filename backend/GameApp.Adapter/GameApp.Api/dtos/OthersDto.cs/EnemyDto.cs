@@ -1,4 +1,4 @@
-namespace GameApp.Api.dtos;
+namespace GameApp.Adapter.Api.dtos.OthersDto;
 
 public class EnemyDto
 {

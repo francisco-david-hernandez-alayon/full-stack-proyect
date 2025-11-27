@@ -1,4 +1,4 @@
-namespace GameApp.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class EnemyDocument
 {

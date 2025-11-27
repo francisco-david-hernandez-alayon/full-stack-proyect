@@ -1,4 +1,4 @@
-namespace GameApp.Api.Enumerates;
+namespace GameApp.Adapter.Api.Enumerates;
 
 public enum ItemType
 {

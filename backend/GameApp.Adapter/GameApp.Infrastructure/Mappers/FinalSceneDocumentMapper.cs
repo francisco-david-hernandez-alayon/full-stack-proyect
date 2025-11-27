@@ -1,7 +1,8 @@
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Infrastructure.Models;
+using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Domain.Entities.Scenes;
 
-namespace GameApp.Infrastructure.Mappers;
+namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class FinalSceneDocumentMapper
 {
