@@ -20,8 +20,8 @@ dotnet new sln -n GameApp
 dotnet new classlib -n GameApp.Domain
 dotnet new classlib -n GameApp.Application
 mkdir GameApp.Adapter; cd GameApp.Adapter
-dotnet new classlib -n GameApp.Infrastructure
-dotnet new webapi -n GameApp.Api
+dotnet new classlib -n GameApp.Adapter.Infrastructure
+dotnet new webapi -n GameApp.Adapter.Api
 ```
 
 ### Agregar referencias entre proyectos
@@ -49,17 +49,21 @@ dotnet add GameApp.Host/GameApp.Host.csproj reference GameApp.Application/GameAp
 
 ### Agregar proyectos a la solución
 ```
-dotnet sln add GameApp.Domain GameApp.Application GameApp.Adapter/GameApp.Infrastructure GameApp.Adapter/GameApp.Api GameApp.Host
+dotnet sln GameApp.sln add GameApp.Domain/GameApp.Domain.csproj
+dotnet sln GameApp.sln add GameApp.Application/GameApp.Application.csproj
+dotnet sln GameApp.sln add GameApp.Adapter/GameApp.Api/GameApp.Api.csproj
+dotnet sln GameApp.sln add GameApp.Adapter/GameApp.Infrastructure/GameApp.Infrastructure.csproj
+dotnet sln GameApp.sln add GameApp.Host/GameApp.Host.csproj
 ```
 
 ### Instalar paquetes necesarios
 ```
-cd GameApp.Infrastructure
+cd GameApp.Adapter.Infrastructure
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package MongoDB.Driver
 
-cd GameApp.Api
+cd GameApp.Adapter.Api
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```

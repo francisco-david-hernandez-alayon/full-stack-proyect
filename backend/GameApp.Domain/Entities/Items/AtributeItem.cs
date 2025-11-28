@@ -32,6 +32,11 @@ public class AtributeItem : Item
 
     public int GetFoodPointsReceived() => FoodPointsReceived;
 
+    // setters
+    public AtributeItem SetHealthPointsReceived(int newHealthPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), newHealthPointsReceived, GetFoodPointsReceived()); 
+
+    public AtributeItem SetFoodPointsReceived(int newFoodPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetHealthPointsReceived(), newFoodPointsReceived); 
+
     // To string
     public override string ToString()
     {

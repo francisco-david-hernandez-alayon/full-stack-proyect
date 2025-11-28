@@ -35,6 +35,14 @@ public class AttackItem : Item
 
     public int GetDurability() => Durability;
 
+    public AttackItem SetAttackDamage(int newAttackDamage) => new AttackItem(GetGuid(), GetName(), GetDescription(), newAttackDamage, GetSpeedAttack(), GetDurability()); 
+
+    public AttackItem SetSpeedAttack(int newSpeedAttack) => new AttackItem(GetGuid(), GetName(), GetDescription(), GetAttackDamage(), newSpeedAttack, GetDurability()); 
+
+    public AttackItem SetDurability(int newDurability) => new AttackItem(GetGuid(), GetName(), GetDescription(), GetAttackDamage(), GetSpeedAttack(), newDurability); 
+
+
+
     // To string
     public override string ToString()
     {

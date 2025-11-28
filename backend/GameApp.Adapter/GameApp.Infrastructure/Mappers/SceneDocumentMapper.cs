@@ -38,6 +38,10 @@ public static class SceneDocumentMapper
             case ItemScene itemScene:
                 doc.SceneType = SceneType.Item;
                 doc.RewardItem = itemScene.GetRewardItem().GetName().GetName();  // store only item name
+                if (itemScene.GetRewardItem() is AttackItem attackItem)  // store durability in attack item case
+                {
+                    doc.attackItemDurability = attackItem.GetDurability();
+                }
                 break;
 
             case EnterDungeonScene dungeon:
@@ -66,51 +70,62 @@ public static class SceneDocumentMapper
         var name = new SceneName(doc.Name);
         var description = new SceneDescription(doc.Description);
 
-        return doc.SceneType switch
+        switch (doc.SceneType)
         {
-            SceneType.NothingHappens =>
-                new NothingHappensScene(doc.Id, name, description, doc.Biome),
+            case SceneType.NothingHappens:
+                return new NothingHappensScene(doc.Id, name, description, doc.Biome);
 
-            SceneType.ChangeBiome =>
-                new ChangeBiomeScene(doc.Id, name, description, doc.Biome),
+            case SceneType.ChangeBiome:
+                return new ChangeBiomeScene(doc.Id, name, description, doc.Biome);
 
-            SceneType.Enemy =>
-                new EnemyScene(doc.Id, name, description, doc.Biome,
+            case SceneType.Enemy:
+                return new EnemyScene(doc.Id, name, description, doc.Biome,
                     doc.Enemy is null
                         ? throw new ArgumentNullException(nameof(doc.Enemy))
-                        : EnemyDocumentMapper.ToDomain(doc.Enemy)
-                ),
+                        : EnemyDocumentMapper.ToDomain(doc.Enemy));
 
-            SceneType.Item =>
-                new ItemScene(doc.Id, name, description, doc.Biome,
-                    doc.RewardItem is null
+            case SceneType.Item:
+                {
+                    Item item = doc.RewardItem is null
                         ? throw new ArgumentNullException(nameof(doc.RewardItem))
-                        : await GetItemByName(new ItemName(doc.RewardItem!), itemRepository)
-                ),
+                        : await GetItemByName(new ItemName(doc.RewardItem), itemRepository);
 
-            SceneType.EnterDungeon =>
-                new EnterDungeonScene(
+                    if (item is AttackItem attackItem)
+                    {
+                        item = attackItem.SetDurability(doc.attackItemDurability ?? 0);
+                    }
+
+                    return new ItemScene(doc.Id, name, description, doc.Biome, item);
+                }
+
+            case SceneType.EnterDungeon:
+                return new EnterDungeonScene(
                     doc.Id,
                     name,
                     description,
                     doc.Biome,
                     doc.PossibleScenes != null
-                        ? (await Task.WhenAll(doc.PossibleScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository)))).ToList()
-                        : new List<Scene>()
-                ),
+                        ? (await Task.WhenAll(doc.PossibleScenes
+                            .Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))))
+                            .ToList()
+                        : new List<Scene>());
 
-
-            SceneType.Trade =>
-                new TradeScene(doc.Id, name, description, doc.Biome,
+            case SceneType.Trade:
+                return new TradeScene(
+                    doc.Id,
+                    name,
+                    description,
+                    doc.Biome,
                     doc.CharacterItemsOffer?.Select(ItemDocumentMapper.ToDomain).ToList() ?? new(),
                     doc.CharacterMoneyOffer ?? 0,
                     doc.MerchantItemsOffer?.Select(ItemDocumentMapper.ToDomain).ToList() ?? new(),
-                    doc.MerchantMoneyOffer ?? 0
-                ),
+                    doc.MerchantMoneyOffer ?? 0);
 
-            _ => new NothingHappensScene(doc.Id, name, description, doc.Biome)
-        };
+            default:
+                return new NothingHappensScene(doc.Id, name, description, doc.Biome);
+        }
     }
+
 
 
     private static async Task<Item> GetItemByName(ItemName name, IItemRepository itemRepository)

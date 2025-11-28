@@ -1,8 +1,11 @@
-namespace GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Domain.ValueObjects.Enemies;
+
+namespace GameApp.Domain.Entities;
 
 // Class for an enemy
 public class Enemy
 {
+    private readonly Guid Id;
     private readonly EnemyName Name;
     private readonly int HealthPoints;
     private readonly int AttackDamage;
@@ -10,9 +13,21 @@ public class Enemy
     private readonly int RewardMoney;
 
 
-    // constructor
+    // Default constructor
     public Enemy(EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
     {
+        Id = Guid.NewGuid();
+        Name = name;
+        HealthPoints = healthPoints;
+        AttackDamage = attackDamage;
+        SpeedAttack = speedAttack;
+        RewardMoney = rewardMoney;
+    }
+
+    // Restore constructor
+    public Enemy(Guid id, EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
+    {
+        Id = id;
         Name = name;
         HealthPoints = healthPoints;
         AttackDamage = attackDamage;
@@ -21,6 +36,7 @@ public class Enemy
     }
 
     // Getters
+    public Guid GetGuid() => Id;
     public EnemyName GetName() => Name;
     public int GetHealthPoints() => HealthPoints;
     public int GetAttackDamage() => AttackDamage;

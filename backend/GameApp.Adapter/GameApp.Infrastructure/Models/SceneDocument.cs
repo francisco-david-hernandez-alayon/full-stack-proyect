@@ -28,6 +28,9 @@ public class SceneDocument
     public string? RewardItem { get; set; }
 
     [BsonIgnoreIfNull]
+    public int? attackItemDurability { get; set;  }
+
+    [BsonIgnoreIfNull]
     public List<ItemDocument>? CharacterItemsOffer { get; set; }
 
     [BsonIgnoreIfNull]

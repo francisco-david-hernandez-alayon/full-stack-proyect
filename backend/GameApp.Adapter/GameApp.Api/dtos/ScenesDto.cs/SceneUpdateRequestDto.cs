@@ -1,3 +1,4 @@
+using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Adapter.Api.dtos.OthersDto;
 using GameApp.Adapter.Api.Enumerates;

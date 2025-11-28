@@ -1,6 +1,8 @@
 using GameApp.Adapter.Api.dtos;
+using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.OthersDto;
 using GameApp.Adapter.Api.Enumerates;
+using GameApp.Domain.Entities;
 using GameApp.Domain.ValueObjects;
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Domain.ValueObjects.Enemies;
@@ -17,7 +19,7 @@ public static class EnemyDtoMapper
         if (dto.Name == null)
             throw new ArgumentNullException(nameof(dto.Name));
 
-        return new Enemy(new EnemyName(dto.Name), dto.HealthPoints, dto.DamageAttack, dto.SpeedAttack, dto.MoneyReward);
+        return new Enemy(dto.Id, new EnemyName(dto.Name), dto.HealthPoints, dto.DamageAttack, dto.SpeedAttack, dto.MoneyReward);
     }
 
 
@@ -25,6 +27,7 @@ public static class EnemyDtoMapper
     {
         return new EnemyDto
         {
+            Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -43,6 +46,7 @@ public static class EnemyDtoMapper
             throw new ArgumentNullException(nameof(dto.Name));
 
         return new Enemy(
+            dto.Id,
             new EnemyName(dto.Name),
             dto.HealthPoints,
             dto.DamageAttack,
@@ -58,6 +62,7 @@ public static class EnemyDtoMapper
 
         return new EnemyDto
         {
+            Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),

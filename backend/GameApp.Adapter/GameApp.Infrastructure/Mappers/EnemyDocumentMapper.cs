@@ -1,5 +1,6 @@
 using GameApp.Domain.ValueObjects.Enemies;
 using GameApp.Adapter.Infrastructure.Models;
+using GameApp.Domain.Entities;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 
@@ -9,6 +10,7 @@ public static class EnemyDocumentMapper
     {
         return new EnemyDocument
         {
+            Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -23,6 +25,7 @@ public static class EnemyDocumentMapper
             throw new ArgumentNullException(nameof(doc));
 
         return new Enemy(
+            doc.Id,
             new EnemyName(doc.Name),
             doc.HealthPoints,
             doc.DamageAttack,
@@ -39,6 +42,7 @@ public static class EnemyDocumentMapper
 
         return new EnemyDocument
         {
+            Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -53,6 +57,7 @@ public static class EnemyDocumentMapper
             return null;
 
         return new Enemy(
+            doc.Id,
             new EnemyName(doc.Name),
             doc.HealthPoints,
             doc.DamageAttack,
