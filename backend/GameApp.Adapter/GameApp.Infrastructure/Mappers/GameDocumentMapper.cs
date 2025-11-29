@@ -26,7 +26,7 @@ public static class GameDocumentMapper
         };
     }
 
-    public async static Task<Game> ToDomainAsync(GameDocument doc, IItemRepository itemRepository)
+    public async static Task<Game> ToDomainAsync(GameDocument doc, IItemRepository itemRepository, IEnemyRepository enemyRepository)
     {
         if (doc == null)
             throw new ArgumentNullException(nameof(doc));
@@ -34,11 +34,11 @@ public static class GameDocumentMapper
         Character character = CharacterDocumentMapper.ToDomain(doc.Character);
 
         List<Scene> completedScenes = (await Task.WhenAll(
-            doc.CompletedScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))
+            doc.CompletedScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository, enemyRepository))
         )).ToList();
 
         List<Scene> currentScenes = (await Task.WhenAll(
-            doc.CurrentScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))
+            doc.CurrentScenes.Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository, enemyRepository))
         )).ToList();
 
 

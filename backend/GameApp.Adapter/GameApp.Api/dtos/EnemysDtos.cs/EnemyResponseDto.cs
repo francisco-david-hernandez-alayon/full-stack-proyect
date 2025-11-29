@@ -1,6 +1,6 @@
 namespace GameApp.Adapter.Api.dtos.EnemysDtos;
 
-public class EnemyDto
+public class EnemyResponseDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = default!;

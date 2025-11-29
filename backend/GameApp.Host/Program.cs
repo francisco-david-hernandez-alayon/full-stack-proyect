@@ -6,7 +6,8 @@ using SceneApp.Application.Services.SceneServices;
 using GameApp.Application.Services.SceneServices;
 using GameApp.Application.Services.ItemServices;
 using GameApp.Adapter.Infrastructure.Repositories;
-using GameApp.Adapter.Api;     
+using GameApp.Adapter.Api;
+using GameApp.Application.Services.EnemyServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,35 +34,46 @@ builder.Services.AddSingleton(database);
 
 
 // Configure services: Dependency Injection
-builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<GameGetService>();
-builder.Services.AddScoped<GameCreateService>();
-builder.Services.AddScoped<GameUpdateService>();
-builder.Services.AddScoped<GameDeleteService>();
-
-builder.Services.AddScoped<ISceneRepository, SceneRepository>();
-builder.Services.AddScoped<SceneGetService>();
-builder.Services.AddScoped<SceneCreateService>();
-builder.Services.AddScoped<SceneUpdateService>();
-builder.Services.AddScoped<SceneDeleteService>();
-
+// Item
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ItemGetService>();
 builder.Services.AddScoped<ItemCreateService>();
 builder.Services.AddScoped<ItemUpdateService>();
 builder.Services.AddScoped<ItemDeleteService>();
+
+// Enemy
+builder.Services.AddScoped<IEnemyRepository, EnemyRepository>();
+builder.Services.AddScoped<EnemyGetService>();
+builder.Services.AddScoped<EnemyCreateService>();
+builder.Services.AddScoped<EnemyUpdateService>();
+builder.Services.AddScoped<EnemyDeleteService>();
+
+// Game
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<GameGetService>();
+builder.Services.AddScoped<GameCreateService>();
+builder.Services.AddScoped<GameUpdateService>();
+builder.Services.AddScoped<GameDeleteService>();
 builder.Services.AddScoped<IGameRepository>(sp =>
 {
     var db = sp.GetRequiredService<IMongoDatabase>();
     var itemRepo = sp.GetRequiredService<IItemRepository>();
-    return new GameRepository(db, itemRepo);
+    var enemyRepo = sp.GetRequiredService<IEnemyRepository>();
+    return new GameRepository(db, itemRepo, enemyRepo);
 });
 
+// Scene
+builder.Services.AddScoped<ISceneRepository, SceneRepository>();
+builder.Services.AddScoped<SceneGetService>();
+builder.Services.AddScoped<SceneCreateService>();
+builder.Services.AddScoped<SceneUpdateService>();
+builder.Services.AddScoped<SceneDeleteService>();
 builder.Services.AddScoped<ISceneRepository>(sp =>
 {
     var db = sp.GetRequiredService<IMongoDatabase>();
     var itemRepo = sp.GetRequiredService<IItemRepository>();
-    return new SceneRepository(db, itemRepo);
+    var enemyRepo = sp.GetRequiredService<IEnemyRepository>();
+    return new SceneRepository(db, itemRepo, enemyRepo);
 });
 
 var app = builder.Build();
@@ -69,10 +81,12 @@ var app = builder.Build();
 // seed initial data
 using (var scope = app.Services.CreateScope())
 {
-    var sceneRepo = scope.ServiceProvider.GetRequiredService<ISceneRepository>();
     var itemRepo = scope.ServiceProvider.GetRequiredService<IItemRepository>();
-
+    var enemyRepo = scope.ServiceProvider.GetRequiredService<IEnemyRepository>();
+    var sceneRepo = scope.ServiceProvider.GetRequiredService<ISceneRepository>();
+    
     await itemRepo.SeedAsync();
+    await enemyRepo.SeedAsync();
     await sceneRepo.SeedAsync();
     
 }

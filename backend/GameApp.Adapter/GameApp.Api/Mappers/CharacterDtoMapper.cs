@@ -7,7 +7,7 @@ namespace GameApp.Adapter.Api.Mappers;
 
 public static class CharacterDtoMapper
 {
-    public static Character ToDomain(CharacterDto dto)
+    public static Character ToDomain(CharacterResponseDto dto)
     {
         if (dto == null)
             throw new ArgumentNullException(nameof(dto));
@@ -38,9 +38,9 @@ public static class CharacterDtoMapper
         }
     }
 
-    public static CharacterDto ToDto(Character character)
+    public static CharacterResponseDto ToDto(Character character)
     {
-        return new CharacterDto
+        return new CharacterResponseDto
         {
             Type = character switch
             {

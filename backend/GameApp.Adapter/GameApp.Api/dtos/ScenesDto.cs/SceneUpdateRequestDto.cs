@@ -16,17 +16,17 @@ public class SceneUpdateRequestDto
     // optional depending on the type of scene:
 
     // EnemyScene
-    public EnemyDto? Enemy { get; set; } 
+    public EnemyResponseDto? Enemy { get; set; } 
 
     // EnterDungeonScene
     public List<SceneResponseDto>? PossibleScenes { get; set; } 
 
     // ItemScene
-    public ItemDto? RewardItem { get; set; } 
+    public ItemResponseDto? RewardItem { get; set; } 
 
     // TradeScene
-    public List<ItemDto>? CharacterItemsOffer { get; set; }
+    public List<ItemResponseDto>? CharacterItemsOffer { get; set; }
     public int? CharacterMoneyOffer { get; set; }
-    public List<ItemDto>? MerchantItemsOffer { get; set; }
+    public List<ItemResponseDto>? MerchantItemsOffer { get; set; }
     public int? MerchantMoneyOffer { get; set; }
 }

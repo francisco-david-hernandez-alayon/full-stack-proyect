@@ -12,16 +12,16 @@ public class AtributeItem : Item
 
 
     // Default constructor
-    public AtributeItem(ItemName name, ItemDescription description, int healthPointsReceived, int foodPointsReceived)
-        : base(name, description)
+    public AtributeItem(ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
+        : base(name, description, tradePrice)
     {
         HealthPointsReceived = healthPointsReceived;
         FoodPointsReceived = foodPointsReceived;
     }
 
     // Restore constructor
-    public AtributeItem(Guid id, ItemName name, ItemDescription description, int healthPointsReceived, int foodPointsReceived)
-        : base(id, name, description)
+    public AtributeItem(Guid id, ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
+        : base(id, name, description, tradePrice)
     {
         HealthPointsReceived = healthPointsReceived;
         FoodPointsReceived = foodPointsReceived;
@@ -33,13 +33,15 @@ public class AtributeItem : Item
     public int GetFoodPointsReceived() => FoodPointsReceived;
 
     // setters
-    public AtributeItem SetHealthPointsReceived(int newHealthPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), newHealthPointsReceived, GetFoodPointsReceived()); 
+    public AtributeItem SetHealthPointsReceived(int newHealthPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetTradePrice(), newHealthPointsReceived, GetFoodPointsReceived()); 
 
-    public AtributeItem SetFoodPointsReceived(int newFoodPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetHealthPointsReceived(), newFoodPointsReceived); 
+    public AtributeItem SetFoodPointsReceived(int newFoodPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetTradePrice(), GetHealthPointsReceived(), newFoodPointsReceived); 
+
+    public AtributeItem SetTradePrice(int newTradePrice) => new AtributeItem(GetGuid(), GetName(), GetDescription(), newTradePrice, GetHealthPointsReceived(), GetFoodPointsReceived()); 
 
     // To string
     public override string ToString()
     {
-        return $"{GetName()} atribute item({GetGuid()}): " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}";
+        return $"{GetName()} atribute item({GetGuid()}): " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}, TradePrice={GetTradePrice()}";
     }
 }

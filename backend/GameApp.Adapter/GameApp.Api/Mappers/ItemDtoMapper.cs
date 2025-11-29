@@ -8,7 +8,7 @@ namespace GameApp.Adapter.Api.Mappers;
 
 public static class ItemDtoMapper
 {
-    public static Item ToDomain(ItemDto dto)
+    public static Item ToDomain(ItemResponseDto dto)
     {
         // Check nullability
         if (dto == null)
@@ -21,10 +21,11 @@ public static class ItemDtoMapper
         Guid id = dto.Id;
         ItemName itemName = new ItemName(dto.Name);
         ItemDescription itemDescription = new ItemDescription(dto.Description);
+        int itemTradePrice = dto.TradePrice;
 
         return dto.ItemType switch
         {
-            ItemType.Attack => new AttackItem(id, itemName, itemDescription,
+            ItemType.Attack => new AttackItem(id, itemName, itemDescription, itemTradePrice,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                         "AttackDamage is required for AttackItem")
                  , dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
@@ -33,7 +34,7 @@ public static class ItemDtoMapper
                         "Durability is required for AttackItem")
                         ),
 
-            ItemType.Attribute => new AtributeItem(id, itemName, itemDescription,
+            ItemType.Attribute => new AtributeItem(id, itemName, itemDescription, itemTradePrice,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                         "HealthPointsReceived is required for AttributeItem"),
                 dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
@@ -45,26 +46,27 @@ public static class ItemDtoMapper
     }
 
 
-    // public static Item ToDomainFromCreateRequest(ItemDto dto)
+    // public static Item ToDomainFromCreateRequest(ItemResponseDto dto)
     // {
         
     // }
 
-    // public static Item ToDomainFromUpdateRequest(ItemDto dto)
+    // public static Item ToDomainFromUpdateRequest(ItemResponseDto dto)
     // {
         
     // }
 
-    public static ItemDto ToDto(Item item)
+    public static ItemResponseDto ToDto(Item item)
     {
         if (item == null)
             throw new ArgumentNullException(nameof(item));
 
-        ItemDto dto = new ItemDto
+        ItemResponseDto dto = new ItemResponseDto
         {
             Id = item.GetGuid(),
             Name = item.GetName().GetName(),
-            Description = item.GetDescription().GetDescription()
+            Description = item.GetDescription().GetDescription(),
+            TradePrice = item.GetTradePrice()
         };
 
         switch (item)

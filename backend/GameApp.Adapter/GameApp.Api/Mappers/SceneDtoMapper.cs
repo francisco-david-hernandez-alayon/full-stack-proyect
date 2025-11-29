@@ -47,10 +47,6 @@ public static class SceneDtoMapper
                         : ItemDtoMapper.ToDomain(dto.RewardItem)
                 ),
 
-            SceneType.EnterDungeon =>
-                new EnterDungeonScene(dto.Id, sceneName, sceneDescription, biome,
-                    dto.PossibleScenes?.Select(ToDomain).ToList() ?? new List<Scene>()
-                ),
 
             SceneType.Trade =>
                 new TradeScene(dto.Id, sceneName, sceneDescription, biome,
@@ -105,10 +101,6 @@ public static class SceneDtoMapper
                         : ItemDtoMapper.ToDomain(dto.RewardItem)
                 ),
 
-            SceneType.EnterDungeon =>
-                new EnterDungeonScene(sceneName, sceneDescription, biome,
-                    dto.PossibleScenes?.Select(ToDomain).ToList() ?? new List<Scene>()
-                ),
 
             SceneType.Trade =>
                 new TradeScene(sceneName, sceneDescription, biome,
@@ -163,11 +155,6 @@ public static class SceneDtoMapper
                         : ItemDtoMapper.ToDomain(dto.RewardItem)
                 ),
 
-            SceneType.EnterDungeon =>
-                new EnterDungeonScene(sceneName, sceneDescription, biome,
-                    dto.PossibleScenes?.Select(ToDomain).ToList() ?? new List<Scene>()
-                ),
-
             SceneType.Trade =>
                 new TradeScene(sceneName, sceneDescription, biome,
                     dto.CharacterItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
@@ -214,13 +201,6 @@ public static class SceneDtoMapper
             case ItemScene itemScene:
                 dto.SceneType = SceneType.Item;
                 dto.RewardItem = ItemDtoMapper.ToDto(itemScene.GetRewardItem());
-                break;
-
-            case EnterDungeonScene dungeon:
-                dto.SceneType = SceneType.EnterDungeon;
-                dto.PossibleScenes = dungeon.GetPossibleScenes()
-                    .Select(ToDto)
-                    .ToList();
                 break;
 
             case TradeScene trade:

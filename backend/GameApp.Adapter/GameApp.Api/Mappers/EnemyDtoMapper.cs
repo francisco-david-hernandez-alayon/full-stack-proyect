@@ -11,7 +11,7 @@ namespace GameApp.Adapter.Api.Mappers;
 
 public static class EnemyDtoMapper
 {
-    public static Enemy ToDomain(EnemyDto dto)
+    public static Enemy ToDomain(EnemyResponseDto dto)
     {
         // Check nullability
         if (dto == null)
@@ -23,9 +23,9 @@ public static class EnemyDtoMapper
     }
 
 
-    public static EnemyDto ToDto(Enemy enemy)
+    public static EnemyResponseDto ToDto(Enemy enemy)
     {
-        return new EnemyDto
+        return new EnemyResponseDto
         {
             Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),
@@ -37,7 +37,7 @@ public static class EnemyDtoMapper
     }
 
 
-    public static Enemy? ToDomainPosibleNull(EnemyDto? dto)
+    public static Enemy? ToDomainPosibleNull(EnemyResponseDto? dto)
     {
         if (dto is null)
             return null;
@@ -55,12 +55,12 @@ public static class EnemyDtoMapper
         );
     }
 
-    public static EnemyDto? ToDtoPosibleNull(Enemy? enemy)
+    public static EnemyResponseDto? ToDtoPosibleNull(Enemy? enemy)
     {
         if (enemy is null)
             return null;
 
-        return new EnemyDto
+        return new EnemyResponseDto
         {
             Id = enemy.GetGuid(),
             Name = enemy.GetName().GetName(),

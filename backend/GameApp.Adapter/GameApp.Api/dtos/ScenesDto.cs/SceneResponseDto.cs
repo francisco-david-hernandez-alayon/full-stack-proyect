@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Adapter.Api.dtos.OthersDto;
@@ -18,17 +19,24 @@ public class SceneResponseDto
     // optional depending on the type of scene:
 
     // EnemyScene
-    public EnemyDto? Enemy { get; set; } 
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public EnemyResponseDto? Enemy { get; set; } 
 
     // EnterDungeonScene
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<SceneResponseDto>? PossibleScenes { get; set; } 
 
     // ItemScene
-    public ItemDto? RewardItem { get; set; } 
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ItemResponseDto? RewardItem { get; set; } 
 
     // TradeScene
-    public List<ItemDto>? CharacterItemsOffer { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<ItemResponseDto>? CharacterItemsOffer { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? CharacterMoneyOffer { get; set; }
-    public List<ItemDto>? MerchantItemsOffer { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<ItemResponseDto>? MerchantItemsOffer { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MerchantMoneyOffer { get; set; }
 }

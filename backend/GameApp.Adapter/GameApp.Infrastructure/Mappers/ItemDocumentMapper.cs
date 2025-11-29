@@ -17,7 +17,8 @@ public static class ItemDocumentMapper
         var doc = new ItemDocument
         {
             Name = item.GetName().GetName(),
-            Description = item.GetDescription().GetDescription()
+            Description = item.GetDescription().GetDescription(),
+            TradePrice = item.GetTradePrice()
         };
 
         switch (item)
@@ -50,12 +51,14 @@ public static class ItemDocumentMapper
 
         ItemName name = new(doc.Name);
         ItemDescription desc = new(doc.Description);
+        int price = doc.TradePrice;
 
         return doc.ItemType switch
         {
             ItemType.Attack => new AttackItem(
                 name,
                 desc,
+                price,
                 doc.AttackDamage ?? throw new ArgumentNullException(nameof(doc.AttackDamage)),
                 doc.SpeedAttack ?? throw new ArgumentNullException(nameof(doc.SpeedAttack)),
                 doc.Durability ?? throw new ArgumentNullException(nameof(doc.Durability))
@@ -63,6 +66,7 @@ public static class ItemDocumentMapper
             ItemType.Attribute => new AtributeItem(
                 name,
                 desc,
+                price,
                 doc.HealthPointsReceived ?? throw new ArgumentNullException(nameof(doc.HealthPointsReceived)),
                 doc.FoodPointsReceived ?? throw new ArgumentNullException(nameof(doc.FoodPointsReceived))
             ),

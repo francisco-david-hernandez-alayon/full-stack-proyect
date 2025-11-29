@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.OthersDto;
 using GameApp.Adapter.Api.dtos.ScenesDto;
@@ -9,7 +10,7 @@ public class GameResponseDto
 {
     public Guid Id { get; set; }
 
-    public CharacterDto Character { get; set; } = default!;
+    public CharacterResponseDto Character { get; set; } = default!;
 
     public int NumberScenesToFinish { get; set; }
 
@@ -21,5 +22,6 @@ public class GameResponseDto
 
     public FinalSceneDto FinalScene { get; set; } = default!;
 
-    public EnemyDto? CurrentEnemy { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public EnemyResponseDto? CurrentEnemy { get; set; }
 }

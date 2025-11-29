@@ -11,48 +11,48 @@ namespace GameApp.Adapter.Infrastructure.Repositories;
 
 public class ItemRepository : IItemRepository
 {
-    private readonly IMongoCollection<ItemDocument> _Items;
+    private readonly IMongoCollection<ItemDocument> _items;
 
     public ItemRepository(IMongoDatabase database)
     {
-        _Items = database.GetCollection<ItemDocument>("items");
+        _items = database.GetCollection<ItemDocument>("items");
     }
 
     public async Task<IEnumerable<Item>> FetchAllAsync()
     {
-        var docs = await _Items.Find(_ => true).ToListAsync();
+        var docs = await _items.Find(_ => true).ToListAsync();
         return docs.Select(ItemDocumentMapper.ToDomain);
     }
 
     public async Task<Item?> FetchByIdAsync(Guid id)
     {
-        var doc = await _Items.Find(g => g.Id == id).FirstOrDefaultAsync();
+        var doc = await _items.Find(g => g.Id == id).FirstOrDefaultAsync();
         return doc is null ? null : ItemDocumentMapper.ToDomain(doc);
     }
 
     public async Task<Item?> FetchByName(ItemName name)
     {
-        var doc = await _Items.Find(g => g.Name == name.GetName()).FirstOrDefaultAsync();
+        var doc = await _items.Find(g => g.Name == name.GetName()).FirstOrDefaultAsync();
         return doc is null ? null : ItemDocumentMapper.ToDomain(doc);
     }
 
     public async Task<Item?> SaveAsync(Item Item)
     {
         var doc = ItemDocumentMapper.ToDocument(Item);
-        await _Items.InsertOneAsync(doc);
+        await _items.InsertOneAsync(doc);
         return Item;
     }
 
     public async Task<Item?> UpdateAsync(Guid id, Item Item)
     {
         var doc = ItemDocumentMapper.ToDocument(Item);
-        var result = await _Items.ReplaceOneAsync(g => g.Id == id, doc);
+        var result = await _items.ReplaceOneAsync(g => g.Id == id, doc);
         return result.IsAcknowledged && result.ModifiedCount > 0 ? Item : null;
     }
 
     public async Task<Item?> DeleteAsync(Guid id)
     {
-        var doc = await _Items.FindOneAndDeleteAsync(g => g.Id == id);
+        var doc = await _items.FindOneAndDeleteAsync(g => g.Id == id);
         return doc is null ? null : ItemDocumentMapper.ToDomain(doc);
     }
 

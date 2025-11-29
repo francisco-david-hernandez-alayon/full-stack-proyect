@@ -3,12 +3,12 @@ using GameApp.Adapter.Api.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.OthersDto;
 
-public class CharacterDto
+public class CharacterResponseDto
 {
     public CharacterType Type { get; set; } = default!; 
 
     public int CurrentHealthPoints { get; set; }
     public int CurrentFoodPoints { get; set; }
     public int CurrentMoney { get; set; }
-    public List<ItemDto> InventoryList { get; set; } = new();
+    public List<ItemResponseDto> InventoryList { get; set; } = new();
 }

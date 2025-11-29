@@ -5,6 +5,8 @@ using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.ValueObjects.Items;
 using GameApp.Domain.Repositories;
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.ValueObjects.Enemies;
+using GameApp.Domain.Entities;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 
@@ -32,7 +34,8 @@ public static class SceneDocumentMapper
 
             case EnemyScene enemyScene:
                 doc.SceneType = SceneType.Enemy;
-                doc.Enemy = EnemyDocumentMapper.ToDocument(enemyScene.GetEnemy());
+                doc.Enemy = enemyScene.GetEnemy().GetName().GetName();
+                doc.EnemyHealthPoints = enemyScene.GetEnemy().GetHealthPoints();  // store enemy hp
                 break;
 
             case ItemScene itemScene:
@@ -40,13 +43,8 @@ public static class SceneDocumentMapper
                 doc.RewardItem = itemScene.GetRewardItem().GetName().GetName();  // store only item name
                 if (itemScene.GetRewardItem() is AttackItem attackItem)  // store durability in attack item case
                 {
-                    doc.attackItemDurability = attackItem.GetDurability();
+                    doc.AttackItemDurability = attackItem.GetDurability();
                 }
-                break;
-
-            case EnterDungeonScene dungeon:
-                doc.SceneType = SceneType.EnterDungeon;
-                doc.PossibleScenes = dungeon.GetPossibleScenes().Select(ToDocument).ToList();
                 break;
 
             case TradeScene trade:
@@ -65,7 +63,7 @@ public static class SceneDocumentMapper
         return doc;
     }
 
-    public static async Task<Scene> ToDomainAsync(SceneDocument doc, IItemRepository itemRepository)
+    public static async Task<Scene> ToDomainAsync(SceneDocument doc, IItemRepository itemRepository, IEnemyRepository enemyRepository)
     {
         var name = new SceneName(doc.Name);
         var description = new SceneDescription(doc.Description);
@@ -79,10 +77,15 @@ public static class SceneDocumentMapper
                 return new ChangeBiomeScene(doc.Id, name, description, doc.Biome);
 
             case SceneType.Enemy:
-                return new EnemyScene(doc.Id, name, description, doc.Biome,
-                    doc.Enemy is null
+                {
+                    Enemy enemy = doc.Enemy is null
                         ? throw new ArgumentNullException(nameof(doc.Enemy))
-                        : EnemyDocumentMapper.ToDomain(doc.Enemy));
+                        : await GetEnemyByName(new EnemyName(doc.Enemy), enemyRepository);
+                        
+                    enemy = enemy.SetHealthPoints(doc.EnemyHealthPoints ?? 0);
+
+                    return new EnemyScene(doc.Id, name, description, doc.Biome, enemy);
+                }
 
             case SceneType.Item:
                 {
@@ -92,23 +95,11 @@ public static class SceneDocumentMapper
 
                     if (item is AttackItem attackItem)
                     {
-                        item = attackItem.SetDurability(doc.attackItemDurability ?? 0);
+                        item = attackItem.SetDurability(doc.AttackItemDurability ?? 0);
                     }
 
                     return new ItemScene(doc.Id, name, description, doc.Biome, item);
                 }
-
-            case SceneType.EnterDungeon:
-                return new EnterDungeonScene(
-                    doc.Id,
-                    name,
-                    description,
-                    doc.Biome,
-                    doc.PossibleScenes != null
-                        ? (await Task.WhenAll(doc.PossibleScenes
-                            .Select(d => SceneDocumentMapper.ToDomainAsync(d, itemRepository))))
-                            .ToList()
-                        : new List<Scene>());
 
             case SceneType.Trade:
                 return new TradeScene(
@@ -127,7 +118,7 @@ public static class SceneDocumentMapper
     }
 
 
-
+    // GET ITEMS FOR OTHER COLLECTIONS
     private static async Task<Item> GetItemByName(ItemName name, IItemRepository itemRepository)
     {
         if (name == null)
@@ -138,6 +129,19 @@ public static class SceneDocumentMapper
             throw new InvalidOperationException($"Item '{name.GetName()}' not found.");
 
         return item;
+    }
+
+
+    private static async Task<Enemy> GetEnemyByName(EnemyName name, IEnemyRepository enemyRepository)
+    {
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+
+        Enemy? enemy = await enemyRepository.FetchByName(name);
+        if (enemy == null)
+            throw new InvalidOperationException($"Enemy '{name.GetName()}' not found.");
+
+        return enemy;
     }
 
 
