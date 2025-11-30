@@ -1,3 +1,4 @@
+using GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Entities.Scenes;
@@ -12,12 +13,17 @@ public interface GameAdders : IGameAdders
     {
         List<Game> gamesToAdd = new List<Game>();
         WarriorCharacter warrior = new WarriorCharacter();
+        warrior = warrior.AddItemInventory(AttackItemsAdders.Dagger) as WarriorCharacter;
+        warrior = warrior.AddItemInventory(AttackItemsAdders.IronSword)  as WarriorCharacter;
+
         NothingHappensScene finalScene = ForestScenesAdder.FinalSceneTreasureForest;
         List<Scene> currentScenes = new List<Scene>{finalScene};
         List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.moveForward};
 
+        Game game1 = new Game(warrior, 10, finalScene, currentScenes, currentUserAction);
 
-        gamesToAdd.Add(new Game(warrior, 10, finalScene, currentScenes, currentUserAction));
+
+        gamesToAdd.Add(game1);
 
 
         games.AddRange(gamesToAdd);

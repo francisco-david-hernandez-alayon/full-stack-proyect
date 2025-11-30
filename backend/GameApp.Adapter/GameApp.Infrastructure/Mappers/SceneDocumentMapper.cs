@@ -35,16 +35,11 @@ public static class SceneDocumentMapper
             case EnemyScene enemyScene:
                 doc.SceneType = SceneType.Enemy;
                 doc.Enemy = enemyScene.GetEnemy().GetName().GetName();
-                doc.EnemyHealthPoints = enemyScene.GetEnemy().GetHealthPoints();  // store enemy hp
                 break;
 
             case ItemScene itemScene:
                 doc.SceneType = SceneType.Item;
-                doc.RewardItem = itemScene.GetRewardItem().GetName().GetName();  // store only item name
-                if (itemScene.GetRewardItem() is AttackItem attackItem)  // store durability in attack item case
-                {
-                    doc.AttackItemDurability = attackItem.GetDurability();
-                }
+                doc.RewardItem = itemScene.GetRewardItem().GetName().GetName(); 
                 break;
 
             case TradeScene trade:
@@ -81,8 +76,6 @@ public static class SceneDocumentMapper
                     Enemy enemy = doc.Enemy is null
                         ? throw new ArgumentNullException(nameof(doc.Enemy))
                         : await GetEnemyByName(new EnemyName(doc.Enemy), enemyRepository);
-                        
-                    enemy = enemy.SetHealthPoints(doc.EnemyHealthPoints ?? 0);
 
                     return new EnemyScene(doc.Id, name, description, doc.Biome, enemy);
                 }
@@ -92,11 +85,6 @@ public static class SceneDocumentMapper
                     Item item = doc.RewardItem is null
                         ? throw new ArgumentNullException(nameof(doc.RewardItem))
                         : await GetItemByName(new ItemName(doc.RewardItem), itemRepository);
-
-                    if (item is AttackItem attackItem)
-                    {
-                        item = attackItem.SetDurability(doc.AttackItemDurability ?? 0);
-                    }
 
                     return new ItemScene(doc.Id, name, description, doc.Biome, item);
                 }
@@ -131,7 +119,7 @@ public static class SceneDocumentMapper
         return item;
     }
 
-
+    // GET ENEMYS FOR OTHER COLLECTIONS
     private static async Task<Enemy> GetEnemyByName(EnemyName name, IEnemyRepository enemyRepository)
     {
         if (name == null)

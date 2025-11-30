@@ -22,7 +22,8 @@ public static class GameDocumentMapper
             CurrentScenes = game.GetCurrentScenes().Select(g => g.GetName().GetName()).ToList(),
             CurrentUserActions = game.GetCurrentUserAction(),
             FinalScene = game.GetFinalScene().GetName().GetName(),
-            CurrentEnemy = EnemyDocumentMapper.ToDocumentPosibleNull(game.GetCurrentEnemy())   // could be null
+            CurrentEnemy = EnemyDocumentMapper.ToDocumentPosibleNull(game.GetCurrentEnemy()),   // could be null
+            EnemyHealthPoints = game.GetCurrentEnemy()?.GetHealthPoints()  // store enemy hp
         };
     }
 
@@ -31,7 +32,7 @@ public static class GameDocumentMapper
         if (doc == null)
             throw new ArgumentNullException(nameof(doc));
 
-        Character character = CharacterDocumentMapper.ToDomain(doc.Character);
+        Character character = await CharacterDocumentMapper.ToDomainAsync(doc.Character, itemRepository);
 
         List<Scene> completedScenes = (await Task.WhenAll(
             doc.CompletedScenes.Select(d => GetSceneByName(new SceneName(d), sceneRepository))
@@ -45,6 +46,11 @@ public static class GameDocumentMapper
         List<UserAction> currentUserAction = doc.CurrentUserActions.ToList();
         NothingHappensScene finalScene = await GetFinalSceneByName(new SceneName(doc.FinalScene), sceneRepository);
         Enemy? currentEnemy = EnemyDocumentMapper.ToDomainPosibleNull(doc.CurrentEnemy);
+        if (currentEnemy != null)
+        {
+            currentEnemy = currentEnemy.SetHealthPoints(doc.EnemyHealthPoints ?? 0);
+        }
+
 
         return new Game(
             doc.Id,

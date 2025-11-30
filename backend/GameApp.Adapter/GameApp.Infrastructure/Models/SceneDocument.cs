@@ -20,16 +20,12 @@ public class SceneDocument
 
     [BsonIgnoreIfNull]
     public string? Enemy { get; set; }
-    [BsonIgnoreIfNull]
-    public int? EnemyHealthPoints { get; set; }
 
     [BsonIgnoreIfNull]
     public List<SceneDocument>? PossibleScenes { get; set; }
 
     [BsonIgnoreIfNull]
     public string? RewardItem { get; set; }
-    [BsonIgnoreIfNull]
-    public int? AttackItemDurability { get; set;  }
 
     [BsonIgnoreIfNull]
     public List<ItemDocument>? CharacterItemsOffer { get; set; }

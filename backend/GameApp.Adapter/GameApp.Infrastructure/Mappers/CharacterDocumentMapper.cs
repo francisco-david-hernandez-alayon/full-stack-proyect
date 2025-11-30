@@ -1,6 +1,9 @@
 using GameApp.Domain.ValueObjects.Characters;
 using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Adapter.Infrastructure.Enumerates;
+using GameApp.Domain.Entities.Items;
+using GameApp.Domain.ValueObjects.Items;
+using GameApp.Domain.Repositories;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 
@@ -18,14 +21,46 @@ public static class CharacterDocumentMapper
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
             CurrentFoodPoints = character.GetCurrentFoodPoints(),
             CurrentMoney = character.GetCurrentMoney(),
-            InventoryList = character.GetInventoryList().Select(ItemDocumentMapper.ToDocument).ToList()
+
+            // Map item name + durability
+            InventoryList = character.GetInventoryList()
+                .Select(item =>
+                {
+                    int durability =
+                        item is AttackItem attack
+                        ? attack.GetDurability()
+                        : 1; // default for non-attack items
+
+                    return new InventoryItemDocument
+                    {
+                        ItemName = item.GetName().GetName(),
+                        ItemDurability = durability
+                    };
+                })
+                .ToList()
         };
     }
 
-    public static Character ToDomain(CharacterDocument doc)
+    public static async Task<Character> ToDomainAsync(CharacterDocument doc, IItemRepository itemRepository)
     {
         if (doc == null)
             throw new ArgumentNullException(nameof(doc));
+
+        var inventoryDomain = new List<Item>();
+
+        foreach (var entry in doc.InventoryList)
+        {
+            // search item
+            Item item = await GetItemByName(new ItemName(entry.ItemName), itemRepository);
+
+            // if attack item apply durability
+            if (item is AttackItem attack)
+            {
+                item = attack.SetDurability(entry.ItemDurability);
+            }
+
+            inventoryDomain.Add(item);
+        }
 
         return doc.Type switch
         {
@@ -33,9 +68,22 @@ public static class CharacterDocumentMapper
                 currentHealthPoints: doc.CurrentHealthPoints,
                 currentFoodPoints: doc.CurrentFoodPoints,
                 currentMoney: doc.CurrentMoney,
-                inventoryList: doc.InventoryList.Select(ItemDocumentMapper.ToDomain).ToList()
+                inventoryList: inventoryDomain
             ),
             _ => throw new ArgumentException($"Unsupported character type: {doc.Type}")
         };
+    }
+
+    // GET ITEMS FOR OTHER COLLECTIONS
+    private static async Task<Item> GetItemByName(ItemName name, IItemRepository itemRepository)
+    {
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+
+        Item? item = await itemRepository.FetchByName(name);
+        if (item == null)
+            throw new InvalidOperationException($"Item '{name.GetName()}' not found.");
+
+        return item;
     }
 }

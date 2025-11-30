@@ -8,5 +8,5 @@ public class CharacterDocument
     public int CurrentHealthPoints { get; set; }
     public int CurrentFoodPoints { get; set; }
     public int CurrentMoney { get; set; }
-    public List<ItemDocument> InventoryList { get; set; } = new();
+    public List<InventoryItemDocument> InventoryList { get; set; } = new();
 }

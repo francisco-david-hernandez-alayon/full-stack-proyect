@@ -22,4 +22,6 @@ public class GameDocument
 
     [BsonIgnoreIfNull]
     public EnemyDocument? CurrentEnemy { get; set; }
+    [BsonIgnoreIfNull]
+    public int? EnemyHealthPoints { get; set; }
 }
