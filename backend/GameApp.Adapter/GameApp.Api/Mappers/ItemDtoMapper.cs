@@ -46,15 +46,86 @@ public static class ItemDtoMapper
     }
 
 
-    // public static Item ToDomainFromCreateRequest(ItemResponseDto dto)
-    // {
-        
-    // }
+    public static Item ToDomainFromCreateRequest(ItemCreateRequestDto dto)
+    {
+        if (dto == null)
+            throw new ArgumentNullException(nameof(dto));
+        if (dto.Name == null)
+            throw new ArgumentNullException(nameof(dto.Name));
+        if (dto.Description == null)
+            throw new ArgumentNullException(nameof(dto.Description));
 
-    // public static Item ToDomainFromUpdateRequest(ItemResponseDto dto)
-    // {
-        
-    // }
+        ItemName itemName = new ItemName(dto.Name);
+        ItemDescription itemDescription = new ItemDescription(dto.Description);
+        int tradePrice = dto.TradePrice;
+
+        return dto.ItemType switch
+        {
+            ItemType.Attack => new AttackItem(
+                itemName,
+                itemDescription,
+                tradePrice,
+                dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
+                    "AttackDamage is required for AttackItem"),
+                dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
+                    "SpeedAttack is required for AttackItem"),
+                dto.Durability ?? 1 // por defecto 1 si no se especifica
+            ),
+
+            ItemType.Attribute => new AtributeItem(
+                itemName,
+                itemDescription,
+                tradePrice,
+                dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
+                    "HealthPointsReceived is required for AttributeItem"),
+                dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
+                    "FoodPointsReceived is required for AttributeItem")
+            ),
+
+            _ => throw new ArgumentException($"Unsupported ItemType: {dto.ItemType}")
+        };
+    }
+
+    public static Item ToDomainFromUpdateRequest(ItemUpdateRequestDto dto)
+    {
+        if (dto == null)
+            throw new ArgumentNullException(nameof(dto));
+        if (dto.Name == null)
+            throw new ArgumentNullException(nameof(dto.Name));
+        if (dto.Description == null)
+            throw new ArgumentNullException(nameof(dto.Description));
+
+        ItemName itemName = new ItemName(dto.Name);
+        ItemDescription itemDescription = new ItemDescription(dto.Description);
+        int tradePrice = dto.TradePrice;
+
+        return dto.ItemType switch
+        {
+            ItemType.Attack => new AttackItem(
+                itemName,
+                itemDescription,
+                tradePrice,
+                dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
+                    "AttackDamage is required for AttackItem"),
+                dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
+                    "SpeedAttack is required for AttackItem"),
+                dto.Durability ?? 1 // default
+            ),
+
+            ItemType.Attribute => new AtributeItem(
+                itemName,
+                itemDescription,
+                tradePrice,
+                dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
+                    "HealthPointsReceived is required for AttributeItem"),
+                dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
+                    "FoodPointsReceived is required for AttributeItem")
+            ),
+
+            _ => throw new ArgumentException($"Unsupported ItemType: {dto.ItemType}")
+        };
+    }
+
 
     public static ItemResponseDto ToDto(Item item)
     {
@@ -90,6 +161,11 @@ public static class ItemDtoMapper
         }
 
         return dto;
+    }
+
+    public static List<ItemResponseDto> ToDtoList(IEnumerable<Item> items)
+    {
+        return items.Select(ToDto).ToList();
     }
 
 }

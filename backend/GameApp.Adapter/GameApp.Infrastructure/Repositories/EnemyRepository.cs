@@ -44,11 +44,12 @@ public class EnemyRepository : IEnemyRepository
         return Enemy;
     }
 
-    public async Task<Enemy?> UpdateAsync(Guid id, Enemy Enemy)
+    public async Task<Enemy?> UpdateAsync(Guid id, Enemy enemy)
     {
-        var doc = EnemyDocumentMapper.ToDocument(Enemy);
+        var doc = EnemyDocumentMapper.ToDocument(enemy);
+        doc.Id = id;  // Keep original id
         var result = await _enemys.ReplaceOneAsync(g => g.Id == id, doc);
-        return result.IsAcknowledged && result.ModifiedCount > 0 ? Enemy : null;
+        return result.IsAcknowledged && result.ModifiedCount > 0 ? enemy : null;
     }
 
     public async Task<Enemy?> DeleteAsync(Guid id)
@@ -64,13 +65,13 @@ public class EnemyRepository : IEnemyRepository
         List<Enemy> Enemys = new List<Enemy>();
 
         EnemysAdder.AddEnemys(Enemys);
-    
+
         // Insert Enemy only if not exist in db
         foreach (var Enemy in Enemys)
         {
             var existing = await FetchByName(Enemy.GetName());
             if (existing is not null)
-                continue; 
+                continue;
 
             await SaveAsync(Enemy);
         }

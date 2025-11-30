@@ -48,9 +48,11 @@ public class GameRepository : IGameRepository
     public async Task<Game?> UpdateAsync(Guid id, Game game)
     {
         var doc = GameDocumentMapper.ToDocument(game);
+        doc.Id = id; // Keep original id
         var result = await _games.ReplaceOneAsync(g => g.Id == id, doc);
         return result.IsAcknowledged && result.ModifiedCount > 0 ? game : null;
     }
+
 
     public async Task<Game?> DeleteAsync(Guid id)
     {
@@ -66,7 +68,7 @@ public class GameRepository : IGameRepository
         List<Game> Games = new List<Game>();
 
         GameAdders.AddGames(Games);
-    
+
         // Insert games in db
         foreach (var game in Games)
         {

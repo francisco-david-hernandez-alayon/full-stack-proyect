@@ -52,12 +52,14 @@ public class SceneRepository : ISceneRepository
         return Scene;
     }
 
-    public async Task<Scene?> UpdateAsync(Guid id, Scene Scene)
+    public async Task<Scene?> UpdateAsync(Guid id, Scene scene)
     {
-        var doc = SceneDocumentMapper.ToDocument(Scene);
+        var doc = SceneDocumentMapper.ToDocument(scene);
+        doc.Id = id;  // Keep original id
         var result = await _scenes.ReplaceOneAsync(g => g.Id == id, doc);
-        return result.IsAcknowledged && result.ModifiedCount > 0 ? Scene : null;
+        return result.IsAcknowledged && result.ModifiedCount > 0 ? scene : null;
     }
+
 
     public async Task<Scene?> DeleteAsync(Guid id)
     {

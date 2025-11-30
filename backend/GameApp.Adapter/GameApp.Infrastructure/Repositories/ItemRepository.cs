@@ -43,12 +43,15 @@ public class ItemRepository : IItemRepository
         return Item;
     }
 
-    public async Task<Item?> UpdateAsync(Guid id, Item Item)
+    public async Task<Item?> UpdateAsync(Guid id, Item item)
     {
-        var doc = ItemDocumentMapper.ToDocument(Item);
+        if (item == null) throw new ArgumentNullException(nameof(item));
+        var doc = ItemDocumentMapper.ToDocument(item);
+        doc.Id = id;  // Keep original id
         var result = await _items.ReplaceOneAsync(g => g.Id == id, doc);
-        return result.IsAcknowledged && result.ModifiedCount > 0 ? Item : null;
+        return result.IsAcknowledged && result.ModifiedCount > 0 ? item : null;
     }
+
 
     public async Task<Item?> DeleteAsync(Guid id)
     {
@@ -63,15 +66,15 @@ public class ItemRepository : IItemRepository
         List<Item> Items = new List<Item>();
 
         AttackItemsAdders.AddItems(Items);
-    
-        
+
+
 
         // Insert Item only if not exist in db
         foreach (var item in Items)
         {
             var existing = await FetchByName(item.GetName());
             if (existing is not null)
-                continue; 
+                continue;
 
             await SaveAsync(item);
         }
