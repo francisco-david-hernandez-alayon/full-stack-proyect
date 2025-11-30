@@ -3,7 +3,6 @@ using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Adapter.Infrastructure.DbDataInitializer.EnemysAdders;
 
-// Interface for Enemys adder to feed initial db
 public class EnemysAdder : IEnemysAdder
 {
     private static readonly Enemy _slime =

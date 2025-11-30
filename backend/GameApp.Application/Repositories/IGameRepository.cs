@@ -13,4 +13,6 @@ public interface IGameRepository
     public abstract Task<Game?> SaveAsync(Game game);
 
     public abstract Task<Game?> UpdateAsync(Guid id, Game game);
+
+    public abstract Task SeedAsync();
 }

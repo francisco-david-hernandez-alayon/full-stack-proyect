@@ -57,9 +57,10 @@ builder.Services.AddScoped<GameDeleteService>();
 builder.Services.AddScoped<IGameRepository>(sp =>
 {
     var db = sp.GetRequiredService<IMongoDatabase>();
+    var sceneRepo = sp.GetRequiredService<ISceneRepository>();
     var itemRepo = sp.GetRequiredService<IItemRepository>();
     var enemyRepo = sp.GetRequiredService<IEnemyRepository>();
-    return new GameRepository(db, itemRepo, enemyRepo);
+    return new GameRepository(db, sceneRepo, itemRepo, enemyRepo);
 });
 
 // Scene
@@ -84,10 +85,12 @@ using (var scope = app.Services.CreateScope())
     var itemRepo = scope.ServiceProvider.GetRequiredService<IItemRepository>();
     var enemyRepo = scope.ServiceProvider.GetRequiredService<IEnemyRepository>();
     var sceneRepo = scope.ServiceProvider.GetRequiredService<ISceneRepository>();
+    var gameRepo = scope.ServiceProvider.GetRequiredService<IGameRepository>();
     
     await itemRepo.SeedAsync();
     await enemyRepo.SeedAsync();
     await sceneRepo.SeedAsync();
+    await gameRepo.SeedAsync();
     
 }
 

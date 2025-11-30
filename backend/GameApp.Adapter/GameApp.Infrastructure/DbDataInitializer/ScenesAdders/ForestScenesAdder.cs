@@ -9,6 +9,16 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 
 public class ForestScenesAdder : IScenesAdder
 {
+    // FINAL SCENE FOREST
+    private static readonly NothingHappensScene _finalSceneTreasureForest =
+    new NothingHappensScene(
+        new SceneName("Final Scene Treasure Forest"),
+        new SceneDescription("After a long journey, you finally reach the hidden treasure. Your adventure has come to an end, and unimaginable riches now lie before you."),
+        getBiome()
+    );
+
+    public static NothingHappensScene FinalSceneTreasureForest => _finalSceneTreasureForest;
+
 
     private static Biome getBiome()
     {
@@ -58,6 +68,9 @@ public class ForestScenesAdder : IScenesAdder
             EnemysAdder.Skeleton
         ));
 
+
+
+        scenesToAdd.Add(FinalSceneTreasureForest);
 
         scenes.AddRange(scenesToAdd);
     }
