@@ -10,7 +10,7 @@ namespace GameApp.Adapter.Api.dtos.ScenesDto;
 public class SceneResponseDto
 {
     public Guid Id { get; set; }
-    
+
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public Biome Biome { get; set; } = default!;
@@ -20,23 +20,20 @@ public class SceneResponseDto
 
     // EnemyScene
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public EnemyResponseDto? Enemy { get; set; } 
-
-    // EnterDungeonScene
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<SceneResponseDto>? PossibleScenes { get; set; } 
+    public EnemyResponseDto? Enemy { get; set; }
 
     // ItemScene
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ItemResponseDto? RewardItem { get; set; } 
+    public ItemResponseDto? RewardItem { get; set; }
 
     // TradeScene
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<ItemResponseDto>? CharacterItemsOffer { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public int? CharacterMoneyOffer { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ItemResponseDto>? MerchantItemsOffer { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public int? MerchantMoneyOffer { get; set; }
+    public int? MerchantMoneyToSpent { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? ProfitMerchantMargin { get; set; }
+
 }

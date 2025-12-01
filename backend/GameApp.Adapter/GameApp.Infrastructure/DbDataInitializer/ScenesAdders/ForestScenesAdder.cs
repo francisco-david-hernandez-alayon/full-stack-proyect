@@ -1,6 +1,7 @@
 using GameApp.Adapter.Infrastructure.DbDataInitializer.EnemysAdders;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
 using GameApp.Domain.Entities;
+using GameApp.Domain.Entities.Items;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;
@@ -67,6 +68,20 @@ public class ForestScenesAdder : IScenesAdder
             biome,
             EnemysAdder.Skeleton
         ));
+
+        scenesToAdd.Add(new TradeScene(
+            new SceneName("Forest Merchant Encounter"),
+            new SceneDescription("You stumble upon a traveling merchant in the forest. He offers various goods for trade."),
+            biome,
+            merchantMoneyToSpent: 50, 
+            merchantItemsOffer: new List<Item>
+            {
+                AttackItemsAdders.WoodSword,
+                AttackItemsAdders.IronSword,
+            },
+            profitMerchantMargin: 15 
+        ));
+
 
 
 

@@ -24,8 +24,6 @@ public static class SceneDtoMapper
         SceneDescription sceneDescription = new SceneDescription(dto.Description);
         Biome biome = dto.Biome;
 
-        Console.WriteLine("Scene: '" + sceneName + ", " + sceneDescription + ", " + biome + ", " + dto.SceneType + "\n");
-
         return dto.SceneType switch
         {
             SceneType.NothingHappens => new NothingHappensScene(dto.Id, sceneName, sceneDescription, biome),
@@ -49,14 +47,18 @@ public static class SceneDtoMapper
 
 
             SceneType.Trade =>
-                new TradeScene(dto.Id, sceneName, sceneDescription, biome,
-                    dto.CharacterItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.CharacterMoneyOffer ?? throw new ArgumentNullException(nameof(dto.CharacterMoneyOffer),
-                        "CharacterMoneyOffer is required for TradeScene"),
+                new TradeScene(
+                    dto.Id,
+                    sceneName,
+                    sceneDescription,
+                    biome,
+                    dto.MerchantMoneyToSpent ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyToSpent),
+                        "MerchantMoneyToSpent is required for TradeScene"),
                     dto.MerchantItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.MerchantMoneyOffer ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyOffer),
-                        "MerchantMoneyOffer is required for TradeScene")
+                    dto.ProfitMerchantMargin ?? throw new ArgumentNullException(nameof(dto.ProfitMerchantMargin),
+                        "ProfitMerchantMargin is required for TradeScene")
                 ),
+
 
             _ => throw new ArgumentException($"Unsupported SceneType type: {dto.SceneType}")
         };
@@ -77,8 +79,6 @@ public static class SceneDtoMapper
         SceneName sceneName = new SceneName(dto.Name);
         SceneDescription sceneDescription = new SceneDescription(dto.Description);
         Biome biome = dto.Biome;
-
-        Console.WriteLine("Scene: '" + sceneName + ", " + sceneDescription + ", " + biome + ", " + dto.SceneType + "\n");
 
         return dto.SceneType switch
         {
@@ -103,14 +103,17 @@ public static class SceneDtoMapper
 
 
             SceneType.Trade =>
-                new TradeScene(sceneName, sceneDescription, biome,
-                    dto.CharacterItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.CharacterMoneyOffer ?? throw new ArgumentNullException(nameof(dto.CharacterMoneyOffer),
-                        "CharacterMoneyOffer is required for TradeScene"),
+                new TradeScene(
+                    sceneName,
+                    sceneDescription,
+                    biome,
+                    dto.MerchantMoneyToSpent ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyToSpent),
+                        "MerchantMoneyToSpent is required for TradeScene"),
                     dto.MerchantItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.MerchantMoneyOffer ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyOffer),
-                        "MerchantMoneyOffer is required for TradeScene")
+                    dto.ProfitMerchantMargin ?? throw new ArgumentNullException(nameof(dto.ProfitMerchantMargin),
+                        "ProfitMerchantMargin is required for TradeScene")
                 ),
+
 
             _ => throw new ArgumentException($"Unsupported SceneType type: {dto.SceneType}")
         };
@@ -156,13 +159,15 @@ public static class SceneDtoMapper
                 ),
 
             SceneType.Trade =>
-                new TradeScene(sceneName, sceneDescription, biome,
-                    dto.CharacterItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.CharacterMoneyOffer ?? throw new ArgumentNullException(nameof(dto.CharacterMoneyOffer),
-                        "CharacterMoneyOffer is required for TradeScene"),
+                new TradeScene(
+                    sceneName,
+                    sceneDescription,
+                    biome,
+                    dto.MerchantMoneyToSpent ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyToSpent),
+                        "MerchantMoneyToSpent is required for TradeScene"),
                     dto.MerchantItemsOffer?.Select(ItemDtoMapper.ToDomain).ToList() ?? new(),
-                    dto.MerchantMoneyOffer ?? throw new ArgumentNullException(nameof(dto.MerchantMoneyOffer),
-                        "MerchantMoneyOffer is required for TradeScene")
+                    dto.ProfitMerchantMargin ?? throw new ArgumentNullException(nameof(dto.ProfitMerchantMargin),
+                        "ProfitMerchantMargin is required for TradeScene")
                 ),
 
             _ => throw new ArgumentException($"Unsupported SceneType type: {dto.SceneType}")
@@ -205,15 +210,13 @@ public static class SceneDtoMapper
 
             case TradeScene trade:
                 dto.SceneType = SceneType.Trade;
-                dto.CharacterItemsOffer = trade.GetCharacterItemsOffer()
-                    .Select(ItemDtoMapper.ToDto)
-                    .ToList();
-                dto.CharacterMoneyOffer = trade.GetCharacterMoneyOffer();
+                dto.MerchantMoneyToSpent = trade.GetMerchantMoneyToSpent();
                 dto.MerchantItemsOffer = trade.GetMerchantItemsOffer()
-                    .Select(ItemDtoMapper.ToDto)
-                    .ToList();
-                dto.MerchantMoneyOffer = trade.GetMerchantMoneyOffer();
+                                              .Select(ItemDtoMapper.ToDto)
+                                              .ToList();
+                dto.ProfitMerchantMargin = trade.GetProfitMerchantMargin();
                 break;
+
 
             default:
                 dto.SceneType = SceneType.None;

@@ -18,15 +18,11 @@ public class SceneUpdateRequestDto
     // EnemyScene
     public EnemyResponseDto? Enemy { get; set; } 
 
-    // EnterDungeonScene
-    public List<SceneResponseDto>? PossibleScenes { get; set; } 
-
     // ItemScene
     public ItemResponseDto? RewardItem { get; set; } 
 
     // TradeScene
-    public List<ItemResponseDto>? CharacterItemsOffer { get; set; }
-    public int? CharacterMoneyOffer { get; set; }
     public List<ItemResponseDto>? MerchantItemsOffer { get; set; }
-    public int? MerchantMoneyOffer { get; set; }
+    public int? MerchantMoneyToSpent { get; set; }
+    public int? ProfitMerchantMargin { get; set; }
 }

@@ -39,16 +39,18 @@ public static class SceneDocumentMapper
 
             case ItemScene itemScene:
                 doc.SceneType = SceneType.Item;
-                doc.RewardItem = itemScene.GetRewardItem().GetName().GetName(); 
+                doc.RewardItem = itemScene.GetRewardItem().GetName().GetName();
                 break;
 
             case TradeScene trade:
                 doc.SceneType = SceneType.Trade;
-                doc.CharacterItemsOffer = trade.GetCharacterItemsOffer().Select(ItemDocumentMapper.ToDocument).ToList();
-                doc.CharacterMoneyOffer = trade.GetCharacterMoneyOffer();
-                doc.MerchantItemsOffer = trade.GetMerchantItemsOffer().Select(ItemDocumentMapper.ToDocument).ToList();
-                doc.MerchantMoneyOffer = trade.GetMerchantMoneyOffer();
+                doc.MerchantMoneyToSpent = trade.GetMerchantMoneyToSpent();
+                doc.MerchantItemsOffer = trade.GetMerchantItemsOffer()
+                                             .Select(ItemDocumentMapper.ToDocument)
+                                             .ToList();
+                doc.ProfitMerchantMargin = trade.GetProfitMerchantMargin();
                 break;
+
 
             default:
                 doc.SceneType = SceneType.None;
@@ -95,10 +97,9 @@ public static class SceneDocumentMapper
                     name,
                     description,
                     doc.Biome,
-                    doc.CharacterItemsOffer?.Select(ItemDocumentMapper.ToDomain).ToList() ?? new(),
-                    doc.CharacterMoneyOffer ?? 0,
+                    doc.MerchantMoneyToSpent ?? 0,
                     doc.MerchantItemsOffer?.Select(ItemDocumentMapper.ToDomain).ToList() ?? new(),
-                    doc.MerchantMoneyOffer ?? 0);
+                    doc.ProfitMerchantMargin ?? 0);
 
             default:
                 return new NothingHappensScene(doc.Id, name, description, doc.Biome);

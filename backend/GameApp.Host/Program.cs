@@ -54,6 +54,7 @@ builder.Services.AddScoped<GameGetService>();
 builder.Services.AddScoped<GameCreateService>();
 builder.Services.AddScoped<GameUpdateService>();
 builder.Services.AddScoped<GameDeleteService>();
+builder.Services.AddScoped<GameGenerateNewSceneService>();
 builder.Services.AddScoped<IGameRepository>(sp =>
 {
     var db = sp.GetRequiredService<IMongoDatabase>();

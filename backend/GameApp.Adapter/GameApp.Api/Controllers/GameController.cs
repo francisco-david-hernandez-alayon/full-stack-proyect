@@ -22,12 +22,15 @@ public class GameController : ControllerBase
     private readonly GameCreateService _createService;
     private readonly GameUpdateService _updateService;
     private readonly GameDeleteService _deleteService;
-    public GameController(GameGetService getService, GameCreateService createService, GameUpdateService updateService, GameDeleteService deleteService)
+    private readonly GameGenerateNewSceneService _generateNewScene;
+
+    public GameController(GameGetService getService, GameCreateService createService, GameUpdateService updateService, GameDeleteService deleteService, GameGenerateNewSceneService generateNewScene)
     {
         _getService = getService;
         _createService = createService;
         _updateService = updateService;
         _deleteService = deleteService;
+        _generateNewScene = generateNewScene;
     }
 
     [HttpGet]
@@ -148,6 +151,36 @@ public class GameController : ControllerBase
                 return NotFound($"Game with ID {id} not found.");
 
             return Ok(GameDtoMapper.ToDto(deletedGame));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+
+
+
+    // GENERATE NEW SCENE FOR GAME
+    [HttpPut("next-scenes")]
+    public async Task<IActionResult> GetNexScenesToGame([FromBody] GameNextSceneRequestDto request)
+    {
+        try
+        {
+            // Transform request Dto to Domain
+            Game? currentGame = GameNextSceneDtoMapper.ToDomain(request);
+            Guid idSceneSelected = request.IdSceneSelected;
+
+            Console.WriteLine(currentGame.ToString());
+
+            // Use service
+            Game? updatedGame = await _generateNewScene.GenerateNewSceneToGame(idSceneSelected, currentGame);
+
+            // Response
+            return updatedGame is not null
+                ? Ok(GameDtoMapper.ToDto(updatedGame))
+                : BadRequest();   
+
         }
         catch (Exception ex)
         {

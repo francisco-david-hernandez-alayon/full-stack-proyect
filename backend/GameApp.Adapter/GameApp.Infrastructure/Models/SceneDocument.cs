@@ -17,25 +17,22 @@ public class SceneDocument
     public Biome Biome { get; set; }
     public SceneType SceneType { get; set; }
 
-
+    // EnemyScene
     [BsonIgnoreIfNull]
     public string? Enemy { get; set; }
 
-    [BsonIgnoreIfNull]
-    public List<SceneDocument>? PossibleScenes { get; set; }
-
+    // ItemScene
     [BsonIgnoreIfNull]
     public string? RewardItem { get; set; }
 
+    // TradeScene
     [BsonIgnoreIfNull]
-    public List<ItemDocument>? CharacterItemsOffer { get; set; }
-
-    [BsonIgnoreIfNull]
-    public int? CharacterMoneyOffer { get; set; }
+    public int? MerchantMoneyToSpent { get; set; }
 
     [BsonIgnoreIfNull]
     public List<ItemDocument>? MerchantItemsOffer { get; set; }
 
     [BsonIgnoreIfNull]
-    public int? MerchantMoneyOffer { get; set; }
+    public int? ProfitMerchantMargin { get; set; }
+
 }
