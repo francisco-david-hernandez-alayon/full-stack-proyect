@@ -22,6 +22,29 @@ public static class EnemyDtoMapper
         return new Enemy(dto.Id, new EnemyName(dto.Name), dto.HealthPoints, dto.DamageAttack, dto.SpeedAttack, dto.MoneyReward);
     }
 
+    public static Enemy ToDomainFromCreateRequest(EnemyCreateRequestDto dto)
+    {
+        return new Enemy(
+            new EnemyName(dto.Name),
+            dto.HealthPoints,
+            dto.DamageAttack,
+            dto.SpeedAttack,
+            dto.MoneyReward
+        );
+    }
+
+    public static Enemy ToDomainFromUpdateRequest(EnemyUpdateRequestDto dto)
+    {
+        return new Enemy(
+            new EnemyName(dto.Name),
+            dto.HealthPoints,
+            dto.DamageAttack,
+            dto.SpeedAttack,
+            dto.MoneyReward
+        );
+    }
+
+
 
     public static EnemyResponseDto ToDto(Enemy enemy)
     {
@@ -69,6 +92,11 @@ public static class EnemyDtoMapper
             SpeedAttack = enemy.GetSpeedAttack(),
             MoneyReward = enemy.GetRewardMoney(),
         };
+    }
+
+    public static List<EnemyResponseDto> ToDtoList(IEnumerable<Enemy> enemys)
+    {
+        return enemys.Select(ToDto).ToList();
     }
 
 }
