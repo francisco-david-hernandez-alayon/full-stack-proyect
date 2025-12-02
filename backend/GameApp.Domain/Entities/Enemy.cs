@@ -44,11 +44,11 @@ public class Enemy
     public int GetRewardMoney() => RewardMoney;
 
     // Setters
-    public Enemy SetName(EnemyName newName) => new Enemy(newName, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetHealthPoints(int newHealthPoints) => new Enemy(Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
-    public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
+    public Enemy SetName(EnemyName newName) => new Enemy(GetGuid(), newName, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetHealthPoints(int newHealthPoints) => new Enemy(GetGuid(), Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(GetGuid(), Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(GetGuid(), Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
+    public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(GetGuid(), Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
     public Enemy ReceiveDamage(int damage)
     {
         int newHealthPoints = HealthPoints - damage;

@@ -30,16 +30,16 @@ public class ItemScene : Scene
 
     // Setters 
     public ItemScene SetSceneName(SceneName newName) =>
-    new ItemScene(newName, GetDescription(), GetBiome(), RewardItem);
+    new ItemScene(GetGuid(), newName, GetDescription(), GetBiome(), RewardItem);
 
     public ItemScene SetSceneDescription(SceneDescription newDescription) =>
-    new ItemScene(GetName(), newDescription, GetBiome(), RewardItem);
+    new ItemScene(GetGuid(), GetName(), newDescription, GetBiome(), RewardItem);
 
     public ItemScene SetBiome(Biome newBiome) =>
-    new ItemScene(GetName(), GetDescription(), newBiome, RewardItem);
+    new ItemScene(GetGuid(), GetName(), GetDescription(), newBiome, RewardItem);
 
     public ItemScene SetItem(Item newItem) =>
-    new ItemScene(GetName(), GetDescription(), GetBiome(), newItem);
+    new ItemScene(GetGuid(), GetName(), GetDescription(), GetBiome(), newItem);
 
     // To string
     public override string ToString()

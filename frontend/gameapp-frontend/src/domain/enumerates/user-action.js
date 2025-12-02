@@ -12,10 +12,6 @@ export const UserAction = Object.freeze({
   ACCEPT_TRADE: "AcceptTrade",
   DECLINE_TRADE: "DeclineTrade",
 
-  // DUNGEONS
-  ENTER_DUNGEON: "EnterDungeon",
-  AVOID_DUNGEON: "AvoidDungeon",
-
   // COMBAT
   ATTACK_ENEMY_WITH_ITEM: "attackEnemyWithItem",
   ATTACK_ENEMY_WITHOUT_ITEM: "attackEnemyWithoutItem",

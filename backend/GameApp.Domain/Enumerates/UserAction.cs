@@ -15,10 +15,6 @@ public enum UserAction
     AcceptTrade,   // Accept current Trade
     DeclineTrade,  // Decline current Trade
 
-    // DUNGEONS
-    EnterDungeon,  // Enter current scene dungeon
-    AvoidDungeon,  // Avoid enter current scene dungeon
-
     // COMBAT
     attackEnemyWithItem, // attack current enemy with attack an item
     attackEnemyWithoutItem,   // attack current enemy without an attack item

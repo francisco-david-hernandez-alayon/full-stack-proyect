@@ -1,13 +1,13 @@
 import { UserAction } from '../enumerates/user-action.js';
 import { Character } from '../value-objects/characters/character';
-import { Enemy } from '../value-objects/enemies/enemy.js';
+import { Enemy } from './enemy.js';
 import { NothingHappensScene } from '../entities/scenes/nothing-happens-scene.js';
 import { Scene } from './scenes/scene.js';
-import { v4 as uuidv4 } from "uuid";
+import { validateOrGenerateUUID } from '../../utils/validate-or-generate-uuid.js';
 
 export class Game {
     constructor(character, numberScenesToFinish, finalScene, listCurrentScenes = [], listCurrentUserActions = [], listCompletedScenes = [], currentEnemy = null, id = null) {
-        this._id = id ?? uuidv4();
+        this._id = validateOrGenerateUUID(id);
 
         if (!(character instanceof Character)) throw new TypeError("character must be an instance of Character");
         this._character = character;
@@ -95,7 +95,7 @@ export class Game {
     }
 
     setCurrentScenes(newList) {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList,this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
     }
 
     setCurrentUserActions(newListCurrenUserActions) {

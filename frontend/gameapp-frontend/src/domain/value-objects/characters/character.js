@@ -1,4 +1,4 @@
-import { Item } from "../items/item.js";
+import { Item } from "../../entities/items/item";
 import {CharacterName} from './character-name';
 
 

@@ -1,10 +1,9 @@
 import { EnemyJsonRequest } from "./enemy-json-request.js";
 import { ItemJsonRequest } from "./item-json-request.js";
-import { Enemy } from "../../../domain/value-objects/enemies/enemy.js";
-import { Item } from "../../../domain/value-objects/items/item.js";
+import { Enemy } from "../../../domain/entities/enemy.js";
+import { Item } from "../../../domain/entities/items/item.js";
 import { Scene } from "../../../domain/entities/scenes/scene.js";
 import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene.js";
-import { EnterDungeonScene } from "../../../domain/entities/scenes/enter-dungeon-scene.js";
 import { ItemScene } from "../../../domain/entities/scenes/item-scene.js";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 import { TradeScene } from "../../../domain/entities/scenes/trade-scene.js";
@@ -26,9 +25,6 @@ export class SceneJsonRequest {
 
         if (scene instanceof EnemyScene) {
             this.sceneType = SceneType.Enemy;
-
-        } else if (scene instanceof EnterDungeonScene) {
-            this.sceneType = SceneType.EnterDungeon;
 
         } else if (scene instanceof ItemScene) {
             this.sceneType = SceneType.Item;
@@ -53,14 +49,6 @@ export class SceneJsonRequest {
             }
 
             this.enemy = new EnemyJsonRequest(scene.enemy);
-        }
-
-        if (scene instanceof EnterDungeonScene) {
-            if (!Array.isArray(scene.possibleScenes)) {
-                throw new TypeError("EnterDungeonScene must have a list of possible scenes");
-            }
-
-            this.possibleScenes = scene._possibleScenes.map(s => new SceneJsonRequest(s));
         }
 
         if (scene instanceof ItemScene) {

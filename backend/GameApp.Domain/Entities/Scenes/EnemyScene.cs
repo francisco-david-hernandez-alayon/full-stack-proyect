@@ -28,16 +28,16 @@ public class EnemyScene : Scene
 
     // Setters 
     public EnemyScene SetSceneName(SceneName newName) =>
-    new EnemyScene(newName, GetDescription(), GetBiome(), Enemy);
+    new EnemyScene(GetGuid(), newName, GetDescription(), GetBiome(), Enemy);
 
     public EnemyScene SetSceneDescription(SceneDescription newDescription) =>
-    new EnemyScene(GetName(), newDescription, GetBiome(), Enemy);
+    new EnemyScene(GetGuid(), GetName(), newDescription, GetBiome(), Enemy);
 
     public EnemyScene SetBiome(Biome newBiome) =>
-    new EnemyScene(GetName(), GetDescription(), newBiome, Enemy);
+    new EnemyScene(GetGuid(), GetName(), GetDescription(), newBiome, Enemy);
 
     public EnemyScene SetEnemy(Enemy newEnemy) =>
-    new EnemyScene(GetName(), GetDescription(), GetBiome(), newEnemy);
+    new EnemyScene(GetGuid(), GetName(), GetDescription(), GetBiome(), newEnemy);
 
     // To string
     public override string ToString()

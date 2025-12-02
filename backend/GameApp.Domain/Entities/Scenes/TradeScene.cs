@@ -45,22 +45,22 @@ public class TradeScene : Scene
     public int GetProfitMerchantMargin() => ProfitMerchantMargin;
 
     public TradeScene SetSceneName(SceneName newName) =>
-        new TradeScene(newName, GetDescription(), GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
+        new TradeScene(GetGuid(), newName, GetDescription(), GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
 
     public TradeScene SetSceneDescription(SceneDescription newDescription) =>
-        new TradeScene(GetName(), newDescription, GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
+        new TradeScene(GetGuid(), GetName(), newDescription, GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
 
     public TradeScene SetBiome(Biome newBiome) =>
-        new TradeScene(GetName(), GetDescription(), newBiome, MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
+        new TradeScene(GetGuid(), GetName(), GetDescription(), newBiome, MerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
 
     public TradeScene SetMerchantMoneyToSpent(int newMerchantMoneyToSpent) =>
-        new TradeScene(GetName(), GetDescription(), GetBiome(), newMerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
+        new TradeScene(GetGuid(), GetName(), GetDescription(), GetBiome(), newMerchantMoneyToSpent, MerchantItemsOffer, ProfitMerchantMargin);
 
     public TradeScene SetMerchantItemsOffer(List<Item> newMerchantItems) =>
-        new TradeScene(GetName(), GetDescription(), GetBiome(), MerchantMoneyToSpent, newMerchantItems, ProfitMerchantMargin);
+        new TradeScene(GetGuid(), GetName(), GetDescription(), GetBiome(), MerchantMoneyToSpent, newMerchantItems, ProfitMerchantMargin);
 
     public TradeScene SetProfitMerchantMargin(int newMargin) =>
-        new TradeScene(GetName(), GetDescription(), GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, newMargin);
+        new TradeScene(GetGuid(), GetName(), GetDescription(), GetBiome(), MerchantMoneyToSpent, MerchantItemsOffer, newMargin);
 
     public override string ToString()
     {

@@ -7,11 +7,11 @@ export class NothingHappensScene extends Scene {
     }
 
     // setter
-    setSceneName(newName) { return new NothingHappensScene(newName, this._description, this._biome); }
-    setSceneDescription(newDescription) { return new NothingHappensScene(this._name, newDescription, this._biome); }
-    setBiome(newBiome) { return new NothingHappensScene(this._name, this._description, newBiome); }
+    setSceneName(newName) { return new NothingHappensScene(newName, this._description, this._biome, this._id); }
+    setSceneDescription(newDescription) { return new NothingHappensScene(this._name, newDescription, this._biome, this._id); }
+    setBiome(newBiome) { return new NothingHappensScene(this._name, this._description, newBiome, this._id); }
 
     toString() {
-        return `${this._name} NothingHappens Scene: Description=${this._description}, Biome=${this._biome}`;
+        return `${this._name} NothingHappens Scene(${this._id}): Description=${this._description}, Biome=${this._biome}`;
     }
 }

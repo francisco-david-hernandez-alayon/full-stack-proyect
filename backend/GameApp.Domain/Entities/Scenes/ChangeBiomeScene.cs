@@ -19,6 +19,16 @@ public class ChangeBiomeScene : Scene
     {
     }
 
+    // Setters 
+    public ChangeBiomeScene SetSceneName(SceneName newName) =>
+    new ChangeBiomeScene(GetGuid(), newName, GetDescription(), GetBiome());
+
+    public ChangeBiomeScene SetSceneDescription(SceneDescription newDescription) =>
+    new ChangeBiomeScene(GetGuid(), GetName(), newDescription, GetBiome());
+
+    public ChangeBiomeScene SetBiome(Biome newBiome) =>
+    new ChangeBiomeScene(GetGuid(), GetName(), GetDescription(), newBiome);
+
     // To string
     public override string ToString() =>
         $"ChangeBiomeScene({GetGuid()}): {GetName()} - {GetDescription()}, BiomeToChange={GetBiome()}";

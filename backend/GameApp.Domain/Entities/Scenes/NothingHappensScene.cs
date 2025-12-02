@@ -21,13 +21,13 @@ public class NothingHappensScene : Scene
 
     // Setters 
     public NothingHappensScene SetSceneName(SceneName newName) =>
-    new NothingHappensScene(newName, GetDescription(), GetBiome());
+    new NothingHappensScene(GetGuid(), newName, GetDescription(), GetBiome());
 
     public NothingHappensScene SetSceneDescription(SceneDescription newDescription) =>
-    new NothingHappensScene(GetName(), newDescription, GetBiome());
+    new NothingHappensScene(GetGuid(), GetName(), newDescription, GetBiome());
 
     public NothingHappensScene SetBiome(Biome newBiome) =>
-    new NothingHappensScene(GetName(), GetDescription(), newBiome);
+    new NothingHappensScene(GetGuid(), GetName(), GetDescription(), newBiome);
 
     // To string
     public override string ToString()

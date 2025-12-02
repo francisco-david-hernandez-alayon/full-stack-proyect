@@ -1,60 +1,70 @@
-import { Item } from "../../value-objects/items/item.js";
+import { Item } from "../items/item.js";
 import { Scene } from "./scene.js";
 
 export class TradeScene extends Scene {
-    constructor(name, description, biome, characterItemsOffer = [], characterMoneyOffer = 0, merchantItemsOffer = [], merchantMoneyOffer = 0, id = null) {
+    constructor(name, description, biome, merchantMoneyToSpent, merchantItemsOffer, profitMerchantMargin, id = null) {
         super(name, description, biome, id);
 
-        this.#validateItemList(characterItemsOffer, "characterItemsOffer");
         this.#validateItemList(merchantItemsOffer, "merchantItemsOffer");
 
-        this._characterItemsOffer = [...characterItemsOffer];
+        if (!Number.isInteger(merchantMoneyToSpent) || merchantMoneyToSpent < 0)
+            throw new TypeError("merchantMoneyToSpent must be an integer >= 0");
 
-        if (typeof characterMoneyOffer !== "number" || !Number.isInteger(characterMoneyOffer) || characterMoneyOffer <= 0) {
-            throw new TypeError("characterMoneyOffer must be an integer greater than 0");
-        }
-        this._characterMoneyOffer = characterMoneyOffer;
+        if (!Number.isInteger(profitMerchantMargin) || profitMerchantMargin < 0)
+            throw new TypeError("profitMerchantMargin must be an integer >= 0");
 
+        this._merchantMoneyToSpent = merchantMoneyToSpent;
         this._merchantItemsOffer = [...merchantItemsOffer];
-
-        if (typeof merchantMoneyOffer !== "number" || !Number.isInteger(merchantMoneyOffer) || merchantMoneyOffer <= 0) {
-            throw new TypeError("merchantMoneyOffer must be an integer greater than 0");
-        }
-        this._merchantMoneyOffer = merchantMoneyOffer;
+        this._profitMerchantMargin = profitMerchantMargin;
     }
 
     #validateItemList(list, paramName) {
-        if (!Array.isArray(list)) throw new TypeError(`${paramName} must be an array`);
+        if (!Array.isArray(list))
+            throw new TypeError(`${paramName} must be an array`);
         for (const item of list) {
-            if (!(item instanceof Item)) {
-                throw new TypeError(`All elements of ${paramName} must be instances of Item or its subclasses`);
-            }
+            if (!(item instanceof Item))
+                throw new TypeError(`All elements of ${paramName} must be instances of Item`);
         }
     }
 
-    // getter
-    get characterItemsOffer() { return [...this._characterItemsOffer]; }
-    get characterMoneyOffer() { return this._characterMoneyOffer; }
+    // GETTERS
+    get merchantMoneyToSpent() { return this._merchantMoneyToSpent; }
     get merchantItemsOffer() { return [...this._merchantItemsOffer]; }
-    get merchantMoneyOffer() { return this._merchantMoneyOffer; }
+    get profitMerchantMargin() { return this._profitMerchantMargin; }
 
-    // setter
-    setSceneName(newName) { return new TradeScene(newName, this._description, this._biome, this._characterItemsOffer, this._characterMoneyOffer, this._merchantItemsOffer, this._merchantMoneyOffer); }
-    setSceneDescription(newDescription) { return new TradeScene(this._name, newDescription, this._biome, this._characterItemsOffer, this._characterMoneyOffer, this._merchantItemsOffer, this._merchantMoneyOffer); }
-    setBiome(newBiome) { return new TradeScene(this._name, this._description, newBiome, this._characterItemsOffer, this._characterMoneyOffer, this._merchantItemsOffer, this._merchantMoneyOffer); }
-
-    setCharacterItemsOffer(newItems) {
-        return new TradeScene(this._name, this._description, this._biome, newItems, this._characterMoneyOffer, this._merchantItemsOffer, this._merchantMoneyOffer);
+    // SETTERS (devuelven nueva instancia)
+    setSceneName(newName) {
+        return new TradeScene(newName, this._description, this._biome, this._merchantMoneyToSpent, this._merchantItemsOffer, this._profitMerchantMargin, this._id);
     }
-    setCharacterMoneyOffer(newMoney) { return new TradeScene(this._name, this._description, this._biome, this._characterItemsOffer, newMoney, this._merchantItemsOffer, this._merchantMoneyOffer); }
+
+    setSceneDescription(newDescription) {
+        return new TradeScene(this._name, newDescription, this._biome, this._merchantMoneyToSpent, this._merchantItemsOffer, this._profitMerchantMargin, this._id
+        );
+    }
+
+    setBiome(newBiome) {
+        return new TradeScene(this._name, this._description, newBiome, this._merchantMoneyToSpent, this._merchantItemsOffer, this._profitMerchantMargin, this._id);
+    }
+
+    setMerchantMoneyToSpent(newMoney) {
+        return new TradeScene(this._name, this._description, this._biome, newMoney, this._merchantItemsOffer, this._profitMerchantMargin, this._id);
+    }
+
     setMerchantItemsOffer(newItems) {
-        return new TradeScene(this._name, this._description, this._biome, this._characterItemsOffer, this._characterMoneyOffer, newItems, this._merchantMoneyOffer);
+        return new TradeScene(this._name, this._description, this._biome, this._merchantMoneyToSpent, newItems, this._profitMerchantMargin, this._id);
     }
-    setMerchantMoneyOffer(newMoney) { return new TradeScene(this._name, this._description, this._biome, this._characterItemsOffer, this._characterMoneyOffer, this._merchantItemsOffer, newMoney); }
+
+    setProfitMerchantMargin(newMargin) {
+        return new TradeScene(this._name, this._description, this._biome, this._merchantMoneyToSpent, this._merchantItemsOffer, newMargin, this._id);
+    }
 
     toString() {
-        const characterItems = this._characterItemsOffer.map(i => i.toString()).join(", ");
         const merchantItems = this._merchantItemsOffer.map(i => i.toString()).join(", ");
-        return `TradeScene: ${this._name} - ${this._biome}\nCharacter Offer: Money=${this._characterMoneyOffer}, Items=[${characterItems}]\nMerchant Offer: Money=${this._merchantMoneyOffer}, Items=[${merchantItems}]`;
+        return (
+            `TradeScene(${this._id}): ${this._name} - ${this._biome}\n` +
+            `Merchant Money To Spent: ${this._merchantMoneyToSpent}\n` +
+            `Profit Merchant Margin: ${this._profitMerchantMargin}\n` +
+            `Merchant Items: [${merchantItems}]`
+        );
     }
 }

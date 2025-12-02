@@ -1,5 +1,5 @@
 import { Character } from "../../../domain/value-objects/characters/character.js";
-import { Item } from "../../../domain/value-objects/items/item.js";
+import { Item } from "../../../domain/entities/items/item.js";
 import { ItemJsonRequest } from "./item-json-request.js";
 import { CharacterType } from "../enumerates/character-type";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character.js";

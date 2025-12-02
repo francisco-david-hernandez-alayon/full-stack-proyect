@@ -9,13 +9,9 @@ export class FinalSceneJsonRequest {
             throw new TypeError("finalScene must be an instance of Scene");
         }
 
-        // Name
+        this.id = finalScene.id; 
         this.name = finalScene.name.name; 
-
-        // Description
         this.description = finalScene.description.description; 
-
-        // Biome
         this.biome = finalScene.biome;
     }
 

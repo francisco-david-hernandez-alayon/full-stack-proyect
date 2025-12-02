@@ -1,16 +1,16 @@
 import { SceneName } from '../../value-objects/scenes/scene-name.js'
 import { SceneDescription } from '../../value-objects/scenes/scene-description.js'
 import { Biome } from '../../enumerates/biome.js';
-import { v4 as uuidv4 } from "uuid";
+import { validateOrGenerateUUID } from '../../../utils/validate-or-generate-uuid.js';
 
 // Abstract base class Scene
 export class Scene {
     constructor(name, description, biome, id = null) {
-        this._id = id ?? uuidv4();
-
         if (!(name instanceof SceneName)) throw new TypeError("name must be SceneName");
         if (!(description instanceof SceneDescription)) throw new TypeError("description must be SceneDescription");
         if (!Object.values(Biome).includes(biome)) throw new TypeError("biome must be a valid Biome");
+        
+        this._id = validateOrGenerateUUID(id);
 
         this._name = name;
         this._description = description;

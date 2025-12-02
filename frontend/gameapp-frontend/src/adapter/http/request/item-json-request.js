@@ -1,4 +1,4 @@
-import { Item } from "../../../domain/value-objects/items/item";
+import { Item } from "../../../domain/entities/items/item";
 
 
 export class ItemJsonRequest {
@@ -6,11 +6,12 @@ export class ItemJsonRequest {
         if (!item) throw new TypeError("item is required");
         if (!(item instanceof Item)) throw new TypeError("item must be an instance of Item");
 
+        this.id = item.id;
         this.name = item.name.name;
         this.description = item.description.description;
         this.itemType = item.itemType;
 
-        // opcionales dependiendo del tipo
+        // optional atributtes
         this.healthPointsReceived = item.healthPointsReceived ?? null;
         this.foodPointsReceived = item.foodPointsReceived ?? null;
         this.attackDamage = item.attackDamage ?? null;
