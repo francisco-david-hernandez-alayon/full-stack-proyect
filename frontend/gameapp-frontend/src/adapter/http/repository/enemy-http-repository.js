@@ -5,9 +5,10 @@ export class EnemyHttpRepository extends IEnemyRepository {
 
     #enemysEndpoint;
 
-    constructor(apiUrl) {
+    constructor() {
         super();
-        if (!apiUrl) throw new TypeError("apiUrl is required");
+        const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
+        if (!apiUrl) throw new TypeError("REACT_APP_BACKEND_API_URL is not defined");
 
         const baseUrl = apiUrl.endsWith("/") ? apiUrl.slice(0, -1) : apiUrl;
         this.#enemysEndpoint = `${baseUrl}/enemy`;

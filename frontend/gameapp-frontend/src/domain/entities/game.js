@@ -1,7 +1,7 @@
 import { UserAction } from '../enumerates/user-action.js';
-import { Character } from '../value-objects/characters/character';
+import { Character } from '../value-objects/characters/character.js';
 import { Enemy } from './enemy.js';
-import { NothingHappensScene } from '../entities/scenes/nothing-happens-scene.js';
+import { NothingHappensScene } from './scenes/nothing-happens-scene.js';
 import { Scene } from './scenes/scene.js';
 import { validateOrGenerateUUID } from '../../utils/validate-or-generate-uuid.js';
 

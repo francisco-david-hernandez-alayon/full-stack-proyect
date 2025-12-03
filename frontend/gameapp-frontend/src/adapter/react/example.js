@@ -1,13 +1,9 @@
 
 
-import { EnemyHttpRepository } from "./adapter/http/repository/enemy-http-repository.js";
-import { GameHttpRepository } from "./adapter/http/repository/game-http-repository.js"
-import { ItemHttpRepository } from "./adapter/http/repository/item-http-repository.js";
-import { SceneHttpRepository } from "./adapter/http/repository/scene-http-repository.js";
-
-
-
-
+import { EnemyHttpRepository } from "../http/repository/enemy-http-repository.js";
+import { GameHttpRepository } from "../http/repository/game-http-repository.js"
+import { ItemHttpRepository } from "../http/repository/item-http-repository.js";
+import { SceneHttpRepository } from "../http/repository/scene-http-repository.js";
 
 
 
@@ -137,12 +133,10 @@ import { SceneHttpRepository } from "./adapter/http/repository/scene-http-reposi
 
 // console.log(game.toString());
 
-
-const apiString = "http://localhost:5000/api";
-const repoGame = new GameHttpRepository(apiString);
-const repoScene = new SceneHttpRepository(apiString);
-const repoItem = new ItemHttpRepository(apiString);
-const repoEnemy = new EnemyHttpRepository(apiString);
+const repoGame = new GameHttpRepository();
+const repoScene = new SceneHttpRepository();
+const repoItem = new ItemHttpRepository();
+const repoEnemy = new EnemyHttpRepository();
 
 (async () => {
     try {

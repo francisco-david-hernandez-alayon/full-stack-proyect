@@ -1,13 +1,13 @@
-import { Game } from "../../../domain/entities/game";
+import { Game } from "../../../domain/entities/game.js";
 import { Scene } from "../../../domain/entities/scenes/scene.js";
-import { UserAction } from "../../../domain/enumerates/user-action";
-import { Character } from "../../../domain/value-objects/characters/character";
-import { Enemy } from "../../../domain/entities/enemy";
+import { UserAction } from "../../../domain/enumerates/user-action.js";
+import { Character } from "../../../domain/value-objects/characters/character.js";
+import { Enemy } from "../../../domain/entities/enemy.js";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
-import { CharacterJsonRequest } from "./character-json-request";
-import { EnemyJsonRequest } from "./enemy-json-request";
-import { FinalSceneJsonRequest } from "./final-scene-json-request";
-import { SceneJsonRequest } from "./scene-json-request";
+import { CharacterJsonRequest } from "./character-json-request.js";
+import { EnemyJsonRequest } from "./enemy-json-request.js";
+import { FinalSceneJsonRequest } from "./final-scene-json-request.js";
+import { SceneJsonRequest } from "./scene-json-request.js";
 
 export class GamePutJsonRequest {
     constructor(game) {

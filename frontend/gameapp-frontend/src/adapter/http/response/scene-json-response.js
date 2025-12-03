@@ -1,13 +1,13 @@
-import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
-import { ItemScene } from "../../../domain/entities/scenes/item-scene";
+import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene.js";
+import { ItemScene } from "../../../domain/entities/scenes/item-scene.js";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
 import { ChangeBiomeScene } from "../../../domain/entities/scenes/change-biome-scene.js";
-import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
-import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
-import { TradeScene } from "../../../domain/entities/scenes/trade-scene";
-import { SceneType } from "../enumerates/scene-type";
-import { EnemyJsonResponse } from "./enemy-json-response";
-import { ItemJsonResponse } from "./item-json-response";
+import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description.js";
+import { SceneName } from "../../../domain/value-objects/scenes/scene-name.js";
+import { TradeScene } from "../../../domain/entities/scenes/trade-scene.js";
+import { SceneType } from "../enumerates/scene-type.js";
+import { EnemyJsonResponse } from "./enemy-json-response.js";
+import { ItemJsonResponse } from "./item-json-response.js";
 
 export class SceneJsonResponse {
     constructor(sceneJson) {

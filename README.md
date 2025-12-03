@@ -2,8 +2,7 @@
 Autor: Francisco David Hernández Alayón
 
 
-## CONFIGURACIÓN BACKEND
-
+## CONFIGURACIÓN BACK-END: C# y mongoDb
 
 ### Crear carpeta backend y entrar
 ```
@@ -76,22 +75,30 @@ sudo apt update
 sudo apt install -y mongodb-org
 sudo systemctl start mongod
 sudo systemctl enable mongod
-
-
 ```
 
+<br>
 
-
-## CONFIGURACIÓN FRONTEND
+## CONFIGURACIÓN FRONT-END: REACT, JS y Tailwind
+### Crear proyecto con vite e instalar dependencias
 ```
 cd ../frontend
-npx create-react-app gameapp-frontend
-cd gameapp-frontend
+npm create vite@latest
+npm install uuid
 npm install axios
 ```
 
+### Añadir tailwind
+1. Instalar Tailwind CSS
+```
+npm install -D @tailwindcss/vite tailwindcss
+```
+2. Añadir Tailwind CSS al vite.config.js
+3. Eliminar todo en index.css y añadir ```@import "tailwindcss";```
 
-## EJECUTAR LOCALMENTE
+<br>
+
+## EJECUCIÓN LOCAL
 
 ### Backend
 ```
@@ -100,10 +107,16 @@ dotnet run --urls "URL API"
 ```
 
 ### Frontend
-Crear un .env con REACT_APP_BACKEND_API_URL="URL DE LA API DEL BACKEND"
+Crear un .env con VITE_BACKEND_API_URL="URL DE LA API DEL BACKEND"
+
 ```
 cd frontend/gameapp-frontend
-npm start
+npm run dev
 ```
 
+<br>
 
+## Recursos
+* [Instalar tailwind](https://tailwindcss.com/docs/installation/using-vite)
+
+* [Inicio rápido react](https://es.react.dev/learn)

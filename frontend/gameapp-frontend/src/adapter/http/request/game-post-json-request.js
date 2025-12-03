@@ -1,11 +1,11 @@
-import { Game } from "../../../domain/entities/game";
+import { Game } from "../../../domain/entities/game.js";
 import { Scene } from "../../../domain/entities/scenes/scene.js";
-import { UserAction } from "../../../domain/enumerates/user-action";
-import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import { UserAction } from "../../../domain/enumerates/user-action.js";
+import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character.js";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
-import { CharacterType } from "../enumerates/character-type";
-import { FinalSceneJsonRequest } from "./final-scene-json-request";
-import { SceneJsonRequest } from "./scene-json-request";
+import { CharacterType } from "../enumerates/character-type.js";
+import { FinalSceneJsonRequest } from "./final-scene-json-request.js";
+import { SceneJsonRequest } from "./scene-json-request.js";
 
 export class GamePostJsonRequest {
     constructor(game) {

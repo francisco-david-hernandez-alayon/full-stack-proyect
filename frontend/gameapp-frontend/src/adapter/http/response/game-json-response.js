@@ -1,13 +1,13 @@
-import { Game } from "../../../domain/entities/game";
-import { UserAction } from "../../../domain/enumerates/user-action";
-import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import { Game } from "../../../domain/entities/game.js";
+import { UserAction } from "../../../domain/enumerates/user-action.js";
+import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character.js";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene.js";
-import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
-import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
-import { CharacterType } from "../enumerates/character-type";
-import { SceneJsonResponse } from "./scene-json-response";
-import { ItemJsonResponse } from "./item-json-response";
-import { EnemyJsonResponse } from "./enemy-json-response";
+import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description.js";
+import { SceneName } from "../../../domain/value-objects/scenes/scene-name.js";
+import { CharacterType } from "../enumerates/character-type.js";
+import { SceneJsonResponse } from "./scene-json-response.js";
+import { ItemJsonResponse } from "./item-json-response.js";
+import { EnemyJsonResponse } from "./enemy-json-response.js";
 
 export class GameJsonResponse {
     constructor(GameJson) {
