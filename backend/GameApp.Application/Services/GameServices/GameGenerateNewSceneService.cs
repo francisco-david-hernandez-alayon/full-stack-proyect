@@ -25,7 +25,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         if (game == null)
             throw new ArgumentNullException(nameof(game));
 
-        // Search scenes selected and add to completed scenes
+        // 1- SEARCH SCENES SELECTED AND ADD TO COMPLETED SCENES
         Scene? sceneSelected = game.GetCurrentScenes()
             .FirstOrDefault(s => s.GetGuid() == idSceneSelected);
 
@@ -35,22 +35,31 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         game = game.AddCompletedScene(sceneSelected);
 
 
-        // Generate new scene
+        // 2- GENERATE NEW CURRENT SCENES
+        // Get all scenes
         var allScenes = (await _repoScene.FetchAllAsync()).ToList();
-
+        // FALTA TENER EN CUENTA EL BIOMA PARA SOLR GENERAR ESCENAS DEL MISMO BIOMA
         if (allScenes.Count == 0)
             throw new InvalidOperationException("No scenes available in repository.");
 
         var random = new Random();
-        Scene newScene = allScenes[random.Next(allScenes.Count)];
 
-        Console.WriteLine($"Generated scene: {newScene.GetGuid()} - {newScene.GetName().GetName()} - {newScene.GetDescription().GetDescription()} - Biome: {newScene.GetBiome()}");
+        // Generate randomly 1 or 2 scenes 
+        int numberOfScenesToGenerate = random.Next(1, 3); 
+        var newScenes = new List<Scene>();
+        for (int i = 0; i < numberOfScenesToGenerate; i++)
+        {
+            Scene randomScene = allScenes[random.Next(allScenes.Count)];
+            newScenes.Add(randomScene);
+        }
+
+        game = game.SetCurrentScenes(newScenes);
 
 
-        game = game.SetCurrentScenes(new List<Scene> { newScene });
 
-        // save in repo
-        Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(), 
+
+        // SAVE GAME IN REPOSITORY AND RETURN GAME
+        Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
         game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), game.GetCurrentEnemy());
 
         return gameSaved;

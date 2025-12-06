@@ -20,7 +20,9 @@ export class GamePutJsonRequest {
         this.finalScene = new FinalSceneJsonRequest(game.finalScene);
 
         this.listCurrentScenes = game.currentScenes.map(scene => new SceneJsonRequest(scene));
+
         this.listCompletedScenes = game.completedScenes.map(scene => new SceneJsonRequest(scene));
+
         this.listCurrentUserActions = game.currentUserActions.map(action => action);
 
         if (game.currentEnemy) {

@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              src="https://images.vexels.com/media/users/3/326801/isolated/preview/a1c22a1b6fc6218aa769f0ae88dc2584-espada-de-dibujos-animados.png"
+              src="/images/logo_castillo_blanco.png"
               alt="Logo"
               className="h-8 w-auto"
             />

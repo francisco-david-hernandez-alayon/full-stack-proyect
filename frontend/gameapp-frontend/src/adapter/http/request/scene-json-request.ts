@@ -29,7 +29,6 @@ export class SceneJsonRequest {
         this.description = scene.description.description;
         this.biome = scene.biome;
 
-        // SceneType determination
         if (scene instanceof EnemyScene) {
             this.sceneType = SceneType.Enemy;
             if (!scene.enemy) throw new TypeError("EnemyScene must have an enemy");

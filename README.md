@@ -120,3 +120,7 @@ npm run dev
 * [Instalar tailwind](https://tailwindcss.com/docs/installation/using-vite)
 
 * [Inicio rápido react](https://es.react.dev/learn)
+
+
+* [Iconos](https://www.flaticon.es/)
+ 

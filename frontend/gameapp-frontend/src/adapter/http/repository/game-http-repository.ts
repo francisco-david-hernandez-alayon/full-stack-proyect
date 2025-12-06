@@ -1,5 +1,6 @@
 import type { IGameRepository } from "../../../application/repositories/igame-repository";
 import { Game } from "../../../domain/entities/game";
+import { GameGenerateNewSceneRequest } from "../request/game-generate-new-scene-request";
 import { GamePostJsonRequest } from "../request/game-post-json-request";
 import { GamePutJsonRequest } from "../request/game-put-json-request";
 import { GameJsonResponse } from "../response/game-json-response";
@@ -66,6 +67,21 @@ export class GameHttpRepository implements IGameRepository {
         });
 
         if (!res.ok) throw new Error(`Error updating game ${id}`);
+
+        const json = await res.json();
+        return new GameJsonResponse(json).toGame();
+    }
+
+    async generateNewScene(currentSceneSelectedId: string, game: Game): Promise<Game> {
+        const bodyDto = new GameGenerateNewSceneRequest(currentSceneSelectedId, game.id, new GamePutJsonRequest(game));
+
+        const res = await fetch(`${this.#gamesEndpoint}/next-scenes`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(bodyDto),
+        });
+
+        if (!res.ok) throw new Error(`Error generating new scene game ${currentSceneSelectedId} in game ${game}`);
 
         const json = await res.json();
         return new GameJsonResponse(json).toGame();

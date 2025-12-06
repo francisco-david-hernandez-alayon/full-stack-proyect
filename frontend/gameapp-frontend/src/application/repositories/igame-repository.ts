@@ -6,4 +6,5 @@ export interface IGameRepository {
     save(game: Game): Promise<Game>;
     delete(id: string): Promise<Game>;
     update(id: string, game: Game): Promise<Game>;
+    generateNewScene(currentSceneSelectedId: string, game: Game): Promise<Game>;
 }

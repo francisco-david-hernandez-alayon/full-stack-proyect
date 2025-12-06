@@ -84,6 +84,7 @@ export class GameJsonResponse {
         const currentScenes = this.listCurrentScenes.map(scene => new SceneJsonResponse(scene).toScene());
         const completedScenes = this.listCompletedScenes.map(scene => new SceneJsonResponse(scene).toScene());
 
+
         const currentEnemy = this.currentEnemy ? new EnemyJsonResponse(this.currentEnemy).toEnemy() : null;
 
         const userActions = this.listCurrentUserActions.map(a => {

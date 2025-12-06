@@ -1,3 +1,4 @@
+using System.Text.Json;
 using GameApp.Adapter.Api.dtos.GamesDto;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Entities.Scenes;
@@ -10,17 +11,28 @@ namespace GameApp.Adapter.Api.Mappers
     {
         public static Game ToDomain(GameNextSceneRequestDto dto)
         {
-            Character character = CharacterDtoMapper.ToDomain(dto.Character);
-            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(dto.FinalScene);
-            List<Scene> completedScenes = dto.ListCompletedScenes.Select(SceneDtoMapper.ToDomain).ToList();
-            List<Scene> currentScenes = dto.ListCurrentScenes.Select(SceneDtoMapper.ToDomain).ToList();
-            List<UserAction> currentUserActions = dto.ListCurrentUserActions.ToList();
-            Enemy? currentEnemy = dto.CurrentEnemy != null ? EnemyDtoMapper.ToDomainPosibleNull(dto.CurrentEnemy) : null;
+            var gameDto = dto.Game;
+
+            Character character = CharacterDtoMapper.ToDomain(gameDto.Character);
+
+            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(gameDto.FinalScene);
+
+            List<Scene> completedScenes = gameDto.ListCompletedScenes?
+                .Select(SceneDtoMapper.ToDomain)
+                .ToList() ?? new List<Scene>();
+
+            List<Scene> currentScenes = gameDto.ListCurrentScenes?
+                .Select(SceneDtoMapper.ToDomain)
+                .ToList() ?? new List<Scene>();
+
+            List<UserAction> currentUserActions = gameDto.ListCurrentUserActions ?? new List<UserAction>();
+
+            Enemy? currentEnemy = EnemyDtoMapper.ToDomainPosibleNull(gameDto.CurrentEnemy);
 
             return new Game(
                 dto.Id,
                 character,
-                dto.NumberScenesToFinish,
+                gameDto.NumberScenesToFinish,
                 completedScenes,
                 finalScene,
                 currentScenes,
