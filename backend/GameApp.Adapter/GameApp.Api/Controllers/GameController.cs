@@ -78,6 +78,9 @@ public class GameController : ControllerBase
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
             List<UserAction> currentUserAction = request.ListCurrentUserActions;
+            
+
+            // Console.WriteLine("Game data to create: " + character, finalScene, currentScenes, currentUserAction);
 
             // Use service
             Game? createdGame = await _createService.CreateGame(
@@ -88,7 +91,7 @@ public class GameController : ControllerBase
                 currentUserAction
             );
 
-            Console.WriteLine("Game created: " + createdGame);
+            
 
             // Response
             return createdGame is not null
@@ -118,17 +121,18 @@ public class GameController : ControllerBase
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
             List<UserAction> currentUserAction = request.ListCurrentUserActions;
+            GameStatus status = request.Status;
             Enemy? currentEnemy = EnemyDtoMapper.ToDomainPosibleNull(request.CurrentEnemy);
 
             // Use service
-            Game? updatedGame = await _updateService.UpdateGame(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy);
+            Game? updatedGame = await _updateService.UpdateGame(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, status, currentEnemy);
 
             Console.WriteLine("Game updated: '" + updatedGame + "'");
 
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, currentEnemy)));    // game not updated
+                : Ok(GameDtoMapper.ToDto(new Game(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, status, currentEnemy)));    // game not updated
 
         }
         catch (Exception ex)

@@ -1,6 +1,6 @@
 export enum UserAction {
     // SCENARIO
-    MOVE_FORWARD = "moveForward",
+    MOVE_FORWARD = "MoveForward",
 
     // ITEMS
     USE_ITEM = "UseItem",
@@ -13,6 +13,6 @@ export enum UserAction {
     DECLINE_TRADE = "DeclineTrade",
 
     // COMBAT
-    ATTACK_ENEMY_WITH_ITEM = "attackEnemyWithItem",
-    ATTACK_ENEMY_WITHOUT_ITEM = "attackEnemyWithoutItem",
+    ATTACK_ENEMY_WITH_ITEM = "AttackEnemyWithItem",
+    ATTACK_ENEMY_WITHOUT_ITEM = "AttackEnemyWithoutItem",
 }

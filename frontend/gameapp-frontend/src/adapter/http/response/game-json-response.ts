@@ -9,6 +9,7 @@ import { SceneJsonResponse } from "./scene-json-response";
 import { ItemJsonResponse } from "./item-json-response";
 import { EnemyJsonResponse } from "./enemy-json-response";
 import type { Biome } from "../../../domain/enumerates/biome";
+import type { GameStatus } from "../../../domain/enumerates/game-status";
 
 interface CharacterJson {
     type: CharacterType;
@@ -31,6 +32,7 @@ interface GameJson {
     listCurrentScenes?: SceneJsonResponse[];
     listCurrentUserActions?: UserAction[];
     finalScene: FinalSceneJson;
+    status: GameStatus;
     currentEnemy?: any;
 }
 
@@ -42,6 +44,7 @@ export class GameJsonResponse {
     listCurrentScenes: SceneJsonResponse[];
     listCurrentUserActions: UserAction[];
     finalScene: FinalSceneJson;
+    status: GameStatus;
     currentEnemy: any | null;
 
     constructor(GameJson: GameJson) {
@@ -54,6 +57,7 @@ export class GameJsonResponse {
         this.listCurrentScenes = GameJson.listCurrentScenes ?? [];
         this.listCurrentUserActions = GameJson.listCurrentUserActions ?? [];
         this.finalScene = GameJson.finalScene;
+        this.status = GameJson.status;
         this.currentEnemy = GameJson.currentEnemy ?? null;
     }
 
@@ -101,6 +105,7 @@ export class GameJsonResponse {
             currentScenes,
             userActions,
             completedScenes,
+            this.status,
             currentEnemy,
             this.id
         );

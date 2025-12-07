@@ -9,7 +9,7 @@ public class DesertScenesAdder : IScenesAdder
 
     private static Biome getBiome()
     {
-        return Biome.desert;
+        return Biome.Desert;
     }
 
     public static void AddScenes(List<Scene> scenes)

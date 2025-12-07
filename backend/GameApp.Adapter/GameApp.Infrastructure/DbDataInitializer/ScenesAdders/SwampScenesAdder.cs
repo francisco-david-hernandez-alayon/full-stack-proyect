@@ -9,7 +9,7 @@ public class SwampScenesAdder : IScenesAdder
 
     private static Biome getBiome()
     {
-        return Biome.swamp;
+        return Biome.Swamp;
     }
 
     public static void AddScenes(List<Scene> scenes)

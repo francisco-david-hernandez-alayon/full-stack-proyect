@@ -22,6 +22,8 @@ public class GameResponseDto
 
     public FinalSceneDto FinalScene { get; set; } = default!;
 
+    public GameStatus Status { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public EnemyResponseDto? CurrentEnemy { get; set; }
 }

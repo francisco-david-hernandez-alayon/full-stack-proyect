@@ -20,6 +20,8 @@ public class GameDocument
     
     public string FinalScene { get; set; } = default!;
 
+    public GameStatus Status { get; set; }
+
     [BsonIgnoreIfNull]
     public EnemyDocument? CurrentEnemy { get; set; }
     [BsonIgnoreIfNull]

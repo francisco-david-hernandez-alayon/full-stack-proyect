@@ -37,6 +37,7 @@ namespace GameApp.Adapter.Api.Mappers
                 finalScene,
                 currentScenes,
                 currentUserActions,
+                gameDto.Status,
                 currentEnemy
             );
         }

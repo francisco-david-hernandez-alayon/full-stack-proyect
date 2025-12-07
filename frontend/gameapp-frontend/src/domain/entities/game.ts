@@ -4,6 +4,7 @@ import { Character } from '../value-objects/characters/character';
 import { Enemy } from './enemy';
 import { NothingHappensScene } from './scenes/nothing-happens-scene';
 import { Scene } from './scenes/scene';
+import { GameStatus } from '../enumerates/game-status';
 
 export class Game {
     private _id: string;
@@ -13,6 +14,7 @@ export class Game {
     private _listCurrentScenes: Scene[];
     private _listCurrentUserActions: UserAction[];
     private _listCompletedScenes: Scene[];
+    private _status: GameStatus;
     private _currentEnemy: Enemy | null;
 
     constructor(
@@ -22,6 +24,7 @@ export class Game {
         listCurrentScenes: Scene[] = [],
         listCurrentUserActions: UserAction[] = [],
         listCompletedScenes: Scene[] = [],
+        status: GameStatus = GameStatus.GAME_IN_PROGRESS,
         currentEnemy: Enemy | null = null,
         id?: string
     ) {
@@ -40,6 +43,7 @@ export class Game {
         this._listCurrentScenes = [...listCurrentScenes];
         this._listCompletedScenes = [...listCompletedScenes];
         this._listCurrentUserActions = [...listCurrentUserActions];
+        this._status = status;
         this._currentEnemy = currentEnemy;
     }
 
@@ -51,40 +55,45 @@ export class Game {
     get finalScene(): NothingHappensScene { return this._finalScene; }
     get currentScenes(): Scene[] { return [...this._listCurrentScenes]; }
     get currentUserActions(): UserAction[] { return [...this._listCurrentUserActions]; }
+    get status(): GameStatus { return this._status; }
     get currentEnemy(): Enemy | null { return this._currentEnemy; }
 
     // Setters / inmutables
     setCharacter(newCharacter: Character): Game {
-        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(newCharacter, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
     setNumberScenesToFinish(newNumber: number): Game {
-        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(this._character, newNumber, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
     addCompletedScene(newScene: Scene): Game {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, [...this._listCompletedScenes, newScene], this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, [...this._listCompletedScenes, newScene], this._status, this._currentEnemy, this._id);
     }
 
     removeLastCompletedScene(): Game {
         if (this._listCompletedScenes.length === 0) return this;
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes.slice(0, -1), this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes.slice(0, -1), this._status, this._currentEnemy, this._id);
     }
 
     setFinalScene(newFinalScene: NothingHappensScene): Game {
-        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
     setCurrentScenes(newList: Scene[]): Game {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, newList, this._listCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
     setCurrentUserActions(newListCurrentUserActions: UserAction[]): Game {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newListCurrentUserActions, this._listCompletedScenes, this._currentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, newListCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
     setCurrentEnemy(newCurrentEnemy: Enemy | null): Game {
-        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, newCurrentEnemy, this._id);
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._status, newCurrentEnemy, this._id);
+    }
+
+    setGameStatus(newStatus: GameStatus): Game {
+        return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, newStatus, this._currentEnemy, this._id);
     }
 
     updateGame(
@@ -94,9 +103,10 @@ export class Game {
         newFinalScene: NothingHappensScene,
         newListCurrentUserActions: UserAction[],
         newListCurrentScenes: Scene[],
+        newStatus: GameStatus,
         newCurrentEnemy: Enemy | null
     ): Game {
-        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newListCurrentUserActions, newCompletedScenes, newCurrentEnemy, this._id);
+        return new Game(newCharacter, newNumberScenesToFinish, newFinalScene, newListCurrentScenes, newListCurrentUserActions, newCompletedScenes, newStatus, newCurrentEnemy, this._id);
     }
 
     toString(): string {
@@ -104,6 +114,7 @@ export class Game {
         const currentScenesStr = this._listCurrentScenes.map(s => s.name.toString()).join(", ");
         const currentUserActionsStr = this._listCurrentUserActions.join(", ");
         return `Game ${this._id}: Character=${this._character.name.toString()}, NumberScenesToFinish=${this._numberScenesToFinish}, ` +
-            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentScenesStr}], CurrentUserActions=[${currentUserActionsStr}], CurrentEnemy=${this._currentEnemy}`;
+            `CompletedScenes=[${completedStr}], FinalScene=${this._finalScene?.name.toString()}, CurrentScenes=[${currentScenesStr}],` +
+            `CurrentUserActions=[${currentUserActionsStr}], STATUS=${this._status} CurrentEnemy=${this._currentEnemy}`;
     }
 }

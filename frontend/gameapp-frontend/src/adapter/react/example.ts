@@ -54,15 +54,19 @@ const repoEnemy = new EnemyHttpRepository();
     if (!finalScene) {
       throw new Error("No NothingHappensScene found in all scenes.");
     }
+    // allScenes.forEach((scene: Scene) => {
+    //   console.log(scene.toString());
+    // });
 
     // POST GAME AND GENERATE NEW SCENE
-    // console.log("--------------------> Response POST:");
+
+    console.log(":--------------------> Response POST:");
     const gamePost = new Game(new WarriorCharacter(), 10, finalScene, [finalScene], [UserAction.MOVE_FORWARD]);
 
     const gamePosted: Game = await repoGame.save(gamePost);
-    // console.log(gamePosted.toString());
+    console.log(gamePosted.toString());
 
-    console.log("--------------------> Response Generate new Scene:");
+    console.log(":--------------------> Response Generate new Scene:");
 
     let gameGeneratingScenes: Game = gamePosted;
     let sceneSelected: Scene;
@@ -72,7 +76,7 @@ const repoEnemy = new EnemyHttpRepository();
       sceneSelected = gameGeneratingScenes.currentScenes[0];
       gameGeneratingScenes = await repoGame.generateNewScene(sceneSelected.id, gameGeneratingScenes);
 
-      console.log("scene generated" + i + " => " + gameGeneratingScenes.toString());
+      console.log(":--:scene generated" + i + " => " + gameGeneratingScenes.toString());
     }
 
 

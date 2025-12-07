@@ -22,6 +22,7 @@ public static class GameDocumentMapper
             CurrentScenes = game.GetCurrentScenes().Select(g => g.GetName().GetName()).ToList(),
             CurrentUserActions = game.GetCurrentUserAction(),
             FinalScene = game.GetFinalScene().GetName().GetName(),
+            Status = game.GetGameStatus(),
             CurrentEnemy = EnemyDocumentMapper.ToDocumentPosibleNull(game.GetCurrentEnemy()),   // could be null
             EnemyHealthPoints = game.GetCurrentEnemy()?.GetHealthPoints()  // store enemy hp
         };
@@ -60,6 +61,7 @@ public static class GameDocumentMapper
             finalScene,
             currentScenes,
             currentUserAction,
+            doc.Status,
             currentEnemy
         );
     }
@@ -92,7 +94,7 @@ public static class GameDocumentMapper
         }
         else
         {
-            return new NothingHappensScene(new SceneName("Final Scene test"), new SceneDescription("Final description"), Biome.unknown);
+            return new NothingHappensScene(new SceneName("Final Scene test"), new SceneDescription("Final description"), Biome.Unknown);
         }
 
     }

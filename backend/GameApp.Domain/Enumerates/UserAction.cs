@@ -3,7 +3,7 @@ namespace GameApp.Domain.Enumerates;
 public enum UserAction
 {
     // SCENARIO
-    moveForward,  // move forward in a chosen direction
+    MoveForward,  // move forward in a chosen direction
 
     // ITEMS
     UseItem,  // use an item from inventory
@@ -16,6 +16,6 @@ public enum UserAction
     DeclineTrade,  // Decline current Trade
 
     // COMBAT
-    attackEnemyWithItem, // attack current enemy with attack an item
-    attackEnemyWithoutItem,   // attack current enemy without an attack item
+    AttackEnemyWithItem, // attack current enemy with attack an item
+    AttackEnemyWithoutItem,   // attack current enemy without an attack item
 }

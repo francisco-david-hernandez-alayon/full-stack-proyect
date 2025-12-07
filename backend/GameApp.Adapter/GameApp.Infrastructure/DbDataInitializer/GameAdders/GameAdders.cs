@@ -18,7 +18,7 @@ public interface GameAdders : IGameAdders
 
         NothingHappensScene finalScene = ForestScenesAdder.FinalSceneTreasureForest;
         List<Scene> currentScenes = new List<Scene>{finalScene};
-        List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.moveForward};
+        List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.MoveForward};
 
         Game game1 = new Game(warrior, 10, finalScene, currentScenes, currentUserAction);
 

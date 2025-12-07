@@ -35,6 +35,7 @@ namespace GameApp.Adapter.Api.Mappers
                 ListCurrentScenes = game.GetCurrentScenes().Select(SceneDtoMapper.ToDto).ToList(),
                 ListCurrentUserActions = game.GetCurrentUserAction().ToList(),
                 FinalScene = FinalSceneDtoMapper.ToDto(game.GetFinalScene()),
+                Status = game.GetGameStatus(),
                 CurrentEnemy = EnemyDtoMapper.ToDtoPosibleNull(game.GetCurrentEnemy()),
             };
         }

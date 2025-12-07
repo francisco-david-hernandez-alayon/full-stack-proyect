@@ -15,6 +15,7 @@ public class Game
     private readonly List<Scene> ListCurrentScenes;
     private readonly List<UserAction> ListCurrentUserActions;  // all possible actions that the user can perform in the current scenes
     private readonly NothingHappensScene FinalScene;
+    private readonly GameStatus Status;
     private readonly Enemy? CurrentEnemy;  // could be an enemy on current scene
 
     ///-------------CREATE ATRIBUTE: CurrentEnemy
@@ -28,6 +29,7 @@ public class Game
         ListCurrentScenes = new List<Scene>();
         ListCurrentUserActions = new List<UserAction>();
         FinalScene = null!;
+        Status = GameStatus.GameInProgress;
     }
 
     // Default constructor
@@ -40,10 +42,11 @@ public class Game
         ListCompletedScenes = new List<Scene>();
         ListCurrentScenes = listCurrentScenes;
         ListCurrentUserActions = listCurrentUserActions;
+        Status = GameStatus.GameInProgress;
     }
 
     // Restore constructor
-    public Game(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions, Enemy? currentEnemy)
+    public Game(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, NothingHappensScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions, GameStatus status, Enemy? currentEnemy)
     {
         Id = id;
         Character = character;
@@ -53,6 +56,7 @@ public class Game
         ListCurrentScenes = listCurrentScenes;
         ListCurrentUserActions = listCurrentUserActions;
         CurrentEnemy = currentEnemy;
+        Status = status;
     }
 
     // Getters
@@ -63,19 +67,20 @@ public class Game
     public NothingHappensScene GetFinalScene() => FinalScene;
     public List<Scene> GetCurrentScenes() => new List<Scene>(ListCurrentScenes);
     public List<UserAction> GetCurrentUserAction() => new List<UserAction>(ListCurrentUserActions);
+    public GameStatus GetGameStatus() => Status;
     public Enemy? GetCurrentEnemy() => CurrentEnemy;
 
     // Setters
     public Game SetCharacter(Character newCharacter) =>
-        new Game(Id, newCharacter, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        new Game(Id, newCharacter, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
 
     public Game SetNumberScenesToFinish(int newNumberScenesToFinish) =>
-        new Game(Id, Character, newNumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        new Game(Id, Character, newNumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
 
     public Game AddCompletedScene(Scene newScene)
     {
         var newList = new List<Scene>(ListCompletedScenes) { newScene };
-        return new Game(Id, Character, NumberScenesToFinish, newList, FinalScene, ListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        return new Game(Id, Character, NumberScenesToFinish, newList, FinalScene, ListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
     }
 
     public Game RemoveLastCompletedScene()
@@ -83,25 +88,28 @@ public class Game
         if (ListCompletedScenes.Count == 0) return this;
         var newList = new List<Scene>(ListCompletedScenes);
         newList.RemoveAt(newList.Count - 1);
-        return new Game(Id, Character, NumberScenesToFinish, newList, FinalScene, ListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        return new Game(Id, Character, NumberScenesToFinish, newList, FinalScene, ListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
     }
 
     public Game SetFinalScene(NothingHappensScene newFinalScene) =>
-        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, newFinalScene, ListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, newFinalScene, ListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
 
     public Game SetCurrentScenes(List<Scene> newListCurrentScenes) =>
-        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, newListCurrentScenes, ListCurrentUserActions, CurrentEnemy);
+        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, newListCurrentScenes, ListCurrentUserActions, Status, CurrentEnemy);
         
     public Game SetCurrentUserActions(List<UserAction> newListCurrentUserActions) =>
-        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, newListCurrentUserActions, CurrentEnemy);
+        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, newListCurrentUserActions, Status, CurrentEnemy);
 
     public Game SetCurrentEnemy(Enemy? newCurrentEnemy) =>
-        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, newCurrentEnemy);
+        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, Status, newCurrentEnemy);
+    
+    public Game SetGameStatus(GameStatus newStatus) =>
+        new Game(Id, Character, NumberScenesToFinish, ListCompletedScenes, FinalScene, ListCurrentScenes, ListCurrentUserActions, newStatus, CurrentEnemy);
 
 
 
-    public Game UpdateGame(Character newCharacter, int newNumberScenesToFinish, List<Scene> newCompletedScenes, NothingHappensScene newFinalScene, List<Scene> newListCurrentScenes, List<UserAction> newlistCurrentUserActions, Enemy? newCurrentEnemy) =>
-    new Game(Id, newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newlistCurrentUserActions, newCurrentEnemy);
+    public Game UpdateGame(Character newCharacter, int newNumberScenesToFinish, List<Scene> newCompletedScenes, NothingHappensScene newFinalScene, List<Scene> newListCurrentScenes, List<UserAction> newlistCurrentUserActions, GameStatus newStatus, Enemy? newCurrentEnemy) =>
+    new Game(Id, newCharacter, newNumberScenesToFinish, newCompletedScenes, newFinalScene, newListCurrentScenes, newlistCurrentUserActions, newStatus, newCurrentEnemy);
 
     // To string
     public override string ToString()
@@ -111,6 +119,6 @@ public class Game
         string currentUserActionsStr = string.Join(", ", ListCurrentUserActions.ConvertAll(s => s.ToString()));
         return $"Game {Id}: Character={Character.GetName()}, NumberScenesToFinish={NumberScenesToFinish}, " +
                $"CompletedScenes=[{completedScenesStr}], FinalScene={FinalScene?.GetName()}, CurrentScenes=[{currentScenesStr}], " + 
-               $"CurrentUserAction=[{currentUserActionsStr}], CurrentEnemy={CurrentEnemy}";
+               $"CurrentUserAction=[{currentUserActionsStr}], GameStatus={Status}, CurrentEnemy={CurrentEnemy}";
     }
 }

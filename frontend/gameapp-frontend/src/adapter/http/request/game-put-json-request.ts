@@ -1,4 +1,5 @@
 import { Game } from "../../../domain/entities/game";
+import type { GameStatus } from "../../../domain/enumerates/game-status";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { CharacterJsonRequest } from "./character-json-request";
 import { EnemyJsonRequest } from "./enemy-json-request";
@@ -12,6 +13,7 @@ export class GamePutJsonRequest {
     listCurrentScenes: SceneJsonRequest[];
     listCurrentUserActions: UserAction[];
     listCompletedScenes: SceneJsonRequest[];
+    status: GameStatus;
     currentEnemy?: EnemyJsonRequest;
 
     constructor(game: Game) {
@@ -24,6 +26,8 @@ export class GamePutJsonRequest {
         this.listCompletedScenes = game.completedScenes.map(scene => new SceneJsonRequest(scene));
 
         this.listCurrentUserActions = game.currentUserActions.map(action => action);
+
+        this.status = game.status;
 
         if (game.currentEnemy) {
             this.currentEnemy = new EnemyJsonRequest(game.currentEnemy);
