@@ -9,8 +9,8 @@ export enum UserAction {
     CHANGE_ITEM = "ChangeItem",
 
     // TRADES
-    ACCEPT_TRADE = "AcceptTrade",
-    DECLINE_TRADE = "DeclineTrade",
+    BUY_ITEMS = "BuyItems",
+    SOLD_ITEMS = "SoldItems",
 
     // COMBAT
     ATTACK_ENEMY_WITH_ITEM = "AttackEnemyWithItem",

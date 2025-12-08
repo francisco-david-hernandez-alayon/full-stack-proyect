@@ -4,7 +4,7 @@ import { Game } from "../../../domain/entities/game";
 import type { GameStatus } from "../../../domain/enumerates/game-status";
 
 export class GameUpdateService implements IGameUpdateUseCase {
-    constructor(private gameRepository: IGameRepository) {}
+    constructor(private readonly gameRepository: IGameRepository) {}
 
     async updateGame(
         id: string,

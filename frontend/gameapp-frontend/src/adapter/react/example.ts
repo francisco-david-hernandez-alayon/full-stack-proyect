@@ -9,11 +9,19 @@ import { Enemy } from "../../domain/entities/enemy";
 import { WarriorCharacter } from "../../domain/value-objects/characters/warrior-character";
 import { NothingHappensScene } from "../../domain/entities/scenes/nothing-happens-scene";
 import { UserAction } from "../../domain/enumerates/user-action";
+import { GameAdvanceSceneService } from "../../application/services/game-services/game-advance-scene-service";
+import { GameCreateService } from "../../application/services/game-services/game-create-service";
+import { GameGetService } from "../../application/services/game-services/game-get-service";
+import { SceneGetService } from "../../application/services/scene-services/scene-get-service";
 
 const repoGame = new GameHttpRepository();
 const repoScene = new SceneHttpRepository();
 const repoItem = new ItemHttpRepository();
 const repoEnemy = new EnemyHttpRepository();
+
+const sceneGetService = new SceneGetService(repoScene);
+const gameAdvanceSceneService = new GameAdvanceSceneService(repoGame);
+const gameCreateService = new GameCreateService(repoGame);
 
 (async () => {
   try {
@@ -47,36 +55,31 @@ const repoEnemy = new EnemyHttpRepository();
 
 
     // GET ALL SCENES
-    console.log("--------------------> Response GET all scenes:");
-    const allScenes: Scene[] = await repoScene.fetchAll();
+    const allScenes: Scene[] = await sceneGetService.getAllScenes();
 
     const finalScene = allScenes.find(s => s instanceof NothingHappensScene);  // search nothing happens scene to make final scene
     if (!finalScene) {
       throw new Error("No NothingHappensScene found in all scenes.");
     }
-    // allScenes.forEach((scene: Scene) => {
-    //   console.log(scene.toString());
-    // });
+
 
     // POST GAME AND GENERATE NEW SCENE
+    console.log("Response POST GAME");
 
-    console.log(":--------------------> Response POST:");
-    const gamePost = new Game(new WarriorCharacter(), 10, finalScene, [finalScene], [UserAction.MOVE_FORWARD]);
-
-    const gamePosted: Game = await repoGame.save(gamePost);
+    const gamePosted: Game = await gameCreateService.createGame(new WarriorCharacter(), 10, finalScene, [finalScene], [UserAction.MOVE_FORWARD]);
     console.log(gamePosted.toString());
 
-    console.log(":--------------------> Response Generate new Scene:");
+    console.log("Response POST GAME");
 
     let gameGeneratingScenes: Game = gamePosted;
     let sceneSelected: Scene;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
 
       sceneSelected = gameGeneratingScenes.currentScenes[0];
-      gameGeneratingScenes = await repoGame.generateNewScene(sceneSelected.id, gameGeneratingScenes);
+      gameGeneratingScenes = await gameAdvanceSceneService.advance(sceneSelected.id, gameGeneratingScenes);
 
-      console.log(":--:scene generated" + i + " => " + gameGeneratingScenes.toString());
+      console.log("game generated '" + i + "' ==> {{{---" + gameGeneratingScenes.toString() + "---}}}");
     }
 
 

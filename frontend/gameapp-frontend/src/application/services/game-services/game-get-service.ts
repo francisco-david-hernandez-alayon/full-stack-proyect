@@ -3,7 +3,7 @@ import type { IGameRepository } from "../../repositories/igame-repository";
 import { Game } from "../../../domain/entities/game";
 
 export class GameGetService implements IGameGetUseCase {
-    constructor(private gameRepository: IGameRepository) {}
+    constructor(private readonly gameRepository: IGameRepository) {}
 
     async getGame(id: string): Promise<Game> {
         return await this.gameRepository.fetchById(id);

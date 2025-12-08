@@ -3,7 +3,7 @@ import type { IGameRepository } from "../../repositories/igame-repository";
 import { Game } from "../../../domain/entities/game";
 
 export class GameDeleteService implements IGameDeleteUseCase {
-    constructor(private gameRepository: IGameRepository) {}
+    constructor(private readonly gameRepository: IGameRepository) {}
 
     async deleteGame(id: string): Promise<Game> {
         const deletedGame = await this.gameRepository.delete(id);

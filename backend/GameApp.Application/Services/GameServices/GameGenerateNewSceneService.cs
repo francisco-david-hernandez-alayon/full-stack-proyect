@@ -26,7 +26,12 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         if (game == null)
             throw new ArgumentNullException(nameof(game));
 
+        // 1- CHECK VALIDATIONS
         // If game is finished
+        if (game.GetGameStatus() == GameStatus.PlayerDeath || game.GetGameStatus() == GameStatus.GameWon)
+        {
+            return game;
+        }
         if (game.GetCompletedScenes().Count >= game.GetNumberScenesToFinish())
         {
             Game? gameFinished = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
@@ -34,8 +39,14 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
             return gameFinished;
         }
+        // if can move forward
+        if (!game.GetCurrentUserAction().Any(userAction => userAction == UserAction.MoveForward))
+        {
+            return game;
+        }
 
-        // 1- SEARCH SCENES SELECTED AND ADD TO COMPLETED SCENES
+
+        // 2- SEARCH SCENES SELECTED AND ADD TO COMPLETED SCENES
         Scene? sceneSelected = game.GetCurrentScenes()
             .FirstOrDefault(s => s.GetGuid() == idSceneSelected);
 
@@ -45,7 +56,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         game = game.AddCompletedScene(sceneSelected);
 
 
-        // 2- GENERATE NEW CURRENT SCENES
+        // 3- GENERATE NEW CURRENT SCENES AND CURRENT USER ACTIONS
         // Get all scenes
         var allScenes = (await _repoScene.FetchAllAsync()).ToList();
         // FALTA TENER EN CUENTA EL BIOMA PARA SOLR GENERAR ESCENAS DEL MISMO BIOMA
@@ -66,9 +77,58 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         game = game.SetCurrentScenes(newScenes);
 
 
+        // If there is only one new scene, configure the UserActions according to the type
+        var updateUserActions = new List<UserAction> { UserAction.UseItem };
+
+        if (newScenes.Count == 1)
+        {
+            var currentSceneSelected = newScenes.First();
+
+            switch (currentSceneSelected)
+            {
+                case NothingHappensScene:
+                    updateUserActions.Add(UserAction.MoveForward);
+                    break;
+
+                case ChangeBiomeScene:
+                    updateUserActions.Add(UserAction.MoveForward);
+                    break;
+
+                case ItemScene:
+                    updateUserActions.Add(UserAction.MoveForward);
+                    updateUserActions.Add(UserAction.GetItem);
+                    updateUserActions.Add(UserAction.ChangeItem);
+                    updateUserActions.Add(UserAction.UseCurrentSceneItem);
+                    break;
+
+                case TradeScene:
+                    updateUserActions.Add(UserAction.MoveForward);
+                    updateUserActions.Add(UserAction.BuyItems);
+                    updateUserActions.Add(UserAction.SoldItems);
+                    break;
+
+                case EnemyScene:
+                    updateUserActions.Add(UserAction.AttackEnemyWithItem);
+                    updateUserActions.Add(UserAction.AttackEnemyWithoutItem);
+                    game = game.SetCurrentEnemy((currentSceneSelected as EnemyScene).GetEnemy());
+                    break;
+
+                default:
+                    break;
+            }
+
+            // Add MoveForward to move one of the current scenes.
+        }
+        else
+        {
+            updateUserActions.Add(UserAction.MoveForward);
+        }
+
+        game = game.SetCurrentUserActions(updateUserActions);
 
 
-        // SAVE GAME IN REPOSITORY AND RETURN GAME
+
+        // 4- SAVE GAME IN REPOSITORY AND RETURN GAME
         Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
         game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameInProgress, game.GetCurrentEnemy());
 

@@ -3,7 +3,7 @@ import type { IGameRepository } from "../../repositories/igame-repository";
 import { Game } from "../../../domain/entities/game";
 
 export class GameCreateService implements IGameCreateUseCase {
-    constructor(private gameRepository: IGameRepository) { }
+    constructor(private readonly gameRepository: IGameRepository) { }
 
     async createGame(
         character: any,

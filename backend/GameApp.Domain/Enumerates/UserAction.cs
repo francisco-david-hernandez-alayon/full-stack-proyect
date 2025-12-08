@@ -12,8 +12,8 @@ public enum UserAction
     ChangeItem,   // Change item from inventory for a new one(max space on inventory reached)
 
     // TRADES
-    AcceptTrade,   // Accept current Trade
-    DeclineTrade,  // Decline current Trade
+    BuyItems,   // Can buy items to merchant
+    SoldItems,  // Sold items
 
     // COMBAT
     AttackEnemyWithItem, // attack current enemy with attack an item
