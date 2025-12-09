@@ -86,6 +86,8 @@ cd ../frontend
 npm create vite@latest
 npm install uuid
 npm install axios
+npm install react-router-dom
+npm install --save-dev @types/react-router-dom
 ```
 
 ### Añadir tailwind

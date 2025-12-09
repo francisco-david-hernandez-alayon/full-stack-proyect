@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 export const Header: React.FC = () => {
   return (
@@ -16,11 +17,11 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm/6 font-semibold text-white">Games</a>
-          <a href="#" className="text-sm/6 font-semibold text-white">Characters</a>
-          <a href="#" className="text-sm/6 font-semibold text-white">Biomes</a>
-          <a href="#" className="text-sm/6 font-semibold text-white">Enemys</a>
-          <a href="#" className="text-sm/6 font-semibold text-white">Items</a>
+          <Link to="/games" className="text-sm/6 font-semibold text-white">Games</Link>
+          <Link to="/characters" className="text-sm/6 font-semibold text-white">Characters</Link>
+          <Link to="/biomes" className="text-sm/6 font-semibold text-white">Biomes</Link>
+          <Link to="/enemies" className="text-sm/6 font-semibold text-white">Enemies</Link>
+          <Link to="/items" className="text-sm/6 font-semibold text-white">Items</Link>
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
