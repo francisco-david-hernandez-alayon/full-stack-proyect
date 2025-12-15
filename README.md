@@ -90,13 +90,19 @@ npm install react-router-dom
 npm install --save-dev @types/react-router-dom
 ```
 
-### Añadir tailwind
+### Añadir tailwind y daisyui
 1. Instalar Tailwind CSS
 ```
 npm install -D @tailwindcss/vite tailwindcss
 ```
-2. Añadir Tailwind CSS al vite.config.js
-3. Eliminar todo en index.css y añadir ```@import "tailwindcss";```
+2. Añadir daisiui
+```
+npm install daisyui
+```
+3. Añadir Tailwind CSS al vite.config.js
+4. Eliminar todo en index.css y añadir ```@import "tailwindcss"; y @plugin "daisyui";```
+
+
 
 <br>
 

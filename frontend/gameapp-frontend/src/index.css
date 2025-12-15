@@ -1,1 +1,52 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+@layer components {
+
+  /* ========= PRIMARY ========= */
+  .bg-custom-primary {
+    @apply bg-rose-800;
+  }
+  .text-custom-primary {
+    @apply text-rose-800;
+  }
+
+  /* ========= SECONDARY ========= */
+  .bg-custom-secondary {
+    @apply bg-slate-700;
+  }
+  .text-custom-secondary {
+    @apply text-slate-700;
+  }
+
+  /* ========= TERTIARY ========= */
+  .bg-custom-tertiary {
+    @apply bg-amber-600;
+  }
+  .text-custom-tertiary {
+    @apply text-amber-600;
+  }
+
+  /* ========= ERROR ========= */
+  .bg-custom-error {
+    @apply bg-red-600;
+  }
+  .text-custom-error {
+    @apply text-red-600;
+  }
+
+  /* ========= BACKGROUND ========= */
+  .bg-custom-background {
+    @apply bg-white;
+  }
+  .bg-custom-background-soft {
+    @apply bg-slate-50;
+  }
+  .text-custom-background {
+    @apply text-white;
+  }
+
+
+
+  
+}

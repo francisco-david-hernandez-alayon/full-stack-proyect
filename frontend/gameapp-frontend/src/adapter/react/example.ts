@@ -54,33 +54,33 @@ const gameCreateService = new GameCreateService(repoGame);
     // });
 
 
-    // GET ALL SCENES
-    const allScenes: Scene[] = await sceneGetService.getAllScenes();
+    // // GET ALL SCENES
+    // const allScenes: Scene[] = await sceneGetService.getAllScenes();
 
-    const finalScene = allScenes.find(s => s instanceof NothingHappensScene);  // search nothing happens scene to make final scene
-    if (!finalScene) {
-      throw new Error("No NothingHappensScene found in all scenes.");
-    }
+    // const finalScene = allScenes.find(s => s instanceof NothingHappensScene);  // search nothing happens scene to make final scene
+    // if (!finalScene) {
+    //   throw new Error("No NothingHappensScene found in all scenes.");
+    // }
 
 
-    // POST GAME AND GENERATE NEW SCENE
-    console.log("Response POST GAME");
+    // // POST GAME AND GENERATE NEW SCENE
+    // console.log("Response POST GAME");
 
-    const gamePosted: Game = await gameCreateService.createGame(new WarriorCharacter(), 10, finalScene, [finalScene], [UserAction.MOVE_FORWARD]);
-    console.log(gamePosted.toString());
+    // const gamePosted: Game = await gameCreateService.createGame(new WarriorCharacter(), 10, finalScene, [finalScene], [UserAction.MOVE_FORWARD]);
+    // console.log(gamePosted.toString());
 
-    console.log("Response POST GAME");
+    // console.log("Response POST GAME");
 
-    let gameGeneratingScenes: Game = gamePosted;
-    let sceneSelected: Scene;
+    // let gameGeneratingScenes: Game = gamePosted;
+    // let sceneSelected: Scene;
 
-    for (let i = 0; i < 20; i++) {
+    // for (let i = 0; i < 20; i++) {
 
-      sceneSelected = gameGeneratingScenes.currentScenes[0];
-      gameGeneratingScenes = await gameAdvanceSceneService.advance(sceneSelected.id, gameGeneratingScenes);
+    //   sceneSelected = gameGeneratingScenes.currentScenes[0];
+    //   gameGeneratingScenes = await gameAdvanceSceneService.advance(sceneSelected.id, gameGeneratingScenes);
 
-      console.log("game generated '" + i + "' ==> {{{---" + gameGeneratingScenes.toString() + "---}}}");
-    }
+    //   console.log("game generated '" + i + "' ==> {{{---" + gameGeneratingScenes.toString() + "---}}}");
+    // }
 
 
 
