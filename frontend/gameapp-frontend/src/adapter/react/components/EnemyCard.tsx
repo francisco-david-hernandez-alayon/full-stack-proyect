@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Enemy } from "../../../domain/entities/enemy";
+import { Activity, DollarSign, Heart, Sword,  } from "lucide-react";
 
 interface EnemyCardProps {
   enemy: Enemy;
@@ -7,12 +8,31 @@ interface EnemyCardProps {
 
 export const EnemyCard: React.FC<EnemyCardProps> = ({ enemy }) => {
   return (
-    <div className="card w-72 bg-custom-background shadow-md">
-      <div className="card-body">
-        <h2 className="card-title text-custom-secondary">{enemy.name.name}</h2>
-        <p>HP: {enemy.healthPoints}</p>
-        <p>Damage: {enemy.attackDamage}</p>
-        <p>Speed: {enemy.speedAttack}</p>
+    <div className="card bg-background shadow-md p-3 max-w-xs">
+      <h2 className="card-title text-primary mb-2">
+        {enemy.name.name}
+      </h2>
+
+      <div className="flex flex-col gap-2 text-secondary">
+        <div className="flex items-center gap-2">
+          <Heart className="w-5 h-5 text-custom-secondary" />
+          <span>HP: {enemy.healthPoints}</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Sword className="w-5 h-5 text-custom-secondary" />
+          <span>Damage: {enemy.attackDamage}</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Activity className="w-5 h-5 text-custom-secondary" />
+          <span>Speed: {enemy.speedAttack}</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <DollarSign className="w-5 h-5 text-custom-secondary" />
+          <span>Reward Money: {enemy.speedAttack}</span>
+        </div>
       </div>
     </div>
   );

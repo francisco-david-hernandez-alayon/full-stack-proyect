@@ -1,52 +1,87 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+
+@layer base {
+  :root {
+    --color-primary: theme(colors.rose.800);
+    --color-secondary: theme(colors.slate.700);
+    --color-tertiary: theme(colors.amber.600);
+    --color-error: theme(colors.red.600);
+    --color-background: theme(colors.white);
+    --color-background-soft: theme(colors.slate.50);
+
+    /* Biome colors */
+    --color-forest: theme(colors.green.800);
+    --color-swamp: theme(colors.green.400);
+    --color-city: theme(colors.gray.500);
+    --color-desert: theme(colors.yellow.500);
+
+    --font-display: "VT323", monospace;
+
+  }
+
+  html {
+    font-family: var(--font-display);
+  }
+}
+
+
 @layer components {
 
   /* ========= PRIMARY ========= */
   .bg-custom-primary {
-    @apply bg-rose-800;
+    background-color: var(--color-primary);
   }
+
   .text-custom-primary {
-    @apply text-rose-800;
+    color: var(--color-primary);
+  }
+
+  .text-custom-primary-title {
+    color: var(--color-primary);
+    @apply text-center text-4xl font-bold p-6;
   }
 
   /* ========= SECONDARY ========= */
   .bg-custom-secondary {
-    @apply bg-slate-700;
+    background-color: var(--color-secondary);
   }
+
   .text-custom-secondary {
-    @apply text-slate-700;
+    color: var(--color-secondary);
   }
 
   /* ========= TERTIARY ========= */
   .bg-custom-tertiary {
-    @apply bg-amber-600;
+    background-color: var(--color-tertiary);
   }
+
   .text-custom-tertiary {
-    @apply text-amber-600;
+    color: var(--color-tertiary);
   }
 
   /* ========= ERROR ========= */
   .bg-custom-error {
-    @apply bg-red-600;
+    background-color: var(--color-error);
   }
+
   .text-custom-error {
-    @apply text-red-600;
+    color: var(--color-error);
   }
 
   /* ========= BACKGROUND ========= */
   .bg-custom-background {
-    @apply bg-white;
+    background-color: var(--color-background);
   }
+
   .bg-custom-background-soft {
-    @apply bg-slate-50;
+    background-color: var(--color-background-soft);
   }
+
   .text-custom-background {
-    @apply text-white;
+    color: var(--color-background);
   }
 
 
-
-  
 }

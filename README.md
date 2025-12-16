@@ -90,17 +90,21 @@ npm install react-router-dom
 npm install --save-dev @types/react-router-dom
 ```
 
-### Añadir tailwind y daisyui
+### Añadir tailwind, daisyui y Lucide
 1. Instalar Tailwind CSS
 ```
 npm install -D @tailwindcss/vite tailwindcss
 ```
-2. Añadir daisiui
+2. Intalar daisiui
 ```
 npm install daisyui
 ```
-3. Añadir Tailwind CSS al vite.config.js
-4. Eliminar todo en index.css y añadir ```@import "tailwindcss"; y @plugin "daisyui";```
+3. Intalar Lucide
+```
+npm install lucide-react
+```
+4. Añadir Tailwind CSS al vite.config.js
+5. Eliminar todo en index.css y añadir ```@import "tailwindcss"; y @plugin "daisyui";```
 
 
 
@@ -127,8 +131,12 @@ npm run dev
 ## Recursos
 * [Instalar tailwind](https://tailwindcss.com/docs/installation/using-vite)
 
+* [Daisiui](https://daisyui.com/)
+
+* [Lucide](https://lucide.dev/)
+
 * [Inicio rápido react](https://es.react.dev/learn)
 
-
 * [Iconos](https://www.flaticon.es/)
+
  
