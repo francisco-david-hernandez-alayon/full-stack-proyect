@@ -19,7 +19,7 @@ export class SceneHttpRepository implements ISceneRepository {
     async fetchById(id: string): Promise<Scene> {
         if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#scenesEndpoint}/${id}`);
+        const res = await fetch(`${this.#scenesEndpoint}/id/${id}`);
         if (!res.ok) throw new Error(`Error fetching scene ${id}`);
 
         const json = await res.json();

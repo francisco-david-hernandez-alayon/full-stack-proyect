@@ -45,7 +45,7 @@ public class GameController : ControllerBase
 
 
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("id/{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         try

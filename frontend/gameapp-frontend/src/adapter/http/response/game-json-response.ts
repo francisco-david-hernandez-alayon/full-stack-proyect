@@ -4,7 +4,7 @@ import { WarriorCharacter } from "../../../domain/value-objects/characters/warri
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
 import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
 import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
-import { CharacterType } from "../enumerates/character-type";
+import { CharacterType } from "../../../application/enumerates/character-type";
 import { SceneJsonResponse } from "./scene-json-response";
 import { ItemJsonResponse } from "./item-json-response";
 import { EnemyJsonResponse } from "./enemy-json-response";

@@ -1,8 +1,8 @@
 using GameApp.Domain.Enumerates;
-using GameApp.Adapter.Infrastructure.Enumerates;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using GameApp.Domain.ValueObjects.Items;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Models;
 

@@ -1,7 +1,7 @@
 import { Game } from "../../../domain/entities/game";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
-import { CharacterType } from "../enumerates/character-type";
+import { CharacterType } from "../../../application/enumerates/character-type";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
 

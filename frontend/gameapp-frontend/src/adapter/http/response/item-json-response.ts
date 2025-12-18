@@ -3,7 +3,7 @@ import { AttributeItem } from "../../../domain/entities/items/attribute-item";
 import { ItemDescription } from "../../../domain/value-objects/items/item-description";
 import { ItemName } from "../../../domain/value-objects/items/item-name";
 import type { Item } from "../../../domain/entities/items/item";
-import { ItemType } from "../enumerates/item-type";
+import { ItemType } from "../../../application/enumerates/item-type";
 
 export class ItemJsonResponse {
     id: string;

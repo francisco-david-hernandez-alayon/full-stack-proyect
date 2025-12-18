@@ -6,7 +6,7 @@ import { ItemScene } from "../../../domain/entities/scenes/item-scene";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
 import { TradeScene } from "../../../domain/entities/scenes/trade-scene";
 import { ChangeBiomeScene } from "../../../domain/entities/scenes/change-biome-scene";
-import { SceneType } from "../enumerates/scene-type";
+import { SceneType } from "../../../application/enumerates/scene-type";
 
 
 export class SceneJsonRequest {

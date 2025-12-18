@@ -1,5 +1,4 @@
 using GameApp.Domain.ValueObjects.Scenes;
-using GameApp.Adapter.Infrastructure.Enumerates;
 using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.ValueObjects.Items;
@@ -7,6 +6,7 @@ using GameApp.Domain.Repositories;
 using GameApp.Domain.Entities.Items;
 using GameApp.Domain.ValueObjects.Enemies;
 using GameApp.Domain.Entities;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 

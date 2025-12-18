@@ -1,7 +1,7 @@
 import { Character } from "../../../domain/value-objects/characters/character";
 import { Item } from "../../../domain/entities/items/item";
 import { ItemJsonRequest } from "./item-json-request";
-import { CharacterType } from "../enumerates/character-type";
+import { CharacterType } from "../../../application/enumerates/character-type";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 
 export class CharacterJsonRequest {

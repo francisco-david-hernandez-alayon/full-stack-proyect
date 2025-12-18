@@ -18,7 +18,7 @@ export class EnemyHttpRepository implements IEnemyRepository {
     async fetchById(id: string): Promise<Enemy> {
         if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#enemysEndpoint}/${id}`);
+        const res = await fetch(`${this.#enemysEndpoint}/id/${id}`);
         if (!res.ok) throw new Error(`Error fetching enemy ${id}`);
 
         const json = await res.json();

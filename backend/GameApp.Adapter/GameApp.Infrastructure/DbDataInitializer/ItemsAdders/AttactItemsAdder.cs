@@ -5,7 +5,7 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
 
 public class AttackItemsAdders : IItemsAdder
 {
-    private static readonly AttackItem _woodSword = new(
+    public static readonly AttackItem WoodSword = new(
         new ItemName("wood sword"),
         new ItemDescription("A simple wood sword"),
         tradePrice: 10,
@@ -14,7 +14,7 @@ public class AttackItemsAdders : IItemsAdder
         durability: 5
     );
 
-    private static readonly AttackItem _ironSword = new(
+    public static readonly AttackItem IronSword = new(
         new ItemName("iron sword"),
         new ItemDescription("A basic iron sword"),
         tradePrice: 20,
@@ -23,7 +23,7 @@ public class AttackItemsAdders : IItemsAdder
         durability: 15
     );
 
-    private static readonly AttackItem _steelAxe = new(
+    public static readonly AttackItem SteelAxe = new(
         new ItemName("steel axe"),
         new ItemDescription("A heavy steel axe"),
         tradePrice: 25,
@@ -32,7 +32,7 @@ public class AttackItemsAdders : IItemsAdder
         durability: 20
     );
 
-    private static readonly AttackItem _dagger = new(
+    public static readonly AttackItem Dagger = new(
         new ItemName("dagger"),
         new ItemDescription("A small, fast dagger"),
         tradePrice: 15,
@@ -41,14 +41,8 @@ public class AttackItemsAdders : IItemsAdder
         durability: 8
     );
 
-    // Getters
-    public static AttackItem WoodSword => _woodSword;
-    public static AttackItem IronSword => _ironSword;
-    public static AttackItem SteelAxe => _steelAxe;
-    public static AttackItem Dagger => _dagger;
-
     public static void AddItems(List<Item> items)
     {
-        items.AddRange(new List<Item> { _woodSword, _ironSword, _steelAxe, _dagger });
+        items.AddRange(new List<Item> { WoodSword, IronSword, SteelAxe, Dagger });
     }
 }

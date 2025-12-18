@@ -2,6 +2,7 @@ import type { IItemRepository } from "../../../application/repositories/iitem-re
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { Item } from "../../../domain/entities/items/item";
 import type { ItemName } from "../../../domain/value-objects/items/item-name";
+import type { ItemType } from "../../../application/enumerates/item-type";
 import { ItemJsonResponse } from "../response/item-json-response";
 
 export class ItemHttpRepository implements IItemRepository {
@@ -19,7 +20,7 @@ export class ItemHttpRepository implements IItemRepository {
     async fetchById(id: string): Promise<Item> {
         if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#itemsEndpoint}/${id}`);
+        const res = await fetch(`${this.#itemsEndpoint}/id/${id}`);
         if (!res.ok) throw new Error(`Error fetching item ${id}`);
 
         const json = await res.json();
@@ -41,6 +42,17 @@ export class ItemHttpRepository implements IItemRepository {
     async fetchAll(): Promise<Item[]> {
         const res = await fetch(this.#itemsEndpoint);
         if (!res.ok) throw new Error("Error fetching items");
+
+        const json: any[] = await res.json();
+        return json.map(s => new ItemJsonResponse(s).toItem());
+    }
+
+    // GET type/:type
+    async fetchAllByType(type: ItemType): Promise<Item[]> {
+        if (!type) throw new TypeError("type is required");
+
+        const res = await fetch(`${this.#itemsEndpoint}/type/${encodeURIComponent(type)}`);
+        if (!res.ok) throw new Error(`Error fetching all items by type '${type}'`);
 
         const json: any[] = await res.json();
         return json.map(s => new ItemJsonResponse(s).toItem());

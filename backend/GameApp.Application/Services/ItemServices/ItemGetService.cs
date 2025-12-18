@@ -1,3 +1,4 @@
+using GameApp.Application.Enumerates;
 using GameApp.Application.UseCases.ItemUseCases;
 using GameApp.Domain.Entities.Items;
 using GameApp.Domain.Repositories;
@@ -25,5 +26,11 @@ public class ItemGetService : ItemGetUseCase
     public async Task<IEnumerable<Item>> GetAllItems()
     {
         return await _repo.FetchAllAsync();
+    }
+
+    public async Task<IEnumerable<Item>> GetAllItemsByType(ItemType type)
+    {
+        return await _repo.FetchAllByTypeAsync(type);
+
     }
 }

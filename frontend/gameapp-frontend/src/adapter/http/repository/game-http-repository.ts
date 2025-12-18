@@ -19,7 +19,7 @@ export class GameHttpRepository implements IGameRepository {
     async fetchById(id: string): Promise<Game> {
         if (!id) throw new TypeError("id is required");
 
-        const res = await fetch(`${this.#gamesEndpoint}/${id}`);
+        const res = await fetch(`${this.#gamesEndpoint}/id/${id}`);
         if (!res.ok) throw new Error(`Error fetching game ${id}`);
 
         const json = await res.json();

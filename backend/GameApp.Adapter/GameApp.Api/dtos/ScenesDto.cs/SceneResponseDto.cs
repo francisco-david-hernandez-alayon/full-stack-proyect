@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Adapter.Api.dtos.OthersDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.ScenesDto;

@@ -1,4 +1,4 @@
-namespace GameApp.Adapter.Api.Enumerates;
+namespace GameApp.Application.Enumerates;
 
 public enum CharacterType
 {

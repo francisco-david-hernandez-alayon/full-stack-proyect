@@ -1,5 +1,5 @@
 using GameApp.Adapter.Api.dtos.ItemsDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.OthersDto;
 

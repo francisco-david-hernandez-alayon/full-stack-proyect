@@ -30,7 +30,7 @@ export const EnemiesPage: React.FC = () => {
 
 
   if (loading) {
-    return <div className="p-6">Loading enemies...</div>;
+    return <div> <span className="loading loading-spinner loading-xs"></span> <div className="p-6">Loading enemies...</div></div> ;
   }
 
   if (error) {

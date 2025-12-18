@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.ItemsDto;
 

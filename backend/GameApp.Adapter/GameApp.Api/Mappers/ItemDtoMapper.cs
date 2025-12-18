@@ -1,6 +1,6 @@
 using GameApp.Adapter.Api.dtos;
 using GameApp.Adapter.Api.dtos.ItemsDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities.Items;
 using GameApp.Domain.ValueObjects.Items;
 

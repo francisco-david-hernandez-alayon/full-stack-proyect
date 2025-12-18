@@ -1,3 +1,4 @@
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities.Items;
 using GameApp.Domain.ValueObjects.Items;
 
@@ -10,4 +11,6 @@ public interface ItemGetUseCase
     public Task<Item?> GetItemByName(ItemName name);
 
     public Task<IEnumerable<Item>> GetAllItems();
+
+    public Task<IEnumerable<Item>> GetAllItemsByType(ItemType type);
 }

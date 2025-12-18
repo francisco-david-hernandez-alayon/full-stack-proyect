@@ -5,6 +5,7 @@ using GameApp.Adapter.Infrastructure.Mappers;
 using GameApp.Domain.ValueObjects.Items;
 using GameApp.Domain.Entities.Items;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
+using GameApp.Application.Enumerates;
 
 
 namespace GameApp.Adapter.Infrastructure.Repositories;
@@ -21,6 +22,12 @@ public class ItemRepository : IItemRepository
     public async Task<IEnumerable<Item>> FetchAllAsync()
     {
         var docs = await _items.Find(_ => true).ToListAsync();
+        return docs.Select(ItemDocumentMapper.ToDomain);
+    }
+
+    public async Task<IEnumerable<Item>> FetchAllByTypeAsync(ItemType type)
+    {
+        var docs = await _items.Find(i => i.ItemType == type).ToListAsync();
         return docs.Select(ItemDocumentMapper.ToDomain);
     }
 
@@ -66,7 +73,7 @@ public class ItemRepository : IItemRepository
         List<Item> Items = new List<Item>();
 
         AttackItemsAdders.AddItems(Items);
-
+        AtributteItemsAdders.AddItems(Items);
 
 
         // Insert Item only if not exist in db

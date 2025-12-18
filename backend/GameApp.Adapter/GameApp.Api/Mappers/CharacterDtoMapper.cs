@@ -1,6 +1,6 @@
 using GameApp.Adapter.Api.dtos;
 using GameApp.Adapter.Api.dtos.OthersDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 using GameApp.Domain.ValueObjects.Characters;
 
 namespace GameApp.Adapter.Api.Mappers;

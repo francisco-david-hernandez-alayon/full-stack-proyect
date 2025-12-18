@@ -1,4 +1,4 @@
-using GameApp.Adapter.Infrastructure.Enumerates;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Models;
 

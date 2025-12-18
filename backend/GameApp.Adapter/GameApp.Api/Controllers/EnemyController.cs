@@ -35,7 +35,7 @@ public class EnemyController : ControllerBase
         return Ok(EnemyDtoMapper.ToDtoList(enemies));
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("id/{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         try

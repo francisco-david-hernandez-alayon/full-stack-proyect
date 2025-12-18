@@ -7,7 +7,7 @@ import { ChangeBiomeScene } from "../../../domain/entities/scenes/change-biome-s
 import { TradeScene } from "../../../domain/entities/scenes/trade-scene";
 import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
 import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
-import { SceneType } from "../enumerates/scene-type";
+import { SceneType } from "../../../application/enumerates/scene-type";
 import { EnemyJsonResponse } from "./enemy-json-response";
 import { ItemJsonResponse } from "./item-json-response";
 import type { Biome } from "../../../domain/enumerates/biome";

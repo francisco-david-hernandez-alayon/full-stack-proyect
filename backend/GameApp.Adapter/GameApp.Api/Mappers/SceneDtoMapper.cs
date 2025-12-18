@@ -1,5 +1,5 @@
 using GameApp.Adapter.Api.dtos.ScenesDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;

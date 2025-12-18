@@ -2,8 +2,8 @@ using GameApp.Domain.ValueObjects.Items;
 using GameApp.Domain.ValueObjects;
 using GameApp.Domain.Enumerates;
 using GameApp.Adapter.Infrastructure.Models;
-using GameApp.Adapter.Infrastructure.Enumerates;
 using GameApp.Domain.Entities.Items;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 

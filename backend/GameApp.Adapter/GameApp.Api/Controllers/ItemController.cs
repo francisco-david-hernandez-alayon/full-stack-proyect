@@ -4,6 +4,7 @@ using GameApp.Adapter.Api.Mappers;
 using GameApp.Application.Services.ItemServices;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Domain.ValueObjects.Items;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Api.Controllers;
 
@@ -35,7 +36,20 @@ public class ItemController : ControllerBase
         return Ok(ItemDtoMapper.ToDtoList(items));
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("type/{type}")]
+    public async Task<IActionResult> GetByType(string type)
+    {
+        if (!Enum.TryParse<ItemType>(type, true, out var itemType))
+        {
+            return BadRequest($"Item type '{type}' does not exist.");
+        }
+
+        var items = await _getService.GetAllItemsByType(itemType);
+        return Ok(ItemDtoMapper.ToDtoList(items));
+    }
+
+
+    [HttpGet("id/{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         try

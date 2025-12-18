@@ -1,7 +1,7 @@
 import { Item } from "../../../domain/entities/items/item";
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../domain/entities/items/attribute-item";
-import { ItemType } from "../enumerates/item-type";
+import { ItemType } from "../../../application/enumerates/item-type";
 
 export class ItemJsonRequest {
     id: string;

@@ -1,7 +1,7 @@
 using GameApp.Adapter.Api.dtos;
 using GameApp.Adapter.Api.dtos.EnemysDtos;
 using GameApp.Adapter.Api.dtos.OthersDto;
-using GameApp.Adapter.Api.Enumerates;
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities;
 using GameApp.Domain.ValueObjects;
 using GameApp.Domain.ValueObjects.Characters;
