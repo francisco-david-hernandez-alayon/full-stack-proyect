@@ -11,17 +11,20 @@ public class WarriorCharacter : Character
     private static readonly int _defaultMaxFoodPoints = 100;
     private static readonly int _defaultMaxInventorySlots = 5;
     private static readonly int _defaultStartingMoney = 10;
+    private static readonly int _defaultAttackSpeed = 3;
+    private static readonly int _defaultAttackDamage = 4;
+
 
 
     // Default constructor
     public WarriorCharacter()
-        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney)
+        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney, _defaultAttackSpeed, _defaultAttackDamage)
     {
     }
 
     // Restore constructor
     public WarriorCharacter(int currentHealthPoints, int currentFoodPoints, int currentMoney, List<Item> inventoryList)
-        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney,
+        : base(_characterName, _defaultMaxHealthPoints, _defaultMaxFoodPoints, _defaultMaxInventorySlots, _defaultStartingMoney, _defaultAttackSpeed, _defaultAttackDamage,
                 currentHealthPoints, currentFoodPoints, currentMoney, inventoryList)
     {
     }
@@ -37,7 +40,7 @@ public class WarriorCharacter : Character
     public override string ToString()
     {
         string inventoryStr = string.Join(", ", GetInventoryList().Select(i => i?.ToString() ?? "Empty"));
-        return $"{GetName().GetName()} Warrior character: " +
+        return $"{GetName().GetName()} Warrior character(atq={GetAttackDamage()}, spd={GetAttackSpeed()}): " +
                $"HP={GetCurrentHealthPoints}/{GetMaxHealthPoints()}, Food={GetCurrentFoodPoints()}/{GetMaxFoodPoints()}, " +
                $"InventorySlots={GetMaxInventorySlots()}, Money={GetCurrentMoney()}, Inventory=[{inventoryStr}]";
     }

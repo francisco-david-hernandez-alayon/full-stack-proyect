@@ -8,6 +8,8 @@ export abstract class Character {
     protected _maxFoodPoints: number;
     protected _maxInventorySlots: number;
     protected _startingMoney: number;
+    protected _attackSpeed: number;
+    protected _attackDamage: number;
 
     protected _currentHealthPoints: number;
     protected _currentFoodPoints: number;
@@ -20,6 +22,8 @@ export abstract class Character {
         maxFoodPoints: number,
         maxInventorySlots: number,
         startingMoney: number,
+        attackSpeed: number,
+        attackDamage: number,
         currentHealthPoints: number | null = null,
         currentFoodPoints: number | null = null,
         currentMoney: number | null = null,
@@ -32,6 +36,8 @@ export abstract class Character {
         this._maxFoodPoints = maxFoodPoints;
         this._maxInventorySlots = maxInventorySlots;
         this._startingMoney = startingMoney;
+        this._attackSpeed = attackSpeed;
+        this._attackDamage = attackDamage;
 
         this._currentHealthPoints = currentHealthPoints ?? maxHealthPoints;
         this._currentFoodPoints = currentFoodPoints ?? maxFoodPoints;
@@ -56,6 +62,8 @@ export abstract class Character {
     get maxFoodPoints(): number { return this._maxFoodPoints; }
     get maxInventorySlots(): number { return this._maxInventorySlots; }
     get startingMoney(): number { return this._startingMoney; }
+    get attackSpeed(): number {return this._attackSpeed; }
+    get attackDamage(): number {return this._attackDamage; }
     get currentHealthPoints(): number { return this._currentHealthPoints; }
     get currentFoodPoints(): number { return this._currentFoodPoints; }
     get currentMoney(): number { return this._currentMoney; }

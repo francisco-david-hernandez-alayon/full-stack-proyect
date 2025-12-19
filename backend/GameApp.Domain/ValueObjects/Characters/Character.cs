@@ -12,6 +12,8 @@ public abstract class Character
     private readonly int MaxFoodPoints;
     private readonly int MaxInventorySlots;
     private readonly int StartingMoney;
+    private readonly int AttackSpeed;
+    private readonly int AttackDamage;
 
     // current Character attributes
     private readonly int CurrentHealthPoints;
@@ -21,22 +23,24 @@ public abstract class Character
 
 
     // Constructor
-    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney)
+    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney, int attackSpeed, int attackDamage)
     {
         Name = name;
         MaxHealthPoints = maxHealthPoints;
         MaxFoodPoints = maxFoodPoints;
         MaxInventorySlots = maxInventorySlots;
         StartingMoney = startingMoney;
+        AttackSpeed = attackSpeed;
+        AttackDamage = attackDamage;
 
         CurrentHealthPoints = MaxHealthPoints;
         CurrentFoodPoints = MaxFoodPoints;
         CurrentMoney = StartingMoney;
         InventoryList = new List<Item>();
-    }
+    } 
 
     // Restore Constructor
-    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney,
+    protected Character(CharacterName name, int maxHealthPoints, int maxFoodPoints, int maxInventorySlots, int startingMoney, int attackSpeed, int attackDamage,
                         int currentHealthPoints, int currentFoodPoints, int currentMoney, List<Item> inventoryList)
     {
         Name = name;
@@ -44,6 +48,8 @@ public abstract class Character
         MaxFoodPoints = maxFoodPoints;
         MaxInventorySlots = maxInventorySlots;
         StartingMoney = startingMoney;
+        AttackSpeed = attackSpeed;
+        AttackDamage = attackDamage;
 
         CurrentHealthPoints = currentHealthPoints;
         CurrentFoodPoints = currentFoodPoints;
@@ -78,6 +84,14 @@ public abstract class Character
     public int GetStartingMoney()
     {
         return StartingMoney;
+    }
+
+    public int GetAttackSpeed() {
+        return AttackSpeed;
+    }
+
+    public int GetAttackDamage() {
+        return AttackDamage;
     }
 
     public int GetCurrentHealthPoints()
