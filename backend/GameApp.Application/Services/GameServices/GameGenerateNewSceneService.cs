@@ -32,7 +32,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         {
             return game;
         }
-        if (game.GetCompletedScenes().Count >= game.GetNumberScenesToFinish())
+        if (game.GetCompletedScenes().Count > game.GetNumberScenesToFinish())
         {
             Game? gameFinished = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
             game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameWon, game.GetCurrentEnemy());
@@ -56,25 +56,37 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         game = game.AddCompletedScene(sceneSelected);
 
 
+
         // 3- GENERATE NEW CURRENT SCENES AND CURRENT USER ACTIONS
-        // Get all scenes
-        var allScenes = (await _repoScene.FetchAllAsync()).ToList();
-        // FALTA TENER EN CUENTA EL BIOMA PARA SOLR GENERAR ESCENAS DEL MISMO BIOMA
-        if (allScenes.Count == 0)
-            throw new InvalidOperationException("No scenes available in repository.");
-
-        var random = new Random();
-
-        // Generate randomly 1 or 2 scenes 
-        int numberOfScenesToGenerate = random.Next(1, 3);
         var newScenes = new List<Scene>();
-        for (int i = 0; i < numberOfScenesToGenerate; i++)
+
+        if (game.GetCompletedScenes().Count == game.GetNumberScenesToFinish()) // If user reach last scene
         {
-            Scene randomScene = allScenes[random.Next(allScenes.Count)];
-            newScenes.Add(randomScene);
+            newScenes = [game.GetFinalScene()];
+
+        }
+        else
+        {
+            // Get all scenes
+            var allScenes = (await _repoScene.FetchAllAsync()).ToList();
+            // FALTA TENER EN CUENTA EL BIOMA PARA SOLR GENERAR ESCENAS DEL MISMO BIOMA
+            if (allScenes.Count == 0)
+                throw new InvalidOperationException("No scenes available in repository.");
+
+            var random = new Random();
+
+            // Generate randomly 1 or 2 scenes 
+            int numberOfScenesToGenerate = random.Next(1, 3);
+
+            for (int i = 0; i < numberOfScenesToGenerate; i++)
+            {
+                Scene randomScene = allScenes[random.Next(allScenes.Count)];
+                newScenes.Add(randomScene);
+            }
+
+            game = game.SetCurrentScenes(newScenes);
         }
 
-        game = game.SetCurrentScenes(newScenes);
 
 
         // If there is only one new scene, configure the UserActions according to the type

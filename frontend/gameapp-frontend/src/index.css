@@ -16,6 +16,7 @@
     --color-swamp: theme(colors.green.400);
     --color-city: theme(colors.gray.500);
     --color-desert: theme(colors.yellow.500);
+    --color-unknown: theme(colors.zinc.400);
 
     --font-display: "VT323", monospace;
 

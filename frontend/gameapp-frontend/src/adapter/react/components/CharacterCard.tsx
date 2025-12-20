@@ -12,7 +12,6 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
       <div className="card-body gap-4 pa-2">
         {/* Top row: image + name | description */}
         <div className="flex gap-4 items-center">
-          {/* Left: image + name */}
           <div className="flex flex-col items-center w-28 flex-none">
             {character instanceof WarriorCharacter && (
               <img
