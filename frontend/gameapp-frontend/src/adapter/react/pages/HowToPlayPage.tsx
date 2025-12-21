@@ -1,5 +1,11 @@
+import type { AlertData } from "../App";
 
-export const HowToPlayPage: React.FC = () => {
+interface HowToplayPageProps {
+  showAlert: (data: AlertData) => void;
+}
+
+
+export const HowToPlayPage: React.FC<HowToplayPageProps> = ({ showAlert }) => {
 
     return (
         <div className="p-6">

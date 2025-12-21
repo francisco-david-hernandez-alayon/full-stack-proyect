@@ -4,6 +4,7 @@ import { Backpack, DollarSign, Gamepad, Ham, Heart, User } from "lucide-react";
 import { GameStatus } from "../../../domain/enumerates/game-status";
 import { Biome } from "../../../domain/enumerates/biome";
 import type { Scene } from "../../../domain/entities/scenes/scene";
+import { getBiomeStyle } from "../utils/GetBiomeStyle";
 
 interface GameCardProps {
     game: Game;
@@ -37,36 +38,9 @@ const getStatusColorClass = (status: GameStatus): string => {
     }
 };
 
-const biomeStyles: Record<
-    Biome,
-    { color: string; image: string }
-> = {
-    [Biome.FOREST]: {
-        color: "var(--color-forest)",
-        image: "/images/biomes/bosque_blanco.png",
-    },
-    [Biome.DESERT]: {
-        color: "var(--color-desert)",
-        image: "/images/biomes/desierto_blanco.png",
-    },
-    [Biome.SWAMP]: {
-        color: "var(--color-swamp)",
-        image: "/images/biomes/pantano_blanco.png",
-    },
-    [Biome.CITY]: {
-        color: "var(--color-city)",
-        image: "/images/biomes/ciudad_blanco.png",
-    },
-    [Biome.UNKNOWN]: {
-        color: "var(--color-unknown)",
-        image: "",
-    },
-};
-
-
 //-------------------------------------------------------REACT FUNCTIONS-------------------------------------------------------------//
 const sceneInfo = (scene: Scene) => {
-    const biomeStyle = biomeStyles[scene.biome];
+    const biomeStyle = getBiomeStyle[scene.biome];
 
     return (
         <div
@@ -81,10 +55,10 @@ const sceneInfo = (scene: Scene) => {
             />
 
             <div className="flex flex-col">
-                <span className="text-sm font-medium text-white">
+                <span className="text-sm font-medium text-custom-background">
                     {scene.name.name}
                 </span>
-                <span className="text-xs opacity-80 text-white">
+                <span className="text-xs opacity-80 text-custom-background">
                     {scene.biome}
                 </span>
             </div>

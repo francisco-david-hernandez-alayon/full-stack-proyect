@@ -7,18 +7,23 @@ import { EnemiesPage } from "../pages/EnemiesPage.tsx";
 import { ItemsPage } from "../pages/ItemsPage.tsx";
 import { PlayGamePage } from "../pages/PlayGamePage.tsx";
 import { HowToPlayPage } from "../pages/HowToPlayPage.tsx";
+import type { AlertData } from "../App.tsx";
 
-export const AppRouter: React.FC = () => {
+interface AppRouterProps {
+  showAlert: (data: AlertData) => void;
+}
+
+export const AppRouter: React.FC<AppRouterProps> = ({ showAlert }) => {
   return (
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/how-to-play" element={<HowToPlayPage />} />
-        <Route path="/play-game/:id" element={<PlayGamePage />} />
-        <Route path="/games" element={<GamesPage />} />
-        <Route path="/characters" element={<CharactersPage />} />
-        <Route path="/biomes" element={<BiomesPage />} />
-        <Route path="/enemies" element={<EnemiesPage />} />
-        <Route path="/items" element={<ItemsPage />} />
+        <Route path="/" element={<HomePage showAlert={showAlert} />} />
+        <Route path="/how-to-play" element={<HowToPlayPage showAlert={showAlert} />} />
+        <Route path="/play-game/:id" element={<PlayGamePage showAlert={showAlert} />} />
+        <Route path="/games" element={<GamesPage showAlert={showAlert} />} />
+        <Route path="/characters" element={<CharactersPage showAlert={showAlert} />} />
+        <Route path="/biomes" element={<BiomesPage showAlert={showAlert} />} />
+        <Route path="/enemies" element={<EnemiesPage showAlert={showAlert} />} />
+        <Route path="/items" element={<ItemsPage showAlert={showAlert} />} />
       </Routes>
   );
 };

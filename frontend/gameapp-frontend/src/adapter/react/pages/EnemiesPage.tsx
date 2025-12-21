@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { EnemyCard } from "../components/EnemyCard";
 import type { Enemy } from "../../../domain/entities/enemy";
 import { EnemyHttpRepository } from "../../http/repository/enemy-http-repository";
+import type { AlertData } from "../App";
 
-export const EnemiesPage: React.FC = () => {
+interface EnemiesPageProps {
+  showAlert: (data: AlertData) => void;
+}
+
+export const EnemiesPage: React.FC<EnemiesPageProps> = ({ showAlert }) => {
   const [enemies, setEnemies] = useState<Enemy[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

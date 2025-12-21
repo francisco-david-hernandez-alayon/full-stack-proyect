@@ -44,6 +44,19 @@
     @apply text-center text-4xl font-bold p-6;
   }
 
+  .btn-custom-primary {
+    background-color: var(--color-primary) !important;
+    color: var(--color-background) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: none !important;
+  }
+
+  .btn-custom-primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    opacity: 0.9;
+  }
+
   /* ========= SECONDARY ========= */
   .bg-custom-secondary {
     background-color: var(--color-secondary);

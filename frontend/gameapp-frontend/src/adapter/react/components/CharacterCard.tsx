@@ -1,6 +1,6 @@
 import { Activity, DollarSign, Ham, Heart, Sword, Backpack } from "lucide-react";
 import { Character } from "../../../domain/value-objects/characters/character";
-import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import { getStyleForCharacter } from "../utils/GetCharacterStyle";
 
 interface CharacterCardProps {
   character: Character;
@@ -13,13 +13,11 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
         {/* Top row: image + name | description */}
         <div className="flex gap-4 items-center">
           <div className="flex flex-col items-center w-28 flex-none">
-            {character instanceof WarriorCharacter && (
-              <img
-                src="/images/characters/caballero.png"
-                alt="Warrior character"
-                className="h-20 w-20"
-              />
-            )}
+            <img
+              src={getStyleForCharacter(character).image}
+              alt={character.constructor.name}
+              className="h-20 w-20"
+            />
 
             <h2 className="card-title text-custom-primary-title text-center text-sm mt-2">
               {character.name.name}

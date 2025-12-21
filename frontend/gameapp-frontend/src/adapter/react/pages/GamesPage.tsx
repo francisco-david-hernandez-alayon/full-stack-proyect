@@ -3,9 +3,14 @@ import type { Game } from "../../../domain/entities/game";
 import { GameHttpRepository } from "../../http/repository/game-http-repository";
 import { GameCard } from "../components/GameCard";
 import { useNavigate } from "react-router-dom";
+import type { AlertData } from "../App";
+
+interface GamePageProps {
+  showAlert: (data: AlertData) => void;
+}
 
 
-export const GamesPage: React.FC = () => {
+export const GamesPage: React.FC<GamePageProps> = ({ showAlert }) => {
   const navigate = useNavigate();
 
   const [games, setGames] = useState<Game[]>([]);

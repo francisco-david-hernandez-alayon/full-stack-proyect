@@ -3,8 +3,13 @@ import type { Item } from "../../../domain/entities/items/item";
 import { ItemHttpRepository } from "../../http/repository/item-http-repository";
 import { ItemCard } from "../components/ItemCard";
 import { ItemType } from "../../../application/enumerates/item-type";
+import type { AlertData } from "../App";
 
-export const ItemsPage: React.FC = () => {
+interface ItemsPageProps {
+  showAlert: (data: AlertData) => void;
+}
+
+export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
   const [itemTypeToSearch, setItemTypeToSearch] = useState<ItemType | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

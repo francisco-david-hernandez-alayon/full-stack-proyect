@@ -1,7 +1,13 @@
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import type { AlertData } from "../App";
 import { CharacterCard } from "../components/CharacterCard";
 
-export const CharactersPage: React.FC = () => {
+interface CharacterPageProps {
+  showAlert: (data: AlertData) => void;
+}
+
+
+export const CharactersPage: React.FC<CharacterPageProps> = ({ showAlert }) => {
   const warrior = new WarriorCharacter();
 
   return (

@@ -3,33 +3,22 @@ import { Activity, BookOpenTextIcon, DollarSign, Ham, Heart, HeartPlus, Stone, S
 import type { Item } from "../../../domain/entities/items/item";
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../domain/entities/items/attribute-item";
+import { getStyleForItem } from "../utils/GetItemStyle";
 
 interface ItemCardProps {
     item: Item;
 }
 
 const renderItemIcon = (item: Item) => {
-    if (item instanceof AttackItem) {
-        return (
-            <img
-                src="/images/items/espada.png"
-                alt="Attack item"
-                className="h-12 w-12"
-            />
-        );
-    }
 
-    if (item instanceof AttributeItem) {
-        return (
-            <img
-                src="/images/items/pocion.png"
-                alt="Attribute item"
-                className="h-12 w-12"
-            />
-        );
-    }
+    const itemStyle = getStyleForItem(item);
+    
+    return <img
+        src={itemStyle.image}
+        alt={item.name.name}
+        className="h-12 w-12"
+    />
 
-    return null;
 };
 
 const renderItemDescription = (item: Item) => {

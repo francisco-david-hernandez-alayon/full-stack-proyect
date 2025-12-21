@@ -1,4 +1,10 @@
-export const HomePage: React.FC = () => {
+import type { AlertData } from "../App";
+
+interface HomePageProps {
+  showAlert: (data: AlertData) => void;
+}
+
+export const HomePage: React.FC<HomePageProps> = ({ showAlert }) => {
     return (
         <>
             <div className="p-6">

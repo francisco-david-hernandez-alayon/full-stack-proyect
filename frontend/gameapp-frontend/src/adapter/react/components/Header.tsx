@@ -7,11 +7,11 @@ export const Header: React.FC = () => {
       <nav className="mx-auto flex items-center justify-between p-6">
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">David Hernández</span>
             <img
               src="/images/logo_castillo_blanco.png"
               alt="Logo"
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </a>
         </div>
