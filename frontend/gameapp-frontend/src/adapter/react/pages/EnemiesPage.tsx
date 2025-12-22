@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { EnemyCard } from "../components/EnemyCard";
 import type { Enemy } from "../../../domain/entities/enemy";
 import { EnemyHttpRepository } from "../../http/repository/enemy-http-repository";
 import type { AlertData } from "../App";
+import { EnemyCard } from "../components/Cards/EnemyCard";
+import { EnemyGetService } from "../../../application/services/enemy-services/enemy-get-service";
+import { AlertTimeMessage, AlertType } from "../components/Structure/AlertMessage";
 
 interface EnemiesPageProps {
   showAlert: (data: AlertData) => void;
@@ -16,14 +18,19 @@ export const EnemiesPage: React.FC<EnemiesPageProps> = ({ showAlert }) => {
   // Get all enemies when the component is mounted
   useEffect(() => {
     const repoEnemy = new EnemyHttpRepository();
+    const enemyGetService = new EnemyGetService(repoEnemy);
 
     const fetchEnemies = async () => {
       try {
-        const allEnemies = await repoEnemy.fetchAll();
+        const allEnemies = await enemyGetService.getAllEnemys();
         setEnemies(allEnemies);
 
       } catch (err) {
-        setError("Error fetching enemies");
+        showAlert({
+          message: "Error fecthing enemies: " + error,
+          type: AlertType.ERROR,
+          duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+        });
 
       } finally {
         setLoading(false);
@@ -35,7 +42,7 @@ export const EnemiesPage: React.FC<EnemiesPageProps> = ({ showAlert }) => {
 
 
   if (loading) {
-    return <div> <span className="loading loading-spinner loading-xs"></span> <div className="p-6">Loading enemies...</div></div> ;
+    return <div> <span className="loading loading-spinner loading-xs"></span> <div className="p-6">Loading enemies...</div></div>;
   }
 
   if (error) {

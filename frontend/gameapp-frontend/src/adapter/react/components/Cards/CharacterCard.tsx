@@ -1,6 +1,6 @@
 import { Activity, DollarSign, Ham, Heart, Sword, Backpack } from "lucide-react";
-import { Character } from "../../../domain/value-objects/characters/character";
-import { getStyleForCharacter } from "../utils/GetCharacterStyle";
+import { getStyleForCharacter } from "../../utils/GetCharacterStyle";
+import { Character } from "../../../../domain/value-objects/characters/character";
 
 interface CharacterCardProps {
   character: Character;

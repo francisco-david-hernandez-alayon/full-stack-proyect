@@ -1,6 +1,6 @@
 import { Biome } from "../../../domain/enumerates/biome";
 import type { AlertData } from "../App";
-import { BiomeCard } from "../components/BiomeCard";
+import { BiomeCard } from "../components/Cards/BiomeCard";
 import { getStyleForBiome } from "../utils/GetBiomeStyle";
 
 interface BiomesPageProps {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Item } from "../../../domain/entities/items/item";
 import { ItemHttpRepository } from "../../http/repository/item-http-repository";
-import { ItemCard } from "../components/ItemCard";
 import { ItemType } from "../../../application/enumerates/item-type";
 import type { AlertData } from "../App";
+import { ItemCard } from "../components/Cards/ItemCard";
+import { ItemGetService } from "../../../application/services/item-services/item-get-service";
+import { AlertTimeMessage, AlertType } from "../components/Structure/AlertMessage";
 
 interface ItemsPageProps {
   showAlert: (data: AlertData) => void;
@@ -18,21 +20,26 @@ export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
   // Get all enemies when the component is mounted
   useEffect(() => {
     const repoItems = new ItemHttpRepository();
+    const itemGetService = new ItemGetService(repoItems);
 
     const fetchItems = async () => {
       try {
         let allItems: Item[] = [];
         if (itemTypeToSearch == null) {
-          allItems = await repoItems.fetchAll();
+          allItems = await itemGetService.getAllItems();
 
         } else {
-          allItems = await repoItems.fetchAllByType(itemTypeToSearch);
+          allItems = await itemGetService.getItemByType(itemTypeToSearch);
         }
 
         setItems(allItems);
 
       } catch (err) {
-        setError("Error fetching items");
+        showAlert({
+          message: "Error fecthing items: " + error,
+          type: AlertType.ERROR,
+          duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+        });
 
       } finally {
         setLoading(false);

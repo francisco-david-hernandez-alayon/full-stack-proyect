@@ -1,15 +1,10 @@
 import type React from "react";
-import type { Game } from "../../../domain/entities/game";
-import { Backpack, DollarSign, Gamepad, Ham, Heart, User } from "lucide-react";
-import { GameStatus } from "../../../domain/enumerates/game-status";
-import { Biome } from "../../../domain/enumerates/biome";
-import type { Scene } from "../../../domain/entities/scenes/scene";
-import { getBiomeStyle } from "../utils/GetBiomeStyle";
+import { Backpack, DollarSign, Gamepad, Ham, Heart, Trash2, User } from "lucide-react";
+import { GameStatus } from "../../../../domain/enumerates/game-status";
+import { Game } from "../../../../domain/entities/game";
+import type { Scene } from "../../../../domain/entities/scenes/scene";
+import { getStyleForBiome } from "../../utils/GetBiomeStyle";
 
-interface GameCardProps {
-    game: Game;
-    onContinueGame: () => void;
-}
 
 //------------------------------------------------------------------------UTILS---------------------------------------------------------------------------//
 const getStatusLabel = (status: GameStatus): string => {
@@ -40,7 +35,7 @@ const getStatusColorClass = (status: GameStatus): string => {
 
 //-------------------------------------------------------REACT FUNCTIONS-------------------------------------------------------------//
 const sceneInfo = (scene: Scene) => {
-    const biomeStyle = getBiomeStyle[scene.biome];
+    const biomeStyle = getStyleForBiome(scene.biome);
 
     return (
         <div
@@ -69,23 +64,53 @@ const sceneInfo = (scene: Scene) => {
 interface GameCardButtonsProps {
     gameStatus: GameStatus;
     onContinue: () => void;
+    onDeleteGame: () => void;
 }
 
-export const GameCardButtons: React.FC<GameCardButtonsProps> = ({ gameStatus, onContinue }) => {
-    if (gameStatus !== GameStatus.GAME_IN_PROGRESS) return null;
-
-    return (
-        <div className="mt-4 flex justify-center">
-            <button className="btn btn-primary" onClick={onContinue}>
-                Continue Game
+export const GameCardButtons: React.FC<GameCardButtonsProps> = ({ gameStatus, onContinue, onDeleteGame }) => {
+    if (gameStatus !== GameStatus.GAME_IN_PROGRESS) return (
+        <div className="mt-4 flex flex-col items-center gap-4">
+            <button
+                className="btn btn-secondary flex items-center gap-2 btn-sm w-36"
+                onClick={onDeleteGame}
+            >
+                <Trash2 className="w-4 h-4" />
+                Delete Game
             </button>
         </div>
+    );
+
+    return (
+        <div className="mt-4 flex flex-col items-center gap-4">
+            <button
+                className="btn btn-primary btn-lg w-48"
+                onClick={onContinue}
+            >
+                Continue Game
+            </button>
+
+            <button
+                className="btn btn-secondary flex items-center gap-2 btn-sm w-36"
+                onClick={onDeleteGame}
+            >
+                <Trash2 className="w-4 h-4" />
+                Delete Game
+            </button>
+        </div>
+
     );
 };
 
 
 //----------------------------------------------------------------MAIN FUNCTION-------------------------------------------------------------------//
-export const GameCard: React.FC<GameCardProps> = ({ game, onContinueGame }) => {
+
+interface GameCardProps {
+    game: Game;
+    onContinueGame: () => void;
+    onDeleteGame: () => void;
+}
+
+export const GameCard: React.FC<GameCardProps> = ({ game, onContinueGame, onDeleteGame }) => {
     const statusLabel = getStatusLabel(game.status);
     const statusColor = getStatusColorClass(game.status);
 
@@ -165,10 +190,11 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onContinueGame }) => {
                 </div>
             </div>
 
-            {/* CONTINUE BUTTON */}
+            {/* ACTIONS BUTTONS */}
             <GameCardButtons
                 gameStatus={game.status}
                 onContinue={onContinueGame}
+                onDeleteGame={onDeleteGame}
             />
 
 

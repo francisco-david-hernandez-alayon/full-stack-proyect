@@ -1,6 +1,6 @@
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 import type { AlertData } from "../App";
-import { CharacterCard } from "../components/CharacterCard";
+import { CharacterCard } from "../components/Cards/CharacterCard";
 
 interface CharacterPageProps {
   showAlert: (data: AlertData) => void;

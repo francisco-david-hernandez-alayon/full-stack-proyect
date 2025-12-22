@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Biome } from "../../../domain/enumerates/biome";
+import type { Biome } from "../../../../domain/enumerates/biome";
 
 interface BiomeCardProps {
     biome: Biome;

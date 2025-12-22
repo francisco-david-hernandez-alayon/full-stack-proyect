@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './App.css';
 import './example';
-import { Header } from './components/Header';
+import { Header } from './components/Structure/Header';
 import { AppRouter } from "./router/AppRouter";
-import { AlertMessage, type AlertMessageProps, type AlertTimeMessage, type AlertType } from './components/AlertMessage';
+import { AlertMessage, type AlertMessageProps, type AlertTimeMessage, type AlertType } from './components/Structure/AlertMessage';
 
 
 export interface AlertData {

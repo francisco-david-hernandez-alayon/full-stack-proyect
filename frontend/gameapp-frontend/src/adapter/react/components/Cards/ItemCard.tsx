@@ -1,9 +1,9 @@
 import type React from "react";
 import { Activity, BookOpenTextIcon, DollarSign, Ham, Heart, HeartPlus, Stone, Sword, } from "lucide-react";
-import type { Item } from "../../../domain/entities/items/item";
-import { AttackItem } from "../../../domain/entities/items/attack-item";
-import { AttributeItem } from "../../../domain/entities/items/attribute-item";
-import { getStyleForItem } from "../utils/GetItemStyle";
+import { Item } from "../../../../domain/entities/items/item";
+import { getStyleForItem } from "../../utils/GetItemStyle";
+import { AttackItem } from "../../../../domain/entities/items/attack-item";
+import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 
 interface ItemCardProps {
     item: Item;

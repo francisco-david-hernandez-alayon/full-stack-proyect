@@ -1,6 +1,6 @@
 import type React from "react";
-import type { Enemy } from "../../../domain/entities/enemy";
 import { Activity, DollarSign, Heart, Sword,  } from "lucide-react";
+import type { Enemy } from "../../../../domain/entities/enemy";
 
 interface EnemyCardProps {
   enemy: Enemy;

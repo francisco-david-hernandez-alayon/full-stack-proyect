@@ -32,7 +32,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         {
             return game;
         }
-        if (game.GetCompletedScenes().Count > game.GetNumberScenesToFinish())
+        if (game.GetCompletedScenes().Count > game.GetNumberScenesToFinish() - 1)
         {
             Game? gameFinished = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
             game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameWon, game.GetCurrentEnemy());
@@ -60,7 +60,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         // 3- GENERATE NEW CURRENT SCENES AND CURRENT USER ACTIONS
         var newScenes = new List<Scene>();
 
-        if (game.GetCompletedScenes().Count == game.GetNumberScenesToFinish()) // If user reach last scene
+        if (game.GetCompletedScenes().Count == game.GetNumberScenesToFinish() - 1) // If user reach last scene
         {
             newScenes = [game.GetFinalScene()];
 
