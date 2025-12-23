@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
-import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
-import { GameHttpRepository } from "../../http/repository/game-http-repository";
-import { SceneHttpRepository } from "../../http/repository/scene-http-repository";
-import type { AlertData } from "../App";
-import { AlertTimeMessage, AlertType } from "./Structure/AlertMessage";
-import { GameCreateService } from "../../../application/services/game-services/game-create-service";
-import { UserAction } from "../../../domain/enumerates/user-action";
-import { SceneGetService } from "../../../application/services/scene-services/scene-get-service";
+import { NothingHappensScene } from "../../../../domain/entities/scenes/nothing-happens-scene";
+import { WarriorCharacter } from "../../../../domain/value-objects/characters/warrior-character";
+import { GameHttpRepository } from "../../../http/repository/game-http-repository";
+import { SceneHttpRepository } from "../../../http/repository/scene-http-repository";
+import type { AlertData } from "../../App";
+import { AlertTimeMessage, AlertType } from "../Structure/AlertMessage";
+import { GameCreateService } from "../../../../application/services/game-services/game-create-service";
+import { UserAction } from "../../../../domain/enumerates/user-action";
+import { SceneGetService } from "../../../../application/services/scene-services/scene-get-service";
 
 interface CreateNewGameProps {
     showAlert: (data: AlertData) => void;

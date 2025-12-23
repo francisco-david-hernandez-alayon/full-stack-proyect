@@ -1,5 +1,5 @@
 import type React from "react";
-import { Activity, BookOpenTextIcon, DollarSign, Ham, Heart, HeartPlus, Stone, Sword, } from "lucide-react";
+import { ActivityIcon, BookOpenTextIcon, DollarSign, Ham, Heart, HeartPlus, Stone, Sword, } from "lucide-react";
 import { Item } from "../../../../domain/entities/items/item";
 import { getStyleForItem } from "../../utils/GetItemStyle";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
@@ -39,7 +39,7 @@ const renderItemDescription = (item: Item) => {
                     <span>Attack Damage: {item.attackDamage}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Activity className="w-5 h-5 text-custom-secondary" />
+                    <ActivityIcon className="w-5 h-5 text-custom-secondary" />
                     <span>Attack Speed: {item.speedAttack}</span>
                 </div>
                 <div className="flex items-center gap-2">

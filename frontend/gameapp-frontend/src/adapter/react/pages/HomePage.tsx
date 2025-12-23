@@ -1,5 +1,5 @@
 import type { AlertData } from "../App";
-import { CreateNewGamePage } from "../components/CreateNewGame";
+import { CreateNewGamePage } from "../components/Game/CreateNewGame";
 
 interface HomePageProps {
   showAlert: (data: AlertData) => void;

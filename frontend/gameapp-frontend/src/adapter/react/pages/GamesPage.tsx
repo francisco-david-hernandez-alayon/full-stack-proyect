@@ -4,7 +4,7 @@ import { GameHttpRepository } from "../../http/repository/game-http-repository";
 import { useNavigate } from "react-router-dom";
 import type { AlertData } from "../App";
 import { GameCard } from "../components/Cards/GameCard";
-import { CreateNewGamePage } from "../components/CreateNewGame";
+import { CreateNewGamePage } from "../components/Game/CreateNewGame";
 import { GameGetService } from "../../../application/services/game-services/game-get-service";
 import { AlertTimeMessage, AlertType } from "../components/Structure/AlertMessage";
 import { GameDeleteService } from "../../../application/services/game-services/game-delete-service";
