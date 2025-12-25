@@ -127,8 +127,6 @@ public class GameController : ControllerBase
             // Use service
             Game? updatedGame = await _updateService.UpdateGame(id, character, request.NumberScenesToFinish, completedScenes, finalScene, currentScenes, currentUserAction, status, currentEnemy);
 
-            Console.WriteLine("Game updated: '" + updatedGame + "'");
-
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))

@@ -6,7 +6,7 @@ export enum UserAction {
     USE_ITEM = "UseItem",
     USE_CURRENT_SCENE_ITEM = "UseCurrentSceneItem",
     GET_ITEM = "GetItem",
-    CHANGE_ITEM = "ChangeItem",
+    DROP_ITEM = "DropItem",
 
     // TRADES
     BUY_ITEMS = "BuyItems",

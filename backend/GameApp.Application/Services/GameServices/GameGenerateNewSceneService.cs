@@ -11,7 +11,6 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
     private readonly IGameRepository _repoGame;
     private readonly ISceneRepository _repoScene;
-
     private readonly GameUpdateService _gameUpdateService;
 
     public GameGenerateNewSceneService(IGameRepository repoGame, ISceneRepository repoScene, GameUpdateService gameUpdateService)
@@ -23,6 +22,9 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
     public async Task<Game?> GenerateNewSceneToGame(Guid idSceneSelected, Game game)
     {
+
+        int HungryByRound = 5;
+
         if (game == null)
             throw new ArgumentNullException(nameof(game));
 
@@ -90,7 +92,13 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
 
         // If there is only one new scene, configure the UserActions according to the type
-        var updateUserActions = new List<UserAction> { UserAction.UseItem };
+        var updateUserActions = new List<UserAction> { };
+
+        if (game.GetCharacter().GetInventoryList().Count > 0)
+        {
+            updateUserActions.Add(UserAction.UseItem);
+            updateUserActions.Add(UserAction.DropItem);
+        }
 
         if (newScenes.Count == 1)
         {
@@ -109,7 +117,6 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
                 case ItemScene:
                     updateUserActions.Add(UserAction.MoveForward);
                     updateUserActions.Add(UserAction.GetItem);
-                    updateUserActions.Add(UserAction.ChangeItem);
                     updateUserActions.Add(UserAction.UseCurrentSceneItem);
                     break;
 
@@ -139,8 +146,16 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         game = game.SetCurrentUserActions(updateUserActions);
 
 
+        // GIVE EFFECTS
+        game = game.SetCharacter(game.GetCharacter().GetHungry(HungryByRound));
 
-        // 4- SAVE GAME IN REPOSITORY AND RETURN GAME
+        if (game.GetCharacter().GetCurrentFoodPoints() <= 0)
+        {
+            game = game.SetGameStatus(GameStatus.PlayerDeath);
+            return game;
+        }
+
+        // 5- SAVE GAME IN REPOSITORY AND RETURN GAME
         Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
         game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameInProgress, game.GetCurrentEnemy());
 

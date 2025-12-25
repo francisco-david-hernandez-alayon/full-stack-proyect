@@ -11,6 +11,10 @@
     --color-background: theme(colors.white);
     --color-background-soft: theme(colors.slate.50);
 
+    /* Game colors */
+    --color-win: theme(colors.green.500);
+    --color-defeat: theme(colors.red.500);
+
     /* Biome colors */
     --color-forest: theme(colors.green.800);
     --color-swamp: theme(colors.green.400);

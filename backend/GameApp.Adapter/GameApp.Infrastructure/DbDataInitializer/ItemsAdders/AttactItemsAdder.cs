@@ -9,8 +9,8 @@ public class AttackItemsAdders : IItemsAdder
         new ItemName("wood sword"),
         new ItemDescription("A simple wood sword"),
         tradePrice: 10,
-        attackDamage: 5,
-        speedAttack: 3,
+        attackDamage: 10,
+        speedAttack: 2,
         durability: 5
     );
 
@@ -18,17 +18,17 @@ public class AttackItemsAdders : IItemsAdder
         new ItemName("iron sword"),
         new ItemDescription("A basic iron sword"),
         tradePrice: 20,
-        attackDamage: 10,
-        speedAttack: 4,
-        durability: 15
+        attackDamage: 20,
+        speedAttack: 3,
+        durability: 10
     );
 
     public static readonly AttackItem SteelAxe = new(
         new ItemName("steel axe"),
         new ItemDescription("A heavy steel axe"),
         tradePrice: 25,
-        attackDamage: 12,
-        speedAttack: 2,
+        attackDamage: 30,
+        speedAttack: 1,
         durability: 20
     );
 
@@ -36,8 +36,8 @@ public class AttackItemsAdders : IItemsAdder
         new ItemName("dagger"),
         new ItemDescription("A small, fast dagger"),
         tradePrice: 15,
-        attackDamage: 4,
-        speedAttack: 6,
+        attackDamage: 15,
+        speedAttack: 4,
         durability: 8
     );
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import type { Game } from "../../../domain/entities/game";
+import { Game } from "../../../domain/entities/game";
 import { GameHttpRepository } from "../../http/repository/game-http-repository";
 import type { AlertData } from "../App";
 import { AlertTimeMessage, AlertType } from "../components/Structure/AlertMessage";
-import { ActivityIcon, Backpack, DollarSign, Ham, Heart, Sword } from "lucide-react";
+import { ActivityIcon, Backpack, DollarSign, Ham, Heart, Sword, User } from "lucide-react";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 import { getStyleForCharacter } from "../utils/GetCharacterStyle";
 import { SceneCard } from "../components/Cards/SceneCard";
@@ -14,6 +14,13 @@ import { GameGetService } from "../../../application/services/game-services/game
 import { GameStatus } from "../../../domain/enumerates/game-status";
 import { InventorySlot } from "../components/Game/InventorySlot";
 import { GameUseItemService } from "../../../application/services/game-services/game-use-item-service";
+import { getLabelForUserAction } from "../utils/GetUserAction";
+import type { Scene } from "../../../domain/entities/scenes/scene";
+import { ItemScene } from "../../../domain/entities/scenes/item-scene";
+import { GameManageItemService } from "../../../application/services/game-services/game-manage-item-service";
+import { UserAction } from "../../../domain/enumerates/user-action";
+import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
+import { GameSummary } from "../components/Game/GameSummary";
 
 
 interface PlayGamePageProps {
@@ -33,6 +40,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     const gameAdvanceSceneService = new GameAdvanceSceneService(repoGames);
     const gameUpdateService = new GameUpdateService(repoGames);
     const gameUseItemService = new GameUseItemService();
+    const gameManageItemService = new GameManageItemService();
 
 
     useEffect(() => {
@@ -102,9 +110,10 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
     }
 
-    const useItem = async (positionItemSelected: number) => {
+    //---------------------------------------------------------ITEM-FUNCTIONS----------------------------------------------------------//
+    const useInventoryItem = async (positionItemSelected: number) => {
         try {
-            const updatedGame = await gameUseItemService.useItem(positionItemSelected, game);
+            const updatedGame = await gameUseItemService.useInventoryItem(positionItemSelected, game);
             setGame(updatedGame);
 
         } catch (error) {
@@ -116,16 +125,120 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
         }
     }
 
+    const dropInventoryItem = async (positionItemSelected: number) => {
+        try {
+            const updatedGame = await gameManageItemService.dropItem(positionItemSelected, game);
+            setGame(updatedGame);
+
+        } catch (error) {
+            showAlert({
+                message: "Error dropping item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+    }
+
+    const useSceneItem = async (currentScene: Scene) => {
+        try {
+            if (currentScene instanceof ItemScene) {
+                const updatedGame = await gameUseItemService.useSceneItem(currentScene.rewardItem, game);
+                setGame(updatedGame);
+            }
+
+
+        } catch (error) {
+            showAlert({
+                message: "Error using scene item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+    }
+
+    const getSceneItem = async (currentScene: Scene) => {
+        try {
+            if (game.character.inventoryList.length >= game.character.maxInventorySlots) {
+                showAlert({
+                    message: `Max inventory slots reached(${game.character.inventoryList.length}/${game.character.maxInventorySlots})`,
+                    type: AlertType.WARNING,
+                    duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+                });
+                return;
+            }
+
+            if (currentScene instanceof ItemScene) {
+                const updatedGame = await gameManageItemService.getItem(currentScene.rewardItem, game);
+                setGame(updatedGame);
+            }
+
+        } catch (error) {
+            showAlert({
+                message: "Error getting scene item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+
+    }
+
+    //---------------------------------------------------------ATTACK FUNCTIONS--------------------------------------------------------//
+    const attackWithoutItem = async () => {
+        try {
+            if (game.currentEnemy) {
+                const updatedGame = await gameUseItemService.attackWithoutItem(game);
+                setGame(updatedGame);
+            }
+
+        } catch (error) {
+            showAlert({
+                message: "Error attacking without item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+
+    }
+
+
+
 
 
 
 
     //----------------------------------------------------------------------------HTML-------------------------------------------------------------------------------//
+
+    if (game.status == GameStatus.PLAYER_DEATH) {
+        saveGame();
+        return <GameSummary game={game} />
+    }
+
+    if (game.status == GameStatus.GAME_WON) {
+        saveGame();
+        return <GameSummary game={game} />
+    }
+
     return (
         <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex flex-row p-4 justify-between items-center h-20 bg-custom-secondary">
                 <h1 className="text-custom-background">Game id ({game.id})</h1>
+
+                <div className="flex flex-row gap-1 text-sm text-custom-background">
+                    {game.currentUserActions.map((action, index) => {
+                        const isLast = index === game.currentUserActions.length - 1;
+                        const isSecondLast = index === game.currentUserActions.length - 2;
+
+                        return (
+                            <span key={index}>
+                                {getLabelForUserAction(action)}
+                                {!isLast && (
+                                    isSecondLast ? " or " : ", "
+                                )}
+                            </span>
+                        );
+                    })}
+                </div>
 
                 <div className="flex flex-row items-center gap-12">
                     <button className="btn btn-custom-primary" onClick={() => saveGame()}>
@@ -141,14 +254,17 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
             <div className="flex flex-1  gap-12 p-12 bg-custom-background">
                 {game.currentScenes.map((scene, index) => (
                     <div key={index} className="flex flex-1 justify-center">
-                        <SceneCard scene={scene} getMoveForwardSceneId={moveForwardScene} canMoveForward={game.currentEnemy == null} />
+                        <SceneCard CharacterInScene={game.currentScenes.length == 1} scene={scene} canMoveForward={game.currentEnemy == null} getMoveForwardSceneId={moveForwardScene}
+                            sceneItemExist={game.currentUserActions.includes(UserAction.USE_CURRENT_SCENE_ITEM)} useSceneItem={() => (useSceneItem(scene))} getSceneItem={() => (getSceneItem(scene))}
+                            canAttackWithoutItem={game.currentUserActions.includes(UserAction.ATTACK_ENEMY_WITHOUT_ITEM)} attackWithoutItem={() => (attackWithoutItem())}
+                            currentEnemyHp={game.currentEnemy?.healthPoints} enemyIsDead={(scene instanceof EnemyScene) && (game.currentScenes.length === 1) && (game.currentEnemy == null)} />
                     </div>
                 ))}
             </div>
 
 
             {/* Character info */}
-            <div className="flex flex-row items-center justify-between p-6 bg-custom-background-soft rounded-xl">
+            <div className="flex flex-row items-center justify-between p-3 bg-custom-background-soft rounded-xl">
 
                 <div className="flex flex-row items-center gap-5 pl-10">
                     {game.character instanceof WarriorCharacter && (
@@ -198,14 +314,14 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
                 <div className="flex items-center gap-5 pr-10">
                     {game.character.inventoryList.map((item, index) => (
                         <div key={index} className="flex flex-1 justify-center">
-                            <InventorySlot item={item} useItem={() => (useItem(index))} />
+                            <InventorySlot item={item} useItem={() => (useInventoryItem(index))} dropItem={() => (dropInventoryItem(index))} />
                         </div>
                     ))}
 
                     {Array.from({
                         length: game.character.maxInventorySlots - game.character.inventoryList.length,
                     }).map((_, index) => (
-                        <InventorySlot key={`empty-${index}`} useItem={() => (console.log("There's no item to use"))}  />
+                        <InventorySlot key={`empty-${index}`} useItem={() => (console.log("There's no item to use"))} dropItem={() => (console.log("There's no item to drop"))} />
                     ))}
 
                     <Backpack className="w-20 h-20" />

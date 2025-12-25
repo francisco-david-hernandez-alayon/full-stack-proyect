@@ -46,6 +46,20 @@ public class ForestScenesAdder : IScenesAdder
             AttackItemsAdders.WoodSword
         ));
 
+        scenesToAdd.Add(new ItemScene(
+            new SceneName("Forest attribute item 1"),
+            new SceneDescription("While exploring the forest, you find a fresh apple lying near a tree, still good to eat."),
+            biome,
+            AtributteItemsAdders.Apple
+        ));
+
+        scenesToAdd.Add(new ItemScene(
+            new SceneName("Forest attribute item 2"),
+            new SceneDescription("As you move deeper among the trees, you discover a small health potion hidden in the undergrowth."),
+            biome,
+            AtributteItemsAdders.HealthPotion
+        ));
+
 
         // Enemy Scene 
         scenesToAdd.Add(new EnemyScene(
@@ -69,6 +83,14 @@ public class ForestScenesAdder : IScenesAdder
             EnemysAdder.Skeleton
         ));
 
+        scenesToAdd.Add(new EnemyScene(
+            new SceneName("Forest Wyvern"),
+            new SceneDescription("A wyvern emerges from the darkness and stares at you."),
+            biome,
+            EnemysAdder.Wyvern
+        ));
+
+        // Trade scene
         scenesToAdd.Add(new TradeScene(
             new SceneName("Forest Merchant Encounter"),
             new SceneDescription("You stumble upon a traveling merchant in the forest. He offers various goods for trade."),

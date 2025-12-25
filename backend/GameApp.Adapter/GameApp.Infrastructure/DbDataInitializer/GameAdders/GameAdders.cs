@@ -13,7 +13,6 @@ public interface GameAdders : IGameAdders
     {
         List<Game> gamesToAdd = new List<Game>();
         WarriorCharacter warrior = new WarriorCharacter();
-        warrior = warrior.AddItemInventory(AttackItemsAdders.Dagger) as WarriorCharacter;
         warrior = warrior.AddItemInventory(AttackItemsAdders.IronSword)  as WarriorCharacter;
         warrior = warrior.AddItemInventory(AtributteItemsAdders.Bread)  as WarriorCharacter;
         warrior = warrior.AddItemInventory(AtributteItemsAdders.HealthPotion)  as WarriorCharacter;

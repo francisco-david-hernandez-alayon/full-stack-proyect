@@ -8,7 +8,7 @@ public class EnemysAdder : IEnemysAdder
     public static readonly Enemy Slime =
        new Enemy(
            new EnemyName("Slime"),
-           healthPoints: 20,
+           healthPoints: 30,
            attackDamage: 3,
            speedAttack: 2,
            rewardMoney: 5
@@ -17,18 +17,18 @@ public class EnemysAdder : IEnemysAdder
     public static readonly Enemy Goblin =
         new Enemy(
             new EnemyName("Goblin"),
-            healthPoints: 35,
-            attackDamage: 6,
-            speedAttack: 3,
+            healthPoints: 50,
+            attackDamage: 7,
+            speedAttack: 4,
             rewardMoney: 10
         );
 
     public static readonly Enemy Skeleton =
         new Enemy(
             new EnemyName("Skeleton"),
-            healthPoints: 50,
+            healthPoints: 70,
             attackDamage: 8,
-            speedAttack: 4,
+            speedAttack: 3,
             rewardMoney: 15
         );
 
@@ -135,10 +135,10 @@ public class EnemysAdder : IEnemysAdder
     public static readonly Enemy Wyvern =
         new Enemy(
             new EnemyName("Wyvern"),
-            healthPoints: 80,
-            attackDamage: 16,
+            healthPoints: 100,
+            attackDamage: 15,
             speedAttack: 5,
-            rewardMoney: 40
+            rewardMoney: 50
         );
 
 

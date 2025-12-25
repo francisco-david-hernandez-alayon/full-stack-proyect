@@ -19,7 +19,12 @@ export class GameAdvanceSceneService implements IGameAdvanceSceneUseCase {
         }
 
         let updatedGame;
-        let updateUserActions: UserAction[] = [UserAction.USE_ITEM];
+        let updateUserActions: UserAction[] = [];
+
+        if (game.character.inventoryList.length > 0) {
+            updateUserActions.push(UserAction.USE_ITEM);
+            updateUserActions.push(UserAction.DROP_ITEM);
+        }
 
         // There are two or more scenes to move(must select one current scene first)
         if (game.currentScenes.length > 1) {
@@ -43,7 +48,6 @@ export class GameAdvanceSceneService implements IGameAdvanceSceneUseCase {
                 case currentSceneSelected instanceof ItemScene:
                     updateUserActions.push(UserAction.MOVE_FORWARD);
                     updateUserActions.push(UserAction.GET_ITEM);
-                    updateUserActions.push(UserAction.CHANGE_ITEM);
                     updateUserActions.push(UserAction.USE_CURRENT_SCENE_ITEM);
                     break;
                 

@@ -19,6 +19,7 @@ export const CreateNewGamePage: React.FC<CreateNewGameProps> = ({ showAlert }) =
     const repoScenes = new SceneHttpRepository();
     const gameCreateService = new GameCreateService(repoGames);
     const sceneGetService = new SceneGetService(repoScenes);
+    const scenesToFinish = 30;
 
     const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ export const CreateNewGamePage: React.FC<CreateNewGameProps> = ({ showAlert }) =
 
             const character = new WarriorCharacter();  // default
 
-            const gameCreated = await gameCreateService.createGame(character, 10, randomFinalScene, [randomCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
+            const gameCreated = await gameCreateService.createGame(character, scenesToFinish, randomFinalScene, [randomCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
 
             navigate(`/play-game/${gameCreated.id}`)
 
