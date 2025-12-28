@@ -10,7 +10,7 @@ export enum UserAction {
 
     // TRADES
     BUY_ITEMS = "BuyItems",
-    SOLD_ITEMS = "SoldItems",
+    SELL_ITEMS = "SellItems",
 
     // COMBAT
     ATTACK_ENEMY_WITH_ITEM = "AttackEnemyWithItem",

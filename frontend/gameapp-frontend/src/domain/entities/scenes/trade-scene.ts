@@ -47,11 +47,48 @@ export class TradeScene extends Scene {
         return new TradeScene(this._name, this._description, this._biome, this._merchantMoneyToSpent, this._merchantItemsOffer, newMargin, this._id);
     }
 
+    removeMerchantItem(position: number): TradeScene {
+        if (position < 0 || position >= this._merchantItemsOffer.length) {
+            throw new Error(
+                "Cannot remove trader item at position " + position
+            );
+        }
+
+        const updatedItems = this._merchantItemsOffer.filter(
+            (_, index) => index !== position
+        );
+
+        return new TradeScene(
+            this._name,
+            this._description,
+            this._biome,
+            this._merchantMoneyToSpent,
+            updatedItems,
+            this._profitMerchantMargin,
+            this._id
+        );
+    }
+
+    addMerchantItem(item: Item): TradeScene {
+        const updatedItems = [...this._merchantItemsOffer, item];
+
+        return new TradeScene(
+            this._name,
+            this._description,
+            this._biome,
+            this._merchantMoneyToSpent,
+            updatedItems,
+            this._profitMerchantMargin,
+            this._id
+        );
+    }
+
+
     toString(): string {
         const merchantItems = this._merchantItemsOffer.map(i => i.toString()).join(", ");
         return `TradeScene(${this._id}): ${this._name} - ${this._biome}\n` +
-               `Merchant Money To Spent: ${this._merchantMoneyToSpent}\n` +
-               `Profit Merchant Margin: ${this._profitMerchantMargin}\n` +
-               `Merchant Items: [${merchantItems}]`;
+            `Merchant Money To Spent: ${this._merchantMoneyToSpent}\n` +
+            `Profit Merchant Margin: ${this._profitMerchantMargin}\n` +
+            `Merchant Items: [${merchantItems}]`;
     }
 }

@@ -8,6 +8,8 @@ export class ItemJsonRequest {
     name: string;
     description: string;
     itemType: ItemType;
+    tradePrice: number;
+
     // Optional attributes
     healthPointsReceived?: number | null;
     foodPointsReceived?: number | null;
@@ -19,6 +21,7 @@ export class ItemJsonRequest {
         this.id = item.id;
         this.name = item.name.name;
         this.description = item.description.description;
+        this.tradePrice = item.tradePrice;
 
         // Determinar tipo y asignar atributos según el tipo
         if (item instanceof AttributeItem) {

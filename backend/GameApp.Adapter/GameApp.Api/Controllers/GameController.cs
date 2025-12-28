@@ -78,7 +78,7 @@ public class GameController : ControllerBase
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
             List<UserAction> currentUserAction = request.ListCurrentUserActions;
-            
+
 
             // Console.WriteLine("Game data to create: " + character, finalScene, currentScenes, currentUserAction);
 
@@ -91,7 +91,7 @@ public class GameController : ControllerBase
                 currentUserAction
             );
 
-            
+
 
             // Response
             return createdGame is not null
@@ -181,7 +181,7 @@ public class GameController : ControllerBase
             // Response
             return updatedGame is not null
                 ? Ok(GameDtoMapper.ToDto(updatedGame))
-                : BadRequest();   
+                : BadRequest();
 
         }
         catch (Exception ex)

@@ -13,6 +13,7 @@ interface InventorySlotProps {
 
 
 export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dropItem }) => {
+    
     // EMPTY SLOT
     if (!item) {
         return (

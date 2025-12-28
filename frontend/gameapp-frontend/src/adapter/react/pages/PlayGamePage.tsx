@@ -21,6 +21,7 @@ import { GameManageItemService } from "../../../application/services/game-servic
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
 import { GameSummary } from "../components/Game/GameSummary";
+import { GameTradeService } from "../../../application/services/game-services/game-trade-service";
 
 
 interface PlayGamePageProps {
@@ -41,6 +42,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     const gameUpdateService = new GameUpdateService(repoGames);
     const gameUseItemService = new GameUseItemService();
     const gameManageItemService = new GameManageItemService();
+    const gameTradeService = new GameTradeService();
 
 
     useEffect(() => {
@@ -158,7 +160,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
     const getSceneItem = async (currentScene: Scene) => {
         try {
-            if (game.character.inventoryList.length >= game.character.maxInventorySlots) {
+            if (game.character.isInventoryFull()) {
                 showAlert({
                     message: `Max inventory slots reached(${game.character.inventoryList.length}/${game.character.maxInventorySlots})`,
                     type: AlertType.WARNING,
@@ -200,13 +202,43 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
     }
 
+    //---------------------------------------------------------TRADE-FUNCTIONS----------------------------------------------------------//
 
+    const sellItem = async (posItemCharacterInventory: number) => {
+        try {
+            const updatedGame = await gameTradeService.sellItems(posItemCharacterInventory, game);
+            setGame(updatedGame);
+
+        } catch (error) {
+            showAlert({
+                message: "Error selling item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+    }
+
+    const buyItem = async (posItemTraderInventory: number) => {
+        try {
+            const updatedGame = await gameTradeService.buyItems(posItemTraderInventory, game);
+            setGame(updatedGame);
+
+        } catch (error) {
+            showAlert({
+                message: "Error buying item: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+    }
 
 
 
 
 
     //----------------------------------------------------------------------------HTML-------------------------------------------------------------------------------//
+
+
 
     if (game.status == GameStatus.PLAYER_DEATH) {
         saveGame();
@@ -255,9 +287,10 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
                 {game.currentScenes.map((scene, index) => (
                     <div key={index} className="flex flex-1 justify-center">
                         <SceneCard CharacterInScene={game.currentScenes.length == 1} scene={scene} canMoveForward={game.currentEnemy == null} getMoveForwardSceneId={moveForwardScene}
-                            sceneItemExist={game.currentUserActions.includes(UserAction.USE_CURRENT_SCENE_ITEM)} useSceneItem={() => (useSceneItem(scene))} getSceneItem={() => (getSceneItem(scene))}
-                            canAttackWithoutItem={game.currentUserActions.includes(UserAction.ATTACK_ENEMY_WITHOUT_ITEM)} attackWithoutItem={() => (attackWithoutItem())}
-                            currentEnemyHp={game.currentEnemy?.healthPoints} enemyIsDead={(scene instanceof EnemyScene) && (game.currentScenes.length === 1) && (game.currentEnemy == null)} />
+                            sceneItemExist={game.currentUserActions.includes(UserAction.USE_CURRENT_SCENE_ITEM)} useSceneItem={useSceneItem} getSceneItem={getSceneItem}
+                            canAttackWithoutItem={game.currentUserActions.includes(UserAction.ATTACK_ENEMY_WITHOUT_ITEM)} attackWithoutItem={attackWithoutItem}
+                            currentEnemyHp={game.currentEnemy?.healthPoints} enemyIsDead={(scene instanceof EnemyScene) && (game.currentScenes.length === 1) && (game.currentEnemy == null)}
+                            characterCurrentMoney={game.character.currentMoney} characterInventory={game.character.inventoryList} sellItem={sellItem} buyItem={buyItem} />
                     </div>
                 ))}
             </div>

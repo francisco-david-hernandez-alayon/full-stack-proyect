@@ -13,7 +13,7 @@ public enum UserAction
 
     // TRADES
     BuyItems,   // Can buy items to merchant
-    SoldItems,  // Sold items
+    SellItems,  // Sell items
 
     // COMBAT
     AttackEnemyWithItem, // attack current enemy with attack an item

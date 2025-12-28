@@ -12,9 +12,9 @@ public class GameDocument
 
     public CharacterDocument Character { get; set; } = default!;
     public int NumberScenesToFinish { get; set; }
-    public List<string> CompletedScenes { get; set; } = new();
+    public List<ItemSceneListDocument> CompletedScenes { get; set; } = new();
 
-    public List<string> CurrentScenes { get; set; } = new();
+    public List<ItemSceneListDocument> CurrentScenes { get; set; } = new();
 
     public List<UserAction> CurrentUserActions { get; set; } = new();
     
@@ -22,8 +22,13 @@ public class GameDocument
 
     public GameStatus Status { get; set; }
 
+    // TradeScene
+
+
+    // Current enemy
     [BsonIgnoreIfNull]
-    public EnemyDocument? CurrentEnemy { get; set; }
+    public string? CurrentEnemyName { get; set; }
     [BsonIgnoreIfNull]
-    public int? EnemyHealthPoints { get; set; }
+    public int? CurrentEnemyHealthPoints { get; set; }
+
 }

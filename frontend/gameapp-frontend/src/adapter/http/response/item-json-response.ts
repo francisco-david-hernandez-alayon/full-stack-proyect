@@ -26,14 +26,14 @@ export class ItemJsonResponse {
         this.name = itemJson.name;
         this.description = itemJson.description;
         this.itemType = itemJson.itemType;
-        this.tradePrice = itemJson.tradePrice ?? null;
+        this.tradePrice = itemJson.tradePrice ?? undefined;
 
-        this.attackDamage = itemJson.attackDamage ?? null;
-        this.speedAttack = itemJson.speedAttack ?? null;
-        this.durability = itemJson.durability ?? null;
+        this.attackDamage = itemJson.attackDamage ?? undefined;
+        this.speedAttack = itemJson.speedAttack ?? undefined;
+        this.durability = itemJson.durability ?? undefined;
 
-        this.healthPointsReceived = itemJson.healthPointsReceived ?? null;
-        this.foodPointsReceived = itemJson.foodPointsReceived ?? null;
+        this.healthPointsReceived = itemJson.healthPointsReceived ?? undefined;
+        this.foodPointsReceived = itemJson.foodPointsReceived ?? undefined;
     }
 
     toItem(): Item {

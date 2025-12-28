@@ -9,6 +9,7 @@ import { getStyleForItem, ItemImageColor } from "../../utils/GetItemStyle";
 import { Enemy } from "../../../../domain/entities/enemy";
 import { EnemyScene } from "../../../../domain/entities/scenes/enemy-scene";
 import { ActivityIcon, DollarSign, Heart, Skull, Sword } from "lucide-react";
+import { TradeScene } from "../../../../domain/entities/scenes/trade-scene";
 
 interface itemSceneCardProps {
     item: Item
@@ -102,25 +103,37 @@ interface SceneCardProps {
     getMoveForwardSceneId: (sceneId: string) => void;
 
     // item
-    sceneItemExist: boolean;
-    useSceneItem: () => void;
-    getSceneItem: () => void;
+    sceneItemExist?: boolean;
+    useSceneItem: (currentScene: Scene) => void;
+    getSceneItem: (currentScene: Scene) => void;
 
     // enemy
     canAttackWithoutItem: boolean;
     attackWithoutItem: () => void;
     currentEnemyHp?: number;
-    enemyIsDead: boolean;
+    enemyIsDead?: boolean;
+
+    // trade
+    characterCurrentMoney?: number;
+    characterInventory?: Item[];
+    sellItem: (posItemCharacterInventory: number) => void;
+    buyItem: (posItemTraderInventory: number) => void;
 
 }
 
-export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, canMoveForward, getMoveForwardSceneId, sceneItemExist, useSceneItem, getSceneItem, canAttackWithoutItem, attackWithoutItem, currentEnemyHp, enemyIsDead }) => {
+export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene,
+    canMoveForward, getMoveForwardSceneId,
+    sceneItemExist, useSceneItem, getSceneItem,
+    canAttackWithoutItem, attackWithoutItem, currentEnemyHp, enemyIsDead,
+    characterCurrentMoney, characterInventory, sellItem, buyItem
+}) => {
+
     const biomeStyle = getStyleForBiome(scene.biome);
     const sceneStyle = getStyleForScene(scene);
 
     return (
         <div
-            className="flex flex-col items-center justify-start p-4 rounded-2xl text-white font-semibold w-full h-full max-w-3xl"
+            className="flex flex-col items-center justify-start p-4 rounded-2xl text-custom-background font-semibold w-full h-full max-w-3xl"
             style={{ backgroundColor: biomeStyle.color }}
         >
 
@@ -155,6 +168,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, c
                 </div>
             </div>
 
+
             {/* SCENE DATA */}
             {scene instanceof ItemScene ? (
                 <div className="flex flex-row items-center justify-center text-center gap-2 ">
@@ -164,7 +178,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, c
                         <button
                             className="btn btn-secondary"
                             disabled={!sceneItemExist}
-                            onClick={useSceneItem}
+                            onClick={() => useSceneItem(scene)}
                         >
                             Use Scene Item
                         </button>
@@ -172,7 +186,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, c
                         <button
                             className="btn btn-secondary"
                             disabled={!sceneItemExist}
-                            onClick={getSceneItem}
+                            onClick={() => getSceneItem(scene)}
                         >
                             Get Scene Item
                         </button>
@@ -181,6 +195,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, c
 
                 </div>
             ) : null}
+
 
             {scene instanceof EnemyScene ? (
                 <div className="flex flex-row items-center justify-center text-center gap-4 ">
@@ -201,16 +216,122 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene, c
             ) : null}
 
 
+            {scene instanceof TradeScene ? (
+
+                CharacterInScene ?
+                    (
+                        <div className="flex flex-row items-start justify-center w-full gap-10 mt-4 text-custom-background">
+
+                            {/* Player Inventory */}
+                            <div className="flex flex-col max-w-70 border rounded-xl p-2 bg-custom-tertiary max-h-50 ">
+                                <div className="flex items-center justify-center font-bold mb-2 gap-1">
+                                    Player Inventory :
+                                    <DollarSign className="w-4 h-4 text-custom-background" />
+                                    {characterCurrentMoney}
+                                </div>
+                                <div className="flex flex-col gap-1 overflow-y-auto">
+                                    {characterInventory?.map((item, index) => (
+                                        <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
+                                            <span className="truncate flex-1">{item.name.name}</span>
+
+                                            <span className="flex items-center gap-1 mx-2">
+                                                <DollarSign className="w-3 h-3 text-custom-background" />
+                                                {item.tradePrice}
+                                            </span>
+
+                                            <button className="btn btn-secondary btn-sm" onClick={() => sellItem(index)} >
+                                                Sell
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Merchant Inventory */}
+                            <div className="flex flex-col max-w-70 border rounded-xl p-2 bg-custom-tertiary max-h-50">
+                                <div className="flex items-center justify-center font-bold mb-2 gap-1">
+                                    Merchant Inventory :
+                                    <DollarSign className="w-4 h-4 text-custom-background" />
+                                    {scene.merchantMoneyToSpent}
+                                </div>
+
+                                <div className="flex flex-col gap-1 overflow-y-auto relative group">
+                                    {scene.merchantItemsOffer.map((item, index) => {
+                                        const priceWithMargin = (item.tradePrice ?? 0) + scene.profitMerchantMargin;
+                                        return (
+                                            <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
+
+                                                <span className="truncate flex-1">{item.name.name}</span>
+
+                                                <span className="flex items-center gap-1 mx-2">
+                                                    <DollarSign className="w-3 h-3 text-custom-background" />
+                                                    {priceWithMargin}
+                                                </span>
+
+                                                <button className="btn btn-primary btn-sm" onClick={() => buyItem(index)}>
+                                                    Buy
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    ) : (
+                        <div className="flex flex-col max-w-70 border rounded-xl p-2 bg-custom-tertiary max-h-50">
+                            <div className="flex items-center justify-center font-bold mb-2 gap-1">
+                                Merchant Inventory :
+                                <DollarSign className="w-4 h-4 text-custom-background" />
+                                {scene.merchantMoneyToSpent}
+                            </div>
+
+                            <div className="flex flex-col gap-1 overflow-y-auto relative group">
+                                {scene.merchantItemsOffer.map((item, index) => {
+                                    const priceWithMargin = (item.tradePrice ?? 0) + scene.profitMerchantMargin;
+                                    return (
+                                        <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
+
+                                            <span className="truncate flex-1">{item.name.name}</span>
+
+                                            <span className="flex items-center gap-1 mx-2">
+                                                <DollarSign className="w-3 h-3 text-custom-background" />
+                                                {priceWithMargin}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+
+                        </div>
+                    )
+
+
+            ) : null}
+
+
+
+
             {/* Move Forward */}
             <div className="flex flex-col items-center">
-                <button
-                    className="btn btn-primary mt-4"
-                    disabled={!canMoveForward}
-                    onClick={() => getMoveForwardSceneId(scene.id)}
-                >
-                    Move forward
-                </button>
-
+                {CharacterInScene ?
+                    <button
+                        className="btn btn-primary mt-4"
+                        disabled={!canMoveForward}
+                        onClick={() => getMoveForwardSceneId(scene.id)}
+                    >
+                        Move forward
+                    </button> :
+                    <button
+                        className="btn btn-secondary mt-4"
+                        disabled={!canMoveForward}
+                        onClick={() => getMoveForwardSceneId(scene.id)}
+                    >
+                        Select scene
+                    </button>}
 
 
             </div>

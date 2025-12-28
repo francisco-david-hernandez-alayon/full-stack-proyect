@@ -123,7 +123,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
                 case TradeScene:
                     updateUserActions.Add(UserAction.MoveForward);
                     updateUserActions.Add(UserAction.BuyItems);
-                    updateUserActions.Add(UserAction.SoldItems);
+                    updateUserActions.Add(UserAction.SellItems);
                     break;
 
                 case EnemyScene:
@@ -154,6 +154,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
             game = game.SetGameStatus(GameStatus.PlayerDeath);
             return game;
         }
+
 
         // 5- SAVE GAME IN REPOSITORY AND RETURN GAME
         Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),

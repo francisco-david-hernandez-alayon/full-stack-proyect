@@ -38,7 +38,7 @@ public class ForestScenesAdder : IScenesAdder
         ));
 
 
-        // Item Scene
+        // Item Scenes
         scenesToAdd.Add(new ItemScene(
             new SceneName("Forest attack item 1"),
             new SceneDescription("While exploring the forest, you stumble upon a wooden sword lying on the ground."),
@@ -61,7 +61,7 @@ public class ForestScenesAdder : IScenesAdder
         ));
 
 
-        // Enemy Scene 
+        // Enemy Scenes
         scenesToAdd.Add(new EnemyScene(
             new SceneName("Forest Slime Encounter"),
             new SceneDescription("A small green slime jumps toward you from behind the bushes."),
@@ -90,20 +90,34 @@ public class ForestScenesAdder : IScenesAdder
             EnemysAdder.Wyvern
         ));
 
-        // Trade scene
+
+        // Trade scenes
         scenesToAdd.Add(new TradeScene(
-            new SceneName("Forest Merchant Encounter"),
+            new SceneName("Forest Merchant Encounter 1"),
             new SceneDescription("You stumble upon a traveling merchant in the forest. He offers various goods for trade."),
             biome,
             merchantMoneyToSpent: 50, 
             merchantItemsOffer: new List<Item>
             {
                 AttackItemsAdders.WoodSword,
-                AttackItemsAdders.IronSword,
+                AtributteItemsAdders.Bread,
             },
-            profitMerchantMargin: 15 
+            profitMerchantMargin: 10 
         ));
 
+        scenesToAdd.Add(new TradeScene(
+            new SceneName("Forest Merchant Encounter 2"),
+            new SceneDescription("Suddenly a strange merchant appears out of nowhere offering products of the highest quality"),
+            biome,
+            merchantMoneyToSpent: 100, 
+            merchantItemsOffer: new List<Item>
+            {
+                AttackItemsAdders.IronSword,
+                AttackItemsAdders.SteelAxe,
+                AtributteItemsAdders.HealthPotion
+            },
+            profitMerchantMargin: 20 
+        ));
 
 
 

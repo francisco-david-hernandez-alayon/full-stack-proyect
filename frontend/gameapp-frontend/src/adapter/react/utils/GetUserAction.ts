@@ -9,7 +9,7 @@ const userActionLabelMap: Record<UserAction, string> = {
     [UserAction.DROP_ITEM]: "Drop item",
 
     [UserAction.BUY_ITEMS]: "Buy items",
-    [UserAction.SOLD_ITEMS]: "Sell items",
+    [UserAction.SELL_ITEMS]: "Sell items",
 
     [UserAction.ATTACK_ENEMY_WITH_ITEM]: "Attack enemy with item",
     [UserAction.ATTACK_ENEMY_WITHOUT_ITEM]: "Attack enemy without item",

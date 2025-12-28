@@ -16,7 +16,7 @@ export class GameUseItemService implements IGameUseItemUseCase {
     let character = game.character;
     let enemy = game.currentEnemy;
 
-    if (!enemy) return game; // No hay enemigo, no hacer nada
+    if (!enemy) return game;
 
     const userDamage = character.attackDamage + Damage;
     const userSpeed = character.attackSpeed + Speed;

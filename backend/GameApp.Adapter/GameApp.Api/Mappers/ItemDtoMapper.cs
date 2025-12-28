@@ -69,7 +69,7 @@ public static class ItemDtoMapper
                     "AttackDamage is required for AttackItem"),
                 dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
                     "SpeedAttack is required for AttackItem"),
-                dto.Durability ?? 1 // por defecto 1 si no se especifica
+                dto.Durability ?? 1
             ),
 
             ItemType.Attribute => new AtributeItem(

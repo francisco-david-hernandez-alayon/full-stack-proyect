@@ -6,7 +6,7 @@
   :root {
     --color-primary: theme(colors.rose.800);
     --color-secondary: theme(colors.slate.700);
-    --color-tertiary: theme(colors.amber.600);
+    --color-tertiary: theme(colors.stone.600);
     --color-error: theme(colors.red.600);
     --color-background: theme(colors.white);
     --color-background-soft: theme(colors.slate.50);

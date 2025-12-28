@@ -13,6 +13,7 @@ export class GameAdvanceSceneService implements IGameAdvanceSceneUseCase {
     constructor(private readonly gameRepository: IGameRepository) { }
 
     async advance(currentSceneSelectedId: string, game: Game): Promise<Game> {
+
         // cant advance if cannot move forward
         if (!game.currentUserActions.find(userAction => userAction === UserAction.MOVE_FORWARD)) {
             return game;
@@ -54,7 +55,7 @@ export class GameAdvanceSceneService implements IGameAdvanceSceneUseCase {
                 case currentSceneSelected instanceof TradeScene:
                     updateUserActions.push(UserAction.MOVE_FORWARD);
                     updateUserActions.push(UserAction.BUY_ITEMS);
-                    updateUserActions.push(UserAction.SOLD_ITEMS);
+                    updateUserActions.push(UserAction.SELL_ITEMS);
                     break;
 
                 case currentSceneSelected instanceof EnemyScene:

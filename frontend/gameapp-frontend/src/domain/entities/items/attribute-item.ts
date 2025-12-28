@@ -15,7 +15,6 @@ export class AttributeItem extends Item {
         id: string | null = null
     ) {
         super(name, description, tradePrice, id);
-
         this._healthPointsReceived = healthPointsReceived;
         this._foodPointsReceived = foodPointsReceived;
     }

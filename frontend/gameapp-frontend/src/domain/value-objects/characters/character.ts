@@ -62,12 +62,17 @@ export abstract class Character {
     get maxFoodPoints(): number { return this._maxFoodPoints; }
     get maxInventorySlots(): number { return this._maxInventorySlots; }
     get startingMoney(): number { return this._startingMoney; }
-    get attackSpeed(): number {return this._attackSpeed; }
-    get attackDamage(): number {return this._attackDamage; }
+    get attackSpeed(): number { return this._attackSpeed; }
+    get attackDamage(): number { return this._attackDamage; }
     get currentHealthPoints(): number { return this._currentHealthPoints; }
     get currentFoodPoints(): number { return this._currentFoodPoints; }
     get currentMoney(): number { return this._currentMoney; }
     get inventoryList(): Item[] { return this._inventoryList; }
+
+    isInventoryFull(): boolean {
+        return this._inventoryList.length >= this._maxInventorySlots;
+    }
+    
 
     // Abstract clone method
     abstract cloneWith(
@@ -79,7 +84,7 @@ export abstract class Character {
 
     // setters / modifiers (return new instance)
     addItemInventory(newItem: Item): Character {
-        if (this._inventoryList.length >= this._maxInventorySlots) return this;
+        if (this.isInventoryFull()) return this;
 
         const newInventory = [...this._inventoryList, newItem];
         return this.cloneWith(this._currentHealthPoints, this._currentFoodPoints, this._currentMoney, newInventory);

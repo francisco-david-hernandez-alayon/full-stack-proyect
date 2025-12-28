@@ -18,13 +18,13 @@ public static class GameDocumentMapper
             Id = game.GetGuid(),
             Character = CharacterDocumentMapper.ToDocument(game.GetCharacter()),
             NumberScenesToFinish = game.GetNumberScenesToFinish(),
-            CompletedScenes = game.GetCompletedScenes().Select(g => g.GetName().GetName()).ToList(),
-            CurrentScenes = game.GetCurrentScenes().Select(g => g.GetName().GetName()).ToList(),
+            CompletedScenes = game.GetCompletedScenes().Select(itemSceneListSceneDocumentMapper.ToItemSceneListDocument).ToList(),
+            CurrentScenes = game.GetCurrentScenes().Select(itemSceneListSceneDocumentMapper.ToItemSceneListDocument).ToList(),
             CurrentUserActions = game.GetCurrentUserAction(),
             FinalScene = game.GetFinalScene().GetName().GetName(),
             Status = game.GetGameStatus(),
-            CurrentEnemy = EnemyDocumentMapper.ToDocumentPosibleNull(game.GetCurrentEnemy()),   // could be null
-            EnemyHealthPoints = game.GetCurrentEnemy()?.GetHealthPoints()  // store enemy hp
+            CurrentEnemyName = game.GetCurrentEnemy()?.GetName().GetName(),
+            CurrentEnemyHealthPoints = game.GetCurrentEnemy()?.GetHealthPoints()  // store enemy hp
         };
     }
 
@@ -36,20 +36,28 @@ public static class GameDocumentMapper
         Character character = await CharacterDocumentMapper.ToDomainAsync(doc.Character, itemRepository);
 
         List<Scene> completedScenes = (await Task.WhenAll(
-            doc.CompletedScenes.Select(d => GetSceneByName(new SceneName(d), sceneRepository))
+            doc.CompletedScenes.Select(d =>
+                itemSceneListSceneDocumentMapper.ToSceneDomainAsync(d, sceneRepository)
+            )
         )).ToList();
 
         List<Scene> currentScenes = (await Task.WhenAll(
-            doc.CurrentScenes.Select(d => GetSceneByName(new SceneName(d), sceneRepository))
+            doc.CurrentScenes.Select(d =>
+                itemSceneListSceneDocumentMapper.ToSceneDomainAsync(d, sceneRepository)
+            )
         )).ToList();
 
 
         List<UserAction> currentUserAction = doc.CurrentUserActions.ToList();
         NothingHappensScene finalScene = await GetFinalSceneByName(new SceneName(doc.FinalScene), sceneRepository);
-        Enemy? currentEnemy = EnemyDocumentMapper.ToDomainPosibleNull(doc.CurrentEnemy);
-        if (currentEnemy != null)
+        Enemy? currentEnemy = null;
+        if (doc.CurrentEnemyName != null)
         {
-            currentEnemy = currentEnemy.SetHealthPoints(doc.EnemyHealthPoints ?? 0);
+            currentEnemy = await GetEnemyByName(new EnemyName(doc.CurrentEnemyName), enemyRepository);
+            if (currentEnemy != null)
+            {
+                currentEnemy = currentEnemy.SetHealthPoints(doc.CurrentEnemyHealthPoints ?? 0);
+            }
         }
 
 
@@ -67,18 +75,6 @@ public static class GameDocumentMapper
     }
 
     // GET SCENES FOR OTHER COLLECTIONS
-    private static async Task<Scene> GetSceneByName(SceneName name, ISceneRepository sceneRepository)
-    {
-        if (name == null)
-            throw new ArgumentNullException(nameof(name));
-
-        Scene? scene = await sceneRepository.FetchByName(name);
-        if (scene == null)
-            throw new InvalidOperationException($"Scene '{name.GetName()}' not found.");
-
-        return scene;
-    }
-
     private static async Task<NothingHappensScene> GetFinalSceneByName(SceneName name, ISceneRepository sceneRepository)
     {
         if (name == null)
@@ -97,6 +93,18 @@ public static class GameDocumentMapper
             return new NothingHappensScene(new SceneName("Final Scene test"), new SceneDescription("Final description"), Biome.Unknown);
         }
 
+    }
+
+    private static async Task<Enemy> GetEnemyByName(EnemyName name, IEnemyRepository enemyRepository)
+    {
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+
+        Enemy? enemy = await enemyRepository.FetchByName(name);
+        if (enemy == null)
+            throw new InvalidOperationException($"Enemy '{name.GetName()}' not found.");
+
+        return enemy;
     }
 
 

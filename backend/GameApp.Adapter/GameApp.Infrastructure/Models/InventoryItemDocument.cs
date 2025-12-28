@@ -1,4 +1,4 @@
-using GameApp.Adapter.Infrastructure.Models;
+namespace GameApp.Adapter.Infrastructure.Models;
 
 public class InventoryItemDocument
 {

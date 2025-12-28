@@ -9,22 +9,20 @@ export class GameManageItemService implements IGameManageItemUseCase {
     constructor() { }
 
     async getItem(item: Item, game: Game): Promise<Game> {
-        if (game.currentUserActions.includes(UserAction.GET_ITEM)) {
+        if (game.currentUserActions.includes(UserAction.GET_ITEM) || game.currentUserActions.includes(UserAction.BUY_ITEMS)) {
             let character = game.character;
 
             // The character doesnt have a full inventory and can get item
-            if (character.inventoryList.length < character.maxInventorySlots) {
-                if (game.currentUserActions.includes(UserAction.GET_ITEM)) {
+            if (!character.isInventoryFull()) {
                     character = character.addItemInventory(item);
                     game = game.setCharacter(character);
 
                     game = game.setCurrentUserActions(removeUserActions(game.currentUserActions, [UserAction.GET_ITEM, UserAction.USE_CURRENT_SCENE_ITEM]));
                     game = game.setCurrentUserActions(addUserActions(game.currentUserActions, [UserAction.USE_ITEM, UserAction.DROP_ITEM]));
-
-
-                }
             }
 
+        }   else {
+            console.error("Cant get an item")
         }
         return game;
 
@@ -35,7 +33,7 @@ export class GameManageItemService implements IGameManageItemUseCase {
 
         // The selected slot in the character's inventory position is occupied and may drop items.
         if (character.inventoryList.length >= positionItemSelected) {
-            if (game.currentUserActions.includes(UserAction.DROP_ITEM)) {
+            if (game.currentUserActions.includes(UserAction.DROP_ITEM) || game.currentUserActions.includes(UserAction.SELL_ITEMS)) {
                 character = character.removeItemInventory(positionItemSelected);
                 game = game.setCharacter(character);
 
@@ -46,6 +44,8 @@ export class GameManageItemService implements IGameManageItemUseCase {
                 }
 
             }
+        }   else {
+            console.error("Cant drop an item")
         }
         return game;
 
