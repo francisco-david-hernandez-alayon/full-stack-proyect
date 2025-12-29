@@ -1,5 +1,7 @@
+using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities;
 using GameApp.Domain.Entities.Scenes;
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Scenes;
 
 namespace GameApp.Domain.Repositories;
@@ -7,6 +9,8 @@ namespace GameApp.Domain.Repositories;
 public interface ISceneRepository
 {
     public abstract Task<IEnumerable<Scene>> FetchAllAsync();
+
+    public abstract Task<IEnumerable<Scene>> FetchAllByTypeAndBiome(Biome? biome, SceneType? type);
 
     public abstract Task<Scene?> FetchByIdAsync(Guid id);
 

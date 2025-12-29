@@ -3,6 +3,7 @@ using GameApp.Application.UseCases.GameUseCases;
 using GameApp.Domain.Repositories;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Application.Services.GameServices;
 
@@ -19,6 +20,102 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         _repoScene = repoScene;
         _gameUpdateService = gameUpdateService;
     }
+
+
+    private static readonly Dictionary<Biome, Dictionary<SceneType, int>> SceneProbabilitiesByBiome =
+    new()
+    {
+        [Biome.City] = new Dictionary<SceneType, int>
+        {
+            { SceneType.NothingHappens, 5 },
+            { SceneType.Item, 15 },
+            { SceneType.Enemy, 20 },
+            { SceneType.Trade, 30 },
+            { SceneType.ChangeBiome, 30 }
+        },
+
+        [Biome.Forest] = new Dictionary<SceneType, int>
+        {
+            { SceneType.NothingHappens, 15 },
+            { SceneType.Item, 25 },
+            { SceneType.Enemy, 30 },
+            { SceneType.Trade, 10 },
+            { SceneType.ChangeBiome, 20 }
+        },
+
+        [Biome.Desert] = new Dictionary<SceneType, int>
+        {
+            { SceneType.NothingHappens, 35 },
+            { SceneType.Item, 20 },
+            { SceneType.Enemy, 20 },
+            { SceneType.Trade, 10 },
+            { SceneType.ChangeBiome, 15 }
+        },
+
+        [Biome.Swamp] = new Dictionary<SceneType, int>
+        {
+            { SceneType.NothingHappens, 10 },
+            { SceneType.Item, 15 },
+            { SceneType.Enemy, 45 },
+            { SceneType.Trade, 10 },
+            { SceneType.ChangeBiome, 20 }
+        }
+    };
+
+    private SceneType GetRandomSceneTypeByBiome(Biome biome)
+    {
+        var probabilities = SceneProbabilitiesByBiome[biome];
+        var totalWeight = probabilities.Values.Sum();
+
+        var roll = Random.Shared.Next(0, totalWeight);
+        var cumulative = 0;
+
+        foreach (var entry in probabilities)
+        {
+            cumulative += entry.Value;
+            if (roll < cumulative)
+                return entry.Key;
+        }
+
+        // Fallback
+        return SceneType.ChangeBiome;
+    }
+
+
+
+
+    private async Task<Scene> GenerateScene(Biome currentBiome)
+    {
+        // Get Type of scene
+        IEnumerable<Scene> candidateScenes;
+        var selectedType = GetRandomSceneTypeByBiome(currentBiome);
+        
+        if (selectedType == SceneType.ChangeBiome)
+        {
+            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(null, SceneType.ChangeBiome);  // change biome no needs to have the same biome that current biome
+        }
+        else
+        {
+            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(currentBiome, selectedType);
+        }
+
+        var scenesList = candidateScenes.ToList();
+
+        // If theres no scene in the list 
+        if (!scenesList.Any())
+        {
+            scenesList = (await _repoScene.FetchAllByTypeAndBiome(
+                null,
+                SceneType.ChangeBiome
+            )).ToList();
+        }
+
+        // Pick random scene
+        var randomScene = scenesList[Random.Shared.Next(scenesList.Count)];
+        return randomScene;
+    }
+
+
 
     public async Task<Game?> GenerateNewSceneToGame(Guid idSceneSelected, Game game)
     {
@@ -65,24 +162,16 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         if (game.GetCompletedScenes().Count == game.GetNumberScenesToFinish() - 1) // If user reach last scene
         {
             newScenes = [game.GetFinalScene()];
-
         }
         else
         {
-            // Get all scenes
-            var allScenes = (await _repoScene.FetchAllAsync()).ToList();
-            // FALTA TENER EN CUENTA EL BIOMA PARA SOLR GENERAR ESCENAS DEL MISMO BIOMA
-            if (allScenes.Count == 0)
-                throw new InvalidOperationException("No scenes available in repository.");
-
-            var random = new Random();
-
             // Generate randomly 1 or 2 scenes 
+            var random = new Random();
             int numberOfScenesToGenerate = random.Next(1, 3);
 
             for (int i = 0; i < numberOfScenesToGenerate; i++)
             {
-                Scene randomScene = allScenes[random.Next(allScenes.Count)];
+                Scene randomScene = await GenerateScene(sceneSelected.GetBiome());
                 newScenes.Add(randomScene);
             }
 

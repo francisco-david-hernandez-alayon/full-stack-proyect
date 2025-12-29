@@ -6,6 +6,8 @@ using GameApp.Domain.ValueObjects.Scenes;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.Enumerates;
+using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Repositories;
 
@@ -31,6 +33,37 @@ public class SceneRepository : ISceneRepository
 
         return scenes;
     }
+
+    public async Task<IEnumerable<Scene>> FetchAllByTypeAndBiome(Biome? biome, SceneType? type)
+    {
+        var filterBuilder = Builders<SceneDocument>.Filter;
+        var filters = new List<FilterDefinition<SceneDocument>>();
+
+        if (biome.HasValue)
+        {
+            filters.Add(filterBuilder.Eq(s => s.Biome, biome.Value));
+        }
+
+        if (type.HasValue)
+        {
+            filters.Add(filterBuilder.Eq(s => s.SceneType, type.Value));
+        }
+
+        var filter = filters.Count > 0
+            ? filterBuilder.And(filters)
+            : filterBuilder.Empty;
+
+        var docs = await _scenes.Find(filter).ToListAsync();
+
+        var scenes = await Task.WhenAll(
+            docs.Select(doc =>
+                SceneDocumentMapper.ToDomainAsync(doc, _itemRepository, _enemyRepository)
+            )
+        );
+
+        return scenes;
+    }
+
 
 
     public async Task<Scene?> FetchByIdAsync(Guid id)

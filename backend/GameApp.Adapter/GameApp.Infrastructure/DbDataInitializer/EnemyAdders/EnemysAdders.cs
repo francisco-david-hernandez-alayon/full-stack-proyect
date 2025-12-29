@@ -32,13 +32,22 @@ public class EnemysAdder : IEnemysAdder
             rewardMoney: 15
         );
 
+    public static readonly Enemy Bandit =
+        new Enemy(
+            new EnemyName("Bandit"),
+            healthPoints: 80,
+            attackDamage: 10,
+            speedAttack: 2,
+            rewardMoney: 20
+        );
+
     public static readonly Enemy Wyvern =
         new Enemy(
             new EnemyName("Wyvern"),
             healthPoints: 100,
             attackDamage: 15,
             speedAttack: 5,
-            rewardMoney: 50
+            rewardMoney: 70
         );
 
 
@@ -49,6 +58,7 @@ public class EnemysAdder : IEnemysAdder
             Slime,
             Goblin,
             Skeleton,
+            Bandit,
             Wyvern
         });
     }

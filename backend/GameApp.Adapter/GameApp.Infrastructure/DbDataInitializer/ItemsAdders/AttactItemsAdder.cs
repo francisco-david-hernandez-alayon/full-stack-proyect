@@ -23,15 +23,6 @@ public class AttackItemsAdders : IItemsAdder
         durability: 10
     );
 
-    public static readonly AttackItem SteelAxe = new(
-        new ItemName("steel axe"),
-        new ItemDescription("A heavy steel axe"),
-        tradePrice: 25,
-        attackDamage: 30,
-        speedAttack: 1,
-        durability: 20
-    );
-
     public static readonly AttackItem Dagger = new(
         new ItemName("dagger"),
         new ItemDescription("A small, fast dagger"),
@@ -40,6 +31,17 @@ public class AttackItemsAdders : IItemsAdder
         speedAttack: 4,
         durability: 8
     );
+
+    public static readonly AttackItem SteelAxe = new(
+        new ItemName("steel axe"),
+        new ItemDescription("A heavy steel axe"),
+        tradePrice: 25,
+        attackDamage: 25,
+        speedAttack: 1,
+        durability: 12
+    );
+
+
 
     public static void AddItems(List<Item> items)
     {

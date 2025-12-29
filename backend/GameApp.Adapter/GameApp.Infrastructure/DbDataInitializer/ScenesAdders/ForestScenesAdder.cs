@@ -31,21 +31,14 @@ public class ForestScenesAdder : IScenesAdder
         List<Scene> scenesToAdd = new List<Scene>();
         Biome biome = getBiome();
 
+        // Nothing Scenes
         scenesToAdd.Add(new NothingHappensScene(
             new SceneName("Nothing Happens Forest 1"),
             new SceneDescription("You walk for a while, but nothing unusual happens in the forest."),
             biome
         ));
 
-
-        // Item Scenes
-        scenesToAdd.Add(new ItemScene(
-            new SceneName("Forest attack item 1"),
-            new SceneDescription("While exploring the forest, you stumble upon a wooden sword lying on the ground."),
-            biome,
-            AttackItemsAdders.WoodSword
-        ));
-
+        // Item Scenes – Attribute Item
         scenesToAdd.Add(new ItemScene(
             new SceneName("Forest attribute item 1"),
             new SceneDescription("While exploring the forest, you find a fresh apple lying near a tree, still good to eat."),
@@ -60,6 +53,13 @@ public class ForestScenesAdder : IScenesAdder
             AtributteItemsAdders.HealthPotion
         ));
 
+        // Item Scene – Attack Item
+        scenesToAdd.Add(new ItemScene(
+            new SceneName("Forest attack item 1"),
+            new SceneDescription("While exploring the forest, you stumble upon a wooden sword lying on the ground."),
+            biome,
+            AttackItemsAdders.WoodSword
+        ));
 
         // Enemy Scenes
         scenesToAdd.Add(new EnemyScene(
@@ -102,7 +102,7 @@ public class ForestScenesAdder : IScenesAdder
                 AttackItemsAdders.WoodSword,
                 AtributteItemsAdders.Bread,
             },
-            profitMerchantMargin: 10 
+            profitMerchantMargin: 3 
         ));
 
         scenesToAdd.Add(new TradeScene(
@@ -116,7 +116,7 @@ public class ForestScenesAdder : IScenesAdder
                 AttackItemsAdders.SteelAxe,
                 AtributteItemsAdders.HealthPotion
             },
-            profitMerchantMargin: 20 
+            profitMerchantMargin: 5 
         ));
 
 

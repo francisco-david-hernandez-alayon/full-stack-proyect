@@ -12,25 +12,25 @@ public class ChangeBiomesScenesAdder : IScenesAdder
         List<Scene> scenesToAdd = new List<Scene>();
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Forest 1"),
+            new SceneName("Change Biome Forest"),
             new SceneDescription("A narrow path opens, leading you into a deep forest."),
             Biome.Forest
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Desert 1"),
+            new SceneName("Change Biome Desert"),
             new SceneDescription("The terrain shifts into endless dunes as you enter the desert."),
             Biome.Desert
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome City 1"),
+            new SceneName("Change Biome City"),
             new SceneDescription("Ruins and stone roads appear as you arrive at an abandoned city."),
             Biome.City
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Swamp 1"),
+            new SceneName("Change Biome Swamp"),
             new SceneDescription("The ground turns wet and murky as you step into a dark swamp."),
             Biome.Swamp
         ));
