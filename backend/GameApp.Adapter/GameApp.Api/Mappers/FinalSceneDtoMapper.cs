@@ -1,4 +1,3 @@
-using GameApp.Adapter.Api.dtos;
 using GameApp.Adapter.Api.dtos.ScenesDto;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
@@ -8,7 +7,7 @@ namespace GameApp.Adapter.Api.Mappers;
 
 public static class FinalSceneDtoMapper
 {
-    public static NothingHappensScene ToDomain(FinalSceneDto dto)
+    public static FinalScene ToDomain(FinalSceneDto dto)
     {
         // Check nullability
         if (dto == null)
@@ -24,11 +23,11 @@ public static class FinalSceneDtoMapper
         SceneDescription sceneDescription = new SceneDescription(dto.Description);
         Biome biome = dto.Biome;
 
-        return new NothingHappensScene(sceneName, sceneDescription, biome);
+        return new FinalScene(sceneName, sceneDescription, biome);
     }
 
 
-    public static FinalSceneDto ToDto(NothingHappensScene scene)
+    public static FinalSceneDto ToDto(FinalScene scene)
     {
        if (scene == null)
             throw new ArgumentNullException(nameof(scene));

@@ -8,5 +8,4 @@ public class FinalSceneDto
     public string Description { get; set; } = default!;
     public Biome Biome { get; set; } = default!; 
 
-    // final scene always will be a NothingHappensScene 
 }

@@ -11,6 +11,14 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 public class CityScenesAdder : IScenesAdder
 {
 
+    // FINAL SCENE
+    public static readonly FinalScene FinalScene =
+    new FinalScene(
+        new SceneName("Final Scene City temle"),
+        new SceneDescription("Finally you reach the temple hidden beneath the city, where countless riches await you."),
+        getBiome()
+    );
+
     private static Biome getBiome()
     {
         return Biome.City;
@@ -71,7 +79,8 @@ public class CityScenesAdder : IScenesAdder
             profitMerchantMargin: 6
         ));
 
-
+        scenesToAdd.Add(FinalScene);
+        
         scenes.AddRange(scenesToAdd);
     }
 }

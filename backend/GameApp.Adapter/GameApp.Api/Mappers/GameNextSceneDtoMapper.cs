@@ -15,7 +15,7 @@ namespace GameApp.Adapter.Api.Mappers
 
             Character character = CharacterDtoMapper.ToDomain(gameDto.Character);
 
-            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(gameDto.FinalScene);
+            FinalScene finalScene = FinalSceneDtoMapper.ToDomain(gameDto.FinalScene);
 
             List<Scene> completedScenes = gameDto.ListCompletedScenes?
                 .Select(SceneDtoMapper.ToDomain)

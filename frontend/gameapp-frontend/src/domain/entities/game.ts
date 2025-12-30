@@ -2,15 +2,15 @@ import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 import { UserAction } from '../enumerates/user-action';
 import { Character } from '../value-objects/characters/character';
 import { Enemy } from './enemy';
-import { NothingHappensScene } from './scenes/nothing-happens-scene';
 import { Scene } from './scenes/scene';
 import { GameStatus } from '../enumerates/game-status';
+import  { FinalScene } from './scenes/final-scene';
 
 export class Game {
     private _id: string;
     private _character: Character;
     private _numberScenesToFinish: number;
-    private _finalScene: NothingHappensScene;
+    private _finalScene: FinalScene;
     private _listCurrentScenes: Scene[];
     private _listCurrentUserActions: UserAction[];
     private _listCompletedScenes: Scene[];
@@ -20,7 +20,7 @@ export class Game {
     constructor(
         character: Character,
         numberScenesToFinish: number,
-        finalScene: NothingHappensScene,
+        finalScene: FinalScene,
         listCurrentScenes: Scene[] = [],
         listCurrentUserActions: UserAction[] = [],
         listCompletedScenes: Scene[] = [],
@@ -52,7 +52,7 @@ export class Game {
     get character(): Character { return this._character; }
     get numberScenesToFinish(): number { return this._numberScenesToFinish; }
     get completedScenes(): Scene[] { return [...this._listCompletedScenes]; }
-    get finalScene(): NothingHappensScene { return this._finalScene; }
+    get finalScene(): FinalScene { return this._finalScene; }
     get currentScenes(): Scene[] { return [...this._listCurrentScenes]; }
     get currentUserActions(): UserAction[] { return [...this._listCurrentUserActions]; }
     get status(): GameStatus { return this._status; }
@@ -76,7 +76,7 @@ export class Game {
         return new Game(this._character, this._numberScenesToFinish, this._finalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes.slice(0, -1), this._status, this._currentEnemy, this._id);
     }
 
-    setFinalScene(newFinalScene: NothingHappensScene): Game {
+    setFinalScene(newFinalScene: FinalScene): Game {
         return new Game(this._character, this._numberScenesToFinish, newFinalScene, this._listCurrentScenes, this._listCurrentUserActions, this._listCompletedScenes, this._status, this._currentEnemy, this._id);
     }
 
@@ -100,7 +100,7 @@ export class Game {
         newCharacter: Character,
         newNumberScenesToFinish: number,
         newCompletedScenes: Scene[],
-        newFinalScene: NothingHappensScene,
+        newFinalScene: FinalScene,
         newListCurrentUserActions: UserAction[],
         newListCurrentScenes: Scene[],
         newStatus: GameStatus,

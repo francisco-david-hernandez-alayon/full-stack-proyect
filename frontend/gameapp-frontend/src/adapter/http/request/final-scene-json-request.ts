@@ -1,4 +1,4 @@
-import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
+import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 
 export class FinalSceneJsonRequest {
     id: string;
@@ -6,10 +6,10 @@ export class FinalSceneJsonRequest {
     description: string;
     biome: string;
 
-    constructor(finalScene: NothingHappensScene) {
+    constructor(finalScene: FinalScene) {
         if (!finalScene) throw new TypeError("finalScene is required");
-        if (!(finalScene instanceof NothingHappensScene)) {
-            throw new TypeError("finalScene must be an instance of NothingHappensScene");
+        if (!(finalScene instanceof FinalScene)) {
+            throw new TypeError("finalScene must be an instance of FinalScene");
         }
 
         this.id = finalScene.id;

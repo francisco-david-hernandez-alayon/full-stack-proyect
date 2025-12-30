@@ -24,6 +24,9 @@ public static class SceneDocumentMapper
 
         switch (scene)
         {
+            case FinalScene:
+                doc.SceneType = SceneType.Final;
+                break;
             case NothingHappensScene:
                 doc.SceneType = SceneType.NothingHappens;
                 break;
@@ -67,6 +70,9 @@ public static class SceneDocumentMapper
 
         switch (doc.SceneType)
         {
+            case SceneType.Final:
+                return new FinalScene(doc.Id, name, description, doc.Biome);
+
             case SceneType.NothingHappens:
                 return new NothingHappensScene(doc.Id, name, description, doc.Biome);
 

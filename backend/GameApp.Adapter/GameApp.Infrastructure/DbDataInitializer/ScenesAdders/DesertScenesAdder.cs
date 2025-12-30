@@ -11,6 +11,14 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 public class DesertScenesAdder : IScenesAdder
 {
 
+    // FINAL SCENE
+    public static readonly FinalScene FinalScene =
+    new FinalScene(
+        new SceneName("Final Scene Desert Oasis"),
+        new SceneDescription("You finally reach the desert oasis village and can rest peacefully."),
+        getBiome()
+    );
+
     private static Biome getBiome()
     {
         return Biome.Desert;
@@ -67,7 +75,7 @@ public class DesertScenesAdder : IScenesAdder
             profitMerchantMargin: 4
         ));
 
-
+        scenesToAdd.Add(FinalScene);
 
         scenes.AddRange(scenesToAdd);
     }

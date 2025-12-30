@@ -73,7 +73,7 @@ public class GameController : ControllerBase
         {
             // Tansform request Dto to Domain
             Character character = CharacterDtoMapper.ToDomainFromType(request.Character);
-            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
+            FinalScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
             List<Scene> currentScenes = request.ListCurrentScenes?
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();
@@ -113,7 +113,7 @@ public class GameController : ControllerBase
         {
             // Transform request Dto to Domain
             Character character = CharacterDtoMapper.ToDomain(request.Character);
-            NothingHappensScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
+            FinalScene finalScene = FinalSceneDtoMapper.ToDomain(request.FinalScene);
             List<Scene> completedScenes = request.ListCompletedScenes?
                 .Select(SceneDtoMapper.ToDomain)
                 .ToList() ?? new List<Scene>();

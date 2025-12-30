@@ -1,7 +1,6 @@
 import { Game } from "../../../domain/entities/game";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
-import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
 import { SceneDescription } from "../../../domain/value-objects/scenes/scene-description";
 import { SceneName } from "../../../domain/value-objects/scenes/scene-name";
 import { CharacterType } from "../../../application/enumerates/character-type";
@@ -10,6 +9,7 @@ import { ItemJsonResponse } from "./item-json-response";
 import { EnemyJsonResponse } from "./enemy-json-response";
 import type { Biome } from "../../../domain/enumerates/biome";
 import type { GameStatus } from "../../../domain/enumerates/game-status";
+import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 
 interface CharacterJson {
     type: CharacterType;
@@ -79,7 +79,7 @@ export class GameJsonResponse {
                 throw new TypeError(`Unknown character type received: '${this.character.type}'`);
         }
 
-        const finalScene = new NothingHappensScene(
+        const finalScene = new FinalScene(
             new SceneName(this.finalScene.name),
             new SceneDescription(this.finalScene.description),
             this.finalScene.biome

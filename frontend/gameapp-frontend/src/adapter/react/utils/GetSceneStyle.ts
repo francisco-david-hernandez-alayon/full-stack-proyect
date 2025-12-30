@@ -10,6 +10,10 @@ export const getSceneStyle: Record<
         image: "/images/scenes/cambiar_blanco.png",
         name: "Change Biome"
     },
+    FinalScene: {
+        image: "/images/scenes/cambiar_blanco.png",
+        name: "Final Scene"
+    },
     EnemyScene: {
         image: "/images/scenes/enemigo_blanco.png",
         name: "Enemy"
@@ -40,6 +44,10 @@ export const sceneTypeStyle: Record<
     [SceneType.ChangeBiome]: {
         image: "/images/scenes/cambiar_blanco.png",
         name: "Change Biome"
+    },
+    [SceneType.Final]: {
+        image: "/images/scenes/cambiar_blanco.png",
+        name: "Final Scene"
     },
     [SceneType.Enemy]: {
         image: "/images/scenes/enemigo_blanco.png",

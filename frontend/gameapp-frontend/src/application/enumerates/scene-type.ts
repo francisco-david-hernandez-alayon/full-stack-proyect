@@ -4,5 +4,6 @@ export enum SceneType {
     Item = "Item",
     NothingHappens = "NothingHappens",
     Trade = "Trade",
+    Final = "Final",
     None = "None"
 }

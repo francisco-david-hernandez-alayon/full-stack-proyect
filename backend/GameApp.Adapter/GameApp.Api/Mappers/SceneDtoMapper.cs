@@ -26,6 +26,8 @@ public static class SceneDtoMapper
 
         return dto.SceneType switch
         {
+            SceneType.Final => new FinalScene(dto.Id, sceneName, sceneDescription, biome),
+
             SceneType.NothingHappens => new NothingHappensScene(dto.Id, sceneName, sceneDescription, biome),
 
             SceneType.ChangeBiome =>
@@ -82,6 +84,8 @@ public static class SceneDtoMapper
 
         return dto.SceneType switch
         {
+            SceneType.Final => new FinalScene(sceneName, sceneDescription, biome),
+
             SceneType.NothingHappens => new NothingHappensScene(sceneName, sceneDescription, biome),
 
             SceneType.ChangeBiome =>
@@ -139,6 +143,8 @@ public static class SceneDtoMapper
 
         return dto.SceneType switch
         {
+            SceneType.Final => new FinalScene(sceneName, sceneDescription, biome),
+
             SceneType.NothingHappens => new NothingHappensScene(sceneName, sceneDescription, biome),
 
             SceneType.ChangeBiome =>
@@ -190,6 +196,10 @@ public static class SceneDtoMapper
 
         switch (scene)
         {
+            case FinalScene:
+                dto.SceneType = SceneType.Final;
+                break;
+
             case NothingHappensScene:
                 dto.SceneType = SceneType.NothingHappens;
                 break;

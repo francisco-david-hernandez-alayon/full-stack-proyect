@@ -10,4 +10,6 @@ public interface SceneGetUseCase
     public Task<Scene?> GetSceneByName(SceneName name);
     
     public Task<IEnumerable<Scene>> GetAllScenes();
+
+    public Task<IEnumerable<FinalScene>> GetAllFinalScenes();
 }

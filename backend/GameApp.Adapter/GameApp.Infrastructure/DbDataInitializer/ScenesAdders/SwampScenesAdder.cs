@@ -11,6 +11,14 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 public class SwampScenesAdder : IScenesAdder
 {
 
+    // FINAL SCENE
+    public static readonly FinalScene FinalScene =
+    new FinalScene(
+        new SceneName("Final Scene Swamp ring"),
+        new SceneDescription("After a viscous puddle you manage to glimpse the corpse of a warrior who carries the very valuable ring that you were looking for."),
+        getBiome()
+    );
+
     private static Biome getBiome()
     {
         return Biome.Swamp;
@@ -21,6 +29,7 @@ public class SwampScenesAdder : IScenesAdder
         List<Scene> scenesToAdd = new List<Scene>();
         Biome biome = getBiome();
 
+        
         // Nothing Scene
         scenesToAdd.Add(new NothingHappensScene(
             new SceneName("Nothing Happens Swamp"),
@@ -86,6 +95,7 @@ public class SwampScenesAdder : IScenesAdder
         ));
 
 
+        scenesToAdd.Add(FinalScene);
 
         scenes.AddRange(scenesToAdd);
     }

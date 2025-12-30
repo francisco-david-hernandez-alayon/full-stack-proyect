@@ -1,6 +1,5 @@
 using GameApp.Adapter.Infrastructure.DbDataInitializer.EnemysAdders;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
-using GameApp.Domain.Entities;
 using GameApp.Domain.Entities.Items;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
@@ -10,15 +9,20 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ScenesAdders;
 
 public class ForestScenesAdder : IScenesAdder
 {
-    // FINAL SCENE FOREST
-    private static readonly NothingHappensScene _finalSceneTreasureForest =
-    new NothingHappensScene(
+    // FINAL SCENE
+    public static readonly FinalScene FinalScene =
+    new FinalScene(
         new SceneName("Final Scene Treasure Forest"),
         new SceneDescription("After a long journey, you finally reach the hidden treasure. Your adventure has come to an end, and unimaginable riches now lie before you."),
         getBiome()
     );
 
-    public static NothingHappensScene FinalSceneTreasureForest => _finalSceneTreasureForest;
+    public static readonly NothingHappensScene InitialScene =
+    new NothingHappensScene(
+        new SceneName("Nothing Happens Forest 2"),
+        new SceneDescription("You wake up in a dark forest"),
+        getBiome()
+    );
 
 
     private static Biome getBiome()
@@ -30,6 +34,8 @@ public class ForestScenesAdder : IScenesAdder
     {
         List<Scene> scenesToAdd = new List<Scene>();
         Biome biome = getBiome();
+
+        // Final Scenes
 
         // Nothing Scenes
         scenesToAdd.Add(new NothingHappensScene(
@@ -121,7 +127,8 @@ public class ForestScenesAdder : IScenesAdder
 
 
 
-        scenesToAdd.Add(FinalSceneTreasureForest);
+        scenesToAdd.Add(FinalScene);
+        scenesToAdd.Add(InitialScene);
 
         scenes.AddRange(scenesToAdd);
     }

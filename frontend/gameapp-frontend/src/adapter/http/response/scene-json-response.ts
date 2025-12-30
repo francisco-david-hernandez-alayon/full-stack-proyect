@@ -11,6 +11,7 @@ import { SceneType } from "../../../application/enumerates/scene-type";
 import { EnemyJsonResponse } from "./enemy-json-response";
 import { ItemJsonResponse } from "./item-json-response";
 import type { Biome } from "../../../domain/enumerates/biome";
+import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 
 export class SceneJsonResponse {
     id: string;
@@ -50,6 +51,8 @@ export class SceneJsonResponse {
         const desc = new SceneDescription(this.description);
 
         switch (this.sceneType) {
+            case SceneType.Final:
+                return new FinalScene(name, desc, this.biome, this.id);
             case SceneType.NothingHappens:
                 return new NothingHappensScene(name, desc, this.biome, this.id);
             case SceneType.ChangeBiome:

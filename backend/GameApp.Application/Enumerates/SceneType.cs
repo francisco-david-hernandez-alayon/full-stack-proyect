@@ -7,5 +7,6 @@ public enum SceneType
     Item,
     NothingHappens,
     Trade,
+    Final,
     None,
 }

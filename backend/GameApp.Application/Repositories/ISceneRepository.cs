@@ -10,6 +10,8 @@ public interface ISceneRepository
 {
     public abstract Task<IEnumerable<Scene>> FetchAllAsync();
 
+    public abstract Task<IEnumerable<FinalScene>> FetchAllFinalScenes();
+
     public abstract Task<IEnumerable<Scene>> FetchAllByTypeAndBiome(Biome? biome, SceneType? type);
 
     public abstract Task<Scene?> FetchByIdAsync(Guid id);

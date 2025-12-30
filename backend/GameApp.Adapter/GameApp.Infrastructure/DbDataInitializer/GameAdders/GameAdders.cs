@@ -17,8 +17,8 @@ public interface GameAdders : IGameAdders
         warrior = warrior.AddItemInventory(AtributteItemsAdders.Bread)  as WarriorCharacter;
         warrior = warrior.AddItemInventory(AtributteItemsAdders.HealthPotion)  as WarriorCharacter;
 
-        NothingHappensScene finalScene = ForestScenesAdder.FinalSceneTreasureForest;
-        List<Scene> currentScenes = new List<Scene>{finalScene};
+        FinalScene finalScene = ForestScenesAdder.FinalScene;
+        List<Scene> currentScenes = new List<Scene>{ForestScenesAdder.InitialScene};
         List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.MoveForward};
 
         Game game1 = new Game(warrior, 10, finalScene, currentScenes, currentUserAction);

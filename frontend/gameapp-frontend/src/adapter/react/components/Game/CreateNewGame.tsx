@@ -19,31 +19,35 @@ export const CreateNewGamePage: React.FC<CreateNewGameProps> = ({ showAlert }) =
     const repoScenes = new SceneHttpRepository();
     const gameCreateService = new GameCreateService(repoGames);
     const sceneGetService = new SceneGetService(repoScenes);
-    const scenesToFinish = 30;
+    const scenesToFinish = 5;
 
     const navigate = useNavigate();
 
     const createNewGame = async () => {
         try {
-            // Get random final scene(NothingHappensScene)
+            // Get Initial Scene
             const scenes = await sceneGetService.getAllScenes();
-
             const nothingHappensScenes = scenes.filter(
                 (scene) => scene instanceof NothingHappensScene
             );
-
             if (nothingHappensScenes.length === 0) {
                 throw new Error("Theres no NothingHappensScene avaible");
             }
             const randomIndex1 = Math.floor(Math.random() * nothingHappensScenes.length);
-            const randomIndex2 = Math.floor(Math.random() * nothingHappensScenes.length);
-            const randomFinalScene = nothingHappensScenes[randomIndex1];
-            const randomCurrentScene= nothingHappensScenes[randomIndex2];
+            const randomInitialCurrentScene= nothingHappensScenes[randomIndex1];
+
+
+            // Get final Scene
+            const finalScenes = await sceneGetService.getAllFinalScenes();
+            if (finalScenes.length === 0) {
+                throw new Error("Theres no FinalScenes avaible");
+            }
+            const randomIndex2 = Math.floor(Math.random() * finalScenes.length);
+            const randomFinalScene = finalScenes[randomIndex2];
 
 
             const character = new WarriorCharacter();  // default
-
-            const gameCreated = await gameCreateService.createGame(character, scenesToFinish, randomFinalScene, [randomCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
+            const gameCreated = await gameCreateService.createGame(character, scenesToFinish, randomFinalScene, [randomInitialCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
 
             navigate(`/play-game/${gameCreated.id}`)
 

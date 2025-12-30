@@ -89,7 +89,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         // Get Type of scene
         IEnumerable<Scene> candidateScenes;
         var selectedType = GetRandomSceneTypeByBiome(currentBiome);
-        
+
         if (selectedType == SceneType.ChangeBiome)
         {
             candidateScenes = await _repoScene.FetchAllByTypeAndBiome(null, SceneType.ChangeBiome);  // change biome no needs to have the same biome that current biome
@@ -116,7 +116,65 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
     }
 
 
+    private Game SetCurrentUserActionsToGame(Game game)
+    {
+        var userActions = new List<UserAction>();
+        var currentScenes = game.GetCurrentScenes();
 
+        // Inventory-based actions
+        if (game.GetCharacter().GetInventoryList().Count > 0)
+        {
+            userActions.Add(UserAction.UseItem);
+            userActions.Add(UserAction.DropItem);
+        }
+
+        // CurrenScenes-based actions
+        if (currentScenes.Count == 1)
+        {
+            var scene = currentScenes.First();
+
+            switch (scene)
+            {
+                case FinalScene:
+                    userActions.Add(UserAction.MoveForward);
+                    break;
+                case NothingHappensScene:
+                    userActions.Add(UserAction.MoveForward);
+                    break;
+                case ChangeBiomeScene:
+                    userActions.Add(UserAction.MoveForward);
+                    break;
+
+                case ItemScene:
+                    userActions.Add(UserAction.MoveForward);
+                    userActions.Add(UserAction.GetItem);
+                    userActions.Add(UserAction.UseCurrentSceneItem);
+                    break;
+
+                case TradeScene:
+                    userActions.Add(UserAction.MoveForward);
+                    userActions.Add(UserAction.BuyItems);
+                    userActions.Add(UserAction.SellItems);
+                    break;
+
+                case EnemyScene enemyScene:
+                    userActions.Add(UserAction.AttackEnemyWithItem);
+                    userActions.Add(UserAction.AttackEnemyWithoutItem);
+                    game = game.SetCurrentEnemy((scene as EnemyScene).GetEnemy());
+                    break;
+            }
+        }
+        else
+        {
+            userActions.Add(UserAction.MoveForward);
+        }
+
+        return game.SetCurrentUserActions(userActions);
+    }
+
+
+
+    //-----------------------------------------------------------------------------MAIN-FUNCTION--------------------------------------------------------------------//
     public async Task<Game?> GenerateNewSceneToGame(Guid idSceneSelected, Game game)
     {
 
@@ -145,23 +203,32 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         }
 
 
-        // 2- SEARCH SCENES SELECTED AND ADD TO COMPLETED SCENES
+        // 2- SEARCH SCENES SELECTED AND ADD TO COMPLETED SCENES IF THERE IS ONLY ONE CURRENT SCENE
         Scene? sceneSelected = game.GetCurrentScenes()
             .FirstOrDefault(s => s.GetGuid() == idSceneSelected);
 
         if (sceneSelected == null)
             throw new InvalidOperationException($"Scene with ID {idSceneSelected} not found in current scenes.");
 
-        game = game.AddCompletedScene(sceneSelected);
-
+        if (game.GetCurrentScenes().Count == 1)
+        {
+            game = game.AddCompletedScene(sceneSelected);
+        }
+        else
+        {
+            game = game.SetCurrentScenes([sceneSelected]);
+            game = SetCurrentUserActionsToGame(game);
+            return game;
+        }
 
 
         // 3- GENERATE NEW CURRENT SCENES AND CURRENT USER ACTIONS
         var newScenes = new List<Scene>();
 
-        if (game.GetCompletedScenes().Count == game.GetNumberScenesToFinish() - 1) // If user reach last scene
+        if (game.GetCompletedScenes().Count >= game.GetNumberScenesToFinish()) // If user reach last scene
         {
             newScenes = [game.GetFinalScene()];
+
         }
         else
         {
@@ -174,65 +241,10 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
                 Scene randomScene = await GenerateScene(sceneSelected.GetBiome());
                 newScenes.Add(randomScene);
             }
-
-            game = game.SetCurrentScenes(newScenes);
         }
+        game = game.SetCurrentScenes(newScenes);
 
-
-
-        // If there is only one new scene, configure the UserActions according to the type
-        var updateUserActions = new List<UserAction> { };
-
-        if (game.GetCharacter().GetInventoryList().Count > 0)
-        {
-            updateUserActions.Add(UserAction.UseItem);
-            updateUserActions.Add(UserAction.DropItem);
-        }
-
-        if (newScenes.Count == 1)
-        {
-            var currentSceneSelected = newScenes.First();
-
-            switch (currentSceneSelected)
-            {
-                case NothingHappensScene:
-                    updateUserActions.Add(UserAction.MoveForward);
-                    break;
-
-                case ChangeBiomeScene:
-                    updateUserActions.Add(UserAction.MoveForward);
-                    break;
-
-                case ItemScene:
-                    updateUserActions.Add(UserAction.MoveForward);
-                    updateUserActions.Add(UserAction.GetItem);
-                    updateUserActions.Add(UserAction.UseCurrentSceneItem);
-                    break;
-
-                case TradeScene:
-                    updateUserActions.Add(UserAction.MoveForward);
-                    updateUserActions.Add(UserAction.BuyItems);
-                    updateUserActions.Add(UserAction.SellItems);
-                    break;
-
-                case EnemyScene:
-                    updateUserActions.Add(UserAction.AttackEnemyWithItem);
-                    updateUserActions.Add(UserAction.AttackEnemyWithoutItem);
-                    game = game.SetCurrentEnemy((currentSceneSelected as EnemyScene).GetEnemy());
-                    break;
-
-                default:
-                    break;
-            }
-
-            // Add MoveForward to move one of the current scenes.
-        }
-        else
-        {
-            updateUserActions.Add(UserAction.MoveForward);
-        }
-
-        game = game.SetCurrentUserActions(updateUserActions);
+        game = SetCurrentUserActionsToGame(game);
 
 
         // GIVE EFFECTS

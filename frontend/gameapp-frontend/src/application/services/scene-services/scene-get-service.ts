@@ -2,6 +2,7 @@ import type { ISceneGetUseCase } from "../../usecases/scene-use-cases/scene-get-
 import type { ISceneRepository } from "../../repositories/iscene-repository";
 import { Scene } from "../../../domain/entities/scenes/scene";
 import type { SceneName } from "../../../domain/value-objects/scenes/scene-name";
+import type { FinalScene } from "../../../domain/entities/scenes/final-scene";
 
 export class SceneGetService implements ISceneGetUseCase {
     constructor(private sceneRepository: ISceneRepository) {}
@@ -17,4 +18,8 @@ export class SceneGetService implements ISceneGetUseCase {
     async getAllScenes(): Promise<Scene[]> {
         return await this.sceneRepository.fetchAll();
     }
+
+    async getAllFinalScenes(): Promise<FinalScene[]> {
+        return await this.sceneRepository.fetchAllFinalScenes();
+    }   
 }

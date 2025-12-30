@@ -34,6 +34,26 @@ public class SceneRepository : ISceneRepository
         return scenes;
     }
 
+    public async Task<IEnumerable<FinalScene>> FetchAllFinalScenes()
+    {
+        var docs = await _scenes
+            .Find(s => s.SceneType == SceneType.Final)
+            .ToListAsync();
+
+        var scenes = await Task.WhenAll(
+            docs.Select(doc =>
+                SceneDocumentMapper.ToDomainAsync(
+                    doc,
+                    _itemRepository,
+                    _enemyRepository
+                )
+            )
+        );
+
+        return scenes.Cast<FinalScene>();
+    }
+
+
     public async Task<IEnumerable<Scene>> FetchAllByTypeAndBiome(Biome? biome, SceneType? type)
     {
         var filterBuilder = Builders<SceneDocument>.Filter;

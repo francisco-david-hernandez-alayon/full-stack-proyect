@@ -34,6 +34,16 @@ public class SceneController : ControllerBase
         return Ok(SceneDtoMapper.ToDtoList(Scenes));
     }
 
+    [HttpGet("final-scenes")]
+    public async Task<IActionResult> GetFinalScenes()
+    {
+        // Use service
+        var Scenes = await _getService.GetAllFinalScenes();
+
+        // Response
+        return Ok(SceneDtoMapper.ToDtoList(Scenes));
+    }
+
 
 
     [HttpGet("id/{id:guid}")]

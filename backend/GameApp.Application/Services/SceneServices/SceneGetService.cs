@@ -1,3 +1,4 @@
+using GameApp.Application.Enumerates;
 using GameApp.Application.UseCases.SceneUseCases;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Repositories;
@@ -27,5 +28,10 @@ public class SceneGetService : SceneGetUseCase
     public async Task<IEnumerable<Scene>> GetAllScenes()
     {
         return await _repo.FetchAllAsync();
+    }
+
+    public async Task<IEnumerable<FinalScene>> GetAllFinalScenes()
+    {
+        return await _repo.FetchAllFinalScenes();
     }
 }

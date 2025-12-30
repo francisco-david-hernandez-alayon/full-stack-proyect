@@ -7,6 +7,7 @@ import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-hap
 import { TradeScene } from "../../../domain/entities/scenes/trade-scene";
 import { ChangeBiomeScene } from "../../../domain/entities/scenes/change-biome-scene";
 import { SceneType } from "../../../application/enumerates/scene-type";
+import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 
 
 export class SceneJsonRequest {
@@ -41,6 +42,9 @@ export class SceneJsonRequest {
 
         } else if (scene instanceof NothingHappensScene) {
             this.sceneType = SceneType.NothingHappens;
+
+        } else if (scene instanceof FinalScene) {
+            this.sceneType = SceneType.Final;
 
         } else if (scene instanceof TradeScene) {
             this.sceneType = SceneType.Trade;

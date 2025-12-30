@@ -49,7 +49,7 @@ public static class GameDocumentMapper
 
 
         List<UserAction> currentUserAction = doc.CurrentUserActions.ToList();
-        NothingHappensScene finalScene = await GetFinalSceneByName(new SceneName(doc.FinalScene), sceneRepository);
+        FinalScene finalScene = await GetFinalSceneByName(new SceneName(doc.FinalScene), sceneRepository);
         Enemy? currentEnemy = null;
         if (doc.CurrentEnemyName != null)
         {
@@ -75,7 +75,7 @@ public static class GameDocumentMapper
     }
 
     // GET SCENES FOR OTHER COLLECTIONS
-    private static async Task<NothingHappensScene> GetFinalSceneByName(SceneName name, ISceneRepository sceneRepository)
+    private static async Task<FinalScene> GetFinalSceneByName(SceneName name, ISceneRepository sceneRepository)
     {
         if (name == null)
             throw new ArgumentNullException(nameof(name));
@@ -84,13 +84,13 @@ public static class GameDocumentMapper
         if (scene == null)
             throw new InvalidOperationException($"Final Scene '{name.GetName()}' not found.");
 
-        if (scene is NothingHappensScene finalScene)
+        if (scene is FinalScene finalScene)
         {
             return finalScene;
         }
         else
         {
-            return new NothingHappensScene(new SceneName("Final Scene test"), new SceneDescription("Final description"), Biome.Unknown);
+            return new FinalScene(new SceneName("Final Scene test"), new SceneDescription("Final description"), Biome.Unknown);
         }
 
     }

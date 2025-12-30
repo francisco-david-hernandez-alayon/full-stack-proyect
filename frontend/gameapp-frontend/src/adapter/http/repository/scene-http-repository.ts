@@ -1,4 +1,6 @@
+import { SceneType } from "../../../application/enumerates/scene-type";
 import type { ISceneRepository } from "../../../application/repositories/iscene-repository";
+import type { FinalScene } from "../../../domain/entities/scenes/final-scene";
 import { NothingHappensScene } from "../../../domain/entities/scenes/nothing-happens-scene";
 import { Scene } from "../../../domain/entities/scenes/scene";
 import type { SceneName } from "../../../domain/value-objects/scenes/scene-name";
@@ -45,6 +47,22 @@ export class SceneHttpRepository implements ISceneRepository {
         const json: any[] = await res.json();
         return json.map(s => new SceneJsonResponse(s).toScene());
     }
+
+    // GET all final scenes
+    async fetchAllFinalScenes(): Promise<FinalScene[]> {
+        const res = await fetch(`${this.#scenesEndpoint}/final-scenes`);
+        if (!res.ok) throw new Error("Error fetching final scenes");
+
+        const json: any[] = await res.json();
+
+        return json
+            .filter(s => s.sceneType === SceneType.Final)  // all scenes must be final scenes
+            .map(s => {
+                const scene = new SceneJsonResponse(s).toScene();
+                return scene as FinalScene;
+            });
+    }
+
 
     // POST
     async save(scene: Scene): Promise<Scene> {
