@@ -8,5 +8,5 @@ namespace GameApp.Application.UseCases.GameUseCases;
 
 public interface GameUpdateUseCase
 {
-    public Task<Game?> UpdateGame(Guid id, Character character, int numberScenesToFinish, List<Scene> completedScenes, FinalScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions, GameStatus status, Enemy? currentEnemy);
+    public Task<Game?> UpdateGame(Guid id, GameDifficulty difficulty, Character character, int numberScenesToFinish, List<Scene> completedScenes, FinalScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions, GameStatus status, Enemy? currentEnemy);
 }

@@ -1,3 +1,4 @@
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Domain.Entities.Items;
@@ -12,16 +13,16 @@ public class AtributeItem : Item
 
 
     // Default constructor
-    public AtributeItem(ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
-        : base(name, description, tradePrice)
+    public AtributeItem(ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
+        : base(rarity, name, description, tradePrice)
     {
         HealthPointsReceived = healthPointsReceived;
         FoodPointsReceived = foodPointsReceived;
     }
 
     // Restore constructor
-    public AtributeItem(Guid id, ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
-        : base(id, name, description, tradePrice)
+    public AtributeItem(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice,  int healthPointsReceived, int foodPointsReceived)
+        : base(id, rarity, name, description, tradePrice)
     {
         HealthPointsReceived = healthPointsReceived;
         FoodPointsReceived = foodPointsReceived;
@@ -33,15 +34,15 @@ public class AtributeItem : Item
     public int GetFoodPointsReceived() => FoodPointsReceived;
 
     // setters
-    public AtributeItem SetHealthPointsReceived(int newHealthPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetTradePrice(), newHealthPointsReceived, GetFoodPointsReceived()); 
+    public AtributeItem SetHealthPointsReceived(int newHealthPointsReceived) => new AtributeItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), newHealthPointsReceived, GetFoodPointsReceived()); 
 
-    public AtributeItem SetFoodPointsReceived(int newFoodPointsReceived) => new AtributeItem(GetGuid(), GetName(), GetDescription(), GetTradePrice(), GetHealthPointsReceived(), newFoodPointsReceived); 
+    public AtributeItem SetFoodPointsReceived(int newFoodPointsReceived) => new AtributeItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetHealthPointsReceived(), newFoodPointsReceived); 
 
-    public AtributeItem SetTradePrice(int newTradePrice) => new AtributeItem(GetGuid(), GetName(), GetDescription(), newTradePrice, GetHealthPointsReceived(), GetFoodPointsReceived()); 
+    public AtributeItem SetTradePrice(int newTradePrice) => new AtributeItem(GetGuid(), GetRarity(), GetName(), GetDescription(), newTradePrice, GetHealthPointsReceived(), GetFoodPointsReceived()); 
 
     // To string
     public override string ToString()
     {
-        return $"{GetName()} atribute item({GetGuid()}): " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}, TradePrice={GetTradePrice()}";
+        return $"{GetName()} atribute item({GetGuid()}, Difficulty {GetRarity()}): " + $"HealthPointsReceived={HealthPointsReceived}, FoodPointsReceived={FoodPointsReceived}, TradePrice={GetTradePrice()}";
     }
 }

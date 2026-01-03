@@ -1,6 +1,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.Enumerates;
 
 namespace GameApp.Adapter.Infrastructure.Models;
 
@@ -9,7 +10,7 @@ public class ItemDocument
     [BsonId]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
-
+    public ItemRarity Rarity { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public ItemType ItemType { get; set; }

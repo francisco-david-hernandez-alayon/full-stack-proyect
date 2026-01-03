@@ -10,6 +10,7 @@ import { EnemyJsonResponse } from "./enemy-json-response";
 import type { Biome } from "../../../domain/enumerates/biome";
 import type { GameStatus } from "../../../domain/enumerates/game-status";
 import { FinalScene } from "../../../domain/entities/scenes/final-scene";
+import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 
 interface CharacterJson {
     type: CharacterType;
@@ -26,6 +27,7 @@ interface FinalSceneJson {
 
 interface GameJson {
     id?: string;
+    difficulty: GameDifficulty;
     character: CharacterJson;
     numberScenesToFinish: number;
     listCompletedScenes?: SceneJsonResponse[];
@@ -33,11 +35,12 @@ interface GameJson {
     listCurrentUserActions?: UserAction[];
     finalScene: FinalSceneJson;
     status: GameStatus;
-    currentEnemy?: any;
+    currentEnemy?: EnemyJsonResponse;
 }
 
 export class GameJsonResponse {
     id?: string;
+    difficulty: GameDifficulty;
     character: CharacterJson;
     numberScenesToFinish: number;
     listCompletedScenes: SceneJsonResponse[];
@@ -45,12 +48,13 @@ export class GameJsonResponse {
     listCurrentUserActions: UserAction[];
     finalScene: FinalSceneJson;
     status: GameStatus;
-    currentEnemy: any | null;
+    currentEnemy: EnemyJsonResponse | null;
 
     constructor(GameJson: GameJson) {
         if (!GameJson) throw new TypeError("GameJson response is required");
 
         this.id = GameJson.id;
+        this.difficulty = GameJson.difficulty;
         this.character = GameJson.character;
         this.numberScenesToFinish = GameJson.numberScenesToFinish;
         this.listCompletedScenes = GameJson.listCompletedScenes ?? [];
@@ -62,12 +66,12 @@ export class GameJsonResponse {
     }
 
     toGame(): Game {
-        let char: WarriorCharacter;
+        let character: WarriorCharacter;
 
         switch (this.character.type) {
             case CharacterType.Warrior: {
                 const inventory = this.character.inventoryList?.map(i => new ItemJsonResponse(i).toItem()) ?? [];
-                char = new WarriorCharacter(
+                character = new WarriorCharacter(
                     this.character.currentHealthPoints,
                     this.character.currentFoodPoints,
                     this.character.currentMoney,
@@ -99,7 +103,8 @@ export class GameJsonResponse {
         });
 
         return new Game(
-            char,
+            this.difficulty,
+            character,
             this.numberScenesToFinish,
             finalScene,
             currentScenes,

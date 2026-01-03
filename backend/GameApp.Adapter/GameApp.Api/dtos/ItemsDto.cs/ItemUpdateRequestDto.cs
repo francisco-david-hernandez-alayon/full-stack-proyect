@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.ItemsDto;
 
 public class ItemUpdateRequestDto
 {
+    public ItemRarity Rarity { get; set; }
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public ItemType ItemType { get; set; } = default!; 

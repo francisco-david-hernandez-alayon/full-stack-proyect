@@ -11,6 +11,7 @@ public static class EnemyDocumentMapper
         return new EnemyDocument
         {
             Id = enemy.GetGuid(),
+            Difficulty = enemy.GetDifficulty(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -26,6 +27,7 @@ public static class EnemyDocumentMapper
 
         return new Enemy(
             doc.Id,
+            doc.Difficulty,
             new EnemyName(doc.Name),
             doc.HealthPoints,
             doc.DamageAttack,
@@ -43,6 +45,7 @@ public static class EnemyDocumentMapper
         return new EnemyDocument
         {
             Id = enemy.GetGuid(),
+            Difficulty = enemy.GetDifficulty(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -58,6 +61,7 @@ public static class EnemyDocumentMapper
 
         return new Enemy(
             doc.Id,
+            doc.Difficulty,
             new EnemyName(doc.Name),
             doc.HealthPoints,
             doc.DamageAttack,

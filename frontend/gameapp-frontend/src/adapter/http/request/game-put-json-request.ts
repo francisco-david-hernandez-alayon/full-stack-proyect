@@ -1,4 +1,5 @@
 import { Game } from "../../../domain/entities/game";
+import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 import type { GameStatus } from "../../../domain/enumerates/game-status";
 import { UserAction } from "../../../domain/enumerates/user-action";
 import { CharacterJsonRequest } from "./character-json-request";
@@ -7,6 +8,7 @@ import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
 
 export class GamePutJsonRequest {
+    difficulty: GameDifficulty;
     character: CharacterJsonRequest;
     numberScenesToFinish: number;
     finalScene: FinalSceneJsonRequest;
@@ -17,6 +19,7 @@ export class GamePutJsonRequest {
     currentEnemy?: EnemyJsonRequest;
 
     constructor(game: Game) {
+        this.difficulty = game.difficulty;
         this.character = new CharacterJsonRequest(game.character);
         this.numberScenesToFinish = game.numberScenesToFinish;
         this.finalScene = new FinalSceneJsonRequest(game.finalScene);

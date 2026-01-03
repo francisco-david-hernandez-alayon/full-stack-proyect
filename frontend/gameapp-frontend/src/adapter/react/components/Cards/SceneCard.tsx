@@ -8,7 +8,7 @@ import type { Item } from "../../../../domain/entities/items/item";
 import { getStyleForItem, ItemImageColor } from "../../utils/GetItemStyle";
 import { Enemy } from "../../../../domain/entities/enemy";
 import { EnemyScene } from "../../../../domain/entities/scenes/enemy-scene";
-import { ActivityIcon, DollarSign, Heart, Skull, Sword } from "lucide-react";
+import { ActivityIcon, AlertCircle, DollarSign, Hand, Heart, Skull, Sword } from "lucide-react";
 import { TradeScene } from "../../../../domain/entities/scenes/trade-scene";
 
 interface itemSceneCardProps {
@@ -70,8 +70,13 @@ const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = fa
 
             {/* Stats */}
             <div className="flex flex-col gap-1 text-xm">
+                
+                <div className="flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 " />
+                    <span>{enemy.difficulty}</span>
+                </div>
 
-                <div className="flex  gap-2">
+                <div className="flex items-center gap-2">
                     <Sword className="w-4 h-4 " />
                     <span>Damage: {enemy.attackDamage}</span>
                 </div>

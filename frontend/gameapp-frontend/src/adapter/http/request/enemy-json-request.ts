@@ -1,7 +1,9 @@
 import { Enemy } from "../../../domain/entities/enemy";
+import type { EnemyDifficulty } from "../../../domain/enumerates/enemy-difficulty";
 
 export class EnemyJsonRequest {
     id: string;
+    difficulty: EnemyDifficulty;
     name: string;
     healthPoints: number;
     damageAttack: number;
@@ -13,6 +15,7 @@ export class EnemyJsonRequest {
         if (!(enemy instanceof Enemy)) throw new TypeError("enemy must be an instance of Enemy");
 
         this.id = enemy.id;
+        this.difficulty = enemy.difficulty;
         this.name = enemy.name.name;
         this.healthPoints = enemy.healthPoints;
         this.damageAttack = enemy.attackDamage;

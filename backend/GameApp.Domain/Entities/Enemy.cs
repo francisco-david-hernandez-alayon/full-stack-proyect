@@ -1,3 +1,4 @@
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Domain.Entities;
@@ -11,12 +12,14 @@ public class Enemy
     private readonly int AttackDamage;
     private readonly int SpeedAttack;
     private readonly int RewardMoney;
+    private readonly EnemyDifficulty Difficulty;
 
 
     // Default constructor
-    public Enemy(EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
+    public Enemy(EnemyDifficulty difficulty, EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
     {
         Id = Guid.NewGuid();
+        Difficulty = difficulty;
         Name = name;
         HealthPoints = healthPoints;
         AttackDamage = attackDamage;
@@ -25,9 +28,10 @@ public class Enemy
     }
 
     // Restore constructor
-    public Enemy(Guid id, EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
+    public Enemy(Guid id, EnemyDifficulty difficulty, EnemyName name, int healthPoints, int attackDamage, int speedAttack, int rewardMoney)
     {
         Id = id;
+        Difficulty = difficulty;
         Name = name;
         HealthPoints = healthPoints;
         AttackDamage = attackDamage;
@@ -37,18 +41,21 @@ public class Enemy
 
     // Getters
     public Guid GetGuid() => Id;
+    public EnemyDifficulty GetDifficulty() => Difficulty;
     public EnemyName GetName() => Name;
     public int GetHealthPoints() => HealthPoints;
     public int GetAttackDamage() => AttackDamage;
     public int GetSpeedAttack() => SpeedAttack;
     public int GetRewardMoney() => RewardMoney;
+    
 
     // Setters
-    public Enemy SetName(EnemyName newName) => new Enemy(GetGuid(), newName, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetHealthPoints(int newHealthPoints) => new Enemy(GetGuid(), Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(GetGuid(), Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
-    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(GetGuid(), Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
-    public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(GetGuid(), Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
+    public Enemy SetDifficulty(EnemyDifficulty newDifficulty) => new Enemy(GetGuid(), newDifficulty, Name, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetName(EnemyName newName) => new Enemy(GetGuid(), Difficulty, newName, HealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetHealthPoints(int newHealthPoints) => new Enemy(GetGuid(), Difficulty, Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetAttackDamage(int newAttackDamage) => new Enemy(GetGuid(), Difficulty, Name, HealthPoints, newAttackDamage, SpeedAttack, RewardMoney);
+    public Enemy SetSpeedAttack(int newSpeedAttack) => new Enemy(GetGuid(), Difficulty, Name, HealthPoints, AttackDamage, newSpeedAttack, RewardMoney);
+    public Enemy SetRewardMoney(int newRewardMoney) => new Enemy(GetGuid(), Difficulty, Name, HealthPoints, AttackDamage, SpeedAttack, newRewardMoney);
     public Enemy ReceiveDamage(int damage)
     {
         int newHealthPoints = HealthPoints - damage;
@@ -58,13 +65,13 @@ public class Enemy
             newHealthPoints = 0;
         }
 
-        return new Enemy(Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
+        return new Enemy(Difficulty, Name, newHealthPoints, AttackDamage, SpeedAttack, RewardMoney);
     }
 
     // To string
     public override string ToString()
     {
-        return $"{Name.GetName()} Enemy: " +
+        return $"{Name.GetName()} Enemy(Difficulty {Difficulty}): " +
                $"HealthPoints={HealthPoints}, " +
                $"AttackDamage={AttackDamage}, " +
                $"SpeedAttack={SpeedAttack}, " +

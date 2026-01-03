@@ -6,6 +6,7 @@ namespace GameApp.Adapter.Api.dtos.GamesDto;
 
 public class GameCreateRequestDto
 {
+    public GameDifficulty Difficulty { get; set; }
     public CharacterType Character { get; set; } = default!;
     public int NumberScenesToFinish { get; set; }
     public FinalSceneDto FinalScene { get; set; } = default!;

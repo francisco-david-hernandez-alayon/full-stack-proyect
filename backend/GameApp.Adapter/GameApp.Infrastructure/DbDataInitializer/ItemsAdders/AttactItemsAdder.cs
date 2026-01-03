@@ -1,4 +1,5 @@
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
@@ -6,6 +7,7 @@ namespace GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
 public class AttackItemsAdders : IItemsAdder
 {
     public static readonly AttackItem WoodSword = new(
+        ItemRarity.Common,
         new ItemName("wood sword"),
         new ItemDescription("A simple wood sword"),
         tradePrice: 10,
@@ -15,6 +17,7 @@ public class AttackItemsAdders : IItemsAdder
     );
 
     public static readonly AttackItem IronSword = new(
+        ItemRarity.Rare,
         new ItemName("iron sword"),
         new ItemDescription("A basic iron sword"),
         tradePrice: 20,
@@ -24,6 +27,7 @@ public class AttackItemsAdders : IItemsAdder
     );
 
     public static readonly AttackItem Dagger = new(
+        ItemRarity.Rare,
         new ItemName("dagger"),
         new ItemDescription("A small, fast dagger"),
         tradePrice: 15,
@@ -33,6 +37,7 @@ public class AttackItemsAdders : IItemsAdder
     );
 
     public static readonly AttackItem SteelAxe = new(
+        ItemRarity.Epic,
         new ItemName("steel axe"),
         new ItemDescription("A heavy steel axe"),
         tradePrice: 25,

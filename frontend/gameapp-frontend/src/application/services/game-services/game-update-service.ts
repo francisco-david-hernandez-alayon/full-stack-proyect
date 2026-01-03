@@ -7,12 +7,14 @@ import type { Character } from "../../../domain/value-objects/characters/charact
 import type { Scene } from "../../../domain/entities/scenes/scene";
 import type { UserAction } from "../../../domain/enumerates/user-action";
 import type { Enemy } from "../../../domain/entities/enemy";
+import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 
 export class GameUpdateService implements IGameUpdateUseCase {
     constructor(private readonly gameRepository: IGameRepository) {}
 
     async updateGame(
         id: string,
+        difficulty: GameDifficulty,
         character: Character,
         numberScenesToFinish: number,
         finalScene: FinalScene,
@@ -23,6 +25,7 @@ export class GameUpdateService implements IGameUpdateUseCase {
         currentEnemy: Enemy | null
     ): Promise<Game> {
         const updatedGame = new Game(
+            difficulty,
             character,
             numberScenesToFinish,
             finalScene,

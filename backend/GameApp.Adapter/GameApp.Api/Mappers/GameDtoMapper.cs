@@ -15,6 +15,7 @@ namespace GameApp.Adapter.Api.Mappers
             var currentUserActions = dto.ListCurrentUserActions.ToList();
 
             return new Game(
+                dto.Difficulty,
                 character,
                 dto.NumberScenesToFinish,
                 finalScene,
@@ -29,6 +30,7 @@ namespace GameApp.Adapter.Api.Mappers
             return new GameResponseDto
             {
                 Id = game.GetGuid(),
+                Difficulty = game.GetDifficulty(),
                 Character = CharacterDtoMapper.ToDto(game.GetCharacter()),
                 NumberScenesToFinish = game.GetNumberScenesToFinish(),
                 ListCompletedScenes = game.GetCompletedScenes().Select(SceneDtoMapper.ToDto).ToList(),

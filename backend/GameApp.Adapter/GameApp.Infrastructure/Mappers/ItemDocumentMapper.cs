@@ -17,6 +17,7 @@ public static class ItemDocumentMapper
         var doc = new ItemDocument
         {
             Id = item.GetGuid(),
+            Rarity = item.GetRarity(),
             Name = item.GetName().GetName(),
             Description = item.GetDescription().GetDescription(),
             TradePrice = item.GetTradePrice()
@@ -58,6 +59,7 @@ public static class ItemDocumentMapper
         {
             ItemType.Attack => new AttackItem(
                 doc.Id,
+                doc.Rarity,
                 name,
                 desc,
                 price,
@@ -67,6 +69,7 @@ public static class ItemDocumentMapper
             ),
             ItemType.Attribute => new AtributeItem(
                 doc.Id,
+                doc.Rarity,
                 name,
                 desc,
                 price,

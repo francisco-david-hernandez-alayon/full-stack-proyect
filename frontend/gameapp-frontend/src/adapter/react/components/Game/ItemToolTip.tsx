@@ -1,4 +1,4 @@
-import { ActivityIcon, BookOpenTextIcon, DollarSign, Ham, HeartPlus, Stone, Sword } from "lucide-react";
+import { ActivityIcon, BookOpenTextIcon, DollarSign, Gem, Ham, HeartPlus, Stone, Sword } from "lucide-react";
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import type { Item } from "../../../../domain/entities/items/item";
@@ -14,6 +14,11 @@ const renderItemTooltipContent = (item: Item) => {
                 <div className="flex items-center gap-2">
                     <BookOpenTextIcon className="w-4 h-4 text-custom-secondary" />
                     <span>{item.description.description}</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Gem className="w-4 h-4 text-custom-secondary" />
+                    <span>Rarity: {item.rarity}</span>
                 </div>
 
                 <div className="flex items-center gap-2">

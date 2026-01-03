@@ -25,7 +25,7 @@ public static class ItemDtoMapper
 
         return dto.ItemType switch
         {
-            ItemType.Attack => new AttackItem(id, itemName, itemDescription, itemTradePrice,
+            ItemType.Attack => new AttackItem(id, dto.Rarity, itemName, itemDescription, itemTradePrice,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                         "AttackDamage is required for AttackItem")
                  , dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
@@ -34,7 +34,7 @@ public static class ItemDtoMapper
                         "Durability is required for AttackItem")
                         ),
 
-            ItemType.Attribute => new AtributeItem(id, itemName, itemDescription, itemTradePrice,
+            ItemType.Attribute => new AtributeItem(id, dto.Rarity, itemName, itemDescription, itemTradePrice,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                         "HealthPointsReceived is required for AttributeItem"),
                 dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
@@ -62,6 +62,7 @@ public static class ItemDtoMapper
         return dto.ItemType switch
         {
             ItemType.Attack => new AttackItem(
+                dto.Rarity, 
                 itemName,
                 itemDescription,
                 tradePrice,
@@ -73,6 +74,7 @@ public static class ItemDtoMapper
             ),
 
             ItemType.Attribute => new AtributeItem(
+                dto.Rarity, 
                 itemName,
                 itemDescription,
                 tradePrice,
@@ -102,6 +104,7 @@ public static class ItemDtoMapper
         return dto.ItemType switch
         {
             ItemType.Attack => new AttackItem(
+                dto.Rarity, 
                 itemName,
                 itemDescription,
                 tradePrice,
@@ -113,6 +116,7 @@ public static class ItemDtoMapper
             ),
 
             ItemType.Attribute => new AtributeItem(
+                dto.Rarity, 
                 itemName,
                 itemDescription,
                 tradePrice,
@@ -135,6 +139,7 @@ public static class ItemDtoMapper
         ItemResponseDto dto = new ItemResponseDto
         {
             Id = item.GetGuid(),
+            Rarity = item.GetRarity(),
             Name = item.GetName().GetName(),
             Description = item.GetDescription().GetDescription(),
             TradePrice = item.GetTradePrice()

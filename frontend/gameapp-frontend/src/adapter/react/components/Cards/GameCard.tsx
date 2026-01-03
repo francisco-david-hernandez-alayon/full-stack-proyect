@@ -126,8 +126,9 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onContinueGame, onDele
                 </div>
 
                 <span className="text-sm opacity-70 font-normal">
-                    ({game.completedScenes.length} / {game.numberScenesToFinish} scenes)
+                    ({game.completedScenes.length} / {game.numberScenesToFinish} scenes)  {game.difficulty}
                 </span>
+
             </div>
 
             {/* Current Scenes */}

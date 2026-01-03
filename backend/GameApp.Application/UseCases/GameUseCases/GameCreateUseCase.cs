@@ -7,5 +7,5 @@ namespace GameApp.Application.UseCases.GameUseCases;
 
 public interface GameCreateUseCase
 {
-    public Task<Game?> CreateGame(Character character, int numberScenesToFinish, FinalScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions);
+    public Task<Game?> CreateGame(GameDifficulty difficulty, Character character, int numberScenesToFinish, FinalScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions);
 }

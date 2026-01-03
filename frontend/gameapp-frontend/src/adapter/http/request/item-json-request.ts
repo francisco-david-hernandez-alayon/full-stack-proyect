@@ -2,9 +2,11 @@ import { Item } from "../../../domain/entities/items/item";
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../domain/entities/items/attribute-item";
 import { ItemType } from "../../../application/enumerates/item-type";
+import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 
 export class ItemJsonRequest {
     id: string;
+    rarity: ItemRarity;
     name: string;
     description: string;
     itemType: ItemType;
@@ -19,6 +21,7 @@ export class ItemJsonRequest {
 
     constructor(item: Item) {
         this.id = item.id;
+        this.rarity = item.rarity;
         this.name = item.name.name;
         this.description = item.description.description;
         this.tradePrice = item.tradePrice;

@@ -52,7 +52,7 @@ export class EnemyHttpRepository implements IEnemyRepository {
 
     // DELETE
     async delete(id: string): Promise<Enemy> {
-        return Promise.resolve(new Enemy(null as any, 0, 0, 0, 0, id));
+        return Promise.resolve(new Enemy(null as any, null as any, 0, 0, 0, 0, id));
     }
 
     // PUT / PATCH

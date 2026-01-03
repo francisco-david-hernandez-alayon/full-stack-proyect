@@ -4,8 +4,10 @@ import { WarriorCharacter } from "../../../domain/value-objects/characters/warri
 import { CharacterType } from "../../../application/enumerates/character-type";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
+import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 
 export class GamePostJsonRequest {
+    difficulty: GameDifficulty;
     character: CharacterType;
     numberScenesToFinish: number;
     finalScene: FinalSceneJsonRequest;
@@ -15,6 +17,8 @@ export class GamePostJsonRequest {
     constructor(game: Game) {
         if (!game) throw new TypeError("game instance is required");
 
+        this.difficulty = game.difficulty;
+        
         // 1. Character
         if (game.character instanceof WarriorCharacter) {
             this.character = CharacterType.Warrior;

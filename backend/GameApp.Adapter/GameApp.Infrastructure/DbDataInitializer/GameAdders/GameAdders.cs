@@ -21,7 +21,7 @@ public interface GameAdders : IGameAdders
         List<Scene> currentScenes = new List<Scene>{ForestScenesAdder.InitialScene};
         List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.MoveForward};
 
-        Game game1 = new Game(warrior, 10, finalScene, currentScenes, currentUserAction);
+        Game game1 = new Game(GameDifficulty.Normal, warrior, 10, finalScene, currentScenes, currentUserAction);
 
 
         gamesToAdd.Add(game1);

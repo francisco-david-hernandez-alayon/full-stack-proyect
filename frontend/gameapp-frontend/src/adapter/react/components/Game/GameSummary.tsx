@@ -26,6 +26,7 @@ export const GameSummary: React.FC<GameSummaryProps> = ({ game }) => {
 
       <div className="flex flex-col items-center gap-1 text-custom-background text-center">
         <span className="text-xl font-semibold">{game.character.name.name}</span>
+        <span>Difficulty: {game.difficulty}</span>
         <span>HP: {game.character.currentHealthPoints}/{game.character.maxHealthPoints}</span>
         <span>Food: {game.character.currentFoodPoints}/{game.character.maxFoodPoints}</span>
         <span>Scenes Completed: {game.completedScenes.length}/{game.numberScenesToFinish}</span>

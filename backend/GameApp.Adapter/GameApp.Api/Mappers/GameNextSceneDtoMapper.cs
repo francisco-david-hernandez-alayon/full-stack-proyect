@@ -31,6 +31,7 @@ namespace GameApp.Adapter.Api.Mappers
 
             return new Game(
                 dto.Id,
+                gameDto.Difficulty,
                 character,
                 gameDto.NumberScenesToFinish,
                 completedScenes,

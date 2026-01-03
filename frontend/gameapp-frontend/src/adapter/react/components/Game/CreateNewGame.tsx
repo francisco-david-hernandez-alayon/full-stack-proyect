@@ -8,6 +8,7 @@ import { AlertTimeMessage, AlertType } from "../Structure/AlertMessage";
 import { GameCreateService } from "../../../../application/services/game-services/game-create-service";
 import { UserAction } from "../../../../domain/enumerates/user-action";
 import { SceneGetService } from "../../../../application/services/scene-services/scene-get-service";
+import { GameDifficulty } from "../../../../domain/enumerates/game-difficulty";
 
 interface CreateNewGameProps {
     showAlert: (data: AlertData) => void;
@@ -47,7 +48,7 @@ export const CreateNewGamePage: React.FC<CreateNewGameProps> = ({ showAlert }) =
 
 
             const character = new WarriorCharacter();  // default
-            const gameCreated = await gameCreateService.createGame(character, scenesToFinish, randomFinalScene, [randomInitialCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
+            const gameCreated = await gameCreateService.createGame(GameDifficulty.Normal, character, scenesToFinish, randomFinalScene, [randomInitialCurrentScene], [UserAction.MOVE_FORWARD, UserAction.USE_ITEM]);
 
             navigate(`/play-game/${gameCreated.id}`)
 

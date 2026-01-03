@@ -16,6 +16,7 @@ public static class GameDocumentMapper
         return new GameDocument
         {
             Id = game.GetGuid(),
+            Difficulty = game.GetDifficulty(),
             Character = CharacterDocumentMapper.ToDocument(game.GetCharacter()),
             NumberScenesToFinish = game.GetNumberScenesToFinish(),
             CompletedScenes = game.GetCompletedScenes().Select(itemSceneListSceneDocumentMapper.ToItemSceneListDocument).ToList(),
@@ -63,6 +64,7 @@ public static class GameDocumentMapper
 
         return new Game(
             doc.Id,
+            doc.Difficulty,
             character,
             doc.NumberScenesToFinish,
             completedScenes,

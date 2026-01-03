@@ -1,4 +1,5 @@
 using GameApp.Domain.Entities;
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Adapter.Infrastructure.DbDataInitializer.EnemysAdders;
@@ -7,15 +8,17 @@ public class EnemysAdder : IEnemysAdder
 {
     public static readonly Enemy Slime =
        new Enemy(
-           new EnemyName("Slime"),
-           healthPoints: 30,
-           attackDamage: 3,
-           speedAttack: 2,
-           rewardMoney: 5
+            EnemyDifficulty.Easy,
+            new EnemyName("Slime"),
+            healthPoints: 30,
+            attackDamage: 3,
+            speedAttack: 2,
+            rewardMoney: 5
        );
 
     public static readonly Enemy Goblin =
         new Enemy(
+            EnemyDifficulty.Easy,
             new EnemyName("Goblin"),
             healthPoints: 50,
             attackDamage: 7,
@@ -25,6 +28,7 @@ public class EnemysAdder : IEnemysAdder
 
     public static readonly Enemy Skeleton =
         new Enemy(
+            EnemyDifficulty.Normal,
             new EnemyName("Skeleton"),
             healthPoints: 70,
             attackDamage: 8,
@@ -34,6 +38,7 @@ public class EnemysAdder : IEnemysAdder
 
     public static readonly Enemy Bandit =
         new Enemy(
+            EnemyDifficulty.Normal,
             new EnemyName("Bandit"),
             healthPoints: 80,
             attackDamage: 10,
@@ -43,6 +48,7 @@ public class EnemysAdder : IEnemysAdder
 
     public static readonly Enemy Wyvern =
         new Enemy(
+            EnemyDifficulty.Hard,
             new EnemyName("Wyvern"),
             healthPoints: 100,
             attackDamage: 15,

@@ -9,7 +9,7 @@ public class GameDocument
     [BsonId]
     [BsonRepresentation(BsonType.String)]
     public Guid Id { get; set; }
-
+    public GameDifficulty Difficulty { get; set; }
     public CharacterDocument Character { get; set; } = default!;
     public int NumberScenesToFinish { get; set; }
     public List<ItemSceneListDocument> CompletedScenes { get; set; } = new();

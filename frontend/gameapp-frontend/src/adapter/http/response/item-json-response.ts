@@ -4,9 +4,11 @@ import { ItemDescription } from "../../../domain/value-objects/items/item-descri
 import { ItemName } from "../../../domain/value-objects/items/item-name";
 import type { Item } from "../../../domain/entities/items/item";
 import { ItemType } from "../../../application/enumerates/item-type";
+import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 
 export class ItemJsonResponse {
     id: string;
+    rarity: ItemRarity;
     name: string;
     description: string;
     itemType: ItemType;
@@ -23,6 +25,7 @@ export class ItemJsonResponse {
         if (!itemJson) throw new TypeError("itemJson response is required");
 
         this.id = itemJson.id;
+        this.rarity = itemJson.rarity;
         this.name = itemJson.name;
         this.description = itemJson.description;
         this.itemType = itemJson.itemType;
@@ -43,6 +46,7 @@ export class ItemJsonResponse {
         switch (this.itemType) {
             case ItemType.Attribute:
                 return new AttributeItem(
+                    this.rarity,
                     name,
                     desc,
                     this.tradePrice!,
@@ -52,6 +56,7 @@ export class ItemJsonResponse {
                 );
             case ItemType.Attack:
                 return new AttackItem(
+                    this.rarity,
                     name,
                     desc,
                     this.tradePrice!,

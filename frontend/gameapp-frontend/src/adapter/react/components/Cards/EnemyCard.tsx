@@ -1,5 +1,5 @@
 import type React from "react";
-import { ActivityIcon, DollarSign, Heart, Sword,  } from "lucide-react";
+import { ActivityIcon, Bolt, DollarSign, Heart, Sword,  } from "lucide-react";
 import type { Enemy } from "../../../../domain/entities/enemy";
 
 interface EnemyCardProps {
@@ -14,6 +14,11 @@ export const EnemyCard: React.FC<EnemyCardProps> = ({ enemy }) => {
       </h2>
 
       <div className="flex flex-col gap-2 text-secondary">
+        <div className="flex items-center gap-2">
+          <Bolt className="w-5 h-5 text-custom-secondary" />
+          <span>Difficulty: {enemy.difficulty}</span>
+        </div>
+
         <div className="flex items-center gap-2">
           <Heart className="w-5 h-5 text-custom-secondary" />
           <span>HP: {enemy.healthPoints}</span>

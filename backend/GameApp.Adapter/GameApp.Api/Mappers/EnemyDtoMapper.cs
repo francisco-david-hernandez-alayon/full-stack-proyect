@@ -19,12 +19,13 @@ public static class EnemyDtoMapper
         if (dto.Name == null)
             throw new ArgumentNullException(nameof(dto.Name));
 
-        return new Enemy(dto.Id, new EnemyName(dto.Name), dto.HealthPoints, dto.DamageAttack, dto.SpeedAttack, dto.MoneyReward);
+        return new Enemy(dto.Id, dto.Difficulty, new EnemyName(dto.Name), dto.HealthPoints, dto.DamageAttack, dto.SpeedAttack, dto.MoneyReward);
     }
 
     public static Enemy ToDomainFromCreateRequest(EnemyCreateRequestDto dto)
     {
         return new Enemy(
+            dto.Difficulty,
             new EnemyName(dto.Name),
             dto.HealthPoints,
             dto.DamageAttack,
@@ -36,6 +37,7 @@ public static class EnemyDtoMapper
     public static Enemy ToDomainFromUpdateRequest(EnemyUpdateRequestDto dto)
     {
         return new Enemy(
+            dto.Difficulty, 
             new EnemyName(dto.Name),
             dto.HealthPoints,
             dto.DamageAttack,
@@ -51,6 +53,7 @@ public static class EnemyDtoMapper
         return new EnemyResponseDto
         {
             Id = enemy.GetGuid(),
+            Difficulty = enemy.GetDifficulty(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
@@ -70,6 +73,7 @@ public static class EnemyDtoMapper
 
         return new Enemy(
             dto.Id,
+            dto.Difficulty, 
             new EnemyName(dto.Name),
             dto.HealthPoints,
             dto.DamageAttack,
@@ -86,6 +90,7 @@ public static class EnemyDtoMapper
         return new EnemyResponseDto
         {
             Id = enemy.GetGuid(),
+            Difficulty = enemy.GetDifficulty(),
             Name = enemy.GetName().GetName(),
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),

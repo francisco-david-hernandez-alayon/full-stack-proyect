@@ -88,6 +88,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
                 <h2 className="card-title text-primary text-center mt-2">
                     {item.name.name}
                 </h2>
+
+                <h2 className="text-primary text-center mt-2">
+                    {item.rarity}
+                </h2>
             </div>
 
             <div className="divider lg:divider-horizontal"></div>

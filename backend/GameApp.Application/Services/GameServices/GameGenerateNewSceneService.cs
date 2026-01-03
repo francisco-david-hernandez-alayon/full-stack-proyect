@@ -191,7 +191,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         }
         if (game.GetCompletedScenes().Count > game.GetNumberScenesToFinish() - 1)
         {
-            Game? gameFinished = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
+            Game? gameFinished = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetDifficulty(), game.GetCharacter(), game.GetNumberScenesToFinish(),
             game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameWon, game.GetCurrentEnemy());
 
             return gameFinished;
@@ -258,7 +258,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
 
         // 5- SAVE GAME IN REPOSITORY AND RETURN GAME
-        Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetCharacter(), game.GetNumberScenesToFinish(),
+        Game? gameSaved = await _gameUpdateService.UpdateGame(game.GetGuid(), game.GetDifficulty(), game.GetCharacter(), game.GetNumberScenesToFinish(),
         game.GetCompletedScenes(), game.GetFinalScene(), game.GetCurrentScenes(), game.GetCurrentUserAction(), GameStatus.GameInProgress, game.GetCurrentEnemy());
 
         return gameSaved;

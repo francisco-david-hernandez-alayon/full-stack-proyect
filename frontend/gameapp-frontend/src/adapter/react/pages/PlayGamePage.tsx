@@ -22,6 +22,7 @@ import { UserAction } from "../../../domain/enumerates/user-action";
 import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
 import { GameSummary } from "../components/Game/GameSummary";
 import { GameTradeService } from "../../../application/services/game-services/game-trade-service";
+import { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 
 
 interface PlayGamePageProps {
@@ -71,7 +72,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     //---------------------------------------------------------GAME-FUNCTIONS----------------------------------------------------------//
     const saveGame = async () => {
         try {
-            const updatedGame = await gameUpdateService.updateGame(game.id, game.character, game.numberScenesToFinish, game.finalScene, game.currentScenes, game.currentUserActions, game.completedScenes, game.status, game.currentEnemy);
+            const updatedGame = await gameUpdateService.updateGame(game.id, game.difficulty, game.character, game.numberScenesToFinish, game.finalScene, game.currentScenes, game.currentUserActions, game.completedScenes, game.status, game.currentEnemy);
             setGame(updatedGame);
 
             showAlert({
