@@ -50,7 +50,7 @@ export const EnemiesPage: React.FC<EnemiesPageProps> = ({ showAlert }) => {
   }
 
   return (
-    <div className="p-6">
+    <div className="flex flex-col align-center p-6">
       <h1 className="text-custom-primary-title">
         Enemies
       </h1>

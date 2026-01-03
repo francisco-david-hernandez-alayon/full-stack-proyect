@@ -8,7 +8,7 @@ interface HowToplayPageProps {
 export const HowToPlayPage: React.FC<HowToplayPageProps> = ({ showAlert }) => {
 
     return (
-        <div className="p-6">
+        <div className="flex flex-col align-center p-6">
             <h1 className="text-custom-primary-title">How to play</h1>
 
         </div>

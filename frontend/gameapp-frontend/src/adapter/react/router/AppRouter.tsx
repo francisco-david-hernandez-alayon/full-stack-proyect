@@ -8,6 +8,7 @@ import { ItemsPage } from "../pages/ItemsPage.tsx";
 import { PlayGamePage } from "../pages/PlayGamePage.tsx";
 import { HowToPlayPage } from "../pages/HowToPlayPage.tsx";
 import type { AlertData } from "../App.tsx";
+import { CreateNewGamePage } from "../pages/CreateNewGamePage.tsx";
 
 interface AppRouterProps {
   showAlert: (data: AlertData) => void;
@@ -19,6 +20,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({ showAlert }) => {
         <Route path="/" element={<HomePage showAlert={showAlert} />} />
         <Route path="/how-to-play" element={<HowToPlayPage showAlert={showAlert} />} />
         <Route path="/play-game/:id" element={<PlayGamePage showAlert={showAlert} />} />
+        <Route path="/create-game" element={<CreateNewGamePage showAlert={showAlert} />} />
         <Route path="/games" element={<GamesPage showAlert={showAlert} />} />
         <Route path="/characters" element={<CharactersPage showAlert={showAlert} />} />
         <Route path="/biomes" element={<BiomesPage showAlert={showAlert} />} />

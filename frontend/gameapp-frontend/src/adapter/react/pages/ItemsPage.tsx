@@ -59,7 +59,7 @@ export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
   }
 
   return (
-    <div className="p-6">
+    <div className="flex flex-col align-center p-6">
       <h1 className="text-custom-primary-title">
         Items
       </h1>

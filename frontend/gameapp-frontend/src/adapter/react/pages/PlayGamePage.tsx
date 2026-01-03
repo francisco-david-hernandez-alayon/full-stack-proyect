@@ -252,10 +252,10 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     }
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col align-center h-full">
             {/* Header */}
             <div className="flex flex-row p-4 justify-between items-center h-20 bg-custom-secondary">
-                <h1 className="text-custom-background">Game id ({game.id})</h1>
+                <h1 className="text-custom-background">Difficulty: {game.difficulty}</h1>
 
                 <div className="flex flex-row gap-1 text-sm text-custom-background">
                     {game.currentUserActions.map((action, index) => {

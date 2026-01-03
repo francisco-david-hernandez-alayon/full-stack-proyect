@@ -13,7 +13,7 @@ export const BiomesPage: React.FC<BiomesPageProps> = ({ showAlert }) => {
 
   return (
     <>
-      <div className="p-6">
+      <div className="flex flex-col align-center p-6">
         <h1 className="text-custom-primary-title">Biomes</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -22,100 +22,6 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
     }
 
 
-    private static readonly Dictionary<Biome, Dictionary<SceneType, int>> SceneProbabilitiesByBiome =
-    new()
-    {
-        [Biome.City] = new Dictionary<SceneType, int>
-        {
-            { SceneType.NothingHappens, 5 },
-            { SceneType.Item, 15 },
-            { SceneType.Enemy, 20 },
-            { SceneType.Trade, 30 },
-            { SceneType.ChangeBiome, 30 }
-        },
-
-        [Biome.Forest] = new Dictionary<SceneType, int>
-        {
-            { SceneType.NothingHappens, 15 },
-            { SceneType.Item, 25 },
-            { SceneType.Enemy, 30 },
-            { SceneType.Trade, 10 },
-            { SceneType.ChangeBiome, 20 }
-        },
-
-        [Biome.Desert] = new Dictionary<SceneType, int>
-        {
-            { SceneType.NothingHappens, 35 },
-            { SceneType.Item, 20 },
-            { SceneType.Enemy, 20 },
-            { SceneType.Trade, 10 },
-            { SceneType.ChangeBiome, 15 }
-        },
-
-        [Biome.Swamp] = new Dictionary<SceneType, int>
-        {
-            { SceneType.NothingHappens, 10 },
-            { SceneType.Item, 15 },
-            { SceneType.Enemy, 45 },
-            { SceneType.Trade, 10 },
-            { SceneType.ChangeBiome, 20 }
-        }
-    };
-
-    private SceneType GetRandomSceneTypeByBiome(Biome biome)
-    {
-        var probabilities = SceneProbabilitiesByBiome[biome];
-        var totalWeight = probabilities.Values.Sum();
-
-        var roll = Random.Shared.Next(0, totalWeight);
-        var cumulative = 0;
-
-        foreach (var entry in probabilities)
-        {
-            cumulative += entry.Value;
-            if (roll < cumulative)
-                return entry.Key;
-        }
-
-        // Fallback
-        return SceneType.ChangeBiome;
-    }
-
-
-
-
-    private async Task<Scene> GenerateScene(Biome currentBiome)
-    {
-        // Get Type of scene
-        IEnumerable<Scene> candidateScenes;
-        var selectedType = GetRandomSceneTypeByBiome(currentBiome);
-
-        if (selectedType == SceneType.ChangeBiome)
-        {
-            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(null, SceneType.ChangeBiome);  // change biome no needs to have the same biome that current biome
-        }
-        else
-        {
-            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(currentBiome, selectedType);
-        }
-
-        var scenesList = candidateScenes.ToList();
-
-        // If theres no scene in the list 
-        if (!scenesList.Any())
-        {
-            scenesList = (await _repoScene.FetchAllByTypeAndBiome(
-                null,
-                SceneType.ChangeBiome
-            )).ToList();
-        }
-
-        // Pick random scene
-        var randomScene = scenesList[Random.Shared.Next(scenesList.Count)];
-        return randomScene;
-    }
-
-
     private Game SetCurrentUserActionsToGame(Game game)
     {
         var userActions = new List<UserAction>();
@@ -174,7 +80,208 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
 
 
-    //-----------------------------------------------------------------------------MAIN-FUNCTION--------------------------------------------------------------------//
+
+
+
+    //-----------------------------------------------------------------------------GENERATE-SCENE-ALGORITHM---------------------------------------------------------------------------//
+
+    public static T GetRandomByWeight<T>(IEnumerable<KeyValuePair<T, int>> weights)
+    where T : notnull
+    {
+        var totalWeight = weights.Sum(w => w.Value);
+        if (totalWeight <= 0)
+            throw new ArgumentException("Total weight must be greater than zero.");
+
+        var roll = Random.Shared.Next(totalWeight);
+        var cumulative = 0;
+
+        foreach (var (key, weight) in weights)
+        {
+            cumulative += weight;
+            if (roll < cumulative)
+                return key;
+        }
+
+        throw new InvalidOperationException("Weighted selection failed.");
+    }
+
+    private SceneType GetRandomSceneTypeByBiome(Biome biome)
+    {
+        Dictionary<SceneType, int> biomeProbabilities = SceneProbabilitiesByBiome.Probabilities[biome];
+        return GetRandomByWeight(biomeProbabilities);
+    }
+
+    private Scene GetRandomSceneFromListScenes(List<Scene> scenes, GameDifficulty difficulty)
+    {
+        Dictionary<SceneGoodness, int> sceneGoodnessWeights = SceneGoodnessWeights.Weights[difficulty];
+        List<KeyValuePair<Scene, int>> sceneProbabilities = new List<KeyValuePair<Scene, int>>();
+
+        foreach (var scene in scenes)
+        {
+            // Get the goodness of the scene
+            SceneGoodness sceneGoodness;
+
+            switch (scene)
+            {
+                case NothingHappensScene nothingScene:
+                    sceneGoodness = SceneGoodness.Normal;
+                    break;
+
+                case ChangeBiomeScene changeScene:
+                    sceneGoodness = SceneGoodness.Normal;
+                    break;
+
+                case ItemScene itemScene:
+
+                    switch (itemScene.GetRewardItem().GetRarity())
+                    {
+                        case ItemRarity.Common:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                        case ItemRarity.Rare:
+                            sceneGoodness = SceneGoodness.Good;
+                            break;
+                        case ItemRarity.Epic:
+                            sceneGoodness = SceneGoodness.VeryGood;
+                            break;
+                        default:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                    }
+                    break;
+
+                case EnemyScene enemyScene:
+                    switch (enemyScene.GetEnemy().GetDifficulty())
+                    {
+                        case EnemyDifficulty.Easy:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                        case EnemyDifficulty.Normal:
+                            sceneGoodness = SceneGoodness.Bad;
+                            break;
+                        case EnemyDifficulty.Hard:
+                            sceneGoodness = SceneGoodness.Bad;
+                            break;
+                        case EnemyDifficulty.Boss:
+                            sceneGoodness = SceneGoodness.VeryBad;
+                            break;
+                        default:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                    }
+                    break;
+
+                case TradeScene tradeScene:
+                    ItemRarity mayorRarity = ItemRarity.Common;
+
+                    // Get item of mayor rarity
+                    foreach (var item in tradeScene.GetMerchantItemsOffer())
+                    {
+                        if (mayorRarity == ItemRarity.Common)
+                        {
+                            if (item.GetRarity() == ItemRarity.Rare || item.GetRarity() == ItemRarity.Epic)
+                            {
+                                mayorRarity = item.GetRarity();
+                            }
+
+                        }
+                        else if (mayorRarity == ItemRarity.Rare)
+                        {
+                            if (item.GetRarity() == ItemRarity.Epic)
+                            {
+                                mayorRarity = item.GetRarity();
+                            }
+
+                        }
+                        else  // an item has epic rarity, so there's no need to keep searching for rarities to obtain the highest rarity
+                        {
+                            break;
+                        }
+                    }
+
+                    // Select godness of scene form item rarity
+                    switch (mayorRarity)
+                    {
+                        case ItemRarity.Common:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                        case ItemRarity.Rare:
+                            sceneGoodness = SceneGoodness.Good;
+                            break;
+                        case ItemRarity.Epic:
+                            sceneGoodness = SceneGoodness.VeryGood;
+                            break;
+                        default:
+                            sceneGoodness = SceneGoodness.Normal;
+                            break;
+                    }
+                    break;
+
+                default:
+                    sceneGoodness = SceneGoodness.Normal;
+                    break;
+            }
+
+
+            // Add the scene with its weight and goodness
+            var weight = sceneGoodnessWeights[sceneGoodness];
+            sceneProbabilities.Add(
+                new KeyValuePair<Scene, int>(scene, weight)
+            );
+        }
+
+        Scene sceneGenerated = GetRandomByWeight(sceneProbabilities);
+
+
+        Console.WriteLine("Scene probabilities: ");
+        foreach (var kvp in sceneProbabilities)
+        {
+            Console.WriteLine($"--> Scene: {kvp.Key.GetType().Name} {kvp.Key.GetName()}, Weight: {kvp.Value})");
+        }
+        Console.WriteLine("Scene generated: " + sceneGenerated);
+
+        return sceneGenerated;
+    }
+
+
+
+    private async Task<Scene> GenerateScene(Biome currentBiome, GameDifficulty difficulty)
+    {
+        // 1- Get Type of scene generated
+        IEnumerable<Scene> candidateScenes;
+        var selectedType = GetRandomSceneTypeByBiome(currentBiome);
+
+        if (selectedType == SceneType.ChangeBiome)
+        {
+            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(null, SceneType.ChangeBiome);  // change biome no needs to have the same biome that current biome
+        }
+        else
+        {
+            candidateScenes = await _repoScene.FetchAllByTypeAndBiome(currentBiome, selectedType);
+        }
+
+        var scenesList = candidateScenes.ToList();
+        if (!scenesList.Any()) // If theres no scene in the list 
+        {
+            scenesList = (await _repoScene.FetchAllByTypeAndBiome(
+                null,
+                SceneType.ChangeBiome
+            )).ToList();
+        }
+
+        // 2- Pick random scene of scenesList
+        Scene randomScene = GetRandomSceneFromListScenes(scenesList, difficulty);
+
+        // 3- Return scene
+        return randomScene;
+    }
+
+
+
+
+
+
+    //-----------------------------------------------------------------------------MAIN-FUNCTION---------------------------------------------------------------------------//
     public async Task<Game?> GenerateNewSceneToGame(Guid idSceneSelected, Game game)
     {
 
@@ -238,7 +345,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
             for (int i = 0; i < numberOfScenesToGenerate; i++)
             {
-                Scene randomScene = await GenerateScene(sceneSelected.GetBiome());
+                Scene randomScene = await GenerateScene(sceneSelected.GetBiome(), game.GetDifficulty());
                 newScenes.Add(randomScene);
             }
         }
