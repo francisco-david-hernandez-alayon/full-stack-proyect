@@ -58,7 +58,7 @@ public abstract class Character
     }
 
     // Clone method for inmutable setters
-    protected abstract Character CloneWith(int currentHealthPoints, int currentFoodPoints, int currentMoney, IReadOnlyList<Item> inventoryList);
+    protected abstract Character CloneCharacter(int currentHealthPoints, int currentFoodPoints, int currentMoney, IReadOnlyList<Item> inventoryList);
 
     // getters
     public CharacterName GetName()
@@ -121,7 +121,7 @@ public abstract class Character
             return this;
 
         var newInventory = new List<Item>(InventoryList) { newItem };
-        return CloneWith(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney, newInventory);
+        return CloneCharacter(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney, newInventory);
     }
 
     public Character RemoveItemInventory(int index)
@@ -131,42 +131,42 @@ public abstract class Character
 
         var newInventory = new List<Item>(InventoryList);
         newInventory.RemoveAt(index);
-        return CloneWith(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney, newInventory);
+        return CloneCharacter(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney, newInventory);
     }
 
     public Character ReceiveDamage(int damage)
     {
         int newHealth = Math.Max(0, CurrentHealthPoints - damage);
-        return CloneWith(newHealth, CurrentFoodPoints, CurrentMoney, InventoryList);
+        return CloneCharacter(newHealth, CurrentFoodPoints, CurrentMoney, InventoryList);
     }
 
     public Character Heal(int amount)
     {
         int newHealth = Math.Min(MaxHealthPoints, CurrentHealthPoints + amount);
-        return CloneWith(newHealth, CurrentFoodPoints, CurrentMoney, InventoryList);
+        return CloneCharacter(newHealth, CurrentFoodPoints, CurrentMoney, InventoryList);
     }
 
     public Character Eat(int amount)
     {
         int newFood = Math.Min(MaxFoodPoints, CurrentFoodPoints + amount);
-        return CloneWith(CurrentHealthPoints, newFood, CurrentMoney, InventoryList);
+        return CloneCharacter(CurrentHealthPoints, newFood, CurrentMoney, InventoryList);
     }
 
     public Character GetHungry(int amount)
     {
         int newFood = Math.Max(0, CurrentFoodPoints - amount);
-        return CloneWith(CurrentHealthPoints, newFood, CurrentMoney, InventoryList);
+        return CloneCharacter(CurrentHealthPoints, newFood, CurrentMoney, InventoryList);
     }
 
     public Character EarnMoney(int amount)
     {
-        return CloneWith(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney + amount, InventoryList);
+        return CloneCharacter(CurrentHealthPoints, CurrentFoodPoints, CurrentMoney + amount, InventoryList);
     }
 
     public Character SpendMoney(int amount)
     {
         int newMoney = Math.Max(0, CurrentMoney - amount);
-        return CloneWith(CurrentHealthPoints, CurrentFoodPoints, newMoney, InventoryList);
+        return CloneCharacter(CurrentHealthPoints, CurrentFoodPoints, newMoney, InventoryList);
     }
 
 }

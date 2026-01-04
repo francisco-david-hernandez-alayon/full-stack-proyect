@@ -4,7 +4,6 @@ using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Domain.Repositories;
 using GameApp.Domain.ValueObjects.Characters;
-using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Application.Services.GameServices;
 

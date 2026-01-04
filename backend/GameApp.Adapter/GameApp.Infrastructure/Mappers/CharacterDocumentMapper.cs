@@ -11,6 +11,14 @@ public static class CharacterDocumentMapper
 {
     public static CharacterDocument ToDocument(Character character)
     {
+        // Get character atributes
+        int? currentHits = null;
+        if (character is WarriorCharacter warrior)
+        {
+            currentHits = warrior.GetHits();
+        }
+
+
         return new CharacterDocument
         {
             Type = character switch
@@ -21,6 +29,9 @@ public static class CharacterDocumentMapper
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
             CurrentFoodPoints = character.GetCurrentFoodPoints(),
             CurrentMoney = character.GetCurrentMoney(),
+
+            // optional atributes
+            CurrentHits = currentHits,
 
             // Map item name + durability
             InventoryList = character.GetInventoryList()
@@ -68,7 +79,8 @@ public static class CharacterDocumentMapper
                 currentHealthPoints: doc.CurrentHealthPoints,
                 currentFoodPoints: doc.CurrentFoodPoints,
                 currentMoney: doc.CurrentMoney,
-                inventoryList: inventoryDomain
+                inventoryList: inventoryDomain,
+                currentHits: doc.CurrentHits ?? 0  // 0 hit by default
             ),
             _ => throw new ArgumentException($"Unsupported character type: {doc.Type}")
         };

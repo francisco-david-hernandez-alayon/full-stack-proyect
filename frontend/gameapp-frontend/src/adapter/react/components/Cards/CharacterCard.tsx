@@ -1,35 +1,58 @@
-import { Activity, DollarSign, Ham, Heart, Sword, Backpack } from "lucide-react";
+import { DollarSign, Ham, Heart, Sword, Backpack, ActivityIcon } from "lucide-react";
 import { getStyleForCharacter } from "../../utils/GetCharacterStyle";
 import { Character } from "../../../../domain/value-objects/characters/character";
+import { WarriorCharacter } from "../../../../domain/value-objects/characters/warrior-character";
 
+
+
+// Special ability description under stats
+const CharacterAbilityDescription: React.FC<{ character: Character }> = ({ character }) => {
+  if (character instanceof WarriorCharacter) {
+    return (
+      <p className="mt-2 text-sm">
+        <span className="text-custom-primary font-bold">
+          Powerful strike
+        </span>
+        : When hitting {character.getHitsToGetAbility()} enemies, can deal {character.getAbilityDamage()} damage to the current enemy without receiving damage.
+      </p>
+    );
+  }
+
+  return null; // Default for other characters
+};
+
+
+
+
+
+//--------------------------------------------------------------------------CHARACTER-CARD------------------------------------------------------------------------//
 interface CharacterCardProps {
   character: Character;
 }
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
+
+  const style = getStyleForCharacter(character);
+
+
   return (
     <div className="card bg-base-100 shadow-xl max-w-md">
       <div className="card-body gap-4 pa-2">
-        {/* Top row: image + name | description */}
+        {/* Top row */}
         <div className="flex gap-4 items-center">
-          <div className="flex flex-col items-center w-28 flex-none">
+          <div className="flex flex-col items-center  w-28 flex-none">
             <img
-              src={getStyleForCharacter(character).image}
+              src={style.image}
               alt={character.constructor.name}
               className="h-20 w-20"
             />
 
-            <h2 className="card-title text-custom-primary-title text-center text-sm mt-2">
+            <h2 className="card-title text-custom-primary-title text-center">
               {character.name.name}
             </h2>
           </div>
 
-          {/* Right: description */}
-          <p className="text-sm text-custom-secondary opacity-80">
-            A well-balanced starting character designed for new players. Reliable
-            in combat and survival, making it the perfect choice to begin your
-            journey.
-          </p>
+          <p className="text-sm text-custom-secondary opacity-80"> {style.description} </p>
         </div>
 
         {/* Stats */}
@@ -76,12 +99,24 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
 
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4" />
+              <ActivityIcon className="w-4 h-4" />
               <span>Speed</span>
             </div>
             <span>{character.attackSpeed}</span>
           </div>
         </div>
+
+
+        {/* Ability */}
+        <div>
+          <p className="mt-2 text-sm">
+            <span className="text-custom-primary font-bold">
+              {style.abilityName}
+            </span>
+            : {style.abilityDescription}
+          </p>
+        </div>
+
       </div>
     </div>
   );

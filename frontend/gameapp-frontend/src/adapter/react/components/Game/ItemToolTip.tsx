@@ -81,14 +81,14 @@ interface InventoryItemToolTipProps {
 export const ItemToolTip: React.FC<InventoryItemToolTipProps> = ({ item }) => {
     return (
         <div
-            className="absolute bottom-full mb-2 hidden group-hover:flex
+            className="absolute bottom-full mb-2 hidden group-hover:flex 
                            w-52 p-3 rounded-lg shadow-lg
                            bg-custom-background text-custom-secondary
                            border border-custom-secondary
                            z-50"
         >
-            <div className="flex flex-col gap-2 text-xs">
-                <span className="font-semibold text-sm">
+            <div className="flex flex-col gap-2 text-sm">
+                <span className="font-semibold text-base">
                     {item.name.name}
                 </span>
 

@@ -3,7 +3,7 @@ import { Game } from "../../../domain/entities/game";
 import type { IGameManageItemUseCase } from "../../usecases/game-use-cases/game-manage-item-use-case";
 import type { Item } from "../../../domain/entities/items/item";
 import { UserAction } from "../../../domain/enumerates/user-action";
-import { addUserActions, removeUserActions } from "../../../adapter/react/utils/UserActionsUtils";
+import { addUserActions, removeUserActions } from "../../Utils/UserActionsUtils";
 
 export class GameManageItemService implements IGameManageItemUseCase {
     constructor() { }

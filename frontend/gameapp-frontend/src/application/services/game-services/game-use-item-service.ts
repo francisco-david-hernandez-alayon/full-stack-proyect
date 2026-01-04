@@ -1,10 +1,11 @@
-import { addUserActions, removeUserActions } from "../../../adapter/react/utils/UserActionsUtils";
+import { addUserActions, removeUserActions } from "../../Utils/UserActionsUtils";
 import type { Game } from "../../../domain/entities/game";
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../domain/entities/items/attribute-item";
 import type { Item } from "../../../domain/entities/items/item";
 import { GameStatus } from "../../../domain/enumerates/game-status";
 import { UserAction } from "../../../domain/enumerates/user-action";
+import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 import type { IGameUseItemUseCase } from "../../usecases/game-use-cases/game-use-item-use-case";
 import { GameManageItemService } from "./game-manage-item-service";
 
@@ -70,6 +71,10 @@ export class GameUseItemService implements IGameUseItemUseCase {
           addUserActions(game.currentUserActions, [UserAction.MOVE_FORWARD])
         );
       }
+    }
+
+    if (character instanceof WarriorCharacter) {
+      character = character.addHit();
     }
 
     game = game.setCharacter(character);

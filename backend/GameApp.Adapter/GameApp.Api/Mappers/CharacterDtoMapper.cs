@@ -18,7 +18,8 @@ public static class CharacterDtoMapper
                 currentHealthPoints: dto.CurrentHealthPoints,
                 currentFoodPoints: dto.CurrentFoodPoints,
                 currentMoney: dto.CurrentMoney,
-                inventoryList: dto.InventoryList.Select(ItemDtoMapper.ToDomain).ToList()
+                inventoryList: dto.InventoryList.Select(ItemDtoMapper.ToDomain).ToList(),
+                currentHits: dto.CurrentHits ?? 0  // 0 by default
             ),
 
             _ => throw new ArgumentException($"Unsupported character type: {dto.Type}")
@@ -40,6 +41,14 @@ public static class CharacterDtoMapper
 
     public static CharacterResponseDto ToDto(Character character)
     {
+
+        // Get character atributes
+        int? currentHits = null;
+        if (character is WarriorCharacter warrior)
+        {
+            currentHits = warrior.GetHits();
+        }
+
         return new CharacterResponseDto
         {
             Type = character switch
@@ -50,7 +59,10 @@ public static class CharacterDtoMapper
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
             CurrentFoodPoints = character.GetCurrentFoodPoints(),
             CurrentMoney = character.GetCurrentMoney(),
-            InventoryList = character.GetInventoryList().Select(ItemDtoMapper.ToDto).ToList()
+            InventoryList = character.GetInventoryList().Select(ItemDtoMapper.ToDto).ToList(),
+
+            // optional atributes
+            CurrentHits = currentHits,
         };
     }
 }

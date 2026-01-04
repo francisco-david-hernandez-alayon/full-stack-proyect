@@ -1,4 +1,4 @@
-import { UserAction } from "../../../domain/enumerates/user-action";
+import { UserAction } from "../../domain/enumerates/user-action";
 
 export function removeUserActions(
     userActions: UserAction[],

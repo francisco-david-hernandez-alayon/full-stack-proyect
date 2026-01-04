@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Application.Enumerates;
 
@@ -11,4 +12,9 @@ public class CharacterResponseDto
     public int CurrentFoodPoints { get; set; }
     public int CurrentMoney { get; set; }
     public List<ItemResponseDto> InventoryList { get; set; } = new();
+
+
+    // Optional Character habilities
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? CurrentHits { get; set; }
 }

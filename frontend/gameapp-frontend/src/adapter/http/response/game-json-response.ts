@@ -18,6 +18,10 @@ interface CharacterJson {
     currentFoodPoints: number;
     currentMoney: number;
     inventoryList?: any[];
+
+    // optional character atributes
+    currentHits?: number;
+
 }
 interface FinalSceneJson {
     name: string;
@@ -75,7 +79,8 @@ export class GameJsonResponse {
                     this.character.currentHealthPoints,
                     this.character.currentFoodPoints,
                     this.character.currentMoney,
-                    inventory
+                    inventory,
+                    this.character.currentHits ?? 0
                 );
                 break;
             }

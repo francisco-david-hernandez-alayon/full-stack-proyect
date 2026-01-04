@@ -22,6 +22,7 @@ public class GameDocument
 
     public GameStatus Status { get; set; }
 
+
     // TradeScene
 
 

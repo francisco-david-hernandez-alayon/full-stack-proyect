@@ -11,6 +11,9 @@ export class CharacterJsonRequest {
     currentMoney: number;
     inventoryList: ItemJsonRequest[];
 
+    // optional atributes
+    currentHits?: number;
+
     constructor(character: Character) {
         if (!character) throw new TypeError("character is required");
         if (!(character instanceof Character)) throw new TypeError("character must be an instance of Character");
@@ -41,6 +44,11 @@ export class CharacterJsonRequest {
             }
             return new ItemJsonRequest(item);
         });
+
+        if (character instanceof WarriorCharacter) {
+            this.currentHits = character.getHits();
+        }
+
     }
 
     toString(): string {

@@ -22,7 +22,8 @@ import { UserAction } from "../../../domain/enumerates/user-action";
 import { EnemyScene } from "../../../domain/entities/scenes/enemy-scene";
 import { GameSummary } from "../components/Game/GameSummary";
 import { GameTradeService } from "../../../application/services/game-services/game-trade-service";
-import { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
+import { GameUseCharacterAbilityService } from "../../../application/services/game-services/game-use-character-ability-service";
+import { CharacterAbilityButton } from "../components/Game/CharacterAbilityButton";
 
 
 interface PlayGamePageProps {
@@ -44,6 +45,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     const gameUseItemService = new GameUseItemService();
     const gameManageItemService = new GameManageItemService();
     const gameTradeService = new GameTradeService();
+    const gameUseCharacterAbilityService = new GameUseCharacterAbilityService();
 
 
     useEffect(() => {
@@ -68,6 +70,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     if (error) return <p className="text-custom-error">{error}</p>;
     if (!game) return <p>Game not found</p>;
 
+    const characterStyle = getStyleForCharacter(game.character);
 
     //---------------------------------------------------------GAME-FUNCTIONS----------------------------------------------------------//
     const saveGame = async () => {
@@ -233,6 +236,24 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
         }
     }
 
+    //---------------------------------------------------------ABILITY-FUNCTIONS----------------------------------------------------------//
+
+    const useCharacterAbility = async () => {
+        try {
+            const updatedGame = await gameUseCharacterAbilityService.useAbility(game);
+            setGame(updatedGame);
+
+        } catch (error) {
+            showAlert({
+                message: "Error attacking with ability: " + error,
+                type: AlertType.ERROR,
+                duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
+            });
+        }
+
+    }
+
+
 
 
 
@@ -253,7 +274,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
     return (
         <div className="flex flex-col align-center h-full">
-            {/* Header */}
+            {/* HEADER */}
             <div className="flex flex-row p-4 justify-between items-center h-20 bg-custom-secondary">
                 <h1 className="text-custom-background">Difficulty: {game.difficulty}</h1>
 
@@ -283,7 +304,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
             </div>
 
-            {/* Current Scenes */}
+            {/* CURRENT SCENES */}
             <div className="flex flex-1  gap-12 p-12 bg-custom-background">
                 {game.currentScenes.map((scene, index) => (
                     <div key={index} className="flex flex-1 justify-center">
@@ -297,13 +318,14 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
             </div>
 
 
-            {/* Character info */}
+            {/* CHARACTER INFO */}
             <div className="flex flex-row items-center justify-between p-3 bg-custom-background-soft rounded-xl">
 
+                {/* Character stats */}
                 <div className="flex flex-row items-center gap-5 pl-10">
                     {game.character instanceof WarriorCharacter && (
                         <img
-                            src={getStyleForCharacter(game.character).image}
+                            src={characterStyle.image}
                             alt="Warrior character"
                             className="h-20 w-20 rounded-full"
                         />
@@ -342,7 +364,11 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
                         </div>
 
                     </div>
+
+                    {/* Character ability */}
+                    <CharacterAbilityButton character={game.character} onUseAbility={useCharacterAbility}/>
                 </div>
+
 
                 {/* Inventory */}
                 <div className="flex items-center gap-5 pr-10">

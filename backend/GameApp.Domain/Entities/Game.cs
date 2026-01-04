@@ -17,19 +17,6 @@ public class Game
     private readonly GameStatus Status;
     private readonly Enemy? CurrentEnemy;  // could be an enemy on current scene
 
-    ///-------------CREATE ATRIBUTE: CurrentEnemy
-
-    // // Required for EF Core
-    // private Game()
-    // {
-    //     Id = Guid.NewGuid();
-    //     Character = null!;
-    //     ListCompletedScenes = new List<Scene>();
-    //     ListCurrentScenes = new List<Scene>();
-    //     ListCurrentUserActions = new List<UserAction>();
-    //     FinalScene = null!;
-    //     Status = GameStatus.GameInProgress;
-    // }
 
     // Default constructor
     public Game(GameDifficulty difficulty, Character character, int numberScenesToFinish, FinalScene finalScene, List<Scene> listCurrentScenes, List<UserAction> listCurrentUserActions)
