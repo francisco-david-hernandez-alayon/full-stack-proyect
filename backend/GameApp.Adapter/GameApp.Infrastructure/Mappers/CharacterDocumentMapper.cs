@@ -24,6 +24,7 @@ public static class CharacterDocumentMapper
             Type = character switch
             {
                 WarriorCharacter => CharacterType.Warrior,
+                ThiefCharacter => CharacterType.Thief,
                 _ => CharacterType.None
             },
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
@@ -81,6 +82,12 @@ public static class CharacterDocumentMapper
                 currentMoney: doc.CurrentMoney,
                 inventoryList: inventoryDomain,
                 currentHits: doc.CurrentHits ?? 0  // 0 hit by default
+            ),
+            CharacterType.Thief => new ThiefCharacter(
+                currentHealthPoints: doc.CurrentHealthPoints,
+                currentFoodPoints: doc.CurrentFoodPoints,
+                currentMoney: doc.CurrentMoney,
+                inventoryList: inventoryDomain
             ),
             _ => throw new ArgumentException($"Unsupported character type: {doc.Type}")
         };

@@ -20,7 +20,7 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
             <div
                 className="flex items-center justify-center
                            border rounded-lg
-                           w-35 h-35
+                           min-w-35 min-h-40
                            bg-custom-background opacity-50"
                 style={{ borderColor: "var(--color-secondary)" }}
             />
@@ -39,7 +39,7 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
             <div
                 className="flex flex-col items-center justify-between
                border rounded-xl
-               w-35 h-35
+               w-35 h-40
                p-2
                bg-custom-background
                hover:shadow-lg transition-shadow

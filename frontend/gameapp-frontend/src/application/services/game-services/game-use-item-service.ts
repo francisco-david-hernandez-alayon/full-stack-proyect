@@ -8,6 +8,7 @@ import { UserAction } from "../../../domain/enumerates/user-action";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 import type { IGameUseItemUseCase } from "../../usecases/game-use-cases/game-use-item-use-case";
 import { GameManageItemService } from "./game-manage-item-service";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 
 export class GameUseItemService implements IGameUseItemUseCase {
 
@@ -75,6 +76,10 @@ export class GameUseItemService implements IGameUseItemUseCase {
 
     if (character instanceof WarriorCharacter) {
       character = character.addHit();
+    }
+
+    if (character instanceof ThiefCharacter && enemy == null) {
+      character = character.earnMoney(ThiefCharacter.EXTRA_MONEY_WHEN_KILL_ENEMY);
     }
 
     game = game.setCharacter(character);

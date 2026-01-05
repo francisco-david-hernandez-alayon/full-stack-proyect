@@ -137,6 +137,6 @@ npm run dev
 
 * [Inicio rápido react](https://es.react.dev/learn)
 
-* [Iconos](https://www.flaticon.es/)
+* [Iconos FlatIcon](https://www.flaticon.es/)
 
  

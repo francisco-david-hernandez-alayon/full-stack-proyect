@@ -5,6 +5,7 @@ import { CharacterType } from "../../../application/enumerates/character-type";
 import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
 import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 
 export class GamePostJsonRequest {
     difficulty: GameDifficulty;
@@ -18,13 +19,23 @@ export class GamePostJsonRequest {
         if (!game) throw new TypeError("game instance is required");
 
         this.difficulty = game.difficulty;
-        
+
         // 1. Character
-        if (game.character instanceof WarriorCharacter) {
-            this.character = CharacterType.Warrior;
-        } else {
-            throw new TypeError(`Unknown character class: '${game.character.constructor.name}'`);
+        switch (true) {
+            case game.character instanceof WarriorCharacter:
+                this.character = CharacterType.Warrior;
+                break;
+
+            case game.character instanceof ThiefCharacter:
+                this.character = CharacterType.Thief;
+                break;
+
+            default:
+                throw new TypeError(
+                    `Unknown character class: '${game.character.constructor.name}'`
+                );
         }
+
 
         // 2. NumberScenesToFinish
         this.numberScenesToFinish = game.numberScenesToFinish;

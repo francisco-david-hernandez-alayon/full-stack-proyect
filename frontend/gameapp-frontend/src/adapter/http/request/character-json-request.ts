@@ -3,6 +3,7 @@ import { Item } from "../../../domain/entities/items/item";
 import { ItemJsonRequest } from "./item-json-request";
 import { CharacterType } from "../../../application/enumerates/character-type";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 
 export class CharacterJsonRequest {
     type: CharacterType;
@@ -28,11 +29,19 @@ export class CharacterJsonRequest {
             throw new TypeError("currentMoney must be an integer");
         }
 
-        if (character instanceof WarriorCharacter) {
-            this.type = CharacterType.Warrior;
-        } else {
-            throw new TypeError(`Unknown character class: '${character.constructor.name}'`);
+        switch (true) {
+            case character instanceof WarriorCharacter:
+                this.type = CharacterType.Warrior;
+                break;
+
+            case character instanceof ThiefCharacter:
+                this.type = CharacterType.Thief;
+                break;
+
+            default:
+                throw new TypeError(`Unknown character class: '${character.constructor.name}'`);
         }
+
 
         this.currentHealthPoints = character.currentHealthPoints;
         this.currentFoodPoints = character.currentFoodPoints;

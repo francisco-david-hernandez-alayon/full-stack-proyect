@@ -12,7 +12,7 @@ public class WarriorCharacter : Character
     private static readonly int DefaultMaxInventorySlots = 5;
     private static readonly int DefaultStartingMoney = 10;
     private static readonly int DefaultAttackSpeed = 3;
-    private static readonly int DefaultAttackDamage = 4;
+    private static readonly int DefaultAttackDamage = 3;
 
 
     // Character Ability

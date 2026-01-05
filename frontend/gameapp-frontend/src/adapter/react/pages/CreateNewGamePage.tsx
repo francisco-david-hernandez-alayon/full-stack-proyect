@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ActivityIcon, DollarSign, Heart, Sword } from "lucide-react";
 import { getStyleForCharacter } from "../utils/GetCharacterStyle";
 import type { Character } from "../../../domain/value-objects/characters/character";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 
 
 //-------------------------------------------------------------------------------SUMMARY-CHARACTER-CARD------------------------------------------------------------------------//
@@ -92,7 +93,7 @@ export const CreateNewGamePage: React.FC<CreateNewGamePageProps> = ({ showAlert 
     // Local state
     const [selectedDifficulty, setSelectedDifficulty] = useState<GameDifficulty>(GameDifficulty.Normal);
     const [selectedRounds, setSelectedRounds] = useState<number>(60); // default "medio"
-    const [selectedCharacter, setSelectedCharacter] = useState<WarriorCharacter>(new WarriorCharacter());
+    const [selectedCharacter, setSelectedCharacter] = useState<Character>(new WarriorCharacter());  // warrior character is default initial character
 
     const roundOptions = [
         { label: "Short", value: 30 },
@@ -201,7 +202,12 @@ export const CreateNewGamePage: React.FC<CreateNewGamePageProps> = ({ showAlert 
                             isSelected={selectedCharacter?.constructor.name === "WarriorCharacter"}
                             onSelect={(char) => setSelectedCharacter(char)}
                         />
-                        {/* Aquí en el futuro puedes agregar más personajes */}
+
+                        <SummaryCardCharacter
+                            character={new ThiefCharacter()}
+                            isSelected={selectedCharacter?.constructor.name === "ThiefCharacter"}
+                            onSelect={(char) => setSelectedCharacter(char)}
+                        />
                     </div>
                 </div>
 

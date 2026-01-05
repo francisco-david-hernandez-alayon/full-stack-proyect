@@ -1,31 +1,7 @@
 import { DollarSign, Ham, Heart, Sword, Backpack, ActivityIcon } from "lucide-react";
 import { getStyleForCharacter } from "../../utils/GetCharacterStyle";
 import { Character } from "../../../../domain/value-objects/characters/character";
-import { WarriorCharacter } from "../../../../domain/value-objects/characters/warrior-character";
 
-
-
-// Special ability description under stats
-const CharacterAbilityDescription: React.FC<{ character: Character }> = ({ character }) => {
-  if (character instanceof WarriorCharacter) {
-    return (
-      <p className="mt-2 text-sm">
-        <span className="text-custom-primary font-bold">
-          Powerful strike
-        </span>
-        : When hitting {character.getHitsToGetAbility()} enemies, can deal {character.getAbilityDamage()} damage to the current enemy without receiving damage.
-      </p>
-    );
-  }
-
-  return null; // Default for other characters
-};
-
-
-
-
-
-//--------------------------------------------------------------------------CHARACTER-CARD------------------------------------------------------------------------//
 interface CharacterCardProps {
   character: Character;
 }
@@ -34,6 +10,13 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
 
   const style = getStyleForCharacter(character);
 
+  if (style == null) {
+    return (
+      <div className="card bg-base-100 shadow-xl max-w-md justify-center items-center">
+        Error loading character {character.name.name}
+      </div>
+    )
+  }
 
   return (
     <div className="card bg-base-100 shadow-xl max-w-md">

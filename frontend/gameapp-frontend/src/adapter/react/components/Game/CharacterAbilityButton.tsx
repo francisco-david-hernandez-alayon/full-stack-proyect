@@ -2,6 +2,8 @@ import React from "react";
 import type { Character } from "../../../../domain/value-objects/characters/character";
 import { WarriorCharacter } from "../../../../domain/value-objects/characters/warrior-character";
 import { getStyleForCharacter } from "../../utils/GetCharacterStyle";
+import { ThiefCharacter } from "../../../../domain/value-objects/characters/thief-caracter";
+import { DollarSign } from "lucide-react";
 
 interface CharacterAbilityButtonProps {
     character: Character;
@@ -35,6 +37,13 @@ export const CharacterAbilityButton: React.FC<CharacterAbilityButtonProps> = ({
                 {character instanceof WarriorCharacter ?
                     (<div>
                         <span className="text-xm opacity-90">{character.getHits()}/{WarriorCharacter.HITS_NEEDED_TO_GET_ABILITY} hits</span>
+                    </div>)
+                    : null}
+                
+                {character instanceof ThiefCharacter ?
+                    (<div className="flex items-center gap-1">
+                        <DollarSign className="w-4 h-4" />
+                        <span className="text-xm opacity-90">{ThiefCharacter.EXTRA_MONEY_WHEN_KILL_ENEMY}</span>
                     </div>)
                     : null}
 

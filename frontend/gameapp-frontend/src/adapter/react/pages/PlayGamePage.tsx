@@ -24,6 +24,7 @@ import { GameSummary } from "../components/Game/GameSummary";
 import { GameTradeService } from "../../../application/services/game-services/game-trade-service";
 import { GameUseCharacterAbilityService } from "../../../application/services/game-services/game-use-character-ability-service";
 import { CharacterAbilityButton } from "../components/Game/CharacterAbilityButton";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 
 
 interface PlayGamePageProps {
@@ -323,13 +324,12 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
                 {/* Character stats */}
                 <div className="flex flex-row items-center gap-5 pl-10">
-                    {game.character instanceof WarriorCharacter && (
-                        <img
-                            src={characterStyle.image}
-                            alt="Warrior character"
-                            className="h-20 w-20 rounded-full"
-                        />
-                    )}
+
+                    <img
+                        src={characterStyle.image}
+                        alt="character img"
+                        className="h-20 w-20"
+                    />
 
                     <div className="flex flex-col gap-2 justify-center">
                         <h2 className="card-title text-custom-primary text-2xl">
@@ -366,26 +366,30 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
                     </div>
 
                     {/* Character ability */}
-                    <CharacterAbilityButton character={game.character} onUseAbility={useCharacterAbility}/>
+                    <CharacterAbilityButton character={game.character} onUseAbility={useCharacterAbility} />
                 </div>
 
 
                 {/* Inventory */}
-                <div className="flex items-center gap-5 pr-10">
-                    {game.character.inventoryList.map((item, index) => (
-                        <div key={index} className="flex flex-1 justify-center">
-                            <InventorySlot item={item} useItem={() => (useInventoryItem(index))} dropItem={() => (dropInventoryItem(index))} />
-                        </div>
-                    ))}
+                <div className="flex items-center  gap-5 pr-10">
+                    <div className="flex flex-wrap items-center gap-5 max-w-5xl ">  
 
-                    {Array.from({
-                        length: game.character.maxInventorySlots - game.character.inventoryList.length,
-                    }).map((_, index) => (
-                        <InventorySlot key={`empty-${index}`} useItem={() => (console.log("There's no item to use"))} dropItem={() => (console.log("There's no item to drop"))} />
-                    ))}
+                        {game.character.inventoryList.map((item, index) => (
+                            <div key={index} className="flex justify-center">
+                                <InventorySlot item={item} useItem={() => (useInventoryItem(index))} dropItem={() => (dropInventoryItem(index))} />
+                            </div>
+                        ))}
+
+                        {Array.from({
+                            length: game.character.maxInventorySlots - game.character.inventoryList.length,
+                        }).map((_, index) => (
+                            <InventorySlot key={`empty-${index}`} useItem={() => (console.log("There's no item to use"))} dropItem={() => (console.log("There's no item to drop"))} />
+                        ))}
+                    </div>
 
                     <Backpack className="w-20 h-20" />
                 </div>
+
             </div>
 
 

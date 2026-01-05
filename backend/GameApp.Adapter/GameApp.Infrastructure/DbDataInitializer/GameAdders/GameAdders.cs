@@ -12,21 +12,25 @@ public interface GameAdders : IGameAdders
     public static void AddGames(List<Game> games)
     {
         List<Game> gamesToAdd = new List<Game>();
-        WarriorCharacter warrior = new WarriorCharacter();
-        warrior = warrior.AddItemInventory(AttackItemsAdders.IronSword)  as WarriorCharacter;
-        warrior = warrior.AddItemInventory(AtributteItemsAdders.Bread)  as WarriorCharacter;
-        warrior = warrior.AddItemInventory(AtributteItemsAdders.HealthPotion)  as WarriorCharacter;
+        ThiefCharacter thief = new ThiefCharacter();
+        thief = thief.AddItemInventory(AttackItemsAdders.IronSword) as ThiefCharacter;
+        thief = thief.AddItemInventory(AtributteItemsAdders.Bread) as ThiefCharacter;
+        thief = thief.AddItemInventory(AtributteItemsAdders.HealthPotion) as ThiefCharacter;
 
-        FinalScene finalScene = ForestScenesAdder.FinalScene;
-        List<Scene> currentScenes = new List<Scene>{ForestScenesAdder.InitialScene};
-        List<UserAction> currentUserAction = new List<UserAction>{UserAction.UseItem, UserAction.MoveForward};
+        if (thief != null)
+        {
+            FinalScene finalScene = ForestScenesAdder.FinalScene;
+            List<Scene> currentScenes = new List<Scene> { ForestScenesAdder.InitialScene };
+            List<UserAction> currentUserAction = new List<UserAction> { UserAction.UseItem, UserAction.MoveForward };
 
-        Game game1 = new Game(GameDifficulty.Normal, warrior, 10, finalScene, currentScenes, currentUserAction);
+            Game game1 = new Game(GameDifficulty.Normal, thief, 10, finalScene, currentScenes, currentUserAction);
+            gamesToAdd.Add(game1);
+            games.AddRange(gamesToAdd);
 
+        }   else
+        {
+            Console.WriteLine("thief is null when game is creating: " + thief);
+        }
 
-        gamesToAdd.Add(game1);
-
-
-        games.AddRange(gamesToAdd);
     }
 }

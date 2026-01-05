@@ -11,6 +11,8 @@ import type { Biome } from "../../../domain/enumerates/biome";
 import type { GameStatus } from "../../../domain/enumerates/game-status";
 import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
+import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import type { Character } from "../../../domain/value-objects/characters/character";
 
 interface CharacterJson {
     type: CharacterType;
@@ -70,7 +72,7 @@ export class GameJsonResponse {
     }
 
     toGame(): Game {
-        let character: WarriorCharacter;
+        let character: Character;
 
         switch (this.character.type) {
             case CharacterType.Warrior: {
@@ -81,6 +83,16 @@ export class GameJsonResponse {
                     this.character.currentMoney,
                     inventory,
                     this.character.currentHits ?? 0
+                );
+                break;
+            }
+            case CharacterType.Thief: {
+                const inventory = this.character.inventoryList?.map(i => new ItemJsonResponse(i).toItem()) ?? [];
+                character = new ThiefCharacter(
+                    this.character.currentHealthPoints,
+                    this.character.currentFoodPoints,
+                    this.character.currentMoney,
+                    inventory,
                 );
                 break;
             }
