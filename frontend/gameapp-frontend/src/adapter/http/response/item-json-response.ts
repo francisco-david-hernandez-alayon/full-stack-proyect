@@ -5,6 +5,7 @@ import { ItemName } from "../../../domain/value-objects/items/item-name";
 import type { Item } from "../../../domain/entities/items/item";
 import { ItemType } from "../../../application/enumerates/item-type";
 import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
+import { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
 
 export class ItemJsonResponse {
     id: string;
@@ -17,6 +18,10 @@ export class ItemJsonResponse {
     attackDamage: number | null;
     speedAttack: number | null;
     durability: number | null;
+    criticalDamage: {
+        criticalProbability: number;
+        extraDamage: number;
+    } | null;
 
     healthPointsReceived: number | null;
     foodPointsReceived: number | null;
@@ -34,9 +39,11 @@ export class ItemJsonResponse {
         this.attackDamage = itemJson.attackDamage ?? undefined;
         this.speedAttack = itemJson.speedAttack ?? undefined;
         this.durability = itemJson.durability ?? undefined;
+        this.criticalDamage = itemJson.criticalDamage ?? undefined;
 
         this.healthPointsReceived = itemJson.healthPointsReceived ?? undefined;
         this.foodPointsReceived = itemJson.foodPointsReceived ?? undefined;
+
     }
 
     toItem(): Item {
@@ -63,6 +70,7 @@ export class ItemJsonResponse {
                     this.attackDamage!,
                     this.speedAttack!,
                     this.durability!,
+                    new CriticalDamage(this.criticalDamage!.criticalProbability, this.criticalDamage!.extraDamage),
                     this.id
                 );
             default:

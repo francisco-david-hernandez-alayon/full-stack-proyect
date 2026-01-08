@@ -16,13 +16,15 @@ public class ItemDocument
     public ItemType ItemType { get; set; }
     public int TradePrice { get; set; } = 0;
 
-
+    // Atribute Item
     [BsonIgnoreIfNull]
     public int? HealthPointsReceived { get; set; }
 
     [BsonIgnoreIfNull]
     public int? FoodPointsReceived { get; set; }
 
+
+    // Attack Item
     [BsonIgnoreIfNull]
     public int? AttackDamage { get; set; }
 
@@ -31,4 +33,7 @@ public class ItemDocument
 
     [BsonIgnoreIfNull]
     public int? Durability { get; set; }
+
+    [BsonIgnoreIfNull]
+    public CriticalDamageDocument? CriticalDamage { get; set; }
 }

@@ -15,4 +15,5 @@ public class EnemyDocument
     public int DamageAttack { get; set; }
     public int SpeedAttack { get; set; }
     public int MoneyReward { get; set; }
+    public CriticalDamageDocument CriticalDamage { get; set; } = default!;
 }

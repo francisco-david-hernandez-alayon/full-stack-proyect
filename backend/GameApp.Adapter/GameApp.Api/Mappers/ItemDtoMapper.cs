@@ -1,7 +1,10 @@
 using GameApp.Adapter.Api.dtos;
 using GameApp.Adapter.Api.dtos.ItemsDto;
+using GameApp.Adapter.Infrastructure.Mappers;
+using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.ValueObjects.Combat;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Adapter.Api.Mappers;
@@ -32,6 +35,7 @@ public static class ItemDtoMapper
                         "SpeedAttack is required for AttackItem")
                 , dto.Durability ?? throw new ArgumentNullException(nameof(dto.Durability),
                         "Durability is required for AttackItem")
+                , CriticalDamageDtoMapper.ToDomain(dto.CriticalDamage ?? new CriticalDamageDto())
                         ),
 
             ItemType.Attribute => new AtributeItem(id, dto.Rarity, itemName, itemDescription, itemTradePrice,
@@ -70,7 +74,8 @@ public static class ItemDtoMapper
                     "AttackDamage is required for AttackItem"),
                 dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
                     "SpeedAttack is required for AttackItem"),
-                dto.Durability ?? 1
+                dto.Durability ?? 1,
+                CriticalDamageDtoMapper.ToDomain(dto.CriticalDamage ?? new CriticalDamageDto())
             ),
 
             ItemType.Attribute => new AtributeItem(
@@ -112,7 +117,8 @@ public static class ItemDtoMapper
                     "AttackDamage is required for AttackItem"),
                 dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
                     "SpeedAttack is required for AttackItem"),
-                dto.Durability ?? 1 // default
+                dto.Durability ?? 1, // default
+                CriticalDamageDtoMapper.ToDomain(dto.CriticalDamage ?? new CriticalDamageDto())
             ),
 
             ItemType.Attribute => new AtributeItem(
@@ -152,6 +158,7 @@ public static class ItemDtoMapper
                 dto.AttackDamage = attack.GetAttackDamage();
                 dto.SpeedAttack = attack.GetSpeedAttack();
                 dto.Durability = attack.GetDurability();
+                dto.CriticalDamage = CriticalDamageDtoMapper.ToDto(attack.GetCriticalDamage()); 
                 break;
 
             case AtributeItem attr:

@@ -4,6 +4,7 @@ using GameApp.Domain.Enumerates;
 using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Domain.Entities.Items;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.ValueObjects.Combat;
 
 namespace GameApp.Adapter.Infrastructure.Mappers;
 
@@ -30,6 +31,7 @@ public static class ItemDocumentMapper
                 doc.AttackDamage = attack.GetAttackDamage();
                 doc.SpeedAttack = attack.GetSpeedAttack();
                 doc.Durability = attack.GetDurability();
+                doc.CriticalDamage = CriticalDamageDocumentMapper.ToDocument(attack.GetCriticalDamage());
                 break;
 
             case AtributeItem attr:
@@ -65,7 +67,8 @@ public static class ItemDocumentMapper
                 price,
                 doc.AttackDamage ?? throw new ArgumentNullException(nameof(doc.AttackDamage)),
                 doc.SpeedAttack ?? throw new ArgumentNullException(nameof(doc.SpeedAttack)),
-                doc.Durability ?? throw new ArgumentNullException(nameof(doc.Durability))
+                doc.Durability ?? throw new ArgumentNullException(nameof(doc.Durability)),
+                CriticalDamageDocumentMapper.ToDomain(doc.CriticalDamage ?? new CriticalDamageDocument())
             ),
             ItemType.Attribute => new AtributeItem(
                 doc.Id,

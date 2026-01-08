@@ -1,5 +1,6 @@
 import { Enemy } from "../../../domain/entities/enemy";
 import type { EnemyDifficulty } from "../../../domain/enumerates/enemy-difficulty";
+import { CriticalDamageJsonRequest } from "./ciritcal-damage-json-request";
 
 export class EnemyJsonRequest {
     id: string;
@@ -8,6 +9,7 @@ export class EnemyJsonRequest {
     healthPoints: number;
     damageAttack: number;
     speedAttack: number;
+    criticalDamage: CriticalDamageJsonRequest;
     moneyReward: number;
 
     constructor(enemy: Enemy) {
@@ -20,6 +22,7 @@ export class EnemyJsonRequest {
         this.healthPoints = enemy.healthPoints;
         this.damageAttack = enemy.attackDamage;
         this.speedAttack = enemy.speedAttack;
+        this.criticalDamage = new CriticalDamageJsonRequest(enemy.criticalDamage)
         this.moneyReward = enemy.rewardMoney;
     }
 

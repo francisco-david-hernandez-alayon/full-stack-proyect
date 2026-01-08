@@ -1,5 +1,6 @@
 using GameApp.Domain.Entities;
 using GameApp.Domain.Enumerates;
+using GameApp.Domain.ValueObjects.Combat;
 using GameApp.Domain.ValueObjects.Enemies;
 
 namespace GameApp.Adapter.Infrastructure.DbDataInitializer.EnemysAdders;
@@ -13,6 +14,7 @@ public class EnemysAdder : IEnemysAdder
             healthPoints: 30,
             attackDamage: 3,
             speedAttack: 2,
+            new CriticalDamage(criticalProbability: 5, extraDamage: 5),
             rewardMoney: 5
        );
 
@@ -23,6 +25,7 @@ public class EnemysAdder : IEnemysAdder
             healthPoints: 50,
             attackDamage: 7,
             speedAttack: 4,
+            new CriticalDamage(criticalProbability: 5, extraDamage: 10),
             rewardMoney: 10
         );
 
@@ -33,6 +36,7 @@ public class EnemysAdder : IEnemysAdder
             healthPoints: 70,
             attackDamage: 8,
             speedAttack: 3,
+            new CriticalDamage(criticalProbability: 5, extraDamage: 5),
             rewardMoney: 15
         );
 
@@ -43,6 +47,7 @@ public class EnemysAdder : IEnemysAdder
             healthPoints: 80,
             attackDamage: 10,
             speedAttack: 2,
+            new CriticalDamage(criticalProbability: 10, extraDamage: 5),
             rewardMoney: 20
         );
 
@@ -53,6 +58,7 @@ public class EnemysAdder : IEnemysAdder
             healthPoints: 100,
             attackDamage: 15,
             speedAttack: 5,
+            new CriticalDamage(criticalProbability: 10, extraDamage: 15),
             rewardMoney: 70
         );
 

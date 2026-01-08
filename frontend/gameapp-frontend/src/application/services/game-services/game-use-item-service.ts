@@ -9,10 +9,28 @@ import { WarriorCharacter } from "../../../domain/value-objects/characters/warri
 import type { IGameUseItemUseCase } from "../../usecases/game-use-cases/game-use-item-use-case";
 import { GameManageItemService } from "./game-manage-item-service";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import type { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
 
 export class GameUseItemService implements IGameUseItemUseCase {
 
   constructor() { }
+
+  // to obtain the damage based on the base damage and the critical chance
+  private getDamage(basicDamage: number, criticalDamage: CriticalDamage): number {
+    const roll = Math.random() * 100; 
+    const isCritical = roll < criticalDamage.criticalProbability;
+
+    // DEPURATE
+    if (isCritical) {
+      console.log("CRITICAL DAMAGE: " + basicDamage + " + " + criticalDamage.extraDamage);
+    }
+    
+
+    return isCritical
+      ? basicDamage + criticalDamage.extraDamage
+      : basicDamage;
+  }
+
 
   private async attackEnemy(Damage: number, Speed: number, game: Game): Promise<Game> {
     let character = game.character;
@@ -20,9 +38,10 @@ export class GameUseItemService implements IGameUseItemUseCase {
 
     if (!enemy) return game;
 
-    const userDamage = character.attackDamage + Damage;
+    const userDamage = character.attackDamage + Damage;  // critical damage included in the damage
     const userSpeed = character.attackSpeed + Speed;
     const enemyDamage = enemy.attackDamage;
+    const enemyCritical = enemy.criticalDamage;
     const enemySpeed = enemy.speedAttack;
 
     if (userSpeed >= enemySpeed) {
@@ -39,7 +58,7 @@ export class GameUseItemService implements IGameUseItemUseCase {
 
       } else {
         // Enemy Attack second
-        character = character.receiveDamage(enemyDamage);
+        character = character.receiveDamage( this.getDamage(enemyDamage, enemyCritical) );
 
         // Check if Player is dead
         if (character.currentHealthPoints <= 0) {
@@ -51,7 +70,7 @@ export class GameUseItemService implements IGameUseItemUseCase {
       }
     } else {
       // Enemy Attack first
-      character = character.receiveDamage(enemyDamage);
+      character = character.receiveDamage( this.getDamage(enemyDamage, enemyCritical) );
 
       // Check if Player is dead
       if (character.currentHealthPoints <= 0) {
@@ -105,7 +124,7 @@ export class GameUseItemService implements IGameUseItemUseCase {
         }
 
         // 2- attack enemy with item and check if player survive
-        game = await this.attackEnemy(item.attackDamage, item.speedAttack, game);
+        game = await this.attackEnemy(this.getDamage(item.attackDamage, item.criticalDamage) , item.speedAttack, game);
 
         if (game.status == GameStatus.PLAYER_DEATH) {
           return game;
@@ -122,7 +141,7 @@ export class GameUseItemService implements IGameUseItemUseCase {
             character.inventoryList[positionInventoryItemSelected] = item;
             game = game.setCharacter(character);
           }
-          
+
         }
 
         break;
@@ -174,6 +193,10 @@ export class GameUseItemService implements IGameUseItemUseCase {
   // Use an item from current Scene
   async useSceneItem(item: Item, game: Game): Promise<Game> {
     if (game.currentUserActions.includes(UserAction.USE_CURRENT_SCENE_ITEM)) {
+      if (item instanceof AttackItem) {  // attack item canot use as scene item
+        return game;
+      }
+
       // Use item
       let gameUpdated = await this.useItem(game, item);
 

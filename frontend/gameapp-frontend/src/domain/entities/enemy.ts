@@ -1,4 +1,5 @@
 import type { EnemyDifficulty } from '../enumerates/enemy-difficulty';
+import type { CriticalDamage } from '../value-objects/enemies/critical-damage';
 import { EnemyName } from '../value-objects/enemies/enemy-name';
 import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
@@ -12,6 +13,7 @@ export class Enemy {
     private _healthPoints: number;
     private _attackDamage: number;
     private _speedAttack: number;
+    private _criticalDamage: CriticalDamage;
     private _rewardMoney: number;
 
     constructor(
@@ -20,6 +22,7 @@ export class Enemy {
         healthPoints: number,
         attackDamage: number,
         speedAttack: number,
+        criticalDamage: CriticalDamage,
         rewardMoney: number,
         id?: string
     ) {
@@ -37,6 +40,7 @@ export class Enemy {
         this._healthPoints = healthPoints;
         this._attackDamage = attackDamage;
         this._speedAttack = speedAttack;
+        this._criticalDamage = criticalDamage;
         this._rewardMoney = rewardMoney;
     }
 
@@ -47,36 +51,41 @@ export class Enemy {
     get healthPoints(): number { return this._healthPoints; }
     get attackDamage(): number { return this._attackDamage; }
     get speedAttack(): number { return this._speedAttack; }
+    get criticalDamage(): CriticalDamage { return this._criticalDamage; }
     get rewardMoney(): number { return this._rewardMoney; }
 
     // Setters 
     setDifficulty(newDifficulty: EnemyDifficulty): Enemy {
-        return new Enemy(newDifficulty, this._name, this._healthPoints, this._attackDamage, this._speedAttack, this._rewardMoney, this._id);
+        return new Enemy(newDifficulty, this._name, this._healthPoints, this._attackDamage, this._speedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     setName(newName: EnemyName): Enemy {
-        return new Enemy(this._difficulty, newName, this._healthPoints, this._attackDamage, this._speedAttack, this._rewardMoney, this._id);
+        return new Enemy(this._difficulty, newName, this._healthPoints, this._attackDamage, this._speedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     setHealthPoints(newHealthPoints: number): Enemy {
-        return new Enemy(this._difficulty, this._name, newHealthPoints, this._attackDamage, this._speedAttack, this._rewardMoney, this._id);
+        return new Enemy(this._difficulty, this._name, newHealthPoints, this._attackDamage, this._speedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     setAttackDamage(newAttackDamage: number): Enemy {
-        return new Enemy(this._difficulty, this._name, this._healthPoints, newAttackDamage, this._speedAttack, this._rewardMoney, this._id);
+        return new Enemy(this._difficulty, this._name, this._healthPoints, newAttackDamage, this._speedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     setSpeedAttack(newSpeedAttack: number): Enemy {
-        return new Enemy(this._difficulty, this._name, this._healthPoints, this._attackDamage, newSpeedAttack, this._rewardMoney, this._id);
+        return new Enemy(this._difficulty, this._name, this._healthPoints, this._attackDamage, newSpeedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     setRewardMoney(newRewardMoney: number): Enemy {
-        return new Enemy(this._difficulty, this._name, this._healthPoints, this._attackDamage, this._speedAttack, newRewardMoney, this._id);
+        return new Enemy(this._difficulty, this._name, this._healthPoints, this._attackDamage, this._speedAttack, this._criticalDamage, newRewardMoney, this._id);
+    }
+
+    setCriticalDamage(newCriticalDamage: CriticalDamage): Enemy {
+        return new Enemy(this._difficulty, this._name, this._healthPoints, this._attackDamage, this._speedAttack, newCriticalDamage, this._rewardMoney, this._id);
     }
 
     receiveDamage(damage: number): Enemy {
         const newHealthPoints = Math.max(0, this._healthPoints - damage);
-        return new Enemy(this._difficulty, this._name, newHealthPoints, this._attackDamage, this._speedAttack, this._rewardMoney, this._id);
+        return new Enemy(this._difficulty, this._name, newHealthPoints, this._attackDamage, this._speedAttack, this._criticalDamage, this._rewardMoney, this._id);
     }
 
     toString(): string {
@@ -84,6 +93,7 @@ export class Enemy {
             `HealthPoints=${this._healthPoints}, ` +
             `AttackDamage=${this._attackDamage}, ` +
             `SpeedAttack=${this._speedAttack}, ` +
+            `CriticalDamage=${this._criticalDamage}, ` +
             `RewardMoney=${this._rewardMoney}`;
     }
 }

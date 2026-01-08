@@ -71,7 +71,18 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     if (error) return <p className="text-custom-error">{error}</p>;
     if (!game) return <p>Game not found</p>;
 
+    // STYLE
     const characterStyle = getStyleForCharacter(game.character);
+    const healthPercent = (game.character.currentHealthPoints / game.character.maxHealthPoints) * 100;
+    const foodPercent = (game.character.currentFoodPoints / game.character.maxFoodPoints) * 100;
+
+    const getHpColorClass = (percent: number) => {
+        if (percent <= 15) return "text-[var(--color-low-hp)]";
+        if (percent <= 50) return "text-[var(--color-medium-hp)]";
+        return "";
+    };
+
+
 
     //---------------------------------------------------------GAME-FUNCTIONS----------------------------------------------------------//
     const saveGame = async () => {
@@ -337,15 +348,22 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
                         </h2>
 
                         <div className="flex flex-row flex-wrap gap-5 text-custom-secondary">
-                            <div className="flex items-center gap-1 text-lg">
+                            {/* Health */}
+                            <div className={`flex items-center gap-1 text-lg ${getHpColorClass(healthPercent)}`}>
                                 <Heart className="w-8 h-8" />
-                                <span>{game.character.currentHealthPoints}/{game.character.maxHealthPoints}</span>
+                                <span>
+                                    {game.character.currentHealthPoints}/{game.character.maxHealthPoints}
+                                </span>
                             </div>
 
-                            <div className="flex items-center gap-1 text-lg">
+                            {/* Food */}
+                            <div className={`flex items-center gap-1 text-lg ${getHpColorClass(foodPercent)}`}>
                                 <Ham className="w-8 h-8" />
-                                <span>{game.character.currentFoodPoints}/{game.character.maxFoodPoints}</span>
+                                <span>
+                                    {game.character.currentFoodPoints}/{game.character.maxFoodPoints}
+                                </span>
                             </div>
+
 
                             <div className="flex items-center gap-1 text-lg">
                                 <DollarSign className="w-8 h-8" />
@@ -372,7 +390,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
                 {/* Inventory */}
                 <div className="flex items-center  gap-5 pr-10">
-                    <div className="flex flex-wrap items-center gap-5 max-w-5xl ">  
+                    <div className="flex flex-wrap items-center gap-5 max-w-5xl ">
 
                         {game.character.inventoryList.map((item, index) => (
                             <div key={index} className="flex justify-center">

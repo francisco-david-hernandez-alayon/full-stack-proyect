@@ -1,4 +1,5 @@
 using GameApp.Domain.Enumerates;
+using GameApp.Domain.ValueObjects.Combat;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Domain.Entities.Items;
@@ -11,44 +12,45 @@ public class AttackItem : Item
     private readonly int SpeedAttack;
     private readonly int Durability;
 
+    private readonly CriticalDamage CriticalDamage;
+
     // Default constructor
-    public AttackItem(ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice, int attackDamage, int speedAttack, int durability)
+    public AttackItem(ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice, int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
         : base(rarity, name, description, tradePrice)
     {
         AttackDamage = attackDamage;
         SpeedAttack  = speedAttack;
         Durability = durability;
+        CriticalDamage = criticalDamage;
     }
 
     // Restore constructor
-    public AttackItem(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice,  int attackDamage, int speedAttack, int durability)
+    public AttackItem(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice,  int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
         : base(id, rarity, name, description, tradePrice)
     {
         AttackDamage = attackDamage;
         SpeedAttack  = speedAttack;
         Durability = durability;
+        CriticalDamage = criticalDamage;
     }
 
-    // getters
+    // Getters
     public int GetAttackDamage() => AttackDamage;
-
     public int GetSpeedAttack() => SpeedAttack ;
-
     public int GetDurability() => Durability;
+    public CriticalDamage GetCriticalDamage() => CriticalDamage;
 
-    public AttackItem SetAttackDamage(int newAttackDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), newAttackDamage, GetSpeedAttack(), GetDurability()); 
-
-    public AttackItem SetSpeedAttack(int newSpeedAttack) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), newSpeedAttack, GetDurability()); 
-
-    public AttackItem SetDurability(int newDurability) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), newDurability); 
-
-    public AttackItem SetPrice(int newTradePrice) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), newTradePrice, GetAttackDamage(), GetSpeedAttack(), GetDurability()); 
-
+    // Setters
+    public AttackItem SetAttackDamage(int newAttackDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), newAttackDamage, GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetSpeedAttack(int newSpeedAttack) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), newSpeedAttack, GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetDurability(int newDurability) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), newDurability, GetCriticalDamage()); 
+    public AttackItem SetPrice(int newTradePrice) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), newTradePrice, GetAttackDamage(), GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetCriticalDamage(CriticalDamage newCriticalDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), GetDurability(), newCriticalDamage); 
 
 
     // To string
     public override string ToString()
     {
-        return $"{GetName()} attack item({GetGuid()}, Difficulty {GetRarity()}): " + $"AttackDamage={AttackDamage}, SpeedAttack={SpeedAttack }, durability={Durability}, TradePrice={GetTradePrice()}";
+        return $"{GetName()} attack item({GetGuid()}, Difficulty {GetRarity()}): " + $"AttackDamage={AttackDamage}, SpeedAttack={SpeedAttack }, durability={Durability}, critical={CriticalDamage}, TradePrice={GetTradePrice()}";
     }
 }

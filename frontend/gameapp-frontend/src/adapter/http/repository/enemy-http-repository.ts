@@ -1,5 +1,6 @@
 import type { IEnemyRepository } from "../../../application/repositories/ienemy-repository";
 import { Enemy } from "../../../domain/entities/enemy";
+import { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
 import type { EnemyName } from "../../../domain/value-objects/enemies/enemy-name";
 import { EnemyJsonResponse } from "../response/enemy-json-response";
 
@@ -52,7 +53,7 @@ export class EnemyHttpRepository implements IEnemyRepository {
 
     // DELETE
     async delete(id: string): Promise<Enemy> {
-        return Promise.resolve(new Enemy(null as any, null as any, 0, 0, 0, 0, id));
+        return Promise.resolve(new Enemy(null as any, null as any, 0, 0, 0, new CriticalDamage(0, 0), 0, id));
     }
 
     // PUT / PATCH

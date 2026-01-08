@@ -3,6 +3,7 @@ import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../domain/entities/items/attribute-item";
 import { ItemType } from "../../../application/enumerates/item-type";
 import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
+import { CriticalDamageJsonRequest } from "./ciritcal-damage-json-request";
 
 export class ItemJsonRequest {
     id: string;
@@ -13,11 +14,12 @@ export class ItemJsonRequest {
     tradePrice: number;
 
     // Optional attributes
-    healthPointsReceived?: number | null;
-    foodPointsReceived?: number | null;
-    attackDamage?: number | null;
-    speedAttack?: number | null;
-    durability?: number | null;
+    healthPointsReceived?: number;
+    foodPointsReceived?: number;
+    attackDamage?: number;
+    speedAttack?: number;
+    durability?: number;
+    criticalDamage?: CriticalDamageJsonRequest;
 
     constructor(item: Item) {
         this.id = item.id;
@@ -37,6 +39,7 @@ export class ItemJsonRequest {
             this.attackDamage = item.attackDamage ?? null;
             this.speedAttack = item.speedAttack ?? null;
             this.durability = item.durability ?? null;
+            this.criticalDamage = new CriticalDamageJsonRequest(item.criticalDamage) ?? null
 
         } else {
             this.itemType = ItemType.None;

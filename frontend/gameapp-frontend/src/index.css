@@ -21,9 +21,13 @@
     --color-city: theme(colors.gray.500);
     --color-desert: theme(colors.yellow.500);
     --color-unknown: theme(colors.zinc.400);
+    
+    /* character status color*/
+    --color-medium-hp: theme(colors.amber.600);
+    --color-low-hp: theme(colors.red.500);
+
 
     --font-display: "VT323", monospace;
-
   }
 
   html {

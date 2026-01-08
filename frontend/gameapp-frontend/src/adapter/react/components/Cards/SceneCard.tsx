@@ -8,7 +8,7 @@ import type { Item } from "../../../../domain/entities/items/item";
 import { getStyleForItem, ItemImageColor } from "../../utils/GetItemStyle";
 import { Enemy } from "../../../../domain/entities/enemy";
 import { EnemyScene } from "../../../../domain/entities/scenes/enemy-scene";
-import { ActivityIcon, AlertCircle, DollarSign, Hand, Heart, Skull, Sword } from "lucide-react";
+import { ActivityIcon, AlertCircle, DiamondPlusIcon, DollarSign, Hand, Heart, Skull, Sword } from "lucide-react";
 import { TradeScene } from "../../../../domain/entities/scenes/trade-scene";
 
 interface itemSceneCardProps {
@@ -40,7 +40,7 @@ interface enemySceneCardProps {
 }
 
 const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = false, currentEnemyHp = enemy.healthPoints }) => {
-    return (<div className="flex flex-col items-center justify-center border rounded-xl w-85 h-40">
+    return (<div className="flex flex-col items-center justify-center border rounded-xl w-85 h-45">
         <div className="text-2xl text-custom-background ">
             {enemy.name.name}
         </div>
@@ -84,6 +84,11 @@ const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = fa
                 <div className="flex items-center gap-2">
                     <ActivityIcon className="w-4 h-4 " />
                     <span>Speed: {enemy.speedAttack}</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <DiamondPlusIcon className="w-4 h-4" />
+                    <span>{enemy.criticalDamage.criticalProbability}% of {enemy.criticalDamage.extraDamage} extra damage</span>
                 </div>
 
                 <div className="flex items-center gap-2">

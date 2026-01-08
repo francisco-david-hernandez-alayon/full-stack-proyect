@@ -1,3 +1,4 @@
+using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Domain.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.EnemysDtos;
@@ -9,5 +10,7 @@ public class EnemyUpdateRequestDto
     public int HealthPoints { get; set; }
     public int DamageAttack { get; set; }
     public int SpeedAttack { get; set; }
+
+    public CriticalDamageDto CriticalDamage { get; set; } = default!;
     public int MoneyReward { get; set; }
 }

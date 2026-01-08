@@ -16,6 +16,7 @@ public static class EnemyDocumentMapper
             HealthPoints = enemy.GetHealthPoints(),
             DamageAttack = enemy.GetAttackDamage(),
             SpeedAttack = enemy.GetSpeedAttack(),
+            CriticalDamage = CriticalDamageDocumentMapper.ToDocument(enemy.GetCriticalDamage()),
             MoneyReward = enemy.GetRewardMoney()
         };
     }
@@ -32,6 +33,7 @@ public static class EnemyDocumentMapper
             doc.HealthPoints,
             doc.DamageAttack,
             doc.SpeedAttack,
+            CriticalDamageDocumentMapper.ToDomain(doc.CriticalDamage ?? new CriticalDamageDocument()),
             doc.MoneyReward
         );
     }
@@ -42,16 +44,7 @@ public static class EnemyDocumentMapper
         if (enemy is null)
             return null;
 
-        return new EnemyDocument
-        {
-            Id = enemy.GetGuid(),
-            Difficulty = enemy.GetDifficulty(),
-            Name = enemy.GetName().GetName(),
-            HealthPoints = enemy.GetHealthPoints(),
-            DamageAttack = enemy.GetAttackDamage(),
-            SpeedAttack = enemy.GetSpeedAttack(),
-            MoneyReward = enemy.GetRewardMoney()
-        };
+        return ToDocument(enemy);
     }
 
     public static Enemy? ToDomainPosibleNull(EnemyDocument? doc)
@@ -59,15 +52,7 @@ public static class EnemyDocumentMapper
         if (doc is null)
             return null;
 
-        return new Enemy(
-            doc.Id,
-            doc.Difficulty,
-            new EnemyName(doc.Name),
-            doc.HealthPoints,
-            doc.DamageAttack,
-            doc.SpeedAttack,
-            doc.MoneyReward
-        );
+        return ToDomain(doc);
     }
 
 }

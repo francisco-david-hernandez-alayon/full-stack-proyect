@@ -1,4 +1,4 @@
-import { ActivityIcon, BookOpenTextIcon, DollarSign, Gem, Ham, HeartPlus, Stone, Sword } from "lucide-react";
+import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Gem, Ham, HeartPlus, Stone, Sword } from "lucide-react";
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import type { Item } from "../../../../domain/entities/items/item";
@@ -39,6 +39,11 @@ const renderItemTooltipContent = (item: Item) => {
                 <div className="flex items-center gap-2">
                     <Stone className="w-4 h-4 text-custom-secondary" />
                     <span>Durability: {item.durability}</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <DiamondPlusIcon className="w-4 h-4 text-custom-secondary" />
+                    <span>{item.criticalDamage.criticalProbability}% of {item.criticalDamage.extraDamage} extra damage</span>
                 </div>
             </div>
         );

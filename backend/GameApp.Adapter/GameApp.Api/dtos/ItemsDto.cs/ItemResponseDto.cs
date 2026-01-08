@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Application.Enumerates;
 using GameApp.Domain.Enumerates;
 
@@ -30,4 +31,7 @@ public class ItemResponseDto
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? Durability { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public CriticalDamageDto? CriticalDamage { get; set; }
 }
