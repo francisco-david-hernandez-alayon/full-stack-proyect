@@ -5,6 +5,7 @@ import type { ItemName } from "../../../domain/value-objects/items/item-name";
 import type { ItemType } from "../../../application/enumerates/item-type";
 import { ItemJsonResponse } from "../response/item-json-response";
 import { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
+import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 
 export class ItemHttpRepository implements IItemRepository {
     #itemsEndpoint: string;
@@ -48,16 +49,30 @@ export class ItemHttpRepository implements IItemRepository {
         return json.map(s => new ItemJsonResponse(s).toItem());
     }
 
-    // GET type/:type
-    async fetchAllByType(type: ItemType): Promise<Item[]> {
-        if (!type) throw new TypeError("type is required");
 
-        const res = await fetch(`${this.#itemsEndpoint}/type/${encodeURIComponent(type)}`);
-        if (!res.ok) throw new Error(`Error fetching all items by type '${type}'`);
+    // GET filter?type=&rarity=
+    async fetchAllByFilter(type?: ItemType | undefined, rarity?: ItemRarity | undefined): Promise<Item[]> {
+
+        const params = new URLSearchParams();
+
+        if (type) params.append("type", type);
+        if (rarity) params.append("rarity", rarity);
+
+        const res = await fetch(
+            `${this.#itemsEndpoint}/filter?${params.toString()}`
+        );
+
+        if (!res.ok) {
+            throw new Error(
+                `Error fetching items by filter type='${type}', rarity='${rarity}'`
+            );
+        }
 
         const json: any[] = await res.json();
         return json.map(s => new ItemJsonResponse(s).toItem());
     }
+
+
 
     // POST
     async save(item: Item): Promise<Item> {

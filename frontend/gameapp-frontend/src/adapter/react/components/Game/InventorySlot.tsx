@@ -1,9 +1,10 @@
 import type React from "react";
 import type { Item } from "../../../../domain/entities/items/item";
-import { getStyleForItem } from "../../utils/GetItemStyle";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import { ItemToolTip } from "./ItemToolTip";
 import { Trash2 } from "lucide-react";
+import { RenderItemIcon } from "../Structure/RenderItemIcon";
+import { getItemRarityColor } from "../../utils/getItemRarityColor";
 
 interface InventorySlotProps {
     item?: Item;
@@ -28,7 +29,7 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
     }
 
     // ITEM SLOT
-    const itemStyle = getStyleForItem(item);
+    const rarityColorClass = getItemRarityColor(item.rarity);
 
     return (
         <div className="relative group">
@@ -47,15 +48,11 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
                 style={{ borderColor: "var(--color-secondary)" }}
             >
 
-                {/* Item image */}
-                <img
-                    src={itemStyle.image}
-                    alt={item.name.name}
-                    className="h-14 w-14 object-contain"
-                />
+                {/* Item icon */}
+                <RenderItemIcon item={item} width={56} height={56} />
 
                 {/* Item name */}
-                <span className="text-center leading-tight text-custom-secondary">
+                <span className={`text-center leading-tight text-custom-secondary ${rarityColorClass}`}>
                     {item.name.name}
                 </span>
 

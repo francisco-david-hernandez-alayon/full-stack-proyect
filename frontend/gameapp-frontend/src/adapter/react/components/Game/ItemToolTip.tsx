@@ -2,12 +2,15 @@ import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Gem, Ham, 
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import type { Item } from "../../../../domain/entities/items/item";
+import { getItemRarityColor } from "../../utils/getItemRarityColor";
 
 // MUST INCLUDE "relative group" in className when you gonna use it
 
 
 
 const renderItemTooltipContent = (item: Item) => {
+    const rarityColorClass = getItemRarityColor(item.rarity);
+
     if (item instanceof AttackItem) {
         return (
             <div className="flex flex-col gap-1">
@@ -16,8 +19,8 @@ const renderItemTooltipContent = (item: Item) => {
                     <span>{item.description.description}</span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <Gem className="w-4 h-4 text-custom-secondary" />
+                <div className={`flex items-center gap-2 ${rarityColorClass}`}>
+                    <Gem className={`w-4 h-4`} />
                     <span>Rarity: {item.rarity}</span>
                 </div>
 
@@ -55,6 +58,11 @@ const renderItemTooltipContent = (item: Item) => {
                 <div className="flex items-center gap-2">
                     <BookOpenTextIcon className="w-4 h-4 text-custom-secondary" />
                     <span>{item.description.description}</span>
+                </div>
+
+                <div className={`flex items-center gap-2 ${rarityColorClass}`}>
+                    <Gem className={`w-4 h-4`} />
+                    <span>Rarity: {item.rarity}</span>
                 </div>
 
                 <div className="flex items-center gap-2">

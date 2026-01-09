@@ -6,13 +6,15 @@ import type { AlertData } from "../App";
 import { ItemCard } from "../components/Cards/ItemCard";
 import { ItemGetService } from "../../../application/services/item-services/item-get-service";
 import { AlertTimeMessage, AlertType } from "../components/Structure/AlertMessage";
+import { ItemRarity } from "../../../domain/enumerates/item-rarity";
 
 interface ItemsPageProps {
   showAlert: (data: AlertData) => void;
 }
 
 export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
-  const [itemTypeToSearch, setItemTypeToSearch] = useState<ItemType | null>(null);
+  const [itemTypeToSearch, setItemTypeToSearch] = useState<ItemType | undefined>(undefined);
+  const [itemRarityToSearch, setItemRarityToSearch] = useState<ItemRarity | undefined>(undefined);
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,31 +25,29 @@ export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
     const itemGetService = new ItemGetService(repoItems);
 
     const fetchItems = async () => {
-      try {
-        let allItems: Item[] = [];
-        if (itemTypeToSearch == null) {
-          allItems = await itemGetService.getAllItems();
+      setLoading(true);
+      setError(null);
 
-        } else {
-          allItems = await itemGetService.getItemByType(itemTypeToSearch);
-        }
+      try {
+        const allItems = await itemGetService.getItemByFilter(itemTypeToSearch, itemRarityToSearch);
 
         setItems(allItems);
-
       } catch (err) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+
+        setError(message);
         showAlert({
-          message: "Error fecthing items: " + error,
+          message: "Error fetching items: " + message,
           type: AlertType.ERROR,
           duration: AlertTimeMessage.SHORT_MESSAGE_DURATION,
         });
-
       } finally {
         setLoading(false);
       }
     };
 
     fetchItems();
-  }, [itemTypeToSearch]);
+  }, [itemTypeToSearch, itemRarityToSearch]);
 
 
   if (loading) {
@@ -64,35 +64,71 @@ export const ItemsPage: React.FC<ItemsPageProps> = ({ showAlert }) => {
         Items
       </h1>
 
-      <div className="flex justify-center p-6">
-        <div className="join">
-          <button
-            className={`btn join-item ${itemTypeToSearch === null ? "btn-primary" : "btn-outline"
-              }`}
-            onClick={() => setItemTypeToSearch(null)}
-          >
-            All
-          </button>
 
-          <button
-            className={`btn join-item ${itemTypeToSearch === ItemType.Attack ? "btn-primary" : "btn-outline"
-              }`}
-            onClick={() => setItemTypeToSearch(ItemType.Attack)}
-          >
-            Attack
-          </button>
+      {/* FILTERS */}
+      <div className="flex flex-row align-center justify-center items-center gap-5">
+        {/* Type filter */}
+        <div className="flex justify-center">
+          <div className="join">
+            <button
+              className={`btn join-item ${itemTypeToSearch === undefined ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemTypeToSearch(undefined)}
+            >
+              All Types
+            </button>
 
-          <button
-            className={`btn join-item ${itemTypeToSearch === ItemType.Attribute ? "btn-primary" : "btn-outline"
-              }`}
-            onClick={() => setItemTypeToSearch(ItemType.Attribute)}
-          >
-            Attribute
-          </button>
+            <button
+              className={`btn join-item ${itemTypeToSearch === ItemType.Attack ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemTypeToSearch(ItemType.Attack)}
+            >
+              Attack
+            </button>
+
+            <button
+              className={`btn join-item ${itemTypeToSearch === ItemType.Attribute ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemTypeToSearch(ItemType.Attribute)}
+            >
+              Attribute
+            </button>
+          </div>
+        </div>
+
+        {/* Rarity filter */}
+        <div className="flex justify-center">
+          <div className="join">
+            <button
+              className={`btn join-item ${itemRarityToSearch === undefined ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemRarityToSearch(undefined)}
+            >
+              All rarities
+            </button>
+
+            <button
+              className={`btn join-item ${itemRarityToSearch === ItemRarity.Common ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemRarityToSearch(ItemRarity.Common)}
+            >
+              Common
+            </button>
+
+            <button
+              className={`btn join-item ${itemRarityToSearch === ItemRarity.Rare ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemRarityToSearch(ItemRarity.Rare)}
+            >
+              Rare
+            </button>
+
+            <button
+              className={`btn join-item ${itemRarityToSearch === ItemRarity.Epic ? "btn-primary" : "btn-outline"}`}
+              onClick={() => setItemRarityToSearch(ItemRarity.Epic)}
+            >
+              Epic
+            </button>
+          </div>
         </div>
       </div>
 
 
+      {/* ITEMS */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {items.map((item) => (
           <ItemCard key={item.id} item={item} />

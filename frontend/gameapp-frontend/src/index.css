@@ -26,6 +26,16 @@
     --color-medium-hp: theme(colors.amber.600);
     --color-low-hp: theme(colors.red.500);
 
+    /* Item rarity */
+    --color-common-item: theme(colors.stone.400);
+    --color-rare-item: theme(colors.green.500);
+    --color-epic-item: theme(colors.red.600);
+
+    /* Enemy rarity */
+    --color-easy-enemy: theme(colors.stone.400);
+    --color-normal-enemy: theme(colors.green.500);
+    --color-hard-enemy: theme(colors.red.600);
+    --color-boss-enemy: theme(colors.purple.800);
 
     --font-display: "VT323", monospace;
   }

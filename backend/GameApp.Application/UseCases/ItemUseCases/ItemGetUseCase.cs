@@ -1,5 +1,6 @@
 using GameApp.Application.Enumerates;
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.ValueObjects.Items;
 
 namespace GameApp.Application.UseCases.ItemUseCases;
@@ -12,5 +13,5 @@ public interface ItemGetUseCase
 
     public Task<IEnumerable<Item>> GetAllItems();
 
-    public Task<IEnumerable<Item>> GetAllItemsByType(ItemType type);
+    public Task<IEnumerable<Item>> GetAllItemsByFilter(ItemType? type, ItemRarity? rarity);
 }

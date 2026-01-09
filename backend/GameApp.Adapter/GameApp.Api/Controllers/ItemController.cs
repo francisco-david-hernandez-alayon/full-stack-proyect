@@ -5,6 +5,7 @@ using GameApp.Application.Services.ItemServices;
 using GameApp.Adapter.Api.dtos.ItemsDto;
 using GameApp.Domain.ValueObjects.Items;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.Enumerates;
 
 namespace GameApp.Adapter.Api.Controllers;
 
@@ -36,17 +37,35 @@ public class ItemController : ControllerBase
         return Ok(ItemDtoMapper.ToDtoList(items));
     }
 
-    [HttpGet("type/{type}")]
-    public async Task<IActionResult> GetByType(string type)
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetByFilter(
+    [FromQuery] string? type,
+    [FromQuery] string? rarity)
     {
-        if (!Enum.TryParse<ItemType>(type, true, out var itemType))
+        ItemType? itemType = null;
+        ItemRarity? itemRarity = null;
+
+        if (!string.IsNullOrWhiteSpace(type))
         {
-            return BadRequest($"Item type '{type}' does not exist.");
+            if (!Enum.TryParse<ItemType>(type, true, out var parsedType))
+                return BadRequest($"Item type '{type}' does not exist.");
+
+            itemType = parsedType;
         }
 
-        var items = await _getService.GetAllItemsByType(itemType);
+        if (!string.IsNullOrWhiteSpace(rarity))
+        {
+            if (!Enum.TryParse<ItemRarity>(rarity, true, out var parsedRarity))
+                return BadRequest($"Item rarity '{rarity}' does not exist.");
+
+            itemRarity = parsedRarity;
+        }
+
+        var items = await _getService.GetAllItemsByFilter(itemType, itemRarity);
         return Ok(ItemDtoMapper.ToDtoList(items));
     }
+
+
 
 
     [HttpGet("id/{id:guid}")]

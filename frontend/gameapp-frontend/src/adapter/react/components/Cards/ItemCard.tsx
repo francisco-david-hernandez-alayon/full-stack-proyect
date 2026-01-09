@@ -1,25 +1,15 @@
 import type React from "react";
-import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Ham, Heart, HeartPlus, Stone, Sword, } from "lucide-react";
+import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Ham, HeartPlus, Stone, Sword, } from "lucide-react";
 import { Item } from "../../../../domain/entities/items/item";
-import { getStyleForItem } from "../../utils/GetItemStyle";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
+import { RenderItemIcon } from "../Structure/RenderItemIcon";
+import { getItemRarityColor } from "../../utils/getItemRarityColor";
 
 interface ItemCardProps {
     item: Item;
 }
 
-const renderItemIcon = (item: Item) => {
-
-    const itemStyle = getStyleForItem(item);
-    
-    return <img
-        src={itemStyle.image}
-        alt={item.name.name}
-        className="h-12 w-12"
-    />
-
-};
 
 const renderItemDescription = (item: Item) => {
     if (item instanceof AttackItem) {
@@ -84,18 +74,22 @@ const renderItemDescription = (item: Item) => {
 
 
 export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
+    const rarityColorClass = getItemRarityColor(item.rarity);
+
     return (
         <div className="flex flex-row card bg-background shadow-md p-4 max-w-xl">
             <div className="flex flex-col items-center justify-center p-2 w-24 flex-none">
-                {renderItemIcon(item)}
-
-                <h2 className="card-title text-primary text-center mt-2">
+                
+                <h2 className={`card-title text-center mt-2 ${rarityColorClass}`} >
                     {item.name.name}
                 </h2>
 
-                <h2 className="text-primary text-center mt-2">
+                <RenderItemIcon item={item} width={48} height={48} />
+
+                <h2 className={`text-center mt-2 font-semibold ${rarityColorClass}`} >
                     {item.rarity}
                 </h2>
+
             </div>
 
             <div className="divider lg:divider-horizontal"></div>

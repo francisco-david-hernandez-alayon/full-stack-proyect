@@ -5,28 +5,34 @@ import { getStyleForBiome } from "../../utils/GetBiomeStyle";
 import { getStyleForScene } from "../../utils/GetSceneStyle";
 import { ItemToolTip } from "../Game/ItemToolTip";
 import type { Item } from "../../../../domain/entities/items/item";
-import { getStyleForItem, ItemImageColor } from "../../utils/GetItemStyle";
 import { Enemy } from "../../../../domain/entities/enemy";
 import { EnemyScene } from "../../../../domain/entities/scenes/enemy-scene";
 import { ActivityIcon, AlertCircle, DiamondPlusIcon, DollarSign, Hand, Heart, Skull, Sword } from "lucide-react";
 import { TradeScene } from "../../../../domain/entities/scenes/trade-scene";
+import { RenderItemIcon } from "../Structure/RenderItemIcon";
+import { getItemRarityColor } from "../../utils/getItemRarityColor";
+import { getEnemyDifficultyColor } from "../../utils/getEnemyDifficultyColor";
+import { RenderEnemyIcon } from "../Structure/RenderEnemyIcon";
 
 interface itemSceneCardProps {
     item: Item
 }
 
 const ItemSceneCard: React.FC<itemSceneCardProps> = ({ item }) => {
+    const rarityColorClass = getItemRarityColor(item.rarity);
+
     return (
         <div className="relative group flex flex-col gap-2 items-center justify-center border rounded-xl w-20 h-25">
             <ItemToolTip item={item} />
 
-            <img
-                src={getStyleForItem(item, ItemImageColor.WHITE).image}
-                alt={item.name.name}
-                className="h-10 w-10 object-contain"
+            <RenderItemIcon
+                item={item}
+                width={40}
+                height={40}
             />
 
-            <div className="text-xs text-center text-custom-background">
+
+            <div className={`text-xs text-center text-custom-background ${rarityColorClass}`}>
                 {item.name.name}
             </div>
         </div>
@@ -40,28 +46,27 @@ interface enemySceneCardProps {
 }
 
 const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = false, currentEnemyHp = enemy.healthPoints }) => {
-    return (<div className="flex flex-col items-center justify-center border rounded-xl w-85 h-45">
-        <div className="text-2xl text-custom-background ">
+    const difficultyColorClass = getEnemyDifficultyColor(enemy.difficulty);
+
+    return (<div className="flex flex-col items-center bg-custom-background-soft justify-center border rounded-xl w-95 h-45">
+        <div className={`text-2xl text-custom-background ${difficultyColorClass}`}>
             {enemy.name.name}
         </div>
 
-        <div className="flex flex-row gap-4 items-center justify-center text-custom-background">
+        <div className={`flex flex-row gap-4 items-center justify-center ${difficultyColorClass}`}>
 
             {/* IMAGE and HP */}
             <div className="flex flex-col items-center gap-3">
-                <img
-                    src="/images/scenes/enemigo_blanco.png"
-                    alt={enemy.name.name}
-                    className="h-16 w-16 object-contain"
-                />
+                <RenderEnemyIcon enemy={enemy} width={64} height={64}/>
+
 
                 <div className="flex flex-row gap-1 items-center justify-center text-xl">
                     {enemyIsDead ? (
-                        <Skull className="text-custom-background w-6 h-6" />
+                        <Skull className="w-6 h-6" />
                     ) : (
                         <>
                             <span>{currentEnemyHp}/{enemy.healthPoints}</span>
-                            <Heart className="w-6 h-6 text-custom-background" />
+                            <Heart className="w-6 h-6" />
                         </>
                     )}
 
@@ -69,9 +74,9 @@ const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = fa
             </div>
 
             {/* Stats */}
-            <div className="flex flex-col gap-1 text-xm">
-                
-                <div className="flex items-center gap-2">
+            <div className={`flex flex-col gap-1 text-xm`}>
+
+                <div className="flex items-center gap-2" >
                     <AlertCircle className="w-4 h-4 " />
                     <span>{enemy.difficulty}</span>
                 </div>
@@ -242,7 +247,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene,
                                 <div className="flex flex-col gap-1 overflow-y-auto">
                                     {characterInventory?.map((item, index) => (
                                         <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
-                                            <span className="truncate flex-1">{item.name.name}</span>
+                                            <span className={`truncate flex-1 ${getItemRarityColor(item.rarity)}`}>{item.name.name}</span>
 
                                             <span className="flex items-center gap-1 mx-2">
                                                 <DollarSign className="w-3 h-3 text-custom-background" />
@@ -271,7 +276,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene,
                                         return (
                                             <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
 
-                                                <span className="truncate flex-1">{item.name.name}</span>
+                                                <span className={`truncate flex-1 ${getItemRarityColor(item.rarity)}`}>{item.name.name}</span>
 
                                                 <span className="flex items-center gap-1 mx-2">
                                                     <DollarSign className="w-3 h-3 text-custom-background" />
@@ -304,7 +309,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene,
                                     return (
                                         <div key={index} className="flex flex-row items-center justify-between p-2 border rounded-lg">
 
-                                            <span className="truncate flex-1">{item.name.name}</span>
+                                            <span className={`truncate flex-1 ${getItemRarityColor(item.rarity)}`}>{item.name.name}</span>
 
                                             <span className="flex items-center gap-1 mx-2">
                                                 <DollarSign className="w-3 h-3 text-custom-background" />

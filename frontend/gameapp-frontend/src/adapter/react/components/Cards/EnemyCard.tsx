@@ -1,21 +1,24 @@
 import type React from "react";
 import { ActivityIcon, Bolt, DiamondPlusIcon, DollarSign, Heart, Sword,  } from "lucide-react";
 import type { Enemy } from "../../../../domain/entities/enemy";
+import { getEnemyDifficultyColor } from "../../utils/getEnemyDifficultyColor";
 
 interface EnemyCardProps {
   enemy: Enemy;
 }
 
 export const EnemyCard: React.FC<EnemyCardProps> = ({ enemy }) => {
+  const difficultyColorClass = getEnemyDifficultyColor(enemy.difficulty);
+
   return (
     <div className="card bg-background shadow-md p-3 max-w-xs">
       <h2 className="card-title text-primary mb-2">
         {enemy.name.name}
       </h2>
 
-      <div className="flex flex-col gap-2 text-secondary">
-        <div className="flex items-center gap-2">
-          <Bolt className="w-5 h-5 text-custom-secondary" />
+      <div className="flex flex-col gap-2 ${difficultyColorClass}">
+        <div className={`flex items-center gap-2  ${difficultyColorClass}`}>
+          <Bolt className="w-5 h-5"/>
           <span>Difficulty: {enemy.difficulty}</span>
         </div>
 

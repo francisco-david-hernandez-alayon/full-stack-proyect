@@ -1,6 +1,7 @@
 using GameApp.Application.Enumerates;
 using GameApp.Application.UseCases.ItemUseCases;
 using GameApp.Domain.Entities.Items;
+using GameApp.Domain.Enumerates;
 using GameApp.Domain.Repositories;
 using GameApp.Domain.ValueObjects.Items;
 
@@ -28,9 +29,9 @@ public class ItemGetService : ItemGetUseCase
         return await _repo.FetchAllAsync();
     }
 
-    public async Task<IEnumerable<Item>> GetAllItemsByType(ItemType type)
+    public async Task<IEnumerable<Item>> GetAllItemsByFilter(ItemType? type, ItemRarity? rarity)
     {
-        return await _repo.FetchAllByTypeAsync(type);
+        return await _repo.FetchAllByFilterAsync(type, rarity);
 
     }
 }

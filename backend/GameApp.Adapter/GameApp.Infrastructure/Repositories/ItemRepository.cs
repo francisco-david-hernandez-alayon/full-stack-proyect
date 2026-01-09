@@ -6,6 +6,7 @@ using GameApp.Domain.ValueObjects.Items;
 using GameApp.Domain.Entities.Items;
 using GameApp.Adapter.Infrastructure.DbDataInitializer.ItemsAdders;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.Enumerates;
 
 
 namespace GameApp.Adapter.Infrastructure.Repositories;
@@ -25,11 +26,20 @@ public class ItemRepository : IItemRepository
         return docs.Select(ItemDocumentMapper.ToDomain);
     }
 
-    public async Task<IEnumerable<Item>> FetchAllByTypeAsync(ItemType type)
+    public async Task<IEnumerable<Item>> FetchAllByFilterAsync(ItemType? type, ItemRarity? rarity)
     {
-        var docs = await _items.Find(i => i.ItemType == type).ToListAsync();
+        var filter = Builders<ItemDocument>.Filter.Empty;
+
+        if (type.HasValue)
+            filter &= Builders<ItemDocument>.Filter.Eq(i => i.ItemType, type.Value);
+
+        if (rarity.HasValue)
+            filter &= Builders<ItemDocument>.Filter.Eq(i => i.Rarity, rarity.Value);
+
+        var docs = await _items.Find(filter).ToListAsync();
         return docs.Select(ItemDocumentMapper.ToDomain);
     }
+
 
     public async Task<Item?> FetchByIdAsync(Guid id)
     {

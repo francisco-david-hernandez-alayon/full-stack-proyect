@@ -3,6 +3,7 @@ import type { IItemRepository } from "../../repositories/iitem-repository";
 import { Item } from "../../../domain/entities/items/item";
 import type { ItemName } from "../../../domain/value-objects/items/item-name";
 import type { ItemType } from "../../enumerates/item-type";
+import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 
 export class ItemGetService implements IItemGetUseCase {
     constructor(private itemRepository: IItemRepository) {}
@@ -15,8 +16,8 @@ export class ItemGetService implements IItemGetUseCase {
         return await this.itemRepository.fetchByName(name);
     }
 
-    async getItemByType(type: ItemType): Promise<Item[]> {
-        return await this.itemRepository.fetchAllByType(type);
+    async getItemByFilter(type?: ItemType, rarity?: ItemRarity): Promise<Item[]> {
+        return await this.itemRepository.fetchAllByFilter(type, rarity);
     }
 
     async getAllItems(): Promise<Item[]> {
