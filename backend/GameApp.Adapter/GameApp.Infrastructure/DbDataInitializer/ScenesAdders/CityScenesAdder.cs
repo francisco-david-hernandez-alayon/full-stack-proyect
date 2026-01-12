@@ -50,7 +50,7 @@ public class CityScenesAdder : IScenesAdder
             new SceneName("City Attack Item"),
             new SceneDescription("In a blacksmith's stall, you find a well-balanced iron sword for sale."),
             biome,
-            AttackItemsAdders.IronSword
+            AttackItemsAdders.KnightSword
         ));
 
 
@@ -71,8 +71,8 @@ public class CityScenesAdder : IScenesAdder
             merchantMoneyToSpent: 150,
             merchantItemsOffer: new List<Item>
             {
-                AttackItemsAdders.IronSword,
-                AttackItemsAdders.Dagger,
+                AttackItemsAdders.KnightSword,
+                AttackItemsAdders.IronDaggers,
                 AtributteItemsAdders.HealthPotion,
                 AtributteItemsAdders.CheeseCake
             },

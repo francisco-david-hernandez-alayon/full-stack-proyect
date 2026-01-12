@@ -1,5 +1,5 @@
 import type React from "react";
-import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Ham, HeartPlus, Stone, Sword, } from "lucide-react";
+import { ActivityIcon, DiamondPlusIcon, DollarSign, Ham, HeartPlus, Stone, Sword, } from "lucide-react";
 import { Item } from "../../../../domain/entities/items/item";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
@@ -16,7 +16,6 @@ const renderItemDescription = (item: Item) => {
         return (
             <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                    <BookOpenTextIcon className="w-5 h-5 text-custom-secondary" />
                     <span>Description: {item.description.description}</span>
                 </div>
 
@@ -48,7 +47,6 @@ const renderItemDescription = (item: Item) => {
         return (
             <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                    <BookOpenTextIcon className="w-5 h-5 text-custom-secondary" />
                     <span>Description: {item.description.description}</span>
                 </div>
 
@@ -78,7 +76,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
 
     return (
         <div className="flex flex-row card bg-background shadow-md p-4 max-w-xl">
-            <div className="flex flex-col items-center justify-center p-2 w-24 flex-none">
+            <div className="flex flex-col items-center justify-center w-34 flex-none">
                 
                 <h2 className={`card-title text-center mt-2 ${rarityColorClass}`} >
                     {item.name.name}

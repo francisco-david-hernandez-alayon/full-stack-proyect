@@ -1,4 +1,4 @@
-import { ActivityIcon, BookOpenTextIcon, DiamondPlusIcon, DollarSign, Gem, Ham, HeartPlus, Stone, Sword } from "lucide-react";
+import { ActivityIcon, DiamondPlusIcon, DollarSign, Gem, Ham, HeartPlus, Stone, Sword } from "lucide-react";
 import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import type { Item } from "../../../../domain/entities/items/item";
@@ -6,6 +6,11 @@ import { getItemRarityColor } from "../../utils/getItemRarityColor";
 
 // MUST INCLUDE "relative group" in className when you gonna use it
 
+const formatPoints = (value: number): string => {
+    if (value > 0) return `+${value}`;
+    if (value < 0) return `${value}`;
+    return '0';
+};
 
 
 const renderItemTooltipContent = (item: Item) => {
@@ -15,7 +20,6 @@ const renderItemTooltipContent = (item: Item) => {
         return (
             <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                    <BookOpenTextIcon className="w-4 h-4 text-custom-secondary" />
                     <span>{item.description.description}</span>
                 </div>
 
@@ -56,7 +60,6 @@ const renderItemTooltipContent = (item: Item) => {
         return (
             <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                    <BookOpenTextIcon className="w-4 h-4 text-custom-secondary" />
                     <span>{item.description.description}</span>
                 </div>
 
@@ -72,13 +75,14 @@ const renderItemTooltipContent = (item: Item) => {
 
                 <div className="flex items-center gap-2">
                     <Ham className="w-4 h-4 text-custom-secondary" />
-                    <span>Food: +{item.foodPointsReceived}</span>
+                    <span>Food: {formatPoints(item.foodPointsReceived)}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                     <HeartPlus className="w-4 h-4 text-custom-secondary" />
-                    <span>Health: +{item.healthPointsReceived}</span>
+                    <span>Health: {formatPoints(item.healthPointsReceived)}</span>
                 </div>
+
             </div>
         );
     }

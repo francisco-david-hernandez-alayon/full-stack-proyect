@@ -49,7 +49,7 @@ public class DesertScenesAdder : IScenesAdder
             new SceneName("Desert Attack Item"),
             new SceneDescription("You find an old dagger stuck in the sand, left behind by a previous traveler."),
             biome,
-            AttackItemsAdders.Dagger
+            AttackItemsAdders.IronDaggers
         ));
 
         // Enemy Scene
@@ -68,7 +68,7 @@ public class DesertScenesAdder : IScenesAdder
             merchantMoneyToSpent: 80,
             merchantItemsOffer: new List<Item>
             {
-                AttackItemsAdders.IronSword,
+                AttackItemsAdders.KnightSword,
                 AtributteItemsAdders.HealthPotion,
                 AtributteItemsAdders.CheeseCake
             },

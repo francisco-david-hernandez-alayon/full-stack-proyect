@@ -13,7 +13,7 @@ public interface GameAdders : IGameAdders
     {
         List<Game> gamesToAdd = new List<Game>();
         ThiefCharacter thief = new ThiefCharacter();
-        thief = thief.AddItemInventory(AttackItemsAdders.IronSword) as ThiefCharacter;
+        thief = thief.AddItemInventory(AttackItemsAdders.KnightSword) as ThiefCharacter;
         thief = thief.AddItemInventory(AtributteItemsAdders.Bread) as ThiefCharacter;
         thief = thief.AddItemInventory(AtributteItemsAdders.HealthPotion) as ThiefCharacter;
 

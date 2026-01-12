@@ -64,7 +64,7 @@ public class ForestScenesAdder : IScenesAdder
             new SceneName("Forest attack item 1"),
             new SceneDescription("While exploring the forest, you stumble upon a wooden sword lying on the ground."),
             biome,
-            AttackItemsAdders.WoodSword
+            AttackItemsAdders.OldStoneSword
         ));
 
         // Enemy Scenes
@@ -105,7 +105,7 @@ public class ForestScenesAdder : IScenesAdder
             merchantMoneyToSpent: 50, 
             merchantItemsOffer: new List<Item>
             {
-                AttackItemsAdders.WoodSword,
+                AttackItemsAdders.OldStoneSword,
                 AtributteItemsAdders.Bread,
             },
             profitMerchantMargin: 3 
@@ -118,8 +118,8 @@ public class ForestScenesAdder : IScenesAdder
             merchantMoneyToSpent: 100, 
             merchantItemsOffer: new List<Item>
             {
-                AttackItemsAdders.IronSword,
-                AttackItemsAdders.SteelAxe,
+                AttackItemsAdders.KnightSword,
+                AttackItemsAdders.BlacksmithsHammer,
                 AtributteItemsAdders.HealthPotion
             },
             profitMerchantMargin: 5 

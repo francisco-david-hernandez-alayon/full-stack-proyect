@@ -52,14 +52,14 @@ public class SwampScenesAdder : IScenesAdder
             new SceneName("Swamp Attack Item 1"),
             new SceneDescription("Half-sunk in the swamp water, you recover a rusty but usable steel axe."),
             biome,
-            AttackItemsAdders.SteelAxe
+            AttackItemsAdders.BlacksmithsHammer
         ));
 
         scenesToAdd.Add(new ItemScene(
             new SceneName("Swamp Attack Item 2"),
             new SceneDescription("You see an old wooden sword in a puddle"),
             biome,
-            AttackItemsAdders.WoodSword
+            AttackItemsAdders.OldStoneSword
         ));
 
 
@@ -87,7 +87,7 @@ public class SwampScenesAdder : IScenesAdder
             merchantMoneyToSpent: 90,
             merchantItemsOffer: new List<Item>
             {
-                AttackItemsAdders.Dagger,
+                AttackItemsAdders.IronDaggers,
                 AtributteItemsAdders.HealthPotion,
                 AtributteItemsAdders.Bread
             },
