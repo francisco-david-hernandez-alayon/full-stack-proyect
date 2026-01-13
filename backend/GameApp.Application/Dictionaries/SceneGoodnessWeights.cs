@@ -18,7 +18,7 @@ public record SceneGoodnessWeights
             [SceneGoodness.VeryGood] = 5,
             [SceneGoodness.Good] = 10,
             [SceneGoodness.Normal] = 10,
-            [SceneGoodness.Bad] = 10,
+            [SceneGoodness.Bad] = 7,
             [SceneGoodness.VeryBad] = 5
         },
 

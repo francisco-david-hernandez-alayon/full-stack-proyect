@@ -44,7 +44,7 @@ export const EnemyCard: React.FC<EnemyCardProps> = ({ enemy }) => {
 
         <div className="flex items-center gap-2">
           <DollarSign className="w-5 h-5 text-custom-secondary" />
-          <span>Reward Money: {enemy.speedAttack}</span>
+          <span>Reward Money: {enemy.rewardMoney}</span>
         </div>
       </div>
     </div>

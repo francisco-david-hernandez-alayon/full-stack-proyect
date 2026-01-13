@@ -12,24 +12,23 @@ public interface GameAdders : IGameAdders
     public static void AddGames(List<Game> games)
     {
         List<Game> gamesToAdd = new List<Game>();
-        ThiefCharacter thief = new ThiefCharacter();
-        thief = thief.AddItemInventory(AttackItemsAdders.KnightSword) as ThiefCharacter;
-        thief = thief.AddItemInventory(AtributteItemsAdders.Bread) as ThiefCharacter;
-        thief = thief.AddItemInventory(AtributteItemsAdders.HealthPotion) as ThiefCharacter;
+        WarriorCharacter warrior = new WarriorCharacter();
+        warrior = warrior.AddItemInventory(AttackItemsAdders.OldStoneSword) as WarriorCharacter;
+        warrior = warrior.AddItemInventory(AtributteItemsAdders.Apple) as WarriorCharacter;
 
-        if (thief != null)
+        if (warrior != null)
         {
             FinalScene finalScene = ForestScenesAdder.FinalScene;
             List<Scene> currentScenes = new List<Scene> { ForestScenesAdder.InitialScene };
             List<UserAction> currentUserAction = new List<UserAction> { UserAction.UseItem, UserAction.MoveForward };
 
-            Game game1 = new Game(GameDifficulty.Normal, thief, 10, finalScene, currentScenes, currentUserAction);
+            Game game1 = new Game(GameDifficulty.Normal, warrior, 30, finalScene, currentScenes, currentUserAction);
             gamesToAdd.Add(game1);
             games.AddRange(gamesToAdd);
 
         }   else
         {
-            Console.WriteLine("thief is null when game is creating: " + thief);
+            Console.WriteLine("warrior is null when game is creating: " + warrior);
         }
 
     }

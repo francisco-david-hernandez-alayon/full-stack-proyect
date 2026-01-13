@@ -11,8 +11,8 @@ public class WarriorCharacter : Character
     private static readonly int DefaultMaxFoodPoints = 100;
     private static readonly int DefaultMaxInventorySlots = 5;
     private static readonly int DefaultStartingMoney = 10;
-    private static readonly int DefaultAttackSpeed = 3;
-    private static readonly int DefaultAttackDamage = 3;
+    private static readonly int DefaultAttackSpeed = 2;
+    private static readonly int DefaultAttackDamage = 5;
 
 
     // Character Ability

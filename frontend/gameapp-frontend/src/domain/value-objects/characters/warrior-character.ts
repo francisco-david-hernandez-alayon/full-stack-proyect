@@ -8,8 +8,8 @@ export class WarriorCharacter extends Character {
     static DEFAULT_MAX_FOOD = 100;
     static DEFAULT_MAX_SLOTS = 5;
     static DEFAULT_MONEY = 10;
-    static DEFAULT_ATTACK_SPEED = 3;
-    static DEFAULT_ATTACK_DAMAGE = 3;
+    static DEFAULT_ATTACK_SPEED = 2;
+    static DEFAULT_ATTACK_DAMAGE = 5;
 
     // Character Ability
     static HITS_NEEDED_TO_GET_ABILITY = 10;

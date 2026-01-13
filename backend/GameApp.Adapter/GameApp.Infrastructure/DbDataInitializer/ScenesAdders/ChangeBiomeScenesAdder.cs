@@ -12,28 +12,29 @@ public class ChangeBiomesScenesAdder : IScenesAdder
         List<Scene> scenesToAdd = new List<Scene>();
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Forest"),
-            new SceneDescription("A narrow path opens, leading you into a deep forest."),
+            new SceneName("Discovering a forest"),
+            new SceneDescription("You catch sight of towering, leafy trees ahead, revealing a beautiful forest brimming with life. "),
             Biome.Forest
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Desert"),
-            new SceneDescription("The terrain shifts into endless dunes as you enter the desert."),
+            new SceneName("Into the Endless Dunes"),
+            new SceneDescription("Suddenly, a suffocating heat hits you as the landscape opens before your eyes. Endless sand dunes stretch as far as you can see, shimmering under the relentless sun."),
             Biome.Desert
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome City"),
-            new SceneDescription("Ruins and stone roads appear as you arrive at an abandoned city."),
+            new SceneName("Arriving at the Bustling City"),
+            new SceneDescription("The sounds and commotion of people draw your attention. Before you rises a sprawling city, filled with shops and streets teeming with life, inviting you to explore its many corners"),
             Biome.City
         ));
 
         scenesToAdd.Add(new ChangeBiomeScene(
-            new SceneName("Change Biome Swamp"),
-            new SceneDescription("The ground turns wet and murky as you step into a dark swamp."),
+            new SceneName("Into the Murky Swamp"),
+            new SceneDescription("The air grows heavy and damp, carrying a sharp, unpleasant odor. Dark, treacherous waters stretch around you, and countless hidden creatures lurk beneath, making every step potentially deadly."),
             Biome.Swamp
         ));
+
 
         scenes.AddRange(scenesToAdd);
     }

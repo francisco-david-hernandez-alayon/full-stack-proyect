@@ -110,6 +110,17 @@ public class AttackItemsAdders : IItemsAdder
         new CriticalDamage(criticalProbability: 5, extraDamage: 5)
     );
 
+    public static readonly AttackItem Mace = new(
+        ItemRarity.Rare,
+        new ItemName("Mace"),
+        new ItemDescription("A heavily reinforced mace full of spikes"),
+        tradePrice: 22,
+        attackDamage: 30,
+        speedAttack: 0,
+        durability: 7,
+        new CriticalDamage(criticalProbability: 15, extraDamage: 5)
+    );
+
 
 
     // EPIC
@@ -162,7 +173,7 @@ public class AttackItemsAdders : IItemsAdder
     public static void AddItems(List<Item> items)
     {
         items.AddRange(new List<Item> { WoodenStick, SharpStone, WoodenBludgeon, OldStoneSword, StoneAxe,
-                                        KnightSword, IronDaggers, IronSpear, BlacksmithsHammer,
+                                        KnightSword, IronDaggers, IronSpear, BlacksmithsHammer, Mace,
                                         DaggerSwampBeast, WilliamKinonSword, SacredForestBranch, FaraelCursedScythe
           });   
     }

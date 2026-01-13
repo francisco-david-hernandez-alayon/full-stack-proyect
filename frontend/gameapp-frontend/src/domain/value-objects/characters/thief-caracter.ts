@@ -8,8 +8,8 @@ export class ThiefCharacter extends Character {
     static DEFAULT_MAX_FOOD = 90;
     static DEFAULT_MAX_SLOTS = 6;
     static DEFAULT_MONEY = 30;
-    static DEFAULT_ATTACK_SPEED = 4;
-    static DEFAULT_ATTACK_DAMAGE = 2;
+    static DEFAULT_ATTACK_SPEED = 3;
+    static DEFAULT_ATTACK_DAMAGE = 3;
 
     // Character Ability
     static EXTRA_MONEY_WHEN_KILL_ENEMY = 5;

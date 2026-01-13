@@ -48,8 +48,8 @@ interface enemySceneCardProps {
 const EnemySceneCard: React.FC<enemySceneCardProps> = ({ enemy, enemyIsDead = false, currentEnemyHp = enemy.healthPoints }) => {
     const difficultyColorClass = getEnemyDifficultyColor(enemy.difficulty);
 
-    return (<div className="flex flex-col items-center bg-custom-background-soft justify-center border rounded-xl w-95 h-45">
-        <div className={`text-2xl text-custom-background ${difficultyColorClass}`}>
+    return (<div className="flex flex-col items-center bg-custom-background-soft justify-center border rounded-xl w-105 h-55">
+        <div className={`text-xl text-custom-background ${difficultyColorClass}`}>
             {enemy.name.name}
         </div>
 
@@ -148,7 +148,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({ CharacterInScene, scene,
 
     return (
         <div
-            className="flex flex-col items-center justify-start p-4 rounded-2xl text-custom-background font-semibold w-full h-full max-w-3xl"
+            className="flex flex-col items-center justify-start p-2 rounded-2xl text-custom-background font-semibold w-full h-full max-w-3xl"
             style={{ backgroundColor: biomeStyle.color }}
         >
 

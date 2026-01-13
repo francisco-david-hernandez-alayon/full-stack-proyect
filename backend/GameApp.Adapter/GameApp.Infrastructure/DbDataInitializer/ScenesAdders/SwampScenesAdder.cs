@@ -65,10 +65,10 @@ public class SwampScenesAdder : IScenesAdder
 
         // Enemy Scene
         scenesToAdd.Add(new EnemyScene(
-            new SceneName("Swamp Skeleton Encounter"),
+            new SceneName("Swamp Skeleton Possesed Encounter"),
             new SceneDescription("A skeleton rises from the murky waters, its bones covered in swamp filth."),
             biome,
-            EnemysAdder.Skeleton
+            EnemysAdder.PossessedSkeleton
         ));
 
         scenesToAdd.Add(new EnemyScene(

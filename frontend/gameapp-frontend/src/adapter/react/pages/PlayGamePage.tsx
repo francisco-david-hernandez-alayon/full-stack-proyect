@@ -317,7 +317,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
             </div>
 
             {/* CURRENT SCENES */}
-            <div className="flex flex-1  gap-12 p-12 bg-custom-background">
+            <div className="flex flex-1  gap-12 p-10 bg-custom-background">
                 {game.currentScenes.map((scene, index) => (
                     <div key={index} className="flex flex-1 justify-center">
                         <SceneCard CharacterInScene={game.currentScenes.length == 1} scene={scene} canMoveForward={game.currentEnemy == null} getMoveForwardSceneId={moveForwardScene}
