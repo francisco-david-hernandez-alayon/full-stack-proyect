@@ -62,6 +62,18 @@ public class ForestScenesAdder : IScenesAdder
         ));
 
         scenesToAdd.Add(new NothingHappensScene(
+            new SceneName("Mist Between the Trees"),
+            new SceneDescription("A thin mist weaves between the trees, softening the forest around you. Your steps echo quietly on damp ground, but nothing emerges from the haze."),
+            biome
+        ));
+
+        scenesToAdd.Add(new NothingHappensScene(
+            new SceneName("Old Footprints on Forest Soil"),
+            new SceneDescription("You notice old footprints pressed into the forest soil, half-erased by time and rain. Whoever passed through is long gone, leaving the woods silent once more."),
+            biome
+        ));
+
+        scenesToAdd.Add(new NothingHappensScene(
             new SceneName("Glimpse of Golden Light"),
             new SceneDescription("A faint, almost celestial sound reaches your ears, and you catch sight of a golden glimmer deep among the trees. As you rush forward, you stumble, and the radiant vision vanishes as quickly as it appeared."),
             biome
@@ -279,7 +291,7 @@ public class ForestScenesAdder : IScenesAdder
         ));
 
         scenesToAdd.Add(new TradeScene(
-            new SceneName("Shady Hooded Merchant on Forest"),
+            new SceneName("Dark Trafficker encounter on Forest"),
             new SceneDescription("A hooded merchant approaches with great interest and offers rare items for sale; from his clothing, one can guess that he belongs to the dark traffickers."),
             biome,
             merchantMoneyToSpent: 50,

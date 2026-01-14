@@ -16,7 +16,7 @@ public record SceneGoodnessWeights
         [GameDifficulty.Normal] = new Dictionary<SceneGoodness, int>
         {
             [SceneGoodness.VeryGood] = 5,
-            [SceneGoodness.Good] = 10,
+            [SceneGoodness.Good] = 8,
             [SceneGoodness.Normal] = 10,
             [SceneGoodness.Bad] = 7,
             [SceneGoodness.VeryBad] = 5

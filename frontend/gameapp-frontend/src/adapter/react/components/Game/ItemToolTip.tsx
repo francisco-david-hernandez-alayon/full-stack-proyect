@@ -73,15 +73,20 @@ const renderItemTooltipContent = (item: Item) => {
                     <span>Price: {item.tradePrice}</span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <Ham className="w-4 h-4 text-custom-secondary" />
-                    <span>Food: {formatPoints(item.foodPointsReceived)}</span>
-                </div>
+                {item.foodPointsReceived != 0 && (
+                    <div className="flex items-center gap-2">
+                        <Ham className="w-4 h-4 text-custom-secondary" />
+                        <span>Food: {formatPoints(item.foodPointsReceived)}</span>
+                    </div>
+                )}
 
-                <div className="flex items-center gap-2">
-                    <HeartPlus className="w-4 h-4 text-custom-secondary" />
-                    <span>Health: {formatPoints(item.healthPointsReceived)}</span>
-                </div>
+                {item.healthPointsReceived != 0 && (
+                    <div className="flex items-center gap-2">
+                        <HeartPlus className="w-4 h-4 text-custom-secondary" />
+                        <span>Health: {formatPoints(item.healthPointsReceived)}</span>
+                    </div>
+                )}
+
 
             </div>
         );

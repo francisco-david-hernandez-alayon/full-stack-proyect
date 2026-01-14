@@ -111,8 +111,10 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         return GetRandomByWeight(biomeProbabilities);
     }
 
-    private Scene GetRandomSceneFromListScenes(List<Scene> scenes, GameDifficulty difficulty)
+    private Scene GetRandomSceneFromListScenes(List<Scene> scenes, GameDifficulty difficulty, int completedScenes)
     {
+        const int NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES = 10;
+
         Dictionary<SceneGoodness, int> sceneGoodnessWeights = SceneGoodnessWeights.Weights[difficulty];
         List<KeyValuePair<Scene, int>> sceneProbabilities = new List<KeyValuePair<Scene, int>>();
 
@@ -160,9 +162,18 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
                             sceneGoodness = SceneGoodness.Bad;
                             break;
                         case EnemyDifficulty.Hard:
+                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES)
+                            {
+                                continue;
+                            }
                             sceneGoodness = SceneGoodness.Bad;
                             break;
                         case EnemyDifficulty.Boss:
+                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES)
+                            {
+                                continue;
+                            }
+
                             sceneGoodness = SceneGoodness.VeryBad;
                             break;
                         default:
@@ -233,7 +244,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         Scene sceneGenerated = GetRandomByWeight(sceneProbabilities);
 
 
-        Console.WriteLine("Scene probabilities: ");
+        Console.WriteLine("Scene probabilities in round " + completedScenes + ": ");
         foreach (var kvp in sceneProbabilities)
         {
             Console.WriteLine($"--> Scene: {kvp.Key.GetType().Name} {kvp.Key.GetName()}, Weight: {kvp.Value})");
@@ -245,7 +256,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
 
 
-    private async Task<Scene> GenerateScene(Biome currentBiome, GameDifficulty difficulty)
+    private async Task<Scene> GenerateScene(Biome currentBiome, GameDifficulty difficulty, int completedScenes)
     {
         // 1- Get Type of scene generated
         IEnumerable<Scene> candidateScenes;
@@ -270,7 +281,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         }
 
         // 2- Pick random scene of scenesList
-        Scene randomScene = GetRandomSceneFromListScenes(scenesList, difficulty);
+        Scene randomScene = GetRandomSceneFromListScenes(scenesList, difficulty, completedScenes);
 
         // 3- Return scene
         return randomScene;
@@ -345,7 +356,7 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
             for (int i = 0; i < numberOfScenesToGenerate; i++)
             {
-                Scene randomScene = await GenerateScene(sceneSelected.GetBiome(), game.GetDifficulty());
+                Scene randomScene = await GenerateScene(sceneSelected.GetBiome(), game.GetDifficulty(), game.GetCompletedScenes().Count);
                 newScenes.Add(randomScene);
             }
         }
