@@ -24,7 +24,8 @@ import { GameSummary } from "../components/Game/GameSummary";
 import { GameTradeService } from "../../../application/services/game-services/game-trade-service";
 import { GameUseCharacterAbilityService } from "../../../application/services/game-services/game-use-character-ability-service";
 import { CharacterAbilityButton } from "../components/Game/CharacterAbilityButton";
-import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import { AttackItem } from "../../../domain/entities/items/attack-item";
+import { DamageAlertInfo } from "../components/Game/DamageAlertInfo";
 
 
 interface PlayGamePageProps {
@@ -32,8 +33,17 @@ interface PlayGamePageProps {
 
 }
 
+export interface DamageAlertData {
+  userDamage: number;
+  enemyDamage: number;
+}
+
 
 export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
+    // ALERT DAMAGE
+    const [damageAlert, setDamageAlert] = useState<DamageAlertData | null>(null);
+
+
     const { id } = useParams<{ id: string }>(); // get url id
     const [game, setGame] = useState<Game | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -131,8 +141,24 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     //---------------------------------------------------------ITEM-FUNCTIONS----------------------------------------------------------//
     const useInventoryItem = async (positionItemSelected: number) => {
         try {
+            // check if user attack enemy
+            const userHpBeforeAttack = game.character.currentHealthPoints;
+            const enemyHpBeforeAttack = game.currentEnemy?.healthPoints ?? 0;
+            let attackEnemy = false;
+            if (game.character.inventoryList[positionItemSelected] instanceof AttackItem && game.currentEnemy != null) {
+                attackEnemy = true;
+            }
+            
             const updatedGame = await gameUseItemService.useInventoryItem(positionItemSelected, game);
             setGame(updatedGame);
+
+            // Show attack result
+            if (attackEnemy) {
+                const userDamage = enemyHpBeforeAttack - (updatedGame.currentEnemy?.healthPoints ?? 0);
+                const enemyDamage = userHpBeforeAttack - updatedGame.character.currentHealthPoints;
+                setDamageAlert({ userDamage, enemyDamage });
+            }
+
 
         } catch (error) {
             showAlert({
@@ -204,8 +230,17 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     const attackWithoutItem = async () => {
         try {
             if (game.currentEnemy) {
+                const userHpBeforeAttack = game.character.currentHealthPoints;
+                const enemyHpBeforeAttack = game.currentEnemy?.healthPoints ?? 0;
+
                 const updatedGame = await gameUseItemService.attackWithoutItem(game);
                 setGame(updatedGame);
+
+                // Show attack result
+                const userDamage = enemyHpBeforeAttack - (updatedGame.currentEnemy?.healthPoints ?? 0);
+                const enemyDamage = userHpBeforeAttack - updatedGame.character.currentHealthPoints;
+                setDamageAlert({ userDamage, enemyDamage });
+
             }
 
         } catch (error) {
@@ -255,6 +290,11 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
             const updatedGame = await gameUseCharacterAbilityService.useAbility(game);
             setGame(updatedGame);
 
+            if (game.character instanceof WarriorCharacter && game.character.canUseAbility()) {
+                const warriorDamage = WarriorCharacter.ABILITY_DAMAGE;
+                setDamageAlert({ userDamage: warriorDamage, enemyDamage: 0 });
+            }
+
         } catch (error) {
             showAlert({
                 message: "Error attacking with ability: " + error,
@@ -286,6 +326,17 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
     return (
         <div className="flex flex-col align-center h-full">
+            {/* Damage Alert */}
+            {damageAlert && (
+            <DamageAlertInfo
+                key={Date.now()}  // force re-render if invoked consecutively
+                userDamage={damageAlert.userDamage}
+                enemyDamage={damageAlert.enemyDamage}
+                onClose={() => setDamageAlert(null)}
+                />
+            )}
+
+
             {/* HEADER */}
             <div className="flex flex-row p-4 justify-between items-center h-20 bg-custom-secondary">
                 <h1 className="text-custom-background">Difficulty: {game.difficulty}</h1>
