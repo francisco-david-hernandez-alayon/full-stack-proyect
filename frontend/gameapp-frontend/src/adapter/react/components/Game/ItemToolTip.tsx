@@ -4,7 +4,38 @@ import { AttackItem } from "../../../../domain/entities/items/attack-item";
 import type { Item } from "../../../../domain/entities/items/item";
 import { getItemRarityColor } from "../../utils/getItemRarityColor";
 
-// MUST INCLUDE "relative group" in className when you gonna use it
+// INCLUDE ON PARENT
+/*
+// ItemToolTip
+const slotRef = useRef<HTMLDivElement>(null);
+const [showTooltip, setShowTooltip] = useState(false);
+const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
+const handleMouseEnter = () => {
+    if (!slotRef.current) return;
+
+    const rect = slotRef.current.getBoundingClientRect();
+
+    setTooltipPos({
+        top: rect.top - 8,
+        left: rect.left + rect.width / 2,
+    });
+
+    setShowTooltip(true);
+};
+
+const handleMouseLeave = () => {
+    setShowTooltip(false);
+};
+
+
+<div ref={slotRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+{showTooltip && (
+                <ItemToolTip item={item} top={tooltipPos.top} left={tooltipPos.left} />
+            )}
+</div>
+*/
+
 
 const formatPoints = (value: number): string => {
     if (value > 0) return `+${value}`;
@@ -95,27 +126,40 @@ const renderItemTooltipContent = (item: Item) => {
     return null;
 };
 
-interface InventoryItemToolTipProps {
+interface ItemToolTipProps {
     item: Item;
+    top: number;
+    left: number;
 }
 
 
-export const ItemToolTip: React.FC<InventoryItemToolTipProps> = ({ item }) => {
-    return (
+import { createPortal } from "react-dom";
+
+export const ItemToolTip: React.FC<ItemToolTipProps> = ({ item, top, left }) => {
+    return createPortal(
         <div
-            className="absolute bottom-full mb-2 hidden group-hover:flex 
-                           w-52 p-3 rounded-lg shadow-lg
-                           bg-custom-background text-custom-secondary
-                           border border-custom-secondary
-                           z-50"
+            className="fixed z-[9999]
+                       w-52 p-3 rounded-lg shadow-lg
+                       bg-custom-background text-custom-secondary
+                       border border-custom-secondary
+                       pointer-events-none"
+            style={{
+                top,
+                left,
+                transform: "translate(-50%, -100%)",
+            }}
         >
             <div className="flex flex-col gap-2 text-sm">
                 <span className="font-semibold text-base">
                     {item.name.name}
                 </span>
-
+                
                 {renderItemTooltipContent(item)}
+
             </div>
-        </div>
+        </div>,
+        document.body
     );
-}
+};
+
+

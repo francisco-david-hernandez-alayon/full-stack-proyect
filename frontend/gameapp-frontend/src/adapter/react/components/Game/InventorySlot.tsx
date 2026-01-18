@@ -5,6 +5,7 @@ import { ItemToolTip } from "./ItemToolTip";
 import { Trash2 } from "lucide-react";
 import { RenderItemIcon } from "../Structure/RenderItemIcon";
 import { getItemRarityColor } from "../../utils/getItemRarityColor";
+import { useRef, useState } from "react";
 
 interface InventorySlotProps {
     item?: Item;
@@ -14,7 +15,29 @@ interface InventorySlotProps {
 
 
 export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dropItem }) => {
-    
+    // ItemToolTip
+    const slotRef = useRef<HTMLDivElement>(null);
+    const [showTooltip, setShowTooltip] = useState(false);
+    const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+
+    const handleMouseEnter = () => {
+        if (!slotRef.current) return;
+
+        const rect = slotRef.current.getBoundingClientRect();
+
+        setTooltipPos({
+            top: rect.top - 8,
+            left: rect.left + rect.width / 2,
+        });
+
+        setShowTooltip(true);
+    };
+
+    const handleMouseLeave = () => {
+        setShowTooltip(false);
+    };
+
+
     // EMPTY SLOT
     if (!item) {
         return (
@@ -32,22 +55,17 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
     const rarityColorClass = getItemRarityColor(item.rarity);
 
     return (
-        <div className="relative group">
-            {/* Tooltip */}
-            <ItemToolTip item={item} />
-
-            {/* Slot */}
-            <div
+            <div ref={slotRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                 className="flex flex-col items-center justify-between
-               border rounded-xl
-               w-35 h-40
-               p-2
-               bg-custom-background
-               hover:shadow-lg transition-shadow
-               cursor-default"
-                style={{ borderColor: "var(--color-secondary)" }}
+                           border rounded-xl
+                           w-35 h-40 p-2
+                           bg-custom-background"
             >
-
+                {/* Tooltip */}
+                {showTooltip && (
+                    <ItemToolTip item={item} top={tooltipPos.top} left={tooltipPos.left} />
+                )}
+                
                 {/* Item icon */}
                 <RenderItemIcon item={item} width={56} height={56} />
 
@@ -75,12 +93,9 @@ export const InventorySlot: React.FC<InventorySlotProps> = ({ item, useItem, dro
                     </button>
                 </div>
 
-
-
             </div>
-
-        </div>
     );
 };
+
 
 

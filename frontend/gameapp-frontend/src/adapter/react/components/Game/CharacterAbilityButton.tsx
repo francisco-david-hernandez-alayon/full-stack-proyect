@@ -26,7 +26,7 @@ export const CharacterAbilityButton: React.FC<CharacterAbilityButtonProps> = ({
 
 
     return (
-        <div className="relative inline-block group text-center">
+        <div className="relative group inline-block  text-center">
             {/* Circular Button */}
             <div
 

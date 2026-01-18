@@ -441,7 +441,7 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
 
                 {/* Inventory */}
                 <div className="flex items-center  gap-5 pr-10">
-                    <div className="flex flex-wrap items-center gap-5 max-w-5xl ">
+                    <div className="flex items-center gap-5 max-w-200 overflow-x-auto ">
 
                         {game.character.inventoryList.map((item, index) => (
                             <div key={index} className="flex justify-center">
