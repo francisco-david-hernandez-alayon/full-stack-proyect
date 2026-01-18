@@ -12,7 +12,7 @@ public class GameResponseDto
 
     public GameDifficulty Difficulty { get; set; }
 
-    public CharacterResponseDto Character { get; set; } = default!;
+    public CharacterDto Character { get; set; } = default!;
 
     public int NumberScenesToFinish { get; set; }
 

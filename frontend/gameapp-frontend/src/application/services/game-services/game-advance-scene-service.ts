@@ -7,6 +7,7 @@ export class GameAdvanceSceneService implements IGameAdvanceSceneUseCase {
 
     async advance(currentSceneSelectedId: string, game: Game): Promise<Game> {
         const updatedGame = await this.gameRepository.generateNewScene(currentSceneSelectedId, game);
+        
         return updatedGame;
     }
 }

@@ -18,6 +18,7 @@ export class GameCreateService implements IGameCreateUseCase {
         listCurrentScenes: Scene[],
         listCurrentUserActions: UserAction[]
     ): Promise<Game> {
+
         const game = new Game(difficulty, character, numberScenesToFinish, finalScene, listCurrentScenes, listCurrentUserActions);
         const gameSaved = await this.gameRepository.save(game);
         return gameSaved;

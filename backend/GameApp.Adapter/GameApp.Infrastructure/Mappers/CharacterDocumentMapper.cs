@@ -13,9 +13,20 @@ public static class CharacterDocumentMapper
     {
         // Get character atributes
         int? currentHits = null;
+        int? currentKills = null;
+        int? currentNothingHappensScenes = null;
+
         if (character is WarriorCharacter warrior)
         {
             currentHits = warrior.GetHits();
+        }
+        if (character is BerserkerCharacter berserker)
+        {
+            currentKills = berserker.GetKills();
+        }
+        if (character is ExplorerCharacter explorer)
+        {
+            currentNothingHappensScenes = explorer.GetNothingHappensScenesVisited();
         }
 
 
@@ -25,6 +36,8 @@ public static class CharacterDocumentMapper
             {
                 WarriorCharacter => CharacterType.Warrior,
                 ThiefCharacter => CharacterType.Thief,
+                BerserkerCharacter => CharacterType.Berserker,
+                ExplorerCharacter => CharacterType.Explorer,
                 _ => CharacterType.None
             },
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
@@ -33,6 +46,8 @@ public static class CharacterDocumentMapper
 
             // optional atributes
             CurrentHits = currentHits,
+            CurrentKills = currentKills,
+            CurrentNothingHappensScenes = currentNothingHappensScenes,
 
             // Map item name + durability
             InventoryList = character.GetInventoryList()
@@ -89,9 +104,24 @@ public static class CharacterDocumentMapper
                 currentMoney: doc.CurrentMoney,
                 inventoryList: inventoryDomain
             ),
+            CharacterType.Berserker => new BerserkerCharacter(
+                currentHealthPoints: doc.CurrentHealthPoints,
+                currentFoodPoints: doc.CurrentFoodPoints,
+                currentMoney: doc.CurrentMoney,
+                inventoryList: inventoryDomain,
+                currentKills: doc.CurrentKills ?? 0 // 0 kills by default
+            ),
+            CharacterType.Explorer => new ExplorerCharacter(
+                currentHealthPoints: doc.CurrentHealthPoints,
+                currentFoodPoints: doc.CurrentFoodPoints,
+                currentMoney: doc.CurrentMoney,
+                inventoryList: inventoryDomain,
+                currentNothingHappensScenesVisited: doc.CurrentNothingHappensScenes ?? 0 // 0 scenes by default
+            ),
             _ => throw new ArgumentException($"Unsupported character type: {doc.Type}")
         };
     }
+
 
     // GET ITEMS FOR OTHER COLLECTIONS
     private static async Task<Item> GetItemByName(ItemName name, IItemRepository itemRepository)

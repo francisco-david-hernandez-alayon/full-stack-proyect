@@ -7,7 +7,7 @@ namespace GameApp.Adapter.Api.Mappers;
 
 public static class CharacterDtoMapper
 {
-    public static Character ToDomain(CharacterResponseDto dto)
+    public static Character ToDomain(CharacterDto dto)
     {
         if (dto == null)
             throw new ArgumentNullException(nameof(dto));
@@ -28,6 +28,20 @@ public static class CharacterDtoMapper
                 currentMoney: dto.CurrentMoney,
                 inventoryList: dto.InventoryList.Select(ItemDtoMapper.ToDomain).ToList()
             ),
+            CharacterType.Berserker => new BerserkerCharacter(
+                currentHealthPoints: dto.CurrentHealthPoints,
+                currentFoodPoints: dto.CurrentFoodPoints,
+                currentMoney: dto.CurrentMoney,
+                inventoryList: dto.InventoryList.Select(ItemDtoMapper.ToDomain).ToList(),
+                currentKills: dto.CurrentKills ?? 0 // 0 by default
+            ),
+            CharacterType.Explorer => new ExplorerCharacter(
+                currentHealthPoints: dto.CurrentHealthPoints,
+                currentFoodPoints: dto.CurrentFoodPoints,
+                currentMoney: dto.CurrentMoney,
+                inventoryList: dto.InventoryList.Select(ItemDtoMapper.ToDomain).ToList(),
+                currentNothingHappensScenesVisited: dto.CurrentNothingHappensScenes ?? 0 // 0 by default
+            ),
 
             _ => throw new ArgumentException($"Unsupported character type: {dto.Type}")
         };
@@ -44,6 +58,12 @@ public static class CharacterDtoMapper
 
             case CharacterType.Thief:
                 return new ThiefCharacter();
+            
+            case CharacterType.Berserker:
+                return new BerserkerCharacter();
+            
+            case CharacterType.Explorer:
+                return new ExplorerCharacter();
 
             default:
                 throw new ArgumentException($"Unsupported character type: {type}");
@@ -51,22 +71,34 @@ public static class CharacterDtoMapper
     }
 
 
-    public static CharacterResponseDto ToDto(Character character)
+    public static CharacterDto ToDto(Character character)
     {
 
         // Get character atributes
         int? currentHits = null;
+        int? currentKills = null;
+        int? currentNothingHappensScenes = null;
         if (character is WarriorCharacter warrior)
         {
             currentHits = warrior.GetHits();
         }
+        if (character is BerserkerCharacter berserker)
+        {
+            currentKills = berserker.GetKills();
+        }
+        if (character is ExplorerCharacter explorer)
+        {
+            currentNothingHappensScenes = explorer.GetNothingHappensScenesVisited();
+        }
 
-        return new CharacterResponseDto
+        return new CharacterDto
         {
             Type = character switch
             {
                 WarriorCharacter => CharacterType.Warrior,
                 ThiefCharacter => CharacterType.Thief,
+                BerserkerCharacter => CharacterType.Berserker,
+                ExplorerCharacter => CharacterType.Explorer,
                 _ => CharacterType.None
             },
             CurrentHealthPoints = character.GetCurrentHealthPoints(),
@@ -76,6 +108,8 @@ public static class CharacterDtoMapper
 
             // optional atributes
             CurrentHits = currentHits,
+            CurrentKills = currentKills,
+            CurrentNothingHappensScenes = currentNothingHappensScenes,
         };
     }
 }

@@ -6,6 +6,8 @@ import { FinalSceneJsonRequest } from "./final-scene-json-request";
 import { SceneJsonRequest } from "./scene-json-request";
 import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import { BerserkerCharacter } from "../../../domain/value-objects/characters/berserker-character";
+import { ExplorerCharacter } from "../../../domain/value-objects/characters/explorer-character";
 
 export class GamePostJsonRequest {
     difficulty: GameDifficulty;
@@ -28,6 +30,14 @@ export class GamePostJsonRequest {
 
             case game.character instanceof ThiefCharacter:
                 this.character = CharacterType.Thief;
+                break;
+
+            case game.character instanceof BerserkerCharacter:
+                this.character = CharacterType.Berserker;
+                break;
+                
+            case game.character instanceof ExplorerCharacter:
+                this.character = CharacterType.Explorer;
                 break;
 
             default:

@@ -14,6 +14,8 @@ import { ActivityIcon, DollarSign, Heart, Sword } from "lucide-react";
 import { getStyleForCharacter } from "../utils/GetCharacterStyle";
 import type { Character } from "../../../domain/value-objects/characters/character";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import { BerserkerCharacter } from "../../../domain/value-objects/characters/berserker-character";
+import { ExplorerCharacter } from "../../../domain/value-objects/characters/explorer-character";
 
 
 //-------------------------------------------------------------------------------SUMMARY-CHARACTER-CARD------------------------------------------------------------------------//
@@ -55,6 +57,10 @@ export const SummaryCardCharacter: React.FC<SummaryCardCharacterProps> = ({ char
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1"><ActivityIcon className="w-3 h-3" /> Spd</div>
                     <span>{character.attackSpeed}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1 font-bold"> Hability: </div>
+                    <span>{style.abilityName} </span>
                 </div>
             </div>
 
@@ -206,6 +212,18 @@ export const CreateNewGamePage: React.FC<CreateNewGamePageProps> = ({ showAlert 
                         <SummaryCardCharacter
                             character={new ThiefCharacter()}
                             isSelected={selectedCharacter?.constructor.name === "ThiefCharacter"}
+                            onSelect={(char) => setSelectedCharacter(char)}
+                        />
+
+                        <SummaryCardCharacter
+                            character={new BerserkerCharacter()}
+                            isSelected={selectedCharacter?.constructor.name === "BerserkerCharacter"}
+                            onSelect={(char) => setSelectedCharacter(char)}
+                        />
+
+                        <SummaryCardCharacter
+                            character={new ExplorerCharacter()}
+                            isSelected={selectedCharacter?.constructor.name === "ExplorerCharacter"}
                             onSelect={(char) => setSelectedCharacter(char)}
                         />
                     </div>

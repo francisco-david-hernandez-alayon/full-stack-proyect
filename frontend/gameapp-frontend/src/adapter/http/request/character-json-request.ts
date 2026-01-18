@@ -4,6 +4,8 @@ import { ItemJsonRequest } from "./item-json-request";
 import { CharacterType } from "../../../application/enumerates/character-type";
 import { WarriorCharacter } from "../../../domain/value-objects/characters/warrior-character";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
+import { BerserkerCharacter } from "../../../domain/value-objects/characters/berserker-character";
+import { ExplorerCharacter } from "../../../domain/value-objects/characters/explorer-character";
 
 export class CharacterJsonRequest {
     type: CharacterType;
@@ -14,6 +16,8 @@ export class CharacterJsonRequest {
 
     // optional atributes
     currentHits?: number;
+    currentKills?: number;
+    currentNothingHappensScenes?: number;
 
     constructor(character: Character) {
         if (!character) throw new TypeError("character is required");
@@ -37,6 +41,14 @@ export class CharacterJsonRequest {
             case character instanceof ThiefCharacter:
                 this.type = CharacterType.Thief;
                 break;
+            
+            case character instanceof BerserkerCharacter:
+                this.type = CharacterType.Berserker;
+                break;
+            
+            case character instanceof ExplorerCharacter:
+                this.type = CharacterType.Explorer;
+                break;
 
             default:
                 throw new TypeError(`Unknown character class: '${character.constructor.name}'`);
@@ -56,6 +68,14 @@ export class CharacterJsonRequest {
 
         if (character instanceof WarriorCharacter) {
             this.currentHits = character.getHits();
+        }
+
+        if (character instanceof BerserkerCharacter) {
+            this.currentKills = character.getKills();
+        }
+
+        if (character instanceof ExplorerCharacter) {
+            this.currentNothingHappensScenes = character.getCurrentNothingHappensScenes();
         }
 
     }

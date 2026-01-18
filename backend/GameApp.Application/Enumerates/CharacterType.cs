@@ -4,5 +4,7 @@ public enum CharacterType
 {
     Warrior,
     Thief,
+    Berserker,
+    Explorer,
     None
 }

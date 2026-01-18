@@ -4,6 +4,8 @@ import { WarriorCharacter } from "../../../../domain/value-objects/characters/wa
 import { getStyleForCharacter } from "../../utils/GetCharacterStyle";
 import { ThiefCharacter } from "../../../../domain/value-objects/characters/thief-caracter";
 import { DollarSign } from "lucide-react";
+import { BerserkerCharacter } from "../../../../domain/value-objects/characters/berserker-character";
+import { ExplorerCharacter } from "../../../../domain/value-objects/characters/explorer-character";
 
 interface CharacterAbilityButtonProps {
     character: Character;
@@ -21,7 +23,18 @@ export const CharacterAbilityButton: React.FC<CharacterAbilityButtonProps> = ({
         if (character.canUseAbility()) {
             canUseAbility = true;
         }
-        
+    }
+
+    if (character instanceof BerserkerCharacter) {
+        if (character.canUseAbility()) {
+            canUseAbility = true;
+        }
+    }
+
+    if (character instanceof ExplorerCharacter) {
+        if (character.canUseAbility()) {
+            canUseAbility = true;
+        }
     }
 
 
@@ -44,6 +57,18 @@ export const CharacterAbilityButton: React.FC<CharacterAbilityButtonProps> = ({
                     (<div className="flex items-center gap-1">
                         <DollarSign className="w-4 h-4" />
                         <span className="text-xm opacity-90">{ThiefCharacter.EXTRA_MONEY_WHEN_KILL_ENEMY}</span>
+                    </div>)
+                    : null}
+                
+                {character instanceof BerserkerCharacter ?
+                    (<div>
+                        <span className="text-xm opacity-90">{character.getKills()}/{BerserkerCharacter.KILLS_NEEDED_TO_GET_ABILITY} kills</span>
+                    </div>)
+                    : null}
+                
+                {character instanceof ExplorerCharacter ?
+                    (<div>
+                        <span className="text-xm opacity-90">{character.getCurrentNothingHappensScenes()}/{ExplorerCharacter.NOTHING_HAPPENS_SCENES_NEEDED} scenes</span>
                     </div>)
                     : null}
 

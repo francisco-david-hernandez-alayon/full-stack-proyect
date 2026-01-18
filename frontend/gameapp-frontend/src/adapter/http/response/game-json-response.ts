@@ -13,6 +13,8 @@ import { FinalScene } from "../../../domain/entities/scenes/final-scene";
 import type { GameDifficulty } from "../../../domain/enumerates/game-difficulty";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 import type { Character } from "../../../domain/value-objects/characters/character";
+import { BerserkerCharacter } from "../../../domain/value-objects/characters/berserker-character";
+import { ExplorerCharacter } from "../../../domain/value-objects/characters/explorer-character";
 
 interface CharacterJson {
     type: CharacterType;
@@ -23,6 +25,8 @@ interface CharacterJson {
 
     // optional character atributes
     currentHits?: number;
+    currentKills?: number;
+    currentNothingHappensScenes?: number;
 
 }
 interface FinalSceneJson {
@@ -93,6 +97,28 @@ export class GameJsonResponse {
                     this.character.currentFoodPoints,
                     this.character.currentMoney,
                     inventory,
+                );
+                break;
+            }
+            case CharacterType.Berserker: {
+                const inventory = this.character.inventoryList?.map(i => new ItemJsonResponse(i).toItem()) ?? [];
+                character = new BerserkerCharacter(
+                    this.character.currentHealthPoints,
+                    this.character.currentFoodPoints,
+                    this.character.currentMoney,
+                    inventory,
+                    this.character.currentKills ?? 0
+                );
+                break;
+            }
+            case CharacterType.Explorer: {
+                const inventory = this.character.inventoryList?.map(i => new ItemJsonResponse(i).toItem()) ?? [];
+                character = new ExplorerCharacter(
+                    this.character.currentHealthPoints,
+                    this.character.currentFoodPoints,
+                    this.character.currentMoney,
+                    inventory,
+                    this.character.currentNothingHappensScenes ?? 0
                 );
                 break;
             }

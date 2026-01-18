@@ -10,6 +10,7 @@ import type { IGameUseItemUseCase } from "../../usecases/game-use-cases/game-use
 import { GameManageItemService } from "./game-manage-item-service";
 import { ThiefCharacter } from "../../../domain/value-objects/characters/thief-caracter";
 import type { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
+import { BerserkerCharacter } from "../../../domain/value-objects/characters/berserker-character";
 
 export class GameUseItemService implements IGameUseItemUseCase {
 
@@ -19,11 +20,6 @@ export class GameUseItemService implements IGameUseItemUseCase {
   private getDamage(basicDamage: number, criticalDamage: CriticalDamage): number {
     const roll = Math.random() * 100; 
     const isCritical = roll < criticalDamage.criticalProbability;
-
-    // DEPURATE
-    if (isCritical) {
-      console.log("CRITICAL DAMAGE: " + basicDamage + " + " + criticalDamage.extraDamage);
-    }
     
 
     return isCritical
@@ -99,6 +95,10 @@ export class GameUseItemService implements IGameUseItemUseCase {
 
     if (character instanceof ThiefCharacter && enemy == null) {
       character = character.earnMoney(ThiefCharacter.EXTRA_MONEY_WHEN_KILL_ENEMY);
+    }
+
+    if (character instanceof BerserkerCharacter && enemy == null) {
+      character = character.addKill();
     }
 
     game = game.setCharacter(character);

@@ -4,7 +4,7 @@ using GameApp.Application.Enumerates;
 
 namespace GameApp.Adapter.Api.dtos.OthersDto;
 
-public class CharacterResponseDto
+public class CharacterDto
 {
     public CharacterType Type { get; set; } = default!; 
 
@@ -17,4 +17,10 @@ public class CharacterResponseDto
     // Optional Character habilities
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? CurrentHits { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? CurrentKills { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? CurrentNothingHappensScenes { get; set; }
 }

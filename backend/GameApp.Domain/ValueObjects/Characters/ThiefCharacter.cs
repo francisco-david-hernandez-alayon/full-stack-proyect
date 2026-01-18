@@ -10,8 +10,8 @@ public class ThiefCharacter : Character
     private static readonly int DefaultMaxFoodPoints = 90;
     private static readonly int DefaultMaxInventorySlots = 6;
     private static readonly int DefaultStartingMoney = 30;
-    private static readonly int DefaultAttackSpeed = 3;
-    private static readonly int DefaultAttackDamage = 3;
+    private static readonly int DefaultAttackSpeed = 4;
+    private static readonly int DefaultAttackDamage = 4;
 
 
     // Character Ability

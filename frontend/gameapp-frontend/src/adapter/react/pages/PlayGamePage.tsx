@@ -26,6 +26,7 @@ import { GameUseCharacterAbilityService } from "../../../application/services/ga
 import { CharacterAbilityButton } from "../components/Game/CharacterAbilityButton";
 import { AttackItem } from "../../../domain/entities/items/attack-item";
 import { DamageAlertInfo } from "../components/Game/DamageAlertInfo";
+import { ItemHttpRepository } from "../../http/repository/item-http-repository";
 
 
 interface PlayGamePageProps {
@@ -56,7 +57,8 @@ export const PlayGamePage: React.FC<PlayGamePageProps> = ({ showAlert }) => {
     const gameUseItemService = new GameUseItemService();
     const gameManageItemService = new GameManageItemService();
     const gameTradeService = new GameTradeService();
-    const gameUseCharacterAbilityService = new GameUseCharacterAbilityService();
+    const repoItems = new ItemHttpRepository();
+    const gameUseCharacterAbilityService = new GameUseCharacterAbilityService(repoItems);
 
 
     useEffect(() => {

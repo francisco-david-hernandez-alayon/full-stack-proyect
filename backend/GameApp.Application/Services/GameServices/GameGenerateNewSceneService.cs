@@ -4,6 +4,7 @@ using GameApp.Domain.Repositories;
 using GameApp.Domain.Entities.Scenes;
 using GameApp.Domain.Enumerates;
 using GameApp.Application.Enumerates;
+using GameApp.Domain.ValueObjects.Characters;
 
 namespace GameApp.Application.Services.GameServices;
 
@@ -331,6 +332,15 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
         if (game.GetCurrentScenes().Count == 1)
         {
             game = game.AddCompletedScene(sceneSelected);
+
+            if (game.GetCharacter() is ExplorerCharacter explorer)
+            {
+                if (sceneSelected is NothingHappensScene)
+                {
+                    explorer = explorer.AddCurrentNothingHappensScenes();
+                    game = game.SetCharacter(explorer);
+                }
+            }
         }
         else
         {

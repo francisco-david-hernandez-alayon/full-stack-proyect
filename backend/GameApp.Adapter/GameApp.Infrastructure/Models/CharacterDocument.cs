@@ -14,4 +14,11 @@ public class CharacterDocument
     // Optional Character habilities
     [BsonIgnoreIfNull]
     public int? CurrentHits { get; set; }
+
+    [BsonIgnoreIfNull]
+    public int? CurrentKills { get; set; }
+
+    [BsonIgnoreIfNull]
+    public int? CurrentNothingHappensScenes { get; set; }
+
 }
