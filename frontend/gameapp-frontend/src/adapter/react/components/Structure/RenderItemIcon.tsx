@@ -1,8 +1,6 @@
 import type React from "react";
 import { Sword, Apple, Swords, Axe, Pickaxe, Gavel, Hammer, Ham, Drumstick, Hop, Beer, LeafyGreen, Wheat, Cherry, Salad, Beef, Nut, Martini, Bean, Pen, HeartPlus, Cake, Stone, MousePointer } from "lucide-react";
 import { Item } from "../../../../domain/entities/items/item";
-import { AttackItem } from "../../../../domain/entities/items/attack-item";
-import { AttributeItem } from "../../../../domain/entities/items/attribute-item";
 import { getItemRarityColor } from "../../utils/getItemRarityColor";
 import { ItemIcon } from "../../../../domain/enumerates/item-icon";
 
@@ -51,8 +49,6 @@ export const RenderItemIcon: React.FC<RenderItemIconProps> = ({
             return <Stone className={`${colorClass}`} width={width} height={height} />;
 
 
-
-        
         case ItemIcon.CAKE:
             return <Cake className={`${colorClass}`} width={width} height={height} />;
 

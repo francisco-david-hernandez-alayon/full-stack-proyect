@@ -152,6 +152,7 @@ export const ItemToolTip: React.FC<ItemToolTipProps> = ({ item, top, left }) => 
             <div className="flex flex-col gap-2 text-sm">
                 <span className="font-semibold text-base">
                     {item.name.name}
+                    <span>Icon: {item.icon}</span>
                 </span>
                 
                 {renderItemTooltipContent(item)}

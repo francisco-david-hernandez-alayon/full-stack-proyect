@@ -37,6 +37,7 @@ export class ItemJsonResponse {
         this.description = itemJson.description;
         this.itemType = itemJson.itemType;
         this.icon = itemJson.icon;
+
         this.tradePrice = itemJson.tradePrice ?? undefined;
 
         this.attackDamage = itemJson.attackDamage ?? undefined;
