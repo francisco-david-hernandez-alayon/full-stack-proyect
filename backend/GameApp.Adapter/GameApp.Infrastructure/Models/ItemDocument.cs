@@ -14,6 +14,7 @@ public class ItemDocument
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public ItemType ItemType { get; set; }
+    public ItemIcon Icon { get; set; }
     public int TradePrice { get; set; } = 0;
 
     // Atribute Item

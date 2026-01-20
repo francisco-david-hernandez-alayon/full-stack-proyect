@@ -3,6 +3,7 @@ import { ItemName } from '../../value-objects/items/item-name';
 import { ItemDescription } from '../../value-objects/items/item-description';
 import type { ItemRarity } from '../../enumerates/item-rarity';
 import type { CriticalDamage } from '../../value-objects/enemies/critical-damage';
+import type { ItemIcon } from '../../enumerates/item-icon';
 
 export class AttackItem extends Item {
     private _attackDamage: number;
@@ -14,6 +15,7 @@ export class AttackItem extends Item {
         rarity: ItemRarity,
         name: ItemName,
         description: ItemDescription,
+        icon: ItemIcon, 
         tradePrice: number,
         attackDamage: number,
         speedAttack: number,
@@ -21,7 +23,7 @@ export class AttackItem extends Item {
         criticalDamage: CriticalDamage,
         id: string | null = null
     ) {
-        super(rarity, name, description, tradePrice, id);
+        super(rarity, name, description, icon, tradePrice, id);
         
         this._attackDamage = attackDamage;
         this._speedAttack = speedAttack;
@@ -37,19 +39,19 @@ export class AttackItem extends Item {
 
     // setters (inmutable, devuelven nueva instancia)
     setAttackDamage(newValue: number): AttackItem {
-        return new AttackItem(this._rarity, this._name, this._description, this._tradePrice, newValue, this._speedAttack, this._durability, this._criticalDamage, this._id);
+        return new AttackItem(this._rarity, this._name, this._description, this._icon, this._tradePrice, newValue, this._speedAttack, this._durability, this._criticalDamage, this._id);
     }
 
     setSpeedAttack(newValue: number): AttackItem {
-        return new AttackItem(this._rarity, this._name, this._description, this._tradePrice, this._attackDamage, newValue, this._durability, this._criticalDamage, this._id);
+        return new AttackItem(this._rarity, this._name, this._description, this._icon, this._tradePrice, this._attackDamage, newValue, this._durability, this._criticalDamage, this._id);
     }
 
     setDurability(newValue: number): AttackItem {
-        return new AttackItem(this._rarity, this._name, this._description, this._tradePrice, this._attackDamage, this._speedAttack, newValue, this._criticalDamage, this._id);
+        return new AttackItem(this._rarity, this._name, this._description, this._icon, this._tradePrice, this._attackDamage, this._speedAttack, newValue, this._criticalDamage, this._id);
     }
 
     setCriticalDamage(newCriticalDamage: CriticalDamage): AttackItem {
-        return new AttackItem(this._rarity, this._name, this._description, this._tradePrice, this._attackDamage, this._speedAttack, this._durability, newCriticalDamage, this._id);
+        return new AttackItem(this._rarity, this._name, this._description, this._icon, this._tradePrice, this._attackDamage, this._speedAttack, this._durability, newCriticalDamage, this._id);
     }
 
 

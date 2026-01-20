@@ -1,11 +1,7 @@
 using GameApp.Domain.ValueObjects.Items;
-using GameApp.Domain.ValueObjects;
-using GameApp.Domain.Enumerates;
 using GameApp.Adapter.Infrastructure.Models;
 using GameApp.Domain.Entities.Items;
 using GameApp.Application.Enumerates;
-using GameApp.Domain.ValueObjects.Combat;
-
 namespace GameApp.Adapter.Infrastructure.Mappers;
 
 public static class ItemDocumentMapper
@@ -21,6 +17,7 @@ public static class ItemDocumentMapper
             Rarity = item.GetRarity(),
             Name = item.GetName().GetName(),
             Description = item.GetDescription().GetDescription(),
+            Icon = item.GetIcon(),
             TradePrice = item.GetTradePrice()
         };
 
@@ -64,6 +61,7 @@ public static class ItemDocumentMapper
                 doc.Rarity,
                 name,
                 desc,
+                doc.Icon,
                 price,
                 doc.AttackDamage ?? throw new ArgumentNullException(nameof(doc.AttackDamage)),
                 doc.SpeedAttack ?? throw new ArgumentNullException(nameof(doc.SpeedAttack)),
@@ -75,6 +73,7 @@ public static class ItemDocumentMapper
                 doc.Rarity,
                 name,
                 desc,
+                doc.Icon,
                 price,
                 doc.HealthPointsReceived ?? throw new ArgumentNullException(nameof(doc.HealthPointsReceived)),
                 doc.FoodPointsReceived ?? throw new ArgumentNullException(nameof(doc.FoodPointsReceived))

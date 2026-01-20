@@ -15,7 +15,7 @@ export const CreateNewGameButton: React.FC<CreateNewGameProps> = ({ showAlert })
 
     return (
         <>
-            <button className="btn btn-primary mt-4" onClick={() => goToCreateNewGame()}>
+            <button className="btn btn-primary" onClick={() => goToCreateNewGame()}>
                 Start new Game
             </button>
         </>

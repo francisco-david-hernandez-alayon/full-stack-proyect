@@ -4,6 +4,7 @@ import { AttributeItem } from "../../../domain/entities/items/attribute-item";
 import { ItemType } from "../../../application/enumerates/item-type";
 import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 import { CriticalDamageJsonRequest } from "./ciritcal-damage-json-request";
+import type { ItemIcon } from "../../../domain/enumerates/item-icon";
 
 export class ItemJsonRequest {
     id: string;
@@ -11,6 +12,7 @@ export class ItemJsonRequest {
     name: string;
     description: string;
     itemType: ItemType;
+    icon: ItemIcon;
     tradePrice: number;
 
     // Optional attributes
@@ -26,6 +28,7 @@ export class ItemJsonRequest {
         this.rarity = item.rarity;
         this.name = item.name.name;
         this.description = item.description.description;
+        this.icon = item.icon;
         this.tradePrice = item.tradePrice;
 
         // Determinar tipo y asignar atributos según el tipo

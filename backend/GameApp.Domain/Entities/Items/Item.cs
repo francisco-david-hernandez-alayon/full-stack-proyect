@@ -10,26 +10,30 @@ public abstract class Item
     private readonly ItemRarity Rarity;
     private readonly ItemName Name;
     private readonly ItemDescription Description;
+
+    private readonly ItemIcon Icon;
     private readonly int TradePrice;
 
     // Default constructor
-    protected Item(ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice)
+    protected Item(ItemRarity rarity, ItemName name, ItemDescription description, ItemIcon icon, int tradePrice)
     {
         Id = Guid.NewGuid();
         Rarity = rarity;
         Name = name;
         Description = description;
         TradePrice = tradePrice;
+        Icon = icon;
     }
 
     // Restore Constructor
-    protected Item(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice)
+    protected Item(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, ItemIcon icon, int tradePrice)
     {
         Id = id;
         Rarity = rarity;
         Name = name;
         Description = description;
         TradePrice = tradePrice;
+        Icon = icon;
     }
 
     public Guid GetGuid() => Id;
@@ -37,5 +41,7 @@ public abstract class Item
     public ItemDescription GetDescription() => Description;
     public int GetTradePrice() => TradePrice;
     public ItemRarity GetRarity() => Rarity;
+
+    public ItemIcon GetIcon() => Icon;
 
 }

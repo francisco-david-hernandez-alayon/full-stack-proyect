@@ -28,7 +28,7 @@ public static class ItemDtoMapper
 
         return dto.ItemType switch
         {
-            ItemType.Attack => new AttackItem(id, dto.Rarity, itemName, itemDescription, itemTradePrice,
+            ItemType.Attack => new AttackItem(id, dto.Rarity, itemName, itemDescription, dto.Icon, itemTradePrice,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                         "AttackDamage is required for AttackItem")
                  , dto.SpeedAttack ?? throw new ArgumentNullException(nameof(dto.SpeedAttack),
@@ -38,7 +38,7 @@ public static class ItemDtoMapper
                 , CriticalDamageDtoMapper.ToDomain(dto.CriticalDamage ?? new CriticalDamageDto())
                         ),
 
-            ItemType.Attribute => new AtributeItem(id, dto.Rarity, itemName, itemDescription, itemTradePrice,
+            ItemType.Attribute => new AtributeItem(id, dto.Rarity, itemName, itemDescription, dto.Icon, itemTradePrice,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                         "HealthPointsReceived is required for AttributeItem"),
                 dto.FoodPointsReceived ?? throw new ArgumentNullException(nameof(dto.FoodPointsReceived),
@@ -69,6 +69,7 @@ public static class ItemDtoMapper
                 dto.Rarity, 
                 itemName,
                 itemDescription,
+                dto.Icon, 
                 tradePrice,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                     "AttackDamage is required for AttackItem"),
@@ -82,6 +83,7 @@ public static class ItemDtoMapper
                 dto.Rarity, 
                 itemName,
                 itemDescription,
+                dto.Icon, 
                 tradePrice,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                     "HealthPointsReceived is required for AttributeItem"),
@@ -112,6 +114,7 @@ public static class ItemDtoMapper
                 dto.Rarity, 
                 itemName,
                 itemDescription,
+                dto.Icon, 
                 tradePrice,
                 dto.AttackDamage ?? throw new ArgumentNullException(nameof(dto.AttackDamage),
                     "AttackDamage is required for AttackItem"),
@@ -125,6 +128,7 @@ public static class ItemDtoMapper
                 dto.Rarity, 
                 itemName,
                 itemDescription,
+                dto.Icon, 
                 tradePrice,
                 dto.HealthPointsReceived ?? throw new ArgumentNullException(nameof(dto.HealthPointsReceived),
                     "HealthPointsReceived is required for AttributeItem"),
@@ -148,6 +152,7 @@ public static class ItemDtoMapper
             Rarity = item.GetRarity(),
             Name = item.GetName().GetName(),
             Description = item.GetDescription().GetDescription(),
+            Icon = item.GetIcon(),
             TradePrice = item.GetTradePrice()
         };
 

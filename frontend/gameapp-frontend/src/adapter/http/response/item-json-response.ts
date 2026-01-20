@@ -6,6 +6,7 @@ import type { Item } from "../../../domain/entities/items/item";
 import { ItemType } from "../../../application/enumerates/item-type";
 import type { ItemRarity } from "../../../domain/enumerates/item-rarity";
 import { CriticalDamage } from "../../../domain/value-objects/enemies/critical-damage";
+import type { ItemIcon } from "../../../domain/enumerates/item-icon";
 
 export class ItemJsonResponse {
     id: string;
@@ -13,6 +14,7 @@ export class ItemJsonResponse {
     name: string;
     description: string;
     itemType: ItemType;
+    icon: ItemIcon;
     tradePrice: number | null;
 
     attackDamage: number | null;
@@ -34,6 +36,7 @@ export class ItemJsonResponse {
         this.name = itemJson.name;
         this.description = itemJson.description;
         this.itemType = itemJson.itemType;
+        this.icon = itemJson.icon;
         this.tradePrice = itemJson.tradePrice ?? undefined;
 
         this.attackDamage = itemJson.attackDamage ?? undefined;
@@ -56,6 +59,7 @@ export class ItemJsonResponse {
                     this.rarity,
                     name,
                     desc,
+                    this.icon,
                     this.tradePrice!,
                     this.healthPointsReceived!,
                     this.foodPointsReceived!,
@@ -66,6 +70,7 @@ export class ItemJsonResponse {
                     this.rarity,
                     name,
                     desc,
+                    this.icon,
                     this.tradePrice!,
                     this.attackDamage!,
                     this.speedAttack!,

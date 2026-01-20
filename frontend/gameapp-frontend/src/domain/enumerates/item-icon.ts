@@ -1,0 +1,27 @@
+export enum ItemIcon {
+    SWORD = "Sword",
+    DOUBLESWORD = "DoubleSword",
+    AXE = "Axe",
+    MACE = "Mace",
+    HAMMER = "Hammer",
+    SPEAR = "Spear",
+    SCYTHE = "Scythe",
+    STICK = "Stick",
+    STONE = "Stone",
+
+    CAKE = "Cake",
+    HEALTH = "Health",
+    APPLE = "Apple",
+    BREAD = "Bread",
+    HAM = "Ham",
+    BEEF = "Beef",
+    ROTTENMEAT = "RottenMeat",
+    FRUITS = "Fruits",
+    CHERRY = "Cherry",
+    SALAD = "Salad",
+    NUT = "Nut",
+    SHEET = "Sheet",
+    ROOT = "Root",
+    BEER = "Beer",
+    CUP = "Cup"
+}

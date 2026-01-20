@@ -81,7 +81,7 @@ export class ItemHttpRepository implements IItemRepository {
 
     // DELETE
     async delete(id: string): Promise<Item> {
-        return Promise.resolve(new AttackItem(null as any, null as any, null as any, 0, 0, 0, 0, new CriticalDamage(0, 0), id));
+        return Promise.resolve(new AttackItem(null as any, null as any, null as any, null as any, 0, 0, 0, 0, new CriticalDamage(0, 0), id));
     }
 
     // PUT / PATCH

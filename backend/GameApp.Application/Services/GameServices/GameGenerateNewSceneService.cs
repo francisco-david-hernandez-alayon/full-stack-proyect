@@ -114,7 +114,8 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
 
     private Scene GetRandomSceneFromListScenes(List<Scene> scenes, GameDifficulty difficulty, int completedScenes)
     {
-        const int NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES = 10;
+        const int NUMBER_SCENES_TO_APPEAR_HARD_ENEMIES = 10;
+        const int NUMBER_SCENES_TO_APPEAR_BOSS_ENEMIES = 20;
 
         Dictionary<SceneGoodness, int> sceneGoodnessWeights = SceneGoodnessWeights.Weights[difficulty];
         List<KeyValuePair<Scene, int>> sceneProbabilities = new List<KeyValuePair<Scene, int>>();
@@ -163,14 +164,14 @@ public class GameGenerateNewSceneService : GameGenerateNewSceneUseCase
                             sceneGoodness = SceneGoodness.Bad;
                             break;
                         case EnemyDifficulty.Hard:
-                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES)
+                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_HARD_ENEMIES)
                             {
                                 continue;
                             }
                             sceneGoodness = SceneGoodness.Bad;
                             break;
                         case EnemyDifficulty.Boss:
-                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_DIFFICULT_ENEMIES)
+                            if (completedScenes <= NUMBER_SCENES_TO_APPEAR_BOSS_ENEMIES)
                             {
                                 continue;
                             }

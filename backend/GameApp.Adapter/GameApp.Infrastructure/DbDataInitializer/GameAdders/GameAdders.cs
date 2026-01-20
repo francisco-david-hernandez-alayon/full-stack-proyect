@@ -11,25 +11,25 @@ public interface GameAdders : IGameAdders
 {
     public static void AddGames(List<Game> games)
     {
-        List<Game> gamesToAdd = new List<Game>();
-        WarriorCharacter warrior = new WarriorCharacter();
-        warrior = warrior.AddItemInventory(AttackItemsAdders.OldStoneSword) as WarriorCharacter;
-        warrior = warrior.AddItemInventory(AtributteItemsAdders.Apple) as WarriorCharacter;
+        // List<Game> gamesToAdd = new List<Game>();
+        // WarriorCharacter warrior = new WarriorCharacter();
+        // warrior = warrior.AddItemInventory(AttackItemsAdders.OldStoneSword) as WarriorCharacter;
+        // warrior = warrior.AddItemInventory(AtributteItemsAdders.Apple) as WarriorCharacter;
 
-        if (warrior != null)
-        {
-            FinalScene finalScene = ForestScenesAdder.FinalScene;
-            List<Scene> currentScenes = new List<Scene> { ForestScenesAdder.InitialScene };
-            List<UserAction> currentUserAction = new List<UserAction> { UserAction.UseItem, UserAction.MoveForward };
+        // if (warrior != null)
+        // {
+        //     FinalScene finalScene = ForestScenesAdder.FinalScene;
+        //     List<Scene> currentScenes = new List<Scene> { ForestScenesAdder.InitialScene };
+        //     List<UserAction> currentUserAction = new List<UserAction> { UserAction.UseItem, UserAction.MoveForward };
 
-            Game game1 = new Game(GameDifficulty.Normal, warrior, 30, finalScene, currentScenes, currentUserAction);
-            gamesToAdd.Add(game1);
-            games.AddRange(gamesToAdd);
+        //     Game game1 = new Game(GameDifficulty.Normal, warrior, 30, finalScene, currentScenes, currentUserAction);
+        //     gamesToAdd.Add(game1);
+        //     games.AddRange(gamesToAdd);
 
-        }   else
-        {
-            Console.WriteLine("warrior is null when game is creating: " + warrior);
-        }
+        // }   else
+        // {
+        //     Console.WriteLine("warrior is null when game is creating: " + warrior);
+        // }
 
     }
 }

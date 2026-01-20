@@ -1,5 +1,5 @@
 import type React from "react";
-import { Bug } from "lucide-react";
+import { Angry } from "lucide-react";
 import type { Enemy } from "../../../../domain/entities/enemy";
 import { getEnemyDifficultyColor } from "../../utils/getEnemyDifficultyColor";
 
@@ -20,7 +20,7 @@ export const RenderEnemyIcon: React.FC<RenderEnemyIconProps> = ({
 
 
     return (
-        <Bug
+        <Angry
             className={colorClass}
             width={width}
             height={height}

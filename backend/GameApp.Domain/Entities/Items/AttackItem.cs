@@ -15,8 +15,8 @@ public class AttackItem : Item
     private readonly CriticalDamage CriticalDamage;
 
     // Default constructor
-    public AttackItem(ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice, int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
-        : base(rarity, name, description, tradePrice)
+    public AttackItem(ItemRarity rarity, ItemName name, ItemDescription description, ItemIcon icon, int tradePrice, int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
+        : base(rarity, name, description, icon, tradePrice)
     {
         AttackDamage = attackDamage;
         SpeedAttack  = speedAttack;
@@ -25,8 +25,8 @@ public class AttackItem : Item
     }
 
     // Restore constructor
-    public AttackItem(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, int tradePrice,  int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
-        : base(id, rarity, name, description, tradePrice)
+    public AttackItem(Guid id, ItemRarity rarity, ItemName name, ItemDescription description, ItemIcon icon, int tradePrice,  int attackDamage, int speedAttack, int durability, CriticalDamage criticalDamage)
+        : base(id, rarity, name, description, icon, tradePrice)
     {
         AttackDamage = attackDamage;
         SpeedAttack  = speedAttack;
@@ -41,11 +41,11 @@ public class AttackItem : Item
     public CriticalDamage GetCriticalDamage() => CriticalDamage;
 
     // Setters
-    public AttackItem SetAttackDamage(int newAttackDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), newAttackDamage, GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
-    public AttackItem SetSpeedAttack(int newSpeedAttack) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), newSpeedAttack, GetDurability(), GetCriticalDamage()); 
-    public AttackItem SetDurability(int newDurability) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), newDurability, GetCriticalDamage()); 
-    public AttackItem SetPrice(int newTradePrice) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), newTradePrice, GetAttackDamage(), GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
-    public AttackItem SetCriticalDamage(CriticalDamage newCriticalDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), GetDurability(), newCriticalDamage); 
+    public AttackItem SetAttackDamage(int newAttackDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetIcon(), GetTradePrice(), newAttackDamage, GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetSpeedAttack(int newSpeedAttack) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetIcon(), GetTradePrice(), GetAttackDamage(), newSpeedAttack, GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetDurability(int newDurability) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetIcon(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), newDurability, GetCriticalDamage()); 
+    public AttackItem SetPrice(int newTradePrice) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetIcon(), newTradePrice, GetAttackDamage(), GetSpeedAttack(), GetDurability(), GetCriticalDamage()); 
+    public AttackItem SetCriticalDamage(CriticalDamage newCriticalDamage) => new AttackItem(GetGuid(), GetRarity(), GetName(), GetDescription(), GetIcon(), GetTradePrice(), GetAttackDamage(), GetSpeedAttack(), GetDurability(), newCriticalDamage); 
 
 
     // To string

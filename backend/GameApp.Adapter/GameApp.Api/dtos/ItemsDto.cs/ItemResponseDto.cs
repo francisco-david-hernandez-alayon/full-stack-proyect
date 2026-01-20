@@ -12,6 +12,7 @@ public class ItemResponseDto
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
     public ItemType ItemType { get; set; } = default!; 
+    public ItemIcon Icon { get; set; }
     public int TradePrice { get; set; } = 0;
 
     // optional depending on the type of item:
