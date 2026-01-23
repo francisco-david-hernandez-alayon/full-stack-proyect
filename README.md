@@ -1,6 +1,10 @@
 # Proyecto. Arquitectura Hexagonal
 Autor: Francisco David Hernández Alayón
 
+El juego es una aventura por turnos basada en escenarios, donde el jugador debe avanzar a través de distintas escenas hasta llegar al final, manteniéndose con vida y gestionando correctamente sus recursos. Cada vez que se avanza a una nueva escena, el personaje pierde comida, por lo que es fundamental conseguir y usar objetos para alimentarse, curarse, combatir enemigos o comerciar con mercaderes.
+
+A lo largo de la partida, el jugador explorará diferentes biomas, cada uno con escenas, enemigos y recompensas únicas que se generarán de forma aleatoria. Existen varios tipos de escenas, como combates, comercio, obtención de objetos o escenas donde no ocurre nada. El combate se basa en estadísticas de velocidad y daño, y cada personaje cuenta con una habilidad especial que se desbloquea al cumplir ciertas condiciones. La toma de decisiones, la gestión del inventario y la adaptación al entorno son clave para sobrevivir y completar el juego.
+
 
 ## CONFIGURACIÓN BACK-END: C# y mongoDb
 
